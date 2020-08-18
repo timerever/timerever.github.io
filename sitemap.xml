@@ -2,34 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://blog.timerever.tk/2017/03/01/merge-multiple-vmdk's-into-single-vmdk/</loc>
-    
-    <lastmod>2020-08-18</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.timerever.tk/2017/01/25/my-first-article/</loc>
-    
-    <lastmod>2020-08-18</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.timerever.tk/2017/03/06/proxy-with-wget/</loc>
-    
-    <lastmod>2020-08-18</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.timerever.tk/2017/04/09/regular-expression/</loc>
-    
-    <lastmod>2020-08-18</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://blog.timerever.tk/2017/04/26/undefined-reference-to-pthread_create/</loc>
     
     <lastmod>2020-08-18</lastmod>
@@ -87,6 +59,34 @@
   
   <url>
     <loc>https://blog.timerever.tk/2017/03/18/git-tutorial/</loc>
+    
+    <lastmod>2020-08-18</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.timerever.tk/2017/03/01/merge-multiple-vmdk's-into-single-vmdk/</loc>
+    
+    <lastmod>2020-08-18</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.timerever.tk/2017/01/25/my-first-article/</loc>
+    
+    <lastmod>2020-08-18</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.timerever.tk/2017/03/06/proxy-with-wget/</loc>
+    
+    <lastmod>2020-08-18</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.timerever.tk/2017/04/09/regular-expression/</loc>
     
     <lastmod>2020-08-18</lastmod>
     
