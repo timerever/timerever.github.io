@@ -65,6 +65,15 @@
   </url>
   
   <url>
+    <loc>https://blog.timerever.tk/about/index.html</loc>
+    
+    <lastmod>2022-01-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.timerever.tk/categories/index.html</loc>
     
     <lastmod>2022-01-07</lastmod>
@@ -75,15 +84,6 @@
   
   <url>
     <loc>https://blog.timerever.tk/tags/index.html</loc>
-    
-    <lastmod>2022-01-07</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.timerever.tk/about/index.html</loc>
     
     <lastmod>2022-01-07</lastmod>
     
@@ -111,6 +111,15 @@
   
   <url>
     <loc>https://blog.timerever.tk/2017/03/18/git-tutorial/</loc>
+    
+    <lastmod>2022-01-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.timerever.tk/2022/01/05/keycloak-custom-idp/</loc>
     
     <lastmod>2022-01-07</lastmod>
     
@@ -405,6 +414,13 @@
   
   <url>
     <loc>https://blog.timerever.tk/categories/Git/</loc>
+    <lastmod>2022-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.timerever.tk/categories/Keycloak/</loc>
     <lastmod>2022-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
