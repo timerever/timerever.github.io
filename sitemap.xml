@@ -2,177 +2,225 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://blog.timerever.tk/2017/04/26/undefined-reference-to-pthread_create/</loc>
-    
-    <lastmod>2021-09-06</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.timerever.tk/2017/01/26/unused-jekyll-on-ubuntu/</loc>
-    
-    <lastmod>2021-09-06</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.timerever.tk/2017/04/04/windows-init/</loc>
-    
-    <lastmod>2021-09-06</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.timerever.tk/about/index.html</loc>
-    
-    <lastmod>2021-09-06</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.timerever.tk/categories/index.html</loc>
-    
-    <lastmod>2021-09-06</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.timerever.tk/tags/index.html</loc>
-    
-    <lastmod>2021-09-06</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.timerever.tk/2017/04/24/fix-sigaction/</loc>
-    
-    <lastmod>2021-09-06</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.timerever.tk/2017/02/27/frequently-used-commands-while-flashing-android/</loc>
-    
-    <lastmod>2021-09-06</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.timerever.tk/2017/03/18/git-tutorial/</loc>
-    
-    <lastmod>2021-09-06</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://blog.timerever.tk/2017/03/01/merge-multiple-vmdk's-into-single-vmdk/</loc>
     
-    <lastmod>2021-09-06</lastmod>
+    <lastmod>2022-01-07</lastmod>
     
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/2017/01/25/my-first-article/</loc>
     
-    <lastmod>2021-09-06</lastmod>
+    <lastmod>2022-01-07</lastmod>
     
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/2017/03/06/proxy-with-wget/</loc>
     
-    <lastmod>2021-09-06</lastmod>
+    <lastmod>2022-01-07</lastmod>
     
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/2017/04/09/regular-expression/</loc>
     
-    <lastmod>2021-09-06</lastmod>
+    <lastmod>2022-01-07</lastmod>
     
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.timerever.tk/2017/04/26/undefined-reference-to-pthread_create/</loc>
+    
+    <lastmod>2022-01-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.timerever.tk/2017/01/26/unused-jekyll-on-ubuntu/</loc>
+    
+    <lastmod>2022-01-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.timerever.tk/2017/04/04/windows-init/</loc>
+    
+    <lastmod>2022-01-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.timerever.tk/categories/index.html</loc>
+    
+    <lastmod>2022-01-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.timerever.tk/tags/index.html</loc>
+    
+    <lastmod>2022-01-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.timerever.tk/about/index.html</loc>
+    
+    <lastmod>2022-01-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.timerever.tk/2017/04/24/fix-sigaction/</loc>
+    
+    <lastmod>2022-01-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.timerever.tk/2017/02/27/frequently-used-commands-while-flashing-android/</loc>
+    
+    <lastmod>2022-01-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.timerever.tk/2017/03/18/git-tutorial/</loc>
+    
+    <lastmod>2022-01-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/2017/03/02/docker-learning-trip-0/</loc>
     
-    <lastmod>2021-09-06</lastmod>
+    <lastmod>2022-01-07</lastmod>
     
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/2017/03/03/docker-learning-trip-1/</loc>
     
-    <lastmod>2021-09-06</lastmod>
+    <lastmod>2022-01-07</lastmod>
     
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/2017/03/05/docker-learning-trip-2/</loc>
     
-    <lastmod>2021-09-06</lastmod>
+    <lastmod>2022-01-07</lastmod>
     
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/2017/03/06/docker-learning-trip-3/</loc>
     
-    <lastmod>2021-09-06</lastmod>
+    <lastmod>2022-01-07</lastmod>
     
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/2017/03/09/docker-learning-trip-4/</loc>
     
-    <lastmod>2021-09-06</lastmod>
+    <lastmod>2022-01-07</lastmod>
     
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/2017/03/11/docker-learning-trip-5/</loc>
     
-    <lastmod>2021-09-06</lastmod>
+    <lastmod>2022-01-07</lastmod>
     
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/2017/03/13/docker-learning-trip-6/</loc>
     
-    <lastmod>2021-09-06</lastmod>
+    <lastmod>2022-01-07</lastmod>
     
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/2017/04/29/factory-patterns-with-java/</loc>
     
-    <lastmod>2021-09-06</lastmod>
+    <lastmod>2022-01-07</lastmod>
     
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/2017/04/23/client-custom-ssl/</loc>
     
-    <lastmod>2021-09-06</lastmod>
+    <lastmod>2022-01-07</lastmod>
     
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/2017/04/28/design-patterns/</loc>
     
-    <lastmod>2021-09-06</lastmod>
+    <lastmod>2022-01-07</lastmod>
     
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/404.html</loc>
     
-    <lastmod>2021-09-06</lastmod>
+    <lastmod>2022-01-07</lastmod>
     
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   
 
   <url>
     <loc>https://blog.timerever.tk/</loc>
-    <lastmod>2021-09-06</lastmod>
+    <lastmod>2022-01-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -180,207 +228,207 @@
   
   <url>
     <loc>https://blog.timerever.tk/tags/Java/</loc>
-    <lastmod>2021-09-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2022-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/tags/HttpClient/</loc>
-    <lastmod>2021-09-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2022-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/tags/Design-Pattern/</loc>
-    <lastmod>2021-09-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2022-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/tags/Docker/</loc>
-    <lastmod>2021-09-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2022-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/tags/Dockerfile/</loc>
-    <lastmod>2021-09-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2022-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/tags/Java-Web/</loc>
-    <lastmod>2021-09-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2022-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/tags/Factory-Patterns/</loc>
-    <lastmod>2021-09-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2022-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/tags/Linux/</loc>
-    <lastmod>2021-09-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2022-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/tags/C/</loc>
-    <lastmod>2021-09-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2022-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/tags/Android/</loc>
-    <lastmod>2021-09-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2022-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/tags/Huawei/</loc>
-    <lastmod>2021-09-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2022-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/tags/CyanogenMod/</loc>
-    <lastmod>2021-09-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2022-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/tags/Git/</loc>
-    <lastmod>2021-09-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2022-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/tags/GitHub/</loc>
-    <lastmod>2021-09-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2022-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/tags/VMware/</loc>
-    <lastmod>2021-09-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2022-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/tags/vmdk/</loc>
-    <lastmod>2021-09-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2022-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/tags/wget/</loc>
-    <lastmod>2021-09-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2022-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/tags/Regular-Expression/</loc>
-    <lastmod>2021-09-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2022-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/tags/Ubuntu/</loc>
-    <lastmod>2021-09-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2022-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/tags/Ruby/</loc>
-    <lastmod>2021-09-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2022-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
 
   
   <url>
     <loc>https://blog.timerever.tk/categories/Java/</loc>
-    <lastmod>2021-09-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2022-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/categories/Design-Pattern/</loc>
-    <lastmod>2021-09-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2022-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/categories/Docker/</loc>
-    <lastmod>2021-09-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2022-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/categories/Linux/</loc>
-    <lastmod>2021-09-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2022-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/categories/Android/</loc>
-    <lastmod>2021-09-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2022-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/categories/Git/</loc>
-    <lastmod>2021-09-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2022-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/categories/VMware/</loc>
-    <lastmod>2021-09-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2022-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/categories/Regular-Expression/</loc>
-    <lastmod>2021-09-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2022-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://blog.timerever.tk/categories/Windows/</loc>
-    <lastmod>2021-09-06</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
+    <lastmod>2022-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
   </url>
   
 </urlset>
