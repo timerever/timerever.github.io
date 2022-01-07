@@ -128,24 +128,6 @@
   </url>
   
   <url>
-    <loc>https://blog.timerever.tk/2017/04/23/client-custom-ssl/</loc>
-    
-    <lastmod>2022-01-07</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.timerever.tk/2017/04/28/design-patterns/</loc>
-    
-    <lastmod>2022-01-07</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.timerever.tk/2017/03/02/docker-learning-trip-0/</loc>
     
     <lastmod>2022-01-07</lastmod>
@@ -218,7 +200,25 @@
   </url>
   
   <url>
-    <loc>https://blog.timerever.tk/404/index.html</loc>
+    <loc>https://blog.timerever.tk/2017/04/23/client-custom-ssl/</loc>
+    
+    <lastmod>2022-01-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.timerever.tk/2017/04/28/design-patterns/</loc>
+    
+    <lastmod>2022-01-07</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.timerever.tk/404.html</loc>
     
     <lastmod>2022-01-07</lastmod>
     
@@ -278,13 +278,6 @@
   </url>
   
   <url>
-    <loc>https://blog.timerever.tk/tags/Factory-Patterns/</loc>
-    <lastmod>2022-01-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://blog.timerever.tk/tags/Linux/</loc>
     <lastmod>2022-01-07</lastmod>
     <changefreq>weekly</changefreq>
@@ -293,6 +286,13 @@
   
   <url>
     <loc>https://blog.timerever.tk/tags/C/</loc>
+    <lastmod>2022-01-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.timerever.tk/tags/Factory-Patterns/</loc>
     <lastmod>2022-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -420,14 +420,14 @@
   </url>
   
   <url>
-    <loc>https://blog.timerever.tk/categories/Keycloak/</loc>
+    <loc>https://blog.timerever.tk/categories/VMware/</loc>
     <lastmod>2022-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://blog.timerever.tk/categories/VMware/</loc>
+    <loc>https://blog.timerever.tk/categories/Keycloak/</loc>
     <lastmod>2022-01-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
