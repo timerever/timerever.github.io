@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.0.2">
+<meta name="generator" content="Hexo 6.0.0">
 
-
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.timerever.tk","root":"/","images":"/images","scheme":"Muse","version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.timerever.tk","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 <meta name="description" content="Keycloak 配置自定义社交登录组件，支持公司内部 SSO OAuth2 接入 Keycloak。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Keycloak 配置自定义社交帐号登录组件">
@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://blog.timerever.tk/2022/01/05/keycloak-custom-idp/keycloak-custom-idp-3.png">
 <meta property="og:image" content="https://blog.timerever.tk/2022/01/05/keycloak-custom-idp/keycloak-custom-idp-4.png">
 <meta property="article:published_time" content="2022-01-05T07:00:00.000Z">
-<meta property="article:modified_time" content="2022-01-07T03:42:10.030Z">
+<meta property="article:modified_time" content="2022-01-07T16:53:24.316Z">
 <meta property="article:author" content="timerever">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://blog.timerever.tk/2022/01/05/keycloak-custom-idp/keycloak-custom-idp-1.png">
@@ -47,6 +47,9 @@
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>Keycloak 配置自定义社交帐号登录组件 | A Blog</title>
   
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90849359-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-90849359-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
 
 
 
@@ -54,7 +57,6 @@
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-<link rel="alternate" href="/atom.xml" title="A Blog" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
@@ -65,6 +67,9 @@
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
 
@@ -72,22 +77,58 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">A Blog</h1>
+      <p class="site-title">A Blog</p>
       <i class="logo-line"></i>
     </a>
   </div>
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
 
 
 
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
         
@@ -119,6 +160,8 @@
 
         <div class="site-overview-wrap sidebar-panel">
           <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="timerever"
+      src="https://avatars.githubusercontent.com/u/12376409?v=4">
   <p class="site-author-name" itemprop="name">timerever</p>
   <div class="site-description" itemprop="description">Just another blog.</div>
 </div>
@@ -142,8 +185,29 @@
       </div>
   </nav>
 </div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/timerever" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;timerever" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
 
 
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.swordandfire.online/" title="https:&#x2F;&#x2F;blog.swordandfire.online" rel="noopener" target="_blank">Swordandfire</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.yxai123.cn/" title="https:&#x2F;&#x2F;www.yxai123.cn" rel="noopener" target="_blank">Yxai123</a>
+        </li>
+    </ul>
+  </div>
 
         </div>
       </div>
@@ -159,6 +223,7 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
@@ -179,7 +244,7 @@
     <link itemprop="mainEntityOfPage" href="https://blog.timerever.tk/2022/01/05/keycloak-custom-idp/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/12376409?v=4">
       <meta itemprop="name" content="timerever">
       <meta itemprop="description" content="Just another blog.">
     </span>
@@ -202,13 +267,6 @@
 
       <time title="创建时间：2022-01-05 15:00:00" itemprop="dateCreated datePublished" datetime="2022-01-05T15:00:00+08:00">2022-01-05</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-01-07 11:42:10" itemprop="dateModified" datetime="2022-01-07T11:42:10+08:00">2022-01-07</time>
-      </span>
     <span class="post-meta-item" title="本文字数">
       <span class="post-meta-item-icon">
         <i class="far fa-file-word"></i>
@@ -226,7 +284,6 @@
 
   
     <span class="post-meta-break"></span>
-    <br/>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -256,11 +313,11 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyIdentityProvider</span> <span class="keyword">extends</span> <span class="title">AbstractOAuth2IdentityProvider</span>&lt;<span class="title">OAuth2IdentityProviderConfig</span>&gt;</span></span><br><span class="line"><span class="class">        <span class="keyword">implements</span> <span class="title">SocialIdentityProvider</span>&lt;<span class="title">OAuth2IdentityProviderConfig</span>&gt; </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyIdentityProvider</span><span class="params">(KeycloakSession session, OAuth2IdentityProviderConfig config)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(session, config);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> String <span class="title">getDefaultScopes</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="1-自定义-IdentityProviderFactory"><a href="#1-自定义-IdentityProviderFactory" class="headerlink" title="1. 自定义 IdentityProviderFactory"></a>1. 自定义 IdentityProviderFactory</h3><p>我们先来看一下 GitHub 的 <code>GitHubIdentityProviderFactory</code>，很简单，有一个唯一的 <code>PROVIDER_ID</code>，然后 <code>getName</code> 方法返回了一个名称用于展示。</p>
-<p><img src="/2022/01/05/keycloak-custom-idp/keycloak-custom-idp-1.png" alt="Github IdentityProviderFactory"></p>
+<p><img src="keycloak-custom-idp-1.png" alt="Github IdentityProviderFactory"></p>
 <p>我们照着改一下即可。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyIdentityProviderFactoryFactory</span> <span class="keyword">extends</span> <span class="title">AbstractIdentityProviderFactory</span>&lt;<span class="title">MyIdentityProvider</span>&gt; <span class="keyword">implements</span> <span class="title">SocialIdentityProviderFactory</span>&lt;<span class="title">MyIdentityProvider</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String PROVIDER_ID = <span class="string">&quot;my-idp&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;My IDP&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> MyIdentityProvider <span class="title">create</span><span class="params">(KeycloakSession session, IdentityProviderModel model)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MyIdentityProvider(session, <span class="keyword">new</span> OAuth2IdentityProviderConfig(model));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> IdentityProviderModel <span class="title">createConfig</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> OAuth2IdentityProviderConfig();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> PROVIDER_ID;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="2-自定义-IdentityProvider"><a href="#2-自定义-IdentityProvider" class="headerlink" title="2. 自定义 IdentityProvider"></a>2. 自定义 IdentityProvider</h3><h4 id="先定义并在构造时传入-Authorize、Token-及-Profile-的-Url。"><a href="#先定义并在构造时传入-Authorize、Token-及-Profile-的-Url。" class="headerlink" title="先定义并在构造时传入 Authorize、Token 及 Profile 的 Url。"></a>先定义并在构造时传入 Authorize、Token 及 Profile 的 Url。</h4><p><img src="/2022/01/05/keycloak-custom-idp/keycloak-custom-idp-2.png" alt="AUTH URL"></p>
+<h3 id="2-自定义-IdentityProvider"><a href="#2-自定义-IdentityProvider" class="headerlink" title="2. 自定义 IdentityProvider"></a>2. 自定义 IdentityProvider</h3><h4 id="先定义并在构造时传入-Authorize、Token-及-Profile-的-Url。"><a href="#先定义并在构造时传入-Authorize、Token-及-Profile-的-Url。" class="headerlink" title="先定义并在构造时传入 Authorize、Token 及 Profile 的 Url。"></a>先定义并在构造时传入 Authorize、Token 及 Profile 的 Url。</h4><p><img src="keycloak-custom-idp-2.png" alt="AUTH URL"></p>
 <h4 id="重写必须要求实现的抽象方法"><a href="#重写必须要求实现的抽象方法" class="headerlink" title="重写必须要求实现的抽象方法"></a>重写必须要求实现的抽象方法</h4><p>重写 <code>getDefaultScopes</code> 的抽象方法，返回自定义 SCOPE。</p>
 <h4 id="按需重写方法"><a href="#按需重写方法" class="headerlink" title="按需重写方法"></a>按需重写方法</h4><p>首先重写 <code>supportsExternalExchange</code>方法，写死返回 <code>true</code>。这个官方文档也没有找到注释，但是各实现类均这么重写的，所以这里我们也一起重写。</p>
 <p>由于我们继承了 <code>AbstractOAuth2IdentityProvider</code>，剩下的可以直接看抽象类的实现，按需重写非标准定义下无法使用默认实现调用的方法。</p>
@@ -273,7 +330,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">callback</span><span class="params">(RealmModel realm, AuthenticationCallback callback, EventBuilder event)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> MyEndpoint(callback, realm, event);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="4-注册-IdentityProviderFactory"><a href="#4-注册-IdentityProviderFactory" class="headerlink" title="4. 注册 IdentityProviderFactory"></a>4. 注册 IdentityProviderFactory</h3><p>在 <code>resources</code> 文件夹下，新建 <code>MEAT-INF</code> 文件夹，并在其下面建立 <code>services</code> 文件。新增 <code>org.keycloak.broker.social.SocialIdentityProviderFactory</code> 文件，在里面直接填写 <code>MyIdentityProviderFactory</code> 的全限定类名即可。</p>
-<p><img src="/2022/01/05/keycloak-custom-idp/keycloak-custom-idp-3.png" alt="注册 IdentityProviderFactory"></p>
+<p><img src="keycloak-custom-idp-3.png" alt="注册 IdentityProviderFactory"></p>
 <hr>
 <p>大体流程就是这样，OAuth2 认证后回调默认的 <code>EndPoint</code> 类的 <code>authResponse</code> 方法。如果大体流程标准，且回调参数标准，可以直接参照默认实现，按需重写所调用的 <code>IdentityProvider</code> 方法；如果回调参数会流程不标准，则需要自定义 EndPoint 并进行注册，再重写 <code>authResponse</code> 方法。</p>
 <h2 id="二、自定义-IdentityProvider-配置页"><a href="#二、自定义-IdentityProvider-配置页" class="headerlink" title="二、自定义 IdentityProvider 配置页"></a>二、自定义 IdentityProvider 配置页</h2><blockquote>
@@ -284,10 +341,10 @@
 <p>将打包后的 jar 文件复制到 <code>standalone\deployments\</code> 文件夹，不需要重启服务，Keycloak 会自动热部署，并在同级目录生成 <code>文件名.deployed</code> 文件。</p>
 <p>如果后续调用时出现 问题，可以参考 <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/57778240/noclassdeffounderror-in-a-provider-jar-when-using-a-class-from-org-keycloak-auth">NoClassDefFoundError in a provider jar</a> 在 <code>maven-jar-plugin</code> 插件配置依赖即可。</p>
 <h2 id="四、使用自定义-IDP"><a href="#四、使用自定义-IDP" class="headerlink" title="四、使用自定义 IDP"></a>四、使用自定义 IDP</h2><p>回到 Keycloak 后台，右上角点击 <code>Server Info</code>，切到 <code>Providers</code> Tab，如果在 <code>social</code> 栏看到了 <code>my-idp</code>（即上面定义的 provider id），说明部署成功，在 Identity Providers 后台正常新增即可。</p>
-<p><img src="/2022/01/05/keycloak-custom-idp/keycloak-custom-idp-4.png" alt="展示出了 my-idp"></p>
+<p><img src="keycloak-custom-idp-4.png" alt="展示出了 my-idp"></p>
 <h2 id="五、自定义-UserAttributeMapper"><a href="#五、自定义-UserAttributeMapper" class="headerlink" title="五、自定义 UserAttributeMapper"></a>五、自定义 UserAttributeMapper</h2><p>由于之前我们需要额外储存用户信息，所以在重写 <code>extractIdentityFromProfile</code> 方法时，使用了 <code>setUserAttribute</code> 方法设置自定义属性。但由于 Keycloak 是冗余的用户数据，我们希望用户每次登录后，都可以自动更新用户信息。我们当然可以在 IDP 的配置中设置 <code>Sync Mode</code> 为 <code>force</code> 来每次更新用户信息，但此时只会自动同步更新 User 中 Details Tab 下的基本信息，不会再次同步 Attributes。<br>正常我们就会想到，可以通过设置 IDP 的 Mappers 来进行属性的放置，结果就会发现，<code>Mapper Type</code> 只有三个 Hardcoded 开头的硬编码的 Mapper。所以为了能够重新使用 <code>Attribute Importer</code>，需要我们自定义一个 <code>UserAttributeMapper</code>。</p>
 <h3 id="1-自定义-UserAttributeMapper"><a href="#1-自定义-UserAttributeMapper" class="headerlink" title="1. 自定义 UserAttributeMapper"></a>1. 自定义 UserAttributeMapper</h3><p>仍然参考 GitHub 的 <code>GitHubUserAttributeMapper</code>，直接拷贝过来，将 <code>PROVIDER_ID</code> 改成自己的即可。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyUserAttributeMapper</span> <span class="keyword">extends</span> <span class="title">AbstractJsonUserAttributeMapper</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String PROVIDER_ID = <span class="string">&quot;my-idp-user-attribute-mapper&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String[] cp = <span class="keyword">new</span> String[] &#123; MyIdentityProviderFactory.PROVIDER_ID &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String[] getCompatibleProviders() &#123;</span><br><span class="line">        <span class="keyword">return</span> cp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> PROVIDER_ID;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyUserAttributeMapper</span> <span class="keyword">extends</span> <span class="title">AbstractJsonUserAttributeMapper</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String PROVIDER_ID = <span class="string">&quot;my-idp-user-attribute-mapper&quot;</span>;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String[] cp = <span class="keyword">new</span> String[] &#123; MyIdentityProviderFactory.PROVIDER_ID &#125;;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> String[] getCompatibleProviders() &#123;</span><br><span class="line">		<span class="keyword">return</span> cp;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> PROVIDER_ID;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>在这我们也可以看到，Keycloak 是通过 <code>AbstractJsonUserAttributeMapper</code> 的 <code>getCompatibleProviders</code> 方法来控制 IDP 可选哪些 Mapper 的。</p>
 <h3 id="2-注册自定义-UserAttributeMapper"><a href="#2-注册自定义-UserAttributeMapper" class="headerlink" title="2. 注册自定义 UserAttributeMapper"></a>2. 注册自定义 UserAttributeMapper</h3><p>同之前注册 <code>IdentityProvider</code>，在 <code>META-INF/service/</code> 下新建 <code>org.keycloak.broker.provider.IdentityProviderMapper</code> 文件，并在其中填写我们自定义的 UserAttributeMapper 的全限定类名。<br>最后，别忘了重新打包部署，我们就可以继续在自定义的 IDP 中使用 <code>Attribute Importer</code> 了。</p>
@@ -299,16 +356,33 @@
     
 
     <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>timerever
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.timerever.tk/2022/01/05/keycloak-custom-idp/" title="Keycloak 配置自定义社交帐号登录组件">https://blog.timerever.tk/2022/01/05/keycloak-custom-idp/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2017/04/29/factory-patterns-with-java/" rel="prev" title="设计模式之工厂模式的 Java 实现">
-                  <i class="fa fa-chevron-left"></i> 设计模式之工厂模式的 Java 实现
-                </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2017/04/29/factory-patterns-with-java/" rel="next" title="设计模式之工厂模式的 Java 实现">
+                  设计模式之工厂模式的 Java 实现 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
@@ -331,21 +405,26 @@
   &copy; 2017 – 
   <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fas fa-coffee"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">timerever</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
-  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
 
     </div>
   </footer>
 
   
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
 
 
 

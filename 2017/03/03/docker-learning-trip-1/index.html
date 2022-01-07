@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.0.2">
+<meta name="generator" content="Hexo 6.0.0">
 
-
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.timerever.tk","root":"/","images":"/images","scheme":"Muse","version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.timerever.tk","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 <meta name="description" content="Docker 从入门到放弃系列之 Docker 的安装">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker 学习之旅（一）：Docker 的安装">
@@ -28,7 +28,7 @@
 <meta property="og:description" content="Docker 从入门到放弃系列之 Docker 的安装">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2017-03-03T02:50:38.000Z">
-<meta property="article:modified_time" content="2022-01-07T03:42:10.026Z">
+<meta property="article:modified_time" content="2022-01-07T16:53:24.308Z">
 <meta property="article:author" content="timerever">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
@@ -43,6 +43,9 @@
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>Docker 学习之旅（一）：Docker 的安装 | A Blog</title>
   
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90849359-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-90849359-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
 
 
 
@@ -50,7 +53,6 @@
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-<link rel="alternate" href="/atom.xml" title="A Blog" type="application/atom+xml">
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
@@ -61,6 +63,9 @@
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
 
@@ -68,22 +73,58 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">A Blog</h1>
+      <p class="site-title">A Blog</p>
       <i class="logo-line"></i>
     </a>
   </div>
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
 
 
 
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
         
@@ -115,6 +156,8 @@
 
         <div class="site-overview-wrap sidebar-panel">
           <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="timerever"
+      src="https://avatars.githubusercontent.com/u/12376409?v=4">
   <p class="site-author-name" itemprop="name">timerever</p>
   <div class="site-description" itemprop="description">Just another blog.</div>
 </div>
@@ -138,8 +181,29 @@
       </div>
   </nav>
 </div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/timerever" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;timerever" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
 
 
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.swordandfire.online/" title="https:&#x2F;&#x2F;blog.swordandfire.online" rel="noopener" target="_blank">Swordandfire</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.yxai123.cn/" title="https:&#x2F;&#x2F;www.yxai123.cn" rel="noopener" target="_blank">Yxai123</a>
+        </li>
+    </ul>
+  </div>
 
         </div>
       </div>
@@ -155,6 +219,7 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
@@ -175,7 +240,7 @@
     <link itemprop="mainEntityOfPage" href="https://blog.timerever.tk/2017/03/03/docker-learning-trip-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/12376409?v=4">
       <meta itemprop="name" content="timerever">
       <meta itemprop="description" content="Just another blog.">
     </span>
@@ -198,31 +263,23 @@
 
       <time title="创建时间：2017-03-03 10:50:38" itemprop="dateCreated datePublished" datetime="2017-03-03T10:50:38+08:00">2017-03-03</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2022-01-07 11:42:10" itemprop="dateModified" datetime="2022-01-07T11:42:10+08:00">2022-01-07</time>
-      </span>
     <span class="post-meta-item" title="本文字数">
       <span class="post-meta-item-icon">
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.9k</span>
+      <span>2.8k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>11 分钟</span>
+      <span>10 分钟</span>
     </span>
 
   
     <span class="post-meta-break"></span>
-    <br/>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -266,52 +323,52 @@
 
 <p>其中 <code>sudo apt-key fingerprint 0EBFCD88</code> 是用来验证源的 key 信息是否匹配，正确的信息应该为 <code>9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88</code>。</p>
 <p>这边使用的是 <code>stable</code> 版本，若要使用更新更快的 <code>edge</code> 版本，只需在最后一行的 <code>stable</code> 后面添加 <code>edge</code> 即可。对于这两个版本，官方解释如下。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Docker CE gives you the option to run stable or edge builds.</span><br><span class="line">* Stable builds are released once per quarter.</span><br><span class="line">* Edge builds are released once per month.</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Docker CE gives you the option to run stable or edge builds.</span><br><span class="line">* Stable builds are released once per quarter.</span><br><span class="line">* Edge builds are released once per month.</span><br></pre></td></tr></table></figure>
 
-<h4 id="安装-Docker-1"><a href="#安装-Docker-1" class="headerlink" title="安装 Docker"></a>安装 Docker</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update</span><br><span class="line">$ sudo apt-get install docker-ce</span><br></pre></td></tr></table></figure>
+<h4 id="安装-Docker-1"><a href="#安装-Docker-1" class="headerlink" title="安装 Docker"></a>安装 Docker</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update</span><br><span class="line">$ sudo apt-get install docker-ce</span><br></pre></td></tr></table></figure>
 
 <p>这样默认安装的总是最新版本的 Docker ，如果你想安装特定版本的 Docker ，可以使用 <code>sudo apt-get install docker-ce=&lt;VERSION&gt;</code> ，使用 <code>apt-cache madison docker-ce</code> 来显示可以安装的 Docker 版本。</p>
 <p>可以通过运行 <code>hello-world</code> 镜像来确认已将 Docker CE 正确安装。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run hello-world</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run hello-world</span><br></pre></td></tr></table></figure>
 
 <h4 id="更新-Docker"><a href="#更新-Docker" class="headerlink" title="更新 Docker"></a>更新 Docker</h4><p>首先运行 <code>sudo apt-get update</code>，然后根据安装指南选择想要安装的新版本。</p>
 <h3 id="Linux-下的可选安装步骤"><a href="#Linux-下的可选安装步骤" class="headerlink" title="Linux 下的可选安装步骤"></a>Linux 下的可选安装步骤</h3><p>文档链接：<a target="_blank" rel="noopener" href="https://docs.docker.com/engine/installation/linux/linux-postinstall/">https://docs.docker.com/engine/installation/linux/linux-postinstall/</a></p>
 <p>此处只列出个人所使用的可选安装。</p>
 <h4 id="使用非-root-用户管理-Docker"><a href="#使用非-root-用户管理-Docker" class="headerlink" title="使用非 root 用户管理 Docker"></a>使用非 root 用户管理 Docker</h4><p>通过文档我们得知 <code>docker</code> 的守护进程绑定的是 Unix socket，默认情况下该 Unix socket 是属于 root 用户，其他用户只能通过 <code>sudo</code> 进行访问，而 <code>docker</code> 的守护进程一直是由 root 用户运行的。所以如果想不使用 <code>sudo</code> 来使用 Docker，可以把用户添加到 <code>docker</code> 用户组。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo groupadd docker # 此处已经存在docker组可不执行操作</span><br><span class="line">$ sudo usermod -aG docker $USER</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo groupadd docker # 此处已经存在docker组可不执行操作</span><br><span class="line">$ sudo usermod -aG docker $USER</span><br></pre></td></tr></table></figure>
 
 <p>注销重新登入系统来使用户组更新。</p>
 <p>通过不加 <code>sudo</code> 命令的 <code>docker</code> 命令来验证。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run hello-world</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run hello-world</span><br></pre></td></tr></table></figure>
 
 <h4 id="使-Docker-开机自启"><a href="#使-Docker-开机自启" class="headerlink" title="使 Docker 开机自启"></a>使 Docker 开机自启</h4><p>对于大多数的发行版本（RHEL, CentOS, Fedora, Ubuntu 16.04 and higher）使用 <code>systemd</code> 来管理开机自启动的服务，Ubuntu 14.10 及以下版本使用 <code>upstart</code>。</p>
 <ul>
 <li><code>systemd</code></li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl enable docker # 开启自启动</span><br><span class="line">$ sudo systemctl disable docker # 关闭自启动</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl enable docker # 开启自启动</span><br><span class="line">$ sudo systemctl disable docker # 关闭自启动</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><code>upstart</code></li>
 </ul>
 <p>Docker 自动使用 <code>upstart</code> 配置自启动，通过以下命令来禁用。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ echo manual | sudo tee &#x2F;etc&#x2F;init&#x2F;docker.override</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ echo manual | sudo tee /etc/init/docker.override</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><code>chkconfig</code></li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo chkconfig docker on</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo chkconfig docker on</span><br></pre></td></tr></table></figure>
 
 <h4 id="设置-HTTP-代理"><a href="#设置-HTTP-代理" class="headerlink" title="设置 HTTP 代理"></a>设置 HTTP 代理</h4><p>因为 Docker 的服务器在国外，所以直连的速度很慢，就需要用国内的镜像或者使用 HTTP 代理，这里选择的是使用 HTTP 代理。该文档不在上面的可选安装步骤里，在后面的 Admin Guide 里面，链接：<a target="_blank" rel="noopener" href="https://docs.docker.com/engine/admin/systemd/#http-proxy">https://docs.docker.com/engine/admin/systemd/#http-proxy</a>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;docker.service.d</span><br><span class="line">$ vi &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;docker.service.d&#x2F;http-proxy.conf</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p /etc/systemd/system/docker.service.d</span><br><span class="line">$ vi /etc/systemd/system/docker.service.d/http-proxy.conf</span><br></pre></td></tr></table></figure>
 
 <p>添加下列内容，按实际情况修改。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[Service]</span><br><span class="line">Environment&#x3D;&quot;HTTP_PROXY&#x3D;http:&#x2F;&#x2F;proxy.example.com:80&#x2F;&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[Service]</span><br><span class="line">Environment=&quot;HTTP_PROXY=http://proxy.example.com:80/&quot;</span><br></pre></td></tr></table></figure>
 
 <p>或者使用以下内容设置不通过代理的地址。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Environment&#x3D;&quot;HTTP_PROXY&#x3D;http:&#x2F;&#x2F;proxy.example.com:80&#x2F;&quot; &quot;NO_PROXY&#x3D;localhost,127.0.0.1,docker-registry.somecorporation.com&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Environment=&quot;HTTP_PROXY=http://proxy.example.com:80/&quot; &quot;NO_PROXY=localhost,127.0.0.1,docker-registry.somecorporation.com&quot;</span><br></pre></td></tr></table></figure>
 
 <p>然后继续操作完成配置。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl daemon-reload</span><br><span class="line">$ systemctl show --property&#x3D;Environment docker # 验证配置是否已经重载，将显示上面配置的信息</span><br><span class="line">$ sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl daemon-reload</span><br><span class="line">$ systemctl show --property=Environment docker # 验证配置是否已经重载，将显示上面配置的信息</span><br><span class="line">$ sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -320,21 +377,38 @@
     
 
     <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>timerever
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.timerever.tk/2017/03/03/docker-learning-trip-1/" title="Docker 学习之旅（一）：Docker 的安装">https://blog.timerever.tk/2017/03/03/docker-learning-trip-1/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
           <div class="post-tags">
-              <a href="/tags/Docker/" rel="tag"># Docker</a>
+              <a href="/tags/Docker/" rel="tag"><i class="fa fa-tag"></i> Docker</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2017/03/02/docker-learning-trip-0/" rel="prev" title="Docker 学习之旅（零）：出师不利">
-                  <i class="fa fa-chevron-left"></i> Docker 学习之旅（零）：出师不利
+                <a href="/2017/03/05/docker-learning-trip-2/" rel="prev" title="Docker 学习之旅（二）：Dockerfile 命令">
+                  <i class="fa fa-chevron-left"></i> Docker 学习之旅（二）：Dockerfile 命令
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2017/03/05/docker-learning-trip-2/" rel="next" title="Docker 学习之旅（二）：Dockerfile 命令">
-                  Docker 学习之旅（二）：Dockerfile 命令 <i class="fa fa-chevron-right"></i>
+                <a href="/2017/03/02/docker-learning-trip-0/" rel="next" title="Docker 学习之旅（零）：出师不利">
+                  Docker 学习之旅（零）：出师不利 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -358,21 +432,26 @@
   &copy; 2017 – 
   <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fas fa-coffee"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">timerever</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
-  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
 
     </div>
   </footer>
 
   
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
 
 
 
