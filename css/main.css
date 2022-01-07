@@ -11,7 +11,6 @@
   --table-row-odd-bg-color: #f9f9f9;
   --table-row-hover-bg-color: #f5f5f5;
   --menu-item-bg-color: #f5f5f5;
-  --theme-color: #222;
   --btn-default-bg: #222;
   --btn-default-color: #fff;
   --btn-default-border-color: #222;
@@ -22,7 +21,6 @@
   --highlight-foreground: #444;
   --highlight-gutter-background: #dedede;
   --highlight-gutter-foreground: #555;
-  color-scheme: light;
 }
 html {
   line-height: 1.15; /* 1 */
@@ -182,7 +180,6 @@ body {
 }
 body {
   background: var(--body-bg-color);
-  box-sizing: border-box;
   color: var(--text-color);
   font-family: Lato, 'PingFang SC', 'Microsoft YaHei', sans-serif;
   font-size: 1em;
@@ -474,27 +471,6 @@ pre {
   line-height: 1.6;
   margin: 0 auto 20px;
 }
-figure.highlight figcaption,
-pre .caption,
-pre figcaption {
-  background: var(--highlight-gutter-background);
-  color: var(--highlight-foreground);
-  display: flow-root;
-  font-size: 0.875em;
-  line-height: 1.2;
-  padding: 0.5em;
-}
-figure.highlight figcaption a,
-pre .caption a,
-pre figcaption a {
-  color: var(--highlight-foreground);
-  float: right;
-}
-figure.highlight figcaption a:hover,
-pre .caption a:hover,
-pre figcaption a:hover {
-  border-bottom-color: var(--highlight-foreground);
-}
 pre,
 code {
   font-family: consolas, Menlo, monospace, 'PingFang SC', 'Microsoft YaHei';
@@ -530,6 +506,27 @@ figure.highlight td {
   border: 0;
   padding: 0;
 }
+figure.highlight figcaption,
+pre .caption,
+pre figcaption {
+  background: var(--highlight-gutter-background);
+  color: var(--highlight-foreground);
+  display: flow-root;
+  font-size: 0.875em;
+  line-height: 1.2;
+  padding: 0.5em;
+}
+figure.highlight figcaption a,
+pre .caption a,
+pre figcaption a {
+  color: var(--highlight-foreground);
+  float: right;
+}
+figure.highlight figcaption a:hover,
+pre .caption a:hover,
+pre figcaption a:hover {
+  border-bottom-color: var(--highlight-foreground);
+}
 figure.highlight .gutter {
   -moz-user-select: none;
   -ms-user-select: none;
@@ -546,9 +543,6 @@ figure.highlight .gutter pre {
 figure.highlight .code pre {
   padding-left: 10px;
   width: 100%;
-}
-figure.highlight .marked {
-  background: rgba(0,0,0,0.3);
 }
 pre .caption,
 pre figcaption {
@@ -571,7 +565,7 @@ pre code {
   text-shadow: none;
 }
 .blockquote-center {
-  border-left: 0;
+  border-left: none;
   margin: 40px 0;
   padding: 0;
   position: relative;
@@ -646,8 +640,8 @@ pre code {
 }
 .post-body .link-grid {
   display: grid;
-  grid-gap: 1.5rem;
-  gap: 1.5rem;
+  grid-gap: 1.5rem 1.5rem;
+  gap: 1.5rem 1.5rem;
   grid-template-columns: 1fr 1fr;
   margin-bottom: 20px;
   padding: 1rem;
@@ -842,108 +836,6 @@ pre code {
     transform: translate(1pt, -2pt) rotate(-1deg);
   }
 }
-.post-body .note {
-  border-radius: 3px;
-  margin-bottom: 20px;
-  padding: 1em;
-  position: relative;
-  border: 1px solid #eee;
-  border-left-width: 5px;
-}
-.post-body .note summary {
-  cursor: pointer;
-  outline: 0;
-}
-.post-body .note summary p {
-  display: inline;
-}
-.post-body .note h2,
-.post-body .note h3,
-.post-body .note h4,
-.post-body .note h5,
-.post-body .note h6 {
-  border-bottom: initial;
-  margin: 0;
-  padding-top: 0;
-}
-.post-body .note p:first-child,
-.post-body .note ul:first-child,
-.post-body .note ol:first-child,
-.post-body .note table:first-child,
-.post-body .note pre:first-child,
-.post-body .note blockquote:first-child,
-.post-body .note img:first-child {
-  margin-top: 0;
-}
-.post-body .note p:last-child,
-.post-body .note ul:last-child,
-.post-body .note ol:last-child,
-.post-body .note table:last-child,
-.post-body .note pre:last-child,
-.post-body .note blockquote:last-child,
-.post-body .note img:last-child {
-  margin-bottom: 0;
-}
-.post-body .note.default {
-  border-left-color: #777;
-}
-.post-body .note.default h2,
-.post-body .note.default h3,
-.post-body .note.default h4,
-.post-body .note.default h5,
-.post-body .note.default h6 {
-  color: #777;
-}
-.post-body .note.primary {
-  border-left-color: #6f42c1;
-}
-.post-body .note.primary h2,
-.post-body .note.primary h3,
-.post-body .note.primary h4,
-.post-body .note.primary h5,
-.post-body .note.primary h6 {
-  color: #6f42c1;
-}
-.post-body .note.info {
-  border-left-color: #428bca;
-}
-.post-body .note.info h2,
-.post-body .note.info h3,
-.post-body .note.info h4,
-.post-body .note.info h5,
-.post-body .note.info h6 {
-  color: #428bca;
-}
-.post-body .note.success {
-  border-left-color: #5cb85c;
-}
-.post-body .note.success h2,
-.post-body .note.success h3,
-.post-body .note.success h4,
-.post-body .note.success h5,
-.post-body .note.success h6 {
-  color: #5cb85c;
-}
-.post-body .note.warning {
-  border-left-color: #f0ad4e;
-}
-.post-body .note.warning h2,
-.post-body .note.warning h3,
-.post-body .note.warning h4,
-.post-body .note.warning h5,
-.post-body .note.warning h6 {
-  color: #f0ad4e;
-}
-.post-body .note.danger {
-  border-left-color: #d9534f;
-}
-.post-body .note.danger h2,
-.post-body .note.danger h3,
-.post-body .note.danger h4,
-.post-body .note.danger h5,
-.post-body .note.danger h6 {
-  color: #d9534f;
-}
 .post-body .tabs {
   margin-bottom: 20px;
 }
@@ -1050,6 +942,108 @@ pre code {
 .tabs-comment .tab-content .tab-pane:not(.active) {
   display: none;
 }
+.post-body .note {
+  border-radius: 3px;
+  margin-bottom: 20px;
+  padding: 1em;
+  position: relative;
+  border: 1px solid #eee;
+  border-left-width: 5px;
+}
+.post-body .note summary {
+  cursor: pointer;
+  outline: 0;
+}
+.post-body .note summary p {
+  display: inline;
+}
+.post-body .note h2,
+.post-body .note h3,
+.post-body .note h4,
+.post-body .note h5,
+.post-body .note h6 {
+  border-bottom: initial;
+  margin: 0;
+  padding-top: 0;
+}
+.post-body .note p:first-child,
+.post-body .note ul:first-child,
+.post-body .note ol:first-child,
+.post-body .note table:first-child,
+.post-body .note pre:first-child,
+.post-body .note blockquote:first-child,
+.post-body .note img:first-child {
+  margin-top: 0;
+}
+.post-body .note p:last-child,
+.post-body .note ul:last-child,
+.post-body .note ol:last-child,
+.post-body .note table:last-child,
+.post-body .note pre:last-child,
+.post-body .note blockquote:last-child,
+.post-body .note img:last-child {
+  margin-bottom: 0;
+}
+.post-body .note.default {
+  border-left-color: #777;
+}
+.post-body .note.default h2,
+.post-body .note.default h3,
+.post-body .note.default h4,
+.post-body .note.default h5,
+.post-body .note.default h6 {
+  color: #777;
+}
+.post-body .note.primary {
+  border-left-color: #6f42c1;
+}
+.post-body .note.primary h2,
+.post-body .note.primary h3,
+.post-body .note.primary h4,
+.post-body .note.primary h5,
+.post-body .note.primary h6 {
+  color: #6f42c1;
+}
+.post-body .note.info {
+  border-left-color: #428bca;
+}
+.post-body .note.info h2,
+.post-body .note.info h3,
+.post-body .note.info h4,
+.post-body .note.info h5,
+.post-body .note.info h6 {
+  color: #428bca;
+}
+.post-body .note.success {
+  border-left-color: #5cb85c;
+}
+.post-body .note.success h2,
+.post-body .note.success h3,
+.post-body .note.success h4,
+.post-body .note.success h5,
+.post-body .note.success h6 {
+  color: #5cb85c;
+}
+.post-body .note.warning {
+  border-left-color: #f0ad4e;
+}
+.post-body .note.warning h2,
+.post-body .note.warning h3,
+.post-body .note.warning h4,
+.post-body .note.warning h5,
+.post-body .note.warning h6 {
+  color: #f0ad4e;
+}
+.post-body .note.danger {
+  border-left-color: #d9534f;
+}
+.post-body .note.danger h2,
+.post-body .note.danger h3,
+.post-body .note.danger h4,
+.post-body .note.danger h5,
+.post-body .note.danger h6 {
+  color: #d9534f;
+}
 .pagination .prev,
 .pagination .next,
 .pagination .page-number,
@@ -1065,11 +1059,6 @@ pre code {
   .pagination .space {
     margin: 0 5px;
   }
-}
-.pagination .page-number.current {
-  background: #ccc;
-  border-color: #ccc;
-  color: var(--content-bg-color);
 }
 .pagination {
   border-top: 1px solid #eee;
@@ -1108,6 +1097,11 @@ pre code {
   margin: 0;
   padding: 0;
 }
+.pagination .page-number.current {
+  background: #ccc;
+  border-color: #ccc;
+  color: var(--content-bg-color);
+}
 .comments {
   margin-top: 60px;
   overflow: hidden;
@@ -1143,7 +1137,7 @@ pre code {
   padding-top: 0;
 }
 .headband {
-  background: var(--theme-color);
+  background: #222;
   height: 3px;
 }
 @media (max-width: 991px) {
@@ -1207,7 +1201,6 @@ pre code {
   font-family: Lato, 'PingFang SC', 'Microsoft YaHei', sans-serif;
   font-size: 1.375em;
   font-weight: normal;
-  line-height: 1.5;
   margin: 0;
 }
 .site-subtitle {
@@ -1408,7 +1401,7 @@ pre code {
     transition: visibility 0.4s, opacity 0.4s;
     visibility: hidden;
     width: 100%;
-    z-index: 10;
+    z-index: 1100;
   }
   .sidebar-active .sidebar-dimmer {
     opacity: 0.7;
@@ -1471,7 +1464,7 @@ pre code {
   cursor: pointer;
   opacity: 0.8;
   position: fixed;
-  z-index: 30;
+  z-index: 1300;
   left: 30px;
 }
 @media (max-width: 991px) {
@@ -1630,7 +1623,7 @@ pre code {
   width: 100%;
 }
 .with-love {
-  color: #f00;
+  color: #ff0000;
   display: inline-block;
   margin: 0 5px;
 }
@@ -1690,21 +1683,13 @@ pre code {
     transform: scale(1.1);
   }
 }
-.noscript-warning {
-  background-color: #f55;
-  color: #fff;
-  font-family: sans-serif;
-  font-size: 1rem;
-  font-weight: bold;
-  left: 0;
-  position: fixed;
-  text-align: center;
-  top: 0;
-  width: 100%;
-  z-index: 50;
-}
 .back-to-top {
   font-size: 12px;
+}
+.back-to-top span {
+  display: none;
+}
+.back-to-top {
   bottom: -100px;
   box-sizing: border-box;
   color: #fff;
@@ -1714,12 +1699,9 @@ pre code {
   cursor: pointer;
   opacity: 0.8;
   position: fixed;
-  z-index: 30;
+  z-index: 1300;
   left: 30px;
   width: 24px;
-}
-.back-to-top span {
-  display: none;
 }
 @media (max-width: 991px) {
   .back-to-top {
@@ -1739,6 +1721,19 @@ pre code {
 }
 .back-to-top.back-to-top-on {
   bottom: 19px;
+}
+.noscript-warning {
+  background-color: #f55;
+  color: #fff;
+  font-family: sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  left: 0;
+  position: fixed;
+  text-align: center;
+  top: 0;
+  width: 100%;
+  z-index: 1500;
 }
 .rtl.post-body p,
 .rtl.post-body a,
@@ -2075,6 +2070,7 @@ pre code {
 }
 .posts-expand .post-meta-container time {
   border-bottom: 1px dashed #999;
+  cursor: pointer;
 }
 .post-meta {
   display: flex;
@@ -2159,7 +2155,7 @@ pre code {
   margin-top: 15px;
   text-align: center;
 }
-.wpac-rating-container {
+.wp_rating {
   height: 20px;
   line-height: 20px;
   margin-top: 10px;
@@ -2596,7 +2592,7 @@ ul.breadcrumb li:last-child {
   top: 0;
   transition: all 0.2s ease-out;
   width: 320px;
-  z-index: 20;
+  z-index: 1200;
 }
 .sidebar a {
   border-bottom-color: #555;
@@ -2617,7 +2613,7 @@ ul.breadcrumb li:last-child {
   vertical-align: middle;
 }
 .links-of-author a::before {
-  background: #0498e3;
+  background: #f2e0ff;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
