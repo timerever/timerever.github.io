@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.timerever.tk/2017/03/01/merge-multiple-vmdk's-into-single-vmdk/</loc>
+    
+    <lastmod>2022-01-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://blog.timerever.tk/2017/01/25/my-first-article/</loc>
     
     <lastmod>2022-01-08</lastmod>
@@ -111,15 +120,6 @@
   
   <url>
     <loc>https://blog.timerever.tk/2022/01/05/keycloak-custom-idp/</loc>
-    
-    <lastmod>2022-01-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://blog.timerever.tk/2017/03/01/merge-multiple-vmdk's-into-single-vmdk/</loc>
     
     <lastmod>2022-01-08</lastmod>
     
