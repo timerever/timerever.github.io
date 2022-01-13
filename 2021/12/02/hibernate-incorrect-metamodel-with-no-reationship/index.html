@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="CjGJdH8_BHGuUxzi06DlaW_9PF8iUgxceKsMT0ad1s0">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.timerever.tk","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="因为项目上使用了 Hibernate Metamodel，而且自定义映射了数据库的 json 字段类型，导致生成的 Metamodel 属性类型有误。虽然并没有用映射的这些属性做 CriteriaQuery，所以其实在项目的使用上没有影响，但是启动时还是会报一个 ERROR 日志，所以寻找一个能够根治的解决办法。 1ERROR org.hibernate.metamodel.internal.Me">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hibernate 解决 Metamodel 属性类型错误问题">
+<meta property="og:url" content="https://blog.timerever.tk/2021/12/02/hibernate-incorrect-metamodel-with-no-reationship/index.html">
+<meta property="og:site_name" content="A Blog">
+<meta property="og:description" content="因为项目上使用了 Hibernate Metamodel，而且自定义映射了数据库的 json 字段类型，导致生成的 Metamodel 属性类型有误。虽然并没有用映射的这些属性做 CriteriaQuery，所以其实在项目的使用上没有影响，但是启动时还是会报一个 ERROR 日志，所以寻找一个能够根治的解决办法。 1ERROR org.hibernate.metamodel.internal.Me">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.timerever.tk/2021/12/02/hibernate-incorrect-metamodel-with-no-reationship/hibernate-incorrect-metamodel-with-no-reationship-1.png">
+<meta property="article:published_time" content="2021-12-02T03:41:48.000Z">
+<meta property="article:modified_time" content="2022-01-13T11:03:25.332Z">
+<meta property="article:author" content="timerever">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Hibernate">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.timerever.tk/2021/12/02/hibernate-incorrect-metamodel-with-no-reationship/hibernate-incorrect-metamodel-with-no-reationship-1.png">
+
+
+<link rel="canonical" href="https://blog.timerever.tk/2021/12/02/hibernate-incorrect-metamodel-with-no-reationship/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.timerever.tk/2021/12/02/hibernate-incorrect-metamodel-with-no-reationship/","path":"2021/12/02/hibernate-incorrect-metamodel-with-no-reationship/","title":"Hibernate 解决 Metamodel 属性类型错误问题"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Hibernate 解决 Metamodel 属性类型错误问题 | A Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90849359-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-90849359-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">A Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%AE%9A%E4%BD%8D%E9%97%AE%E9%A2%98"><span class="nav-text">一、定位问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%98"><span class="nav-text">二、解决问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%8F%92%E6%9B%B2"><span class="nav-text">三、插曲</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E4%BA%B2%E5%8A%9B%E4%BA%B2%E4%B8%BA"><span class="nav-text">四、亲力亲为</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="timerever"
+      src="https://avatars.githubusercontent.com/u/12376409?v=4">
+  <p class="site-author-name" itemprop="name">timerever</p>
+  <div class="site-description" itemprop="description">Just another blog.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/timerever" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;timerever" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.swordandfire.online/" title="https:&#x2F;&#x2F;blog.swordandfire.online" rel="noopener" target="_blank">Swordandfire</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.yxai123.cn/" title="https:&#x2F;&#x2F;www.yxai123.cn" rel="noopener" target="_blank">Yxai123</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.timerever.tk/2021/12/02/hibernate-incorrect-metamodel-with-no-reationship/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/12376409?v=4">
+      <meta itemprop="name" content="timerever">
+      <meta itemprop="description" content="Just another blog.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Hibernate 解决 Metamodel 属性类型错误问题
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-12-02 11:41:48" itemprop="dateCreated datePublished" datetime="2021-12-02T11:41:48+08:00">2021-12-02</time>
+    </span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-tags"></i>
+      </span>
+      <span class="post-meta-item-text">标签：</span>
+      <span class="post-tags">
+        <a href="/tags/Java/" rel="tag"> Java</a>
+        <a href="/tags/Hibernate/" rel="tag"> Hibernate</a>
+      </span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>因为项目上使用了 Hibernate Metamodel，而且自定义映射了数据库的 json 字段类型，导致生成的 Metamodel 属性类型有误。虽然并没有用映射的这些属性做 <code>CriteriaQuery</code>，所以其实在项目的使用上没有影响，但是启动时还是会报一个 ERROR 日志，所以寻找一个能够根治的解决办法。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR org.hibernate.metamodel.internal.MetadataContext [MetadataContext.java:491] - HHH015007: Illegal argument on static metamodel field injection : Foo_#bars; expected type : org.hibernate.metamodel.model.domain.internal.SingularAttributeImpl; encountered type : javax.persistence.metamodel.MapAttribute</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<h3 id="一、定位问题"><a href="#一、定位问题" class="headerlink" title="一、定位问题"></a>一、定位问题</h3><p><strong>首先是背景信息：</strong>因为前端需要在数据库存储 JSON 字段，而且现在版本的 MySQL 天然支持 JSON ，所以建表时采用了 JSON 作为字段类型。然后在 JPA 实体层面，引入了 <code>hibernate-types</code> 依赖来增加 Hibernate 对 JSON 的支持，字段属性增加了 <code>@Type(type = &quot;json&quot;)</code> 注解，本身定义为了 <code>Map</code> 类型。</p>
+<p>其实在 Hibernate 对 JSON 处理这件事情上，传统方案是通过自定义 <code>Convert</code> 来实现。或者可能不是 JSON Object 而是 JSON Array，但无论是那种情况，均会遇到同样的问题。</p>
+<p>通过报错信息，对代码进行 DEBUG 后得知，Hibernate 在启动时，会根据实体属性是否存在与其他实体的关系，生成不同的 <code>Attribute</code>。比如 OneToMany 一对多关系就会生成 <code>ListAttribute</code> 或 <code>SetAttribute</code>，没有关系的属性都是 <code>SingularAttribute</code>。而启动时通过反射，会 set Metamodel 的对应属性，我们可以在 target 下面看见，Metamodel 的类型为 <code>MapAttribute</code>，所以我们可以确定，问题就出在了生成 Metamodel 的时候。具体是不是直接拿实体定义的数据类型来生成的我没有去看源码，不过可以肯定的是它在判断类型的时候缺少额外的判断。</p>
+<h3 id="二、解决问题"><a href="#二、解决问题" class="headerlink" title="二、解决问题"></a>二、解决问题</h3><p>同样作为一个共性问题，在 Goolge 进行搜索后，定位到了一条仍然是 Hibernate 官方 Bug 追踪的链接 <a target="_blank" rel="noopener" href="https://hibernate.atlassian.net/browse/HHH-12338">Incorrect metamodel for basic collections</a>。简单的来说，就是当前已经在 5.5.0.Alpha1 的版本中得到了解决，不过如果你认真看了下面整个的 Activity 记录，就会发现仍然是存在一个小插曲。</p>
+<h3 id="三、插曲"><a href="#三、插曲" class="headerlink" title="三、插曲"></a>三、插曲</h3><p>这个问题是在 2018 年的 3 月份被提出来的，而 5.5.0.Alpha1 已经是 2021 年 8 月份的事情了，照理说这么一个小问题不会需要三年多的时间来处理，而这个疑问的答案就在下面的讨论之中。</p>
+<p>简单来说，这个问题在当月就被解决掉了，伴随着 5.2.17 的版本发布，这个问题理论上来说就不应该再存在了。然而事与愿违，在 5.2.17 版本发布之后，很快就有人提出了新的问题。在下面的 Comment 中有记录，同时这个人也单独提了一个 issue <a target="_blank" rel="noopener" href="https://hibernate.atlassian.net/browse/HHH-12581">NPE for Criteria query containing fetch join as a regression of HHH-12338</a>，即这次的改动造成了 NPE。然后可以看到在另一个维护者与之前 Vlad Mihalcea 的一番讨论之后，他们决定恢复这次的改动。</p>
+<p><img src="hibernate-incorrect-metamodel-with-no-reationship-1.png" alt="revert commit"></p>
+<p>但是回退了就意味着问题又回来了，上面提到的 Vlad Mihalcea 从红帽离职，不再维护 Hibernate 还弄了一个新的项目就是上面提到的 <code>hibernate-types</code>。所以其他人在遇到相同的问题时，有部分和我们一样是采用的 <code>hibernate-types</code> 方案，自然而然有人把问题又丢给了 Vlad Mihalcea，不过是在 <code>hibernate-types</code> 项目。</p>
+<p>于是 Vlad Mihalcea 在 Github 提了新的 PR，见 <a target="_blank" rel="noopener" href="https://github.com/hibernate/hibernate-orm/pull/3254">HHH-12338 - Incorrect metamodel for basic collections</a>。不过很不幸的是，并没有后续。</p>
+<p>直到今年的 7 月，又一位开发者忍无可忍决定解决这个问题，提了新的 PR 出来，见 <a target="_blank" rel="noopener" href="https://github.com/hibernate/hibernate-orm/pull/4096">HHH-14724 Test-case for metamodel compile error with converters and validation</a>。这次终于引起了重视，并在一番努力之后，终于得到了合并，问题就此解决。</p>
+<p>题外话，这件事情，是不是跟前阵子遇到的 <a href="/2021/11/26/hibernate-automatic-2nd-collection-cache-eviction/">Hibernate 配置自动清除二级缓存之集合缓存</a> 里面的插曲有点像？笑。</p>
+<h3 id="四、亲力亲为"><a href="#四、亲力亲为" class="headerlink" title="四、亲力亲为"></a>四、亲力亲为</h3><p>虽说这件事情现在看来终于告一段落了，不过由于时今年 9 月份才最终解决，虽然代码已经被合并到了各个版本的分支中，但 5.4 已经半年没有发过新的版本了。虽说 5.5 和 5.6 的版本已经没问题了，但由于项目框架的问题，并不能直接升级 Hibernate 的版本，而且本来 5.5 的版本就存在很大改动，现有架构并不能保证完全兼容（比如还是上面提到的 <code>hibernate-types</code> 就需要引入另外一个包），所以最后没有办法，只能决定采用重打包的方式自己对源码进行更新。</p>
+<p>剩下的事情就不再赘述了，大概流程就是下载 Hibernate 源码，找到 5.4.32.Final 的 tag，在此基础上手动把修复代码的变更拷贝过来，然后改个版本号，发布到私仓，再更改当前项目依赖的版本号，最后成功解决。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>timerever
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.timerever.tk/2021/12/02/hibernate-incorrect-metamodel-with-no-reationship/" title="Hibernate 解决 Metamodel 属性类型错误问题">https://blog.timerever.tk/2021/12/02/hibernate-incorrect-metamodel-with-no-reationship/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+              <a href="/tags/Hibernate/" rel="tag"><i class="fa fa-tag"></i> Hibernate</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/01/05/keycloak-custom-idp/" rel="prev" title="Keycloak 配置自定义社交帐号登录组件">
+                  <i class="fa fa-chevron-left"></i> Keycloak 配置自定义社交帐号登录组件
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/11/26/hibernate-automatic-2nd-collection-cache-eviction/" rel="next" title="Hibernate 配置自动清除二级缓存之集合缓存">
+                  Hibernate 配置自动清除二级缓存之集合缓存 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fas fa-coffee"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">timerever</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

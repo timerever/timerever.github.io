@@ -21,15 +21,15 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"blog.timerever.tk","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
-<meta name="description" content="Docker 从入门到放弃">
+<meta name="description" content="Docker——这是一个自出现以来就发展迅猛并获得成功的引擎。自从选择这个方向学习以来，一直在各个地方看到这个名词，但也只是大概了解到这是一个一般企业才会采用的东西。 寒假放假前的课程设计，邀请了企业的人拿来了企业的真实项目来让我们学习，有幸在课余时间与主管技术的老师咨询讨论了一下。其中有一个话题就说到了 Docker，也是符合之前自己所想，老师也是说，像我们平时自己用，拿自己电脑跑或者租个 vp">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker 学习之旅（零）：出师不利">
 <meta property="og:url" content="https://blog.timerever.tk/2017/03/02/docker-learning-trip-0/index.html">
 <meta property="og:site_name" content="A Blog">
-<meta property="og:description" content="Docker 从入门到放弃">
+<meta property="og:description" content="Docker——这是一个自出现以来就发展迅猛并获得成功的引擎。自从选择这个方向学习以来，一直在各个地方看到这个名词，但也只是大概了解到这是一个一般企业才会采用的东西。 寒假放假前的课程设计，邀请了企业的人拿来了企业的真实项目来让我们学习，有幸在课余时间与主管技术的老师咨询讨论了一下。其中有一个话题就说到了 Docker，也是符合之前自己所想，老师也是说，像我们平时自己用，拿自己电脑跑或者租个 vp">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2017-03-02T13:51:49.000Z">
-<meta property="article:modified_time" content="2022-01-08T06:25:43.626Z">
+<meta property="article:modified_time" content="2022-01-13T11:03:25.324Z">
 <meta property="article:author" content="timerever">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
@@ -151,7 +151,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-text">安装</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -166,7 +166,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -177,7 +177,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">28</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -312,6 +312,8 @@
 <p>寒假放假前的课程设计，邀请了企业的人拿来了企业的真实项目来让我们学习，有幸在课余时间与主管技术的老师咨询讨论了一下。其中有一个话题就说到了 Docker，也是符合之前自己所想，老师也是说，像我们平时自己用，拿自己电脑跑或者租个 vps 什么的也就够了，也是用不上这种东西，不过从交谈中也大概了解到了应用 Docker 的优势，比如统一测试环境，比如秒级启动随时恢复等等等等。</p>
 <p>秉承着热爱计算机相关的一切的原则，还是决定先大概看一下这个东西，虽然可能实用性真的接近于零，不过就像自己选择这个专业一样，不是出于为了找工作或者怎样怎样的功利的心态，而是所谓的，真的是“热爱学习”。</p>
 <p>所以作为一只准程序猿，那么要做的第一件事便是打开官网寻找官方文档（所谓程序员必会通用技能），然后就是阅读英文文档（另一项必会技能）。</p>
+<span id="more"></span>
+
 <h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>使用的环境是 Ubuntu 的 16.10，默认的源里有 Docker，只需按照官网手册就可轻松安装。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install \</span><br><span class="line">    apt-transport-https \</span><br><span class="line">    ca-certificates \</span><br><span class="line">    curl \</span><br><span class="line">    software-properties-common</span><br><span class="line">$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</span><br><span class="line">$ sudo apt-key fingerprint 0EBFCD88</span><br><span class="line">$ sudo add-apt-repository \</span><br><span class="line">   <span class="string">&quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu \</span></span><br><span class="line"><span class="string">   <span class="subst">$(lsb_release -cs)</span> \</span></span><br><span class="line"><span class="string">   stable&quot;</span></span><br></pre></td></tr></table></figure>
 

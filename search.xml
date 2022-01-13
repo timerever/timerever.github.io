@@ -6,6 +6,8 @@
     <content><![CDATA[<p>在使用 Apache HttpComponents 时，需要访问一个第三方接口进行数据传输，但是由于对方使用的是 Let’s Encrypt 的证书，虽然浏览器是信任的，但是在调试的时候发现程序并不信任,所以采用自定义 SSLContext 的方式解决该问题。</p>
 <h3 id="查找官方解决方案"><a href="#查找官方解决方案" class="headerlink" title="查找官方解决方案"></a>查找官方解决方案</h3><p>作为一只程序猿，翻官方文档肯定是首选方案。官方提供了一种 Custom SSL context 的实现。</p>
 <p><a href="http://hc.apache.org/httpcomponents-client-4.5.x/httpclient/examples/org/apache/http/examples/client/ClientCustomSSL.java">http://hc.apache.org/httpcomponents-client-4.5.x/httpclient/examples/org/apache/http/examples/client/ClientCustomSSL.java</a></p>
+<span id="more"></span>
+
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * ====================================================================</span></span><br><span class="line"><span class="comment"> * Licensed to the Apache Software Foundation (ASF) under one</span></span><br><span class="line"><span class="comment"> * or more contributor license agreements.  See the NOTICE file</span></span><br><span class="line"><span class="comment"> * distributed with this work for additional information</span></span><br><span class="line"><span class="comment"> * regarding copyright ownership.  The ASF licenses this file</span></span><br><span class="line"><span class="comment"> * to you under the Apache License, Version 2.0 (the</span></span><br><span class="line"><span class="comment"> * &quot;License&quot;); you may not use this file except in compliance</span></span><br><span class="line"><span class="comment"> * with the License.  You may obtain a copy of the License at</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> *   http://www.apache.org/licenses/LICENSE-2.0</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Unless required by applicable law or agreed to in writing,</span></span><br><span class="line"><span class="comment"> * software distributed under the License is distributed on an</span></span><br><span class="line"><span class="comment"> * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY</span></span><br><span class="line"><span class="comment"> * KIND, either express or implied.  See the License for the</span></span><br><span class="line"><span class="comment"> * specific language governing permissions and limitations</span></span><br><span class="line"><span class="comment"> * under the License.</span></span><br><span class="line"><span class="comment"> * ====================================================================</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * This software consists of voluntary contributions made by many</span></span><br><span class="line"><span class="comment"> * individuals on behalf of the Apache Software Foundation.  For more</span></span><br><span class="line"><span class="comment"> * information on the Apache Software Foundation, please see</span></span><br><span class="line"><span class="comment"> * &lt;http://www.apache.org/&gt;.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">package</span> org.apache.http.examples.client;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.net.ssl.SSLContext;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.http.HttpEntity;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.CloseableHttpResponse;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.HttpGet;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.conn.ssl.SSLConnectionSocketFactory;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.conn.ssl.TrustSelfSignedStrategy;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.client.CloseableHttpClient;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.client.HttpClients;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.ssl.SSLContexts;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.util.EntityUtils;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * This example demonstrates how to create secure connections with a custom SSL</span></span><br><span class="line"><span class="comment"> * context.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClientCustomSSL</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">// Trust own CA and all self-signed certs</span></span><br><span class="line">        SSLContext sslcontext = SSLContexts.custom()</span><br><span class="line">                .loadTrustMaterial(<span class="keyword">new</span> File(<span class="string">&quot;my.keystore&quot;</span>), <span class="string">&quot;nopassword&quot;</span>.toCharArray(),</span><br><span class="line">                        <span class="keyword">new</span> TrustSelfSignedStrategy())</span><br><span class="line">                .build();</span><br><span class="line">        <span class="comment">// Allow TLSv1 protocol only</span></span><br><span class="line">        SSLConnectionSocketFactory sslsf = <span class="keyword">new</span> SSLConnectionSocketFactory(</span><br><span class="line">                sslcontext,</span><br><span class="line">                <span class="keyword">new</span> String[] &#123; <span class="string">&quot;TLSv1&quot;</span> &#125;,</span><br><span class="line">                <span class="keyword">null</span>,</span><br><span class="line">                SSLConnectionSocketFactory.getDefaultHostnameVerifier());</span><br><span class="line">        CloseableHttpClient httpclient = HttpClients.custom()</span><br><span class="line">                .setSSLSocketFactory(sslsf)</span><br><span class="line">                .build();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line"></span><br><span class="line">            HttpGet httpget = <span class="keyword">new</span> HttpGet(<span class="string">&quot;https://httpbin.org/&quot;</span>);</span><br><span class="line"></span><br><span class="line">            System.out.println(<span class="string">&quot;Executing request &quot;</span> + httpget.getRequestLine());</span><br><span class="line"></span><br><span class="line">            CloseableHttpResponse response = httpclient.execute(httpget);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                HttpEntity entity = response.getEntity();</span><br><span class="line"></span><br><span class="line">                System.out.println(<span class="string">&quot;----------------------------------------&quot;</span>);</span><br><span class="line">                System.out.println(response.getStatusLine());</span><br><span class="line">                EntityUtils.consume(entity);</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                response.close();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            httpclient.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>由于考虑到该接口为第三方接口，对方可能进行证书的更换，再加上由于所传输信息是可以公开的、非重要数据的数据，所以并不采用官方给出的导入证书而使用不进行检查直接信任的方式处理。</p>
@@ -44,6 +46,8 @@
 <p><strong>模式</strong> 起源于建筑学，每个模式都描述了一个在我们的环境中不断出现的问题，然后描述了该问题的解决方案的核心，通过这种方式我们可以无数次的重用那些已有的解决方案，无需再重复相同的工作。</p>
 <p><strong>软件模式 (Software Patterns)</strong> 是将模式的一般概念应用于软件开发领域，即软件开发的总体指导思路或参照样板。软件模式并非仅限于设计模式，它还包括架构模式、分析模式和过程模式等，实际上，在软件开发生命周期的每一个阶段都存在着一些被认同的模式。</p>
 <p>在这里主要讨论的是软件设计模式。</p>
+<span id="more"></span>
+
 <h2 id="软件架构模式与软件设计模式的比较"><a href="#软件架构模式与软件设计模式的比较" class="headerlink" title="软件架构模式与软件设计模式的比较"></a>软件架构模式与软件设计模式的比较</h2><p>简略的来说，架构模式是整体上的大智慧，而软件模式更侧重于小技巧。</p>
 <p>这里以 MVC 解决方案为例。</p>
 <h2 id="软件架构模式"><a href="#软件架构模式" class="headerlink" title="软件架构模式"></a>软件架构模式</h2><p><img src="design-patterns-1.png" alt="Alt MVC软件架构模式" title="MVC软件架构模式"></p>
@@ -147,6 +151,8 @@
 <p>寒假放假前的课程设计，邀请了企业的人拿来了企业的真实项目来让我们学习，有幸在课余时间与主管技术的老师咨询讨论了一下。其中有一个话题就说到了 Docker，也是符合之前自己所想，老师也是说，像我们平时自己用，拿自己电脑跑或者租个 vps 什么的也就够了，也是用不上这种东西，不过从交谈中也大概了解到了应用 Docker 的优势，比如统一测试环境，比如秒级启动随时恢复等等等等。</p>
 <p>秉承着热爱计算机相关的一切的原则，还是决定先大概看一下这个东西，虽然可能实用性真的接近于零，不过就像自己选择这个专业一样，不是出于为了找工作或者怎样怎样的功利的心态，而是所谓的，真的是“热爱学习”。</p>
 <p>所以作为一只准程序猿，那么要做的第一件事便是打开官网寻找官方文档（所谓程序员必会通用技能），然后就是阅读英文文档（另一项必会技能）。</p>
+<span id="more"></span>
+
 <h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>使用的环境是 Ubuntu 的 16.10，默认的源里有 Docker，只需按照官网手册就可轻松安装。</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo apt-get install \</span><br><span class="line">    apt-transport-https \</span><br><span class="line">    ca-certificates \</span><br><span class="line">    curl \</span><br><span class="line">    software-properties-common</span><br><span class="line">$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</span><br><span class="line">$ sudo apt-key fingerprint 0EBFCD88</span><br><span class="line">$ sudo add-apt-repository \</span><br><span class="line">   <span class="string">&quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu \</span></span><br><span class="line"><span class="string">   <span class="subst">$(lsb_release -cs)</span> \</span></span><br><span class="line"><span class="string">   stable&quot;</span></span><br></pre></td></tr></table></figure>
 
@@ -169,6 +175,8 @@
 </blockquote>
 <p>由于使用的环境为 Ubuntu 的 16.10 最新稳定版本，所以打开 Ubuntu 的文档进行安装，以下命令全部来源于官方文档。</p>
 <p>为了防止惨剧的再次发生，记录下此时的版本，页面右上角显示为 Docker 17.03。</p>
+<span id="more"></span>
+
 <h3 id="卸载旧版本"><a href="#卸载旧版本" class="headerlink" title="卸载旧版本"></a>卸载旧版本</h3><p>文档链接：<a href="https://docs.docker.com/engine/installation/linux/ubuntu/#uninstall-old-versions">https://docs.docker.com/engine/installation/linux/ubuntu/#uninstall-old-versions</a></p>
 <p>因为安装了旧版本的 Docker，所以需要先卸载老版本，当然没有安装过就不需要进行这一步了。</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo apt-get remove docker docker-engine</span><br></pre></td></tr></table></figure>
@@ -250,6 +258,8 @@
 <li>Build 缓存</li>
 </ul>
 <p>都是一些阅读理解的内容，详细见官方文档。</p>
+<span id="more"></span>
+
 <h3 id="Dockerfile-指南"><a href="#Dockerfile-指南" class="headerlink" title="Dockerfile 指南"></a>Dockerfile 指南</h3><p>文档链接：<a href="https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#the-dockerfile-instructions">https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#the-dockerfile-instructions</a></p>
 <p>仅列出各命令简单用法，详细请参照上文列出的官方详细文档。</p>
 <h4 id="FROM"><a href="#FROM" class="headerlink" title="FROM"></a>FROM</h4><p>你可以在现有镜像的基础上构建自己的镜像。</p>
@@ -332,6 +342,8 @@ ENTRYPOINT command param1 param2（shell 形式）
     <url>/2017/03/06/docker-learning-trip-3/</url>
     <content><![CDATA[<p>基础镜像，官方说法是 <strong>base image</strong>，官方解释为“ <strong>An image that has no parent is a base image.</strong> ”也就是说，没有父镜像的镜像就是基础镜像，我们要做的就是创建一个基础镜像。</p>
 <p>文档链接：<a href="https://docs.docker.com/engine/userguide/eng-image/baseimages/">https://docs.docker.com/engine/userguide/eng-image/baseimages/</a></p>
+<span id="more"></span>
+
 <h3 id="使用-tar-创建一个完整镜像"><a href="#使用-tar-创建一个完整镜像" class="headerlink" title="使用 tar 创建一个完整镜像"></a>使用 <code>tar</code> 创建一个完整镜像</h3><p>执行 <code>$ docker run raring cat /etc/lsb-release</code> 命令时报错且解决无果，可能 Debian 的发行版和 Ubuntu还是存在些许差异。</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ docker run raring cat /etc/lsb-release</span><br><span class="line">container_linux.go:247: starting container process caused &quot;exec: \&quot;cat\&quot;: executable file not found in $PATH&quot;</span><br><span class="line">docker: Error response from daemon: oci runtime error: container_linux.go:247: starting container process caused &quot;exec: \&quot;cat\&quot;: executable file not found in $PATH&quot;.</span><br><span class="line">ERRO[0000] error getting events from daemon: net/http: request canceled</span><br></pre></td></tr></table></figure>
 
@@ -362,6 +374,8 @@ ENTRYPOINT command param1 param2（shell 形式）
 </ul>
 <p>这仅仅是 Docker Hub 的一个基本组成，它对大多数的个人和小型企业是十分有帮助的。在改版后，文档将 Docker Hub 部分独立出去，这里遵循以前的顺序，介绍下 Docker Hub 的基础应用。</p>
 <p>有关于 Docker Hub 的文档：<a href="https://docs.docker.com/docker-hub/">https://docs.docker.com/docker-hub/</a></p>
+<span id="more"></span>
+
 <h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>没有登录帐号的情况下可以 <code>search</code> 或者 <code>pull</code> 镜像，但是不能 <code>push</code> 镜像。</p>
 <h3 id="团队和组织"><a href="#团队和组织" class="headerlink" title="团队和组织"></a>团队和组织</h3><p>太高大上，个人的我用不上，不太了解。</p>
 <h3 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h3><h4 id="搜索镜像"><a href="#搜索镜像" class="headerlink" title="搜索镜像"></a>搜索镜像</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ docker search centos</span><br><span class="line">NAME                                 DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED</span><br><span class="line">centos                               The official build of CentOS.                   1034      [OK]</span><br><span class="line">ansible/centos7-ansible              Ansible on Centos7                              43                   [OK]</span><br><span class="line">tutum/centos                         Centos image with SSH access. For the root...   13                   [OK]</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
@@ -394,6 +408,8 @@ ENTRYPOINT command param1 param2（shell 形式）
     <content><![CDATA[<p>在之前介绍了 <code>Dockerfile</code> 文件和 Docker Hub 的使用，现在就来完整的应用其创建一个 Docker 下的 srceenfetch。</p>
 <h4 id="关于-srceenfetch"><a href="#关于-srceenfetch" class="headerlink" title="关于 srceenfetch"></a>关于 srceenfetch</h4><p>srceenfetch 基本是我在每一个 Linux 主机都会安装的程序，大概就是用来秀 Linux 和一个简略但直观地展示硬件环境的一个应用程序。</p>
 <p>该项目托管在 GitHub，项目地址为：<a href="https://github.com/KittyKatt/screenFetch">https://github.com/KittyKatt/screenFetch</a>。</p>
+<span id="more"></span>
+
 <h3 id="创建-Docker-Hub-仓库"><a href="#创建-Docker-Hub-仓库" class="headerlink" title="创建 Docker Hub 仓库"></a>创建 Docker Hub 仓库</h3><p>在 Docker Hub 网页上创建一个 Docker Hub 仓库，具体操作很简单，不再赘述。</p>
 <p>此处创建的仓库为：<code>timerever/screenfetch</code></p>
 <h3 id="构建镜像"><a href="#构建镜像" class="headerlink" title="构建镜像"></a>构建镜像</h3><h4 id="创建-Dockerfile-文件"><a href="#创建-Dockerfile-文件" class="headerlink" title="创建 Dockerfile 文件"></a>创建 Dockerfile 文件</h4><p>因为 screenfetch 在 Ubuntu 中可以直接通过 <code>apt-get</code> 安装，所以直接使用 Ubuntu 源安装。</p>
@@ -420,6 +436,8 @@ ENTRYPOINT command param1 param2（shell 形式）
 <h3 id="寻找镜像"><a href="#寻找镜像" class="headerlink" title="寻找镜像"></a>寻找镜像</h3><p>既然官方的镜像那么多，那么我们为什么不先去看一下官方镜像呢？打开 Docker Hub 一搜索 tomcat，排在第一个的就是。</p>
 <p>地址：<a href="https://hub.docker.com/_/tomcat/">https://hub.docker.com/_/tomcat/</a></p>
 <p>这边选择 tomcat7 + jre7，但是通过查看构建所使用的 <code>Dockfile</code> 文件发现，tomcat 的官方源采用的是 jre7 是 openJDK7 的 jre，这里需要注意。</p>
+<span id="more"></span>
+
 <h3 id="下载运行-tomcat"><a href="#下载运行-tomcat" class="headerlink" title="下载运行 tomcat"></a>下载运行 tomcat</h3><p>tomcat 的默认启动参数为 <code>CMD [&quot;catalina.sh&quot;, &quot;run&quot;]</code>，启动方式为：</p>
 <pre><code>docker run -it --rm tomcat:7.0
 </code></pre>
@@ -461,6 +479,8 @@ ENTRYPOINT command param1 param2（shell 形式）
     <title>设计模式之工厂模式的 Java 实现</title>
     <url>/2017/04/29/factory-patterns-with-java/</url>
     <content><![CDATA[<p><strong>工厂模式</strong> 属于设计模式中创建型数据模式的一种，同时是软件设计模式中最常使用的模式。广义的工厂模式只是一个统称，其还可以继续分为 <strong>简单工厂模式</strong>、<strong>工厂模式</strong> 和 <strong>抽象工厂模式</strong>。这里对这些工厂模式进行说明并使用 Java 代码进行实现。</p>
+<span id="more"></span>
+
 <h2 id="通常状态下的对象创建"><a href="#通常状态下的对象创建" class="headerlink" title="通常状态下的对象创建"></a>通常状态下的对象创建</h2><p>在不使用任何模式的时候，我们通常是需要什么对象，就直接创建什么对象，如下所示。</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* Bicycle.java */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Bicycle</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Bicycle</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="keyword">this</span>.getClass().getSimpleName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Motorbike.java */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Motorbike</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Motorbike</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="keyword">this</span>.getClass().getSimpleName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Main.java */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Bicycle bicycle = <span class="keyword">new</span> Bicycle();</span><br><span class="line">        Motorbike motorbike = <span class="keyword">new</span> Motorbike();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -578,6 +598,8 @@ SummerTextField
 <blockquote>
 <p>该实例首先把 SIGQUIT、SIGINT 两个信号加入信号集，然后将该信号集设为阻塞状态，<br>并在该状态下使程序暂停 5 秒。接下来再将信号集设置为非阻塞状态，再对这两个信号分别<br>操作，其中 SIGQUIT 执行默认操作，而 SIGINT 执行用户自定义函数的操作。源代码如下<br>所示：</p>
 </blockquote>
+<span id="more"></span>
+
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;signal.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">my_func</span><span class="params">(<span class="keyword">int</span> signum)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;If you want to quit,please try SIGQUIT\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">sigset_t</span> <span class="built_in">set</span>,pendset;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">sigaction</span> <span class="title">action1</span>,<span class="title">action2</span>;</span></span><br><span class="line">	<span class="keyword">if</span>(sigemptyset(&amp;<span class="built_in">set</span>)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigemptyset&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span>(sigaddset(&amp;<span class="built_in">set</span>,SIGQUIT)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigaddset&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span>(sigaddset(&amp;<span class="built_in">set</span>,SIGINT)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigaddset&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span>(sigprocmask(SIG_BLOCK,&amp;<span class="built_in">set</span>,<span class="literal">NULL</span>)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigprocmask&quot;</span>);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;blocked\n&quot;</span>);</span><br><span class="line">		sleep(<span class="number">5</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(sigprocmask(SIG_UNBLOCK,&amp;<span class="built_in">set</span>,<span class="literal">NULL</span>)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigprocmask&quot;</span>);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;unblock\n&quot;</span>);</span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">if</span>(sigismember(&amp;<span class="built_in">set</span>,SIGINT))&#123;</span><br><span class="line">			sigemptyset(&amp;action1.sa_mask);</span><br><span class="line">			action1.sa_handler=my_func;</span><br><span class="line">			sigaction(SIGINT,&amp;action1,<span class="literal">NULL</span>);</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(sigismember(&amp;<span class="built_in">set</span>,SIGQUIT))&#123;</span><br><span class="line">			sigemptyset(&amp;action2.sa_mask);</span><br><span class="line">			action2.sa_handler = SIG_DFL;</span><br><span class="line">			sigaction(SIGTERM,&amp;action2,<span class="literal">NULL</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>理论上，按说明所述及代码的编写，使用 <code>Ctrl-C</code> 传递 <code>SIGINT</code> 信号后，会转到自定义处理函数 <code>my_func</code>，但在实际操作中，在进入自定义处理函数后，程序直接退出。<strong>猜测</strong>是由于在进行自定义处理函数后，系统仍然对信号做了默认的处理。</p>
@@ -631,6 +653,8 @@ SummerTextField
 <p>寻着 XDA 上开发者给的步骤给走，给了两个 rec 一个无法挂载内置储存卡然后没外置的选项（不过也是因为这个才有了本文），一个有问题直接手机进了救援模式，也是汗颜，索性自己手里有 rec 成功解决了。</p>
 <p>文中说把刷机包放到外置内存卡目录下，然后进入 rec 傻眼了并没有找到从外置内存卡安装刷机包的选项，于是无奈自己尝试用 adb 传送刷机包。</p>
 <p>至于为什么以前不怎么用 adb，主要是由于华为这机子很难从关机状态进入 fastboot，官方让插着 USB 线关机进入但是成功率不高，所以以前都是用论坛正好给出的脚本从开机状态进入，正好熟悉下 adb 记录于此。</p>
+<span id="more"></span>
+
 <h3 id="adb-命令"><a href="#adb-命令" class="headerlink" title="adb 命令"></a>adb 命令</h3><ul>
 <li><a href="https://developer.android.com/studio/command-line/adb.html">官方文档</a></li>
 </ul>
@@ -651,7 +675,7 @@ SummerTextField
     <title>Git 简易教程</title>
     <url>/2017/03/18/git-tutorial/</url>
     <content><![CDATA[<blockquote>
-<p>一个好早就写了出来的教材，当然是别人给的，所以 dalao 一直没发我也不好意思发，正好假期也终于有时间写一写博客了，那边也发了于是，就把这个撇上来了。内容也没改，反正都认识（雾</p>
+<p>一个好早就写了出来的教材，代没某大佬投递</p>
 </blockquote>
 <h1 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h1><p><strong>为什么要进行版本控制？</strong>  最简单的例子，当我们用文字处理软件工作时（如Word）需要进行修改，而有时候又不确定修改的内容是不是需要的，因此会产生许多个文件，如图：  </p>
 <p><img src="git-tutorial-1.png"></p>
@@ -660,6 +684,7 @@ SummerTextField
 <p>采取版本控制后，你可以将文件还原到之前的状态，比较各状态之间的细节从而查出是修改了哪个地方，找出哪里出了问题。甚至你可以随意删改项目中的文件，照样可以恢复到之前的样子，因而增加了容错率，提供了更多可能性。</p>
 <p>版本控制有三种，第一种是本地式版本控制，也就是在本地的硬盘上用数据库记录历代文件；第二种是集中式版本控制，通过一个服务器，多个用户连接到服务器进行文件的记录。<br>而第三种是我们着重介绍的<em>分布式版本控制</em>，它将前两种结合起来，在本地和服务器都建立数据库，每次工作时从服务器克隆（clone）下来，同时又与服务器交互，从而兼顾协同性和安全性。</p>
 <p><em>我们所说的git就是一个分布式版本控制软件，GitHub就是一个git的托管服务。</em></p>
+<span id="more"></span>
 <h1 id="git本地操作"><a href="#git本地操作" class="headerlink" title="git本地操作"></a>git本地操作</h1><p>git设计简单，是完全分布式，允许成千上万个并行开发的分支(Branch)，有能力管理超大规模的项目，是目前首选的版本控制软件。</p>
 <h2 id="一、工作流程"><a href="#一、工作流程" class="headerlink" title="一、工作流程"></a>一、工作流程</h2><p>git的三个工作区域，对应着三种状态：<br><img src="git-tutorial-2.png"><br>git 工作流程如下：    </p>
 <ol>
@@ -847,9 +872,69 @@ Checking connectivity... done.
       </tags>
   </entry>
   <entry>
+    <title>Hibernate 配置自动清除二级缓存之集合缓存</title>
+    <url>/2021/11/26/hibernate-automatic-2nd-collection-cache-eviction/</url>
+    <content><![CDATA[<p>之前在项目上使用了 Hibernate，并开启了基于 caffeine 的二级缓存。因为 Hibernate 会自动处理缓存，所以一直没怎么关注。直到最近，发现在一种特定的情况下，Hibernate 不会自动清除二级缓存里面的集合缓存。问题最后解决起来其实很简单，增加一个配置项的事。不过问题寻求解决的过程还是蛮繁琐的，并没有人能够直接告诉这个问题的答案，在此记录一下这个问题的排查过程。</p>
+<blockquote>
+<p>太长不看版：Spring Boot 中设置属性 spring.jpa.properties.auto_evict_collection_cache=true 即可解决。</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="一、问题出现"><a href="#一、问题出现" class="headerlink" title="一、问题出现"></a>一、问题出现</h3><p>假定我这里有两个实体，分别为 <code>Parent</code> 和 <code>Child</code>。然后 Parent 与 Child 之间存在一对多的对应关系，即在 Parent 的实体中，存在一个属性 <code>private Set&lt;Child&gt; children</code>，然后我们开启二级缓存 <code>@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)</code>。在这种情况下，我们先访问 Parent 实体并获取其中的 <code>children</code> 属性，确保其已被缓存。然后我们再单独操作 Child，我们新建一个 Child 对象 <code>Child child = new Child()</code> 并设置其 Parent 的值 <code>child.setParent(parent)</code> 并保存 Child 实体 <code>ChildRepository.save(child)</code>。然后我们回过来获取 Parent，会发现 Parent 的 <code>children</code> 的值仍为原数组对象， 没有我们新增的 <code>child</code> 对象。</p>
+<p>通过在 Google 上进行搜索，发现 stackoverflow 上存在几个类似的问题，再进一步的搜索后，发现在 Hibernate 官方 Bug 追踪网站上有人归纳并提出了这个问题 <a href="https://hibernate.atlassian.net/browse/HHH-4910">automatic L2 collection cache eviction when an element is added/updated/removed</a>，可以看到不只是自己遇到的新增，修改/删除也会有类似的问题。</p>
+<h3 id="二、问题解决"><a href="#二、问题解决" class="headerlink" title="二、问题解决"></a>二、问题解决</h3><p>在上面链接的内容下方，问题提出者给出了一种 workaround 的方案，提供 <code>@PostPersist</code>、<code>@PostRemove</code> 及 <code>@PreUpdate</code> 的监听，并在监听中自动清理缓存。以及在之前查阅 stackoverflow 时，也有人认为，你需要在操作多方元素的时候，同时操作一方对应的集合，对其进行 add/remove 操作。</p>
+<p>但不管怎么说，这些都是一些 workaround 方案，因为 Hibernate 本身是有能力自动处理这些事情的。话又说回来，既然问题很早就被提出了，比如这个链接中使用的版本是 <code>3.3.1</code>，同时官方也已经记录了这个问题已经在 <code>4.3.0.Beta5</code> 中被修复了，可是为什么我们还是会遇到这个问题？这个答案其实在下面的评论中。</p>
+<p><img src="hibernate-automatic-2nd-collection-cache-eviction-1.png" alt="Hibernate atlassian 下面的评论"></p>
+<p>点进链接是 GitHub 的 PR 请求，讨论中详细地记录了从贡献者提出 PR 到最后并合并的整个流程。看下来大概就是，贡献者向负责人解释了为了提出这个改动、有负责人担心是不是会影响性能并期望做成可配置的、贡献者支持了配置项、PR 最终被合并。所以问题已经很明了了，功能上是已经被修复了，但是因为做成了配置项，所以默认没有启用，我们需要手动启用这个特性。</p>
+<p><img src="hibernate-automatic-2nd-collection-cache-eviction-2.png" alt="变成配置项的 commit"></p>
+<p>所以我们从这里点进去，去看一下我们怎么才能打开这个特性。最后我们可以看到是在 <code>hibernate-core/src/main/java/org/hibernate/cfg/AvailableSettings.java</code> 这个文件中定义了配置的名字。</p>
+<p><img src="hibernate-automatic-2nd-collection-cache-eviction-3.png" alt="配置项的名字"></p>
+<p>所以到这里，这个问题就算是最终解决了。</p>
+<h3 id="三、插曲"><a href="#三、插曲" class="headerlink" title="三、插曲"></a>三、插曲</h3><p>由于项目使用了 <code>spring-boot-starter-data-jpa</code> 依赖，所以这个配置项的设置并不是上面 Hibernate 的改动所提及的，于是继续在 Google 用 <code>auto_evict_collection_cache</code> 作为关键字进行搜索，寻找在 Spring Boot 中的配置方式。最终是得到了答案，Spring Boot 中的配置项为 <code>spring.jpa.properties.auto_evict_collection_cache</code>，不过在此之外还发现了一个小插曲。</p>
+<p><a href="https://hibernate.atlassian.net/browse/HHH-10614">Auto evict collection cache throws exception with null values</a> 中描述了一个人开启了这个特性，然后在一个特定的情况下 Hibernate 会抛出异常。虽然这个问题很快就被解决了，不过现在回来想想，维护者在维护这种已经已经很庞大的项目时，对所有的改动都抱有谨慎的态度还是很有必要的。做成了配置项，虽然一方面会让很多不知道的人继续遇到这个问题，但同时也让很多无关的人避免了可能带来的新问题。所以这两种方案孰优孰劣，可能就见仁见智了吧。</p>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>Hibernate</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hibernate 解决 Metamodel 属性类型错误问题</title>
+    <url>/2021/12/02/hibernate-incorrect-metamodel-with-no-reationship/</url>
+    <content><![CDATA[<p>因为项目上使用了 Hibernate Metamodel，而且自定义映射了数据库的 json 字段类型，导致生成的 Metamodel 属性类型有误。虽然并没有用映射的这些属性做 <code>CriteriaQuery</code>，所以其实在项目的使用上没有影响，但是启动时还是会报一个 ERROR 日志，所以寻找一个能够根治的解决办法。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ERROR org.hibernate.metamodel.internal.MetadataContext [MetadataContext.java:491] - HHH015007: Illegal argument on static metamodel field injection : Foo_#bars; expected type : org.hibernate.metamodel.model.domain.internal.SingularAttributeImpl; encountered type : javax.persistence.metamodel.MapAttribute</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<h3 id="一、定位问题"><a href="#一、定位问题" class="headerlink" title="一、定位问题"></a>一、定位问题</h3><p><strong>首先是背景信息：</strong>因为前端需要在数据库存储 JSON 字段，而且现在版本的 MySQL 天然支持 JSON ，所以建表时采用了 JSON 作为字段类型。然后在 JPA 实体层面，引入了 <code>hibernate-types</code> 依赖来增加 Hibernate 对 JSON 的支持，字段属性增加了 <code>@Type(type = &quot;json&quot;)</code> 注解，本身定义为了 <code>Map</code> 类型。</p>
+<p>其实在 Hibernate 对 JSON 处理这件事情上，传统方案是通过自定义 <code>Convert</code> 来实现。或者可能不是 JSON Object 而是 JSON Array，但无论是那种情况，均会遇到同样的问题。</p>
+<p>通过报错信息，对代码进行 DEBUG 后得知，Hibernate 在启动时，会根据实体属性是否存在与其他实体的关系，生成不同的 <code>Attribute</code>。比如 OneToMany 一对多关系就会生成 <code>ListAttribute</code> 或 <code>SetAttribute</code>，没有关系的属性都是 <code>SingularAttribute</code>。而启动时通过反射，会 set Metamodel 的对应属性，我们可以在 target 下面看见，Metamodel 的类型为 <code>MapAttribute</code>，所以我们可以确定，问题就出在了生成 Metamodel 的时候。具体是不是直接拿实体定义的数据类型来生成的我没有去看源码，不过可以肯定的是它在判断类型的时候缺少额外的判断。</p>
+<h3 id="二、解决问题"><a href="#二、解决问题" class="headerlink" title="二、解决问题"></a>二、解决问题</h3><p>同样作为一个共性问题，在 Goolge 进行搜索后，定位到了一条仍然是 Hibernate 官方 Bug 追踪的链接 <a href="https://hibernate.atlassian.net/browse/HHH-12338">Incorrect metamodel for basic collections</a>。简单的来说，就是当前已经在 5.5.0.Alpha1 的版本中得到了解决，不过如果你认真看了下面整个的 Activity 记录，就会发现仍然是存在一个小插曲。</p>
+<h3 id="三、插曲"><a href="#三、插曲" class="headerlink" title="三、插曲"></a>三、插曲</h3><p>这个问题是在 2018 年的 3 月份被提出来的，而 5.5.0.Alpha1 已经是 2021 年 8 月份的事情了，照理说这么一个小问题不会需要三年多的时间来处理，而这个疑问的答案就在下面的讨论之中。</p>
+<p>简单来说，这个问题在当月就被解决掉了，伴随着 5.2.17 的版本发布，这个问题理论上来说就不应该再存在了。然而事与愿违，在 5.2.17 版本发布之后，很快就有人提出了新的问题。在下面的 Comment 中有记录，同时这个人也单独提了一个 issue <a href="https://hibernate.atlassian.net/browse/HHH-12581">NPE for Criteria query containing fetch join as a regression of HHH-12338</a>，即这次的改动造成了 NPE。然后可以看到在另一个维护者与之前 Vlad Mihalcea 的一番讨论之后，他们决定恢复这次的改动。</p>
+<p><img src="hibernate-incorrect-metamodel-with-no-reationship-1.png" alt="revert commit"></p>
+<p>但是回退了就意味着问题又回来了，上面提到的 Vlad Mihalcea 从红帽离职，不再维护 Hibernate 还弄了一个新的项目就是上面提到的 <code>hibernate-types</code>。所以其他人在遇到相同的问题时，有部分和我们一样是采用的 <code>hibernate-types</code> 方案，自然而然有人把问题又丢给了 Vlad Mihalcea，不过是在 <code>hibernate-types</code> 项目。</p>
+<p>于是 Vlad Mihalcea 在 Github 提了新的 PR，见 <a href="https://github.com/hibernate/hibernate-orm/pull/3254">HHH-12338 - Incorrect metamodel for basic collections</a>。不过很不幸的是，并没有后续。</p>
+<p>直到今年的 7 月，又一位开发者忍无可忍决定解决这个问题，提了新的 PR 出来，见 <a href="https://github.com/hibernate/hibernate-orm/pull/4096">HHH-14724 Test-case for metamodel compile error with converters and validation</a>。这次终于引起了重视，并在一番努力之后，终于得到了合并，问题就此解决。</p>
+<p>题外话，这件事情，是不是跟前阵子遇到的 <a href="/2021/11/26/hibernate-automatic-2nd-collection-cache-eviction/">Hibernate 配置自动清除二级缓存之集合缓存</a> 里面的插曲有点像？笑。</p>
+<h3 id="四、亲力亲为"><a href="#四、亲力亲为" class="headerlink" title="四、亲力亲为"></a>四、亲力亲为</h3><p>虽说这件事情现在看来终于告一段落了，不过由于时今年 9 月份才最终解决，虽然代码已经被合并到了各个版本的分支中，但 5.4 已经半年没有发过新的版本了。虽说 5.5 和 5.6 的版本已经没问题了，但由于项目框架的问题，并不能直接升级 Hibernate 的版本，而且本来 5.5 的版本就存在很大改动，现有架构并不能保证完全兼容（比如还是上面提到的 <code>hibernate-types</code> 就需要引入另外一个包），所以最后没有办法，只能决定采用重打包的方式自己对源码进行更新。</p>
+<p>剩下的事情就不再赘述了，大概流程就是下载 Hibernate 源码，找到 5.4.32.Final 的 tag，在此基础上手动把修复代码的变更拷贝过来，然后改个版本号，发布到私仓，再更改当前项目依赖的版本号，最后成功解决。</p>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>Hibernate</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Keycloak 配置自定义社交帐号登录组件</title>
     <url>/2022/01/05/keycloak-custom-idp/</url>
-    <content><![CDATA[<p>由于 Keycloak 由红帽开发维护，所以其自带的 Social Identity Providers 都是国外的平台。现有需求对接公司 SSO，且由于国内 OAuth2 协议实现均不标准（公司的也是），所以无法使用 Keycloak 的 OpenID Connect 自定义接入，需要自己扩展 Identity Provider 实现。和国内的微信、钉钉、飞书等系统接入代码类似，但发现现有的接入组件没有实现 <code>UserAttributeMapper</code>，且版本变动，代码并不兼容，所以基于 Github 的组件进行参考实现。</p>
+    <content><![CDATA[<p>由于 Keycloak 由红帽开发维护，所以其自带的 Social Identity Providers 都是国外的平台。现有需求对接公司 SSO，且由于国内 OAuth2 协议实现均不标准（公司的也是），所以无法使用 Keycloak 的 OpenID Connect 自定义接入，需要自己扩展 Identity Provider 实现。和国内的微信、钉钉、飞书等系统接入代码类似，但发现现有的接入组件没有实现 <code>UserAttributeMapper</code>，且版本变动，代码并不兼容，所以参考 Github 的实现进行开发。</p>
 <blockquote>
 <p>Keycloak 使用当前最新版：16.1.0</p>
 </blockquote>
@@ -899,12 +984,20 @@ Checking connectivity... done.
       <categories>
         <category>Keycloak</category>
       </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>Keycloak</tag>
+        <tag>OAuth2</tag>
+        <tag>SSO</tag>
+      </tags>
   </entry>
   <entry>
     <title>合并多个 vmdk 文件</title>
     <url>/2017/03/01/merge-multiple-vmdk&#39;s-into-single-vmdk/</url>
     <content><![CDATA[<p>这是一个上古时代的虚拟机，自从换电脑以来就一直跟随我。虽然当初磁盘选择了单文件存储，然而由于众多快照的原因，又是好多 vmdk 的虚拟磁盘文件躺在硬盘中。因为好多快照都是之前已经被删除了，索性整理了一下虚拟机，并且将多个虚拟磁盘文件合并。</p>
 <p>上网寻找了一下解决方案，发现在一个大概是和虚拟化相关的、猜测是 wordpress 官方博客（猜测原因是因为该博客用的是 wordpress.com 的二级域名）的文章中找到了答案。</p>
+<span id="more"></span>
+
 <blockquote>
 <p><a href="https://vmexpo.wordpress.com/2014/04/15/how-to-merge-multiple-vmdks-into-single-vmdk/comment-page-1/">https://vmexpo.wordpress.com/2014/04/15/how-to-merge-multiple-vmdks-into-single-vmdk/comment-page-1/</a></p>
 </blockquote>
@@ -942,9 +1035,11 @@ Checking connectivity... done.
     <content><![CDATA[<p><code>wget</code> 是 Linux 下常用的一个命令行下载工具。由于此次需要下载的文件在国外，所以速度缓慢，然后就想到使用代理进行下载。使用 <code>--help</code> 查询了一番，发现并没有可以设置代理的地方，倒是有不走代理的选项，汗。</p>
 <p>因为是在终端使用，所以并不想使用全局代理，上网搜寻了一下关于 <code>wget</code> 使用代理的使用方法。</p>
 <ol>
-<li><p>修改 .wgetrc 文件</p>
-<p> .wgetrc 文件位于 $HOME 目录下，修改添加代理设置。</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ vi .wgetrc</span><br><span class="line">use_proxy=on</span><br><span class="line">http_proxy=http://ip:port</span><br></pre></td></tr></table></figure></li>
+<li>修改 .wgetrc 文件 .wgetrc 文件位于 $HOME 目录下，修改添加代理设置。 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ vi .wgetrc</span><br><span class="line">use_proxy=on</span><br><span class="line">http_proxy=http://ip:port</span><br></pre></td></tr></table></figure></li>
+</ol>
+<span id="more"></span>
+
+<ol start="2">
 <li><p>设置环境变量</p>
 <p> 通过环境变量使终端使用代理。</p>
  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ export http_proxy=&quot;ip:port&quot;</span><br></pre></td></tr></table></figure></li>
@@ -979,6 +1074,8 @@ Checking connectivity... done.
 <li> <em>闭包</em>：如a*b，表示0或若干个a和一个b连接而成的字符串。</li>
 </ol>
 <p>以上就是最最最基本的结构，是构成正则表达式的基础。</p>
+<span id="more"></span>
+
 <p>我们可以使用括号改变优先级顺序，如 c(ac|b)d 表示 cacd, cbd。</p>
 <p>至于其它教程里写到的如 +,?, [] 等操作都是基本操作的简略缩写，它们都可以通过基本操作完成。    </p>
 <p>+ 是由那些基本操作完成的？(文章末尾给出答案)</p>
@@ -1077,6 +1174,8 @@ Checking connectivity... done.
 <li><a href="http://jekyll.com.cn/">Jekyll 中文官网</a></li>
 <li><a href="http://www.ruby-lang.org/">Ruby官网</a></li>
 </ul>
+<span id="more"></span>
+
 <h3 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h3><p>由于 Ubuntu 的仓库里各软件还是很多的，所以首先选择了 apt 方式安装。</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo apt-get install ruby</span><br><span class="line">$ gem install jekyll</span><br></pre></td></tr></table></figure>
 
@@ -1105,6 +1204,7 @@ Checking connectivity... done.
         <tag>Linux</tag>
         <tag>Ubuntu</tag>
         <tag>Ruby</tag>
+        <tag>Jekyll</tag>
       </tags>
   </entry>
   <entry>
@@ -1115,6 +1215,8 @@ Checking connectivity... done.
 </blockquote>
 <h3 id="注册表相关"><a href="#注册表相关" class="headerlink" title="注册表相关"></a>注册表相关</h3><p>“regedit.exe” 是 Windows 系统的注册表编辑器，是 Registry Editor 的缩写。其实质上是一个庞大的数据库，它存储这下面这些内容：软、硬件的有关配置和状态信息，应用程序和资源管理器外壳的初始条件、首选项和卸载数据；计算机的整个系统的设置和各种许可，文件扩展名与应用程序的关联，硬件的描述、状态和属性；计算机性能纪录和底层的系统状态信息，以及各类其他数据。（摘自百度百科）</p>
 <p>通常可使用 <code>win + r</code> 运行输入 <code>regedit</code> 打开。</p>
+<span id="more"></span>
+
 <h4 id="删除我的电脑中应用添加的图标"><a href="#删除我的电脑中应用添加的图标" class="headerlink" title="删除我的电脑中应用添加的图标"></a>删除我的电脑中应用添加的图标</h4><p>由于一般使用绿色版，所以接触的不是很多，但印象中百度云管家、360 云盘这种东西都是会增加图标的，而且有的应用添加的图标是不能右键删除的，这里记录下使用注册表的解决方法。</p>
 <p>接触到的图标都是在下列位置新建<strong>注册表项</strong>，发现其余的再补充。</p>
 <pre><code>HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace
@@ -1137,5 +1239,10 @@ Checking connectivity... done.
       <categories>
         <category>Windows</category>
       </categories>
+      <tags>
+        <tag>Windows</tag>
+        <tag>Regedit</tag>
+        <tag>PowerShell</tag>
+      </tags>
   </entry>
 </search>

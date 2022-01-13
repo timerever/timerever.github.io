@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -173,7 +173,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">28</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -285,6 +285,18 @@
           <a href="/categories/Keycloak/" itemprop="url" rel="index"><span itemprop="name">Keycloak</span></a>
         </span>
     </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-tags"></i>
+      </span>
+      <span class="post-meta-item-text">标签：</span>
+      <span class="post-tags">
+        <a href="/tags/Java/" rel="tag"> Java</a>
+        <a href="/tags/Keycloak/" rel="tag"> Keycloak</a>
+        <a href="/tags/OAuth2/" rel="tag"> OAuth2</a>
+        <a href="/tags/SSO/" rel="tag"> SSO</a>
+      </span>
+    </span>
 </div>
 
         </div>
@@ -294,10 +306,224 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>Keycloak 配置自定义社交登录组件，支持公司内部 SSO OAuth2 接入 Keycloak。</p>
+          <p>Keycloak 自带的社交网站接入只有国外的系统，如果接入国内平台则需要自定义社交登录组件。支持公司内部 SSO 的 OAuth2 接入方式同理，并通过同时实现自定义 UserAttributeMapper 来恢复 Attribute Importer 的 Mapper 类型，以额外存储用户信息并实现自动更新。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/01/05/keycloak-custom-idp/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.timerever.tk/2021/12/02/hibernate-incorrect-metamodel-with-no-reationship/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/12376409?v=4">
+      <meta itemprop="name" content="timerever">
+      <meta itemprop="description" content="Just another blog.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/12/02/hibernate-incorrect-metamodel-with-no-reationship/" class="post-title-link" itemprop="url">Hibernate 解决 Metamodel 属性类型错误问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-12-02 11:41:48" itemprop="dateCreated datePublished" datetime="2021-12-02T11:41:48+08:00">2021-12-02</time>
+    </span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-tags"></i>
+      </span>
+      <span class="post-meta-item-text">标签：</span>
+      <span class="post-tags">
+        <a href="/tags/Java/" rel="tag"> Java</a>
+        <a href="/tags/Hibernate/" rel="tag"> Hibernate</a>
+      </span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>因为项目上使用了 Hibernate Metamodel，而且自定义映射了数据库的 json 字段类型，导致生成的 Metamodel 属性类型有误。虽然并没有用映射的这些属性做 <code>CriteriaQuery</code>，所以其实在项目的使用上没有影响，但是启动时还是会报一个 ERROR 日志，所以寻找一个能够根治的解决办法。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR org.hibernate.metamodel.internal.MetadataContext [MetadataContext.java:491] - HHH015007: Illegal argument on static metamodel field injection : Foo_#bars; expected type : org.hibernate.metamodel.model.domain.internal.SingularAttributeImpl; encountered type : javax.persistence.metamodel.MapAttribute</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/12/02/hibernate-incorrect-metamodel-with-no-reationship/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.timerever.tk/2021/11/26/hibernate-automatic-2nd-collection-cache-eviction/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/12376409?v=4">
+      <meta itemprop="name" content="timerever">
+      <meta itemprop="description" content="Just another blog.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/11/26/hibernate-automatic-2nd-collection-cache-eviction/" class="post-title-link" itemprop="url">Hibernate 配置自动清除二级缓存之集合缓存</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-26 15:21:10" itemprop="dateCreated datePublished" datetime="2021-11-26T15:21:10+08:00">2021-11-26</time>
+    </span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-tags"></i>
+      </span>
+      <span class="post-meta-item-text">标签：</span>
+      <span class="post-tags">
+        <a href="/tags/Java/" rel="tag"> Java</a>
+        <a href="/tags/Hibernate/" rel="tag"> Hibernate</a>
+      </span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>之前在项目上使用了 Hibernate，并开启了基于 caffeine 的二级缓存。因为 Hibernate 会自动处理缓存，所以一直没怎么关注。直到最近，发现在一种特定的情况下，Hibernate 不会自动清除二级缓存里面的集合缓存。问题最后解决起来其实很简单，增加一个配置项的事。不过问题寻求解决的过程还是蛮繁琐的，并没有人能够直接告诉这个问题的答案，在此记录一下这个问题的排查过程。</p>
+<blockquote>
+<p>太长不看版：Spring Boot 中设置属性 spring.jpa.properties.auto_evict_collection_cache=true 即可解决。</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/11/26/hibernate-automatic-2nd-collection-cache-eviction/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -400,10 +626,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>设计模式之工厂模式的 Java 代码实现</p>
+          <p><strong>工厂模式</strong> 属于设计模式中创建型数据模式的一种，同时是软件设计模式中最常使用的模式。广义的工厂模式只是一个统称，其还可以继续分为 <strong>简单工厂模式</strong>、<strong>工厂模式</strong> 和 <strong>抽象工厂模式</strong>。这里对这些工厂模式进行说明并使用 Java 代码进行实现。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2017/04/29/factory-patterns-with-java/">
+              <a class="btn" href="/2017/04/29/factory-patterns-with-java/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -504,10 +730,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>软件设计模式概述</p>
+          <h1 id="模式和软件模式"><a href="#模式和软件模式" class="headerlink" title="模式和软件模式"></a>模式和软件模式</h1><blockquote>
+<p>A pattern is a solution to a problem in a context.</p>
+</blockquote>
+<p><strong>模式</strong> 起源于建筑学，每个模式都描述了一个在我们的环境中不断出现的问题，然后描述了该问题的解决方案的核心，通过这种方式我们可以无数次的重用那些已有的解决方案，无需再重复相同的工作。</p>
+<p><strong>软件模式 (Software Patterns)</strong> 是将模式的一般概念应用于软件开发领域，即软件开发的总体指导思路或参照样板。软件模式并非仅限于设计模式，它还包括架构模式、分析模式和过程模式等，实际上，在软件开发生命周期的每一个阶段都存在着一些被认同的模式。</p>
+<p>在这里主要讨论的是软件设计模式。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2017/04/28/design-patterns/">
+              <a class="btn" href="/2017/04/28/design-patterns/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -609,15 +840,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>对 “pthread_create” 未定义的引用解决方案</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/04/26/undefined-reference-to-pthread_create/">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <p>今天在对 Linux 多线程编程进行学习时，在编译代码时出现了问题。</p>
+<p>由于使用了 <code>pthread_create</code>, <code>pthread_join</code> 等函数，在使用 <code>gcc</code> 编译时，出现了 <strong>对 ‘pthread_create’ 未定义的引用</strong> 的错误，在上网查询后，得知 pthread 库不是 Linux 系统默认的库，所以在编译时需要添加 <code>-lpthread</code> 参数来使用 libpthread.a 库进行编译。</p>
+<pre><code># gcc -o pthread -lpthread pthread.c
+</code></pre>
+<p>结果还是失败。再次上网查阅，得知 <code>-lpthread</code> 应该放到最后面，修改后编译通过。</p>
+<pre><code># gcc thread.c -o thread.c -lpthread
+</code></pre>
+<p><strong>参考链接：<a target="_blank" rel="noopener" href="http://blog.csdn.net/besfanfei/article/details/7542396">http://blog.csdn.net/besfanfei/article/details/7542396</a></strong></p>
+
       
     </div>
 
@@ -714,10 +945,13 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>对 Linux 下 sigaction 自定义信号处理函数的猜测及“修复”</p>
+          <p>在对嵌入式 Linux 系统程序开发中的进程间通信进行学习时，涉及到了信号集函数组，书中给出的示例如下：</p>
+<blockquote>
+<p>该实例首先把 SIGQUIT、SIGINT 两个信号加入信号集，然后将该信号集设为阻塞状态，<br>并在该状态下使程序暂停 5 秒。接下来再将信号集设置为非阻塞状态，再对这两个信号分别<br>操作，其中 SIGQUIT 执行默认操作，而 SIGINT 执行用户自定义函数的操作。源代码如下<br>所示：</p>
+</blockquote>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2017/04/24/fix-sigaction/">
+              <a class="btn" href="/2017/04/24/fix-sigaction/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -819,10 +1053,12 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>JDK1.7 下使用自定义 SSLContext 完成 Apache HttpClient 忽略对服务器端证书的校验</p>
+          <p>在使用 Apache HttpComponents 时，需要访问一个第三方接口进行数据传输，但是由于对方使用的是 Let’s Encrypt 的证书，虽然浏览器是信任的，但是在调试的时候发现程序并不信任,所以采用自定义 SSLContext 的方式解决该问题。</p>
+<h3 id="查找官方解决方案"><a href="#查找官方解决方案" class="headerlink" title="查找官方解决方案"></a>查找官方解决方案</h3><p>作为一只程序猿，翻官方文档肯定是首选方案。官方提供了一种 Custom SSL context 的实现。</p>
+<p><a target="_blank" rel="noopener" href="http://hc.apache.org/httpcomponents-client-4.5.x/httpclient/examples/org/apache/http/examples/client/ClientCustomSSL.java">http://hc.apache.org/httpcomponents-client-4.5.x/httpclient/examples/org/apache/http/examples/client/ClientCustomSSL.java</a></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2017/04/23/client-custom-ssl/">
+              <a class="btn" href="/2017/04/23/client-custom-ssl/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -923,10 +1159,22 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>正则表达式原理探究</p>
+          <blockquote>
+<p>正则表达式是被广为使用的工具，功能非常强大，但语法很复杂，想要完全记忆非常麻烦。<br>偶然间在《算法：第四版》上看到了有关于正则表达式原理的叙述，受益匪浅，在此做下笔记。</p>
+</blockquote>
+<h1 id="正则表达式的定义"><a href="#正则表达式的定义" class="headerlink" title="正则表达式的定义"></a>正则表达式的定义</h1><p><strong>什么是正则表达式？</strong>一个正则表达式对应着一堆字符串，这些字符串构成一个集合，它们的共同特点就是匹配于这个正则表达式。例如：a(a|b) * b 就对应着第一个字符为a，最后一个字符为b，由a和b构成的字符串。 </p>
+<p>正则表达式有三种核心的基本结构：</p>
+<ol>
+<li> <em>连接</em>：如 abc，由 a, b, c连接而成。</li>
+<li><em>或</em>：如 a|b|c，表示是 a 或 b 或 c。<pre><code>  ab|bcd表示ab或bcd。
+</code></pre>
+</li>
+<li> <em>闭包</em>：如a*b，表示0或若干个a和一个b连接而成的字符串。</li>
+</ol>
+<p>以上就是最最最基本的结构，是构成正则表达式的基础。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2017/04/09/regular-expression/">
+              <a class="btn" href="/2017/04/09/regular-expression/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1009,109 +1257,15 @@
           <a href="/categories/Windows/" itemprop="url" rel="index"><span itemprop="name">Windows</span></a>
         </span>
     </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Windows 装机后日常个性化配置。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/04/04/windows-init/">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.timerever.tk/2017/03/18/git-tutorial/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/12376409?v=4">
-      <meta itemprop="name" content="timerever">
-      <meta itemprop="description" content="Just another blog.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="A Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2017/03/18/git-tutorial/" class="post-title-link" itemprop="url">Git 简易教程</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2017-03-18 11:07:37" itemprop="dateCreated datePublished" datetime="2017-03-18T11:07:37+08:00">2017-03-18</time>
-    </span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>4.5k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>16 分钟</span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
-        </span>
-    </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="fa fa-tags"></i>
       </span>
       <span class="post-meta-item-text">标签：</span>
       <span class="post-tags">
-        <a href="/tags/Git/" rel="tag"> Git</a>
-        <a href="/tags/GitHub/" rel="tag"> GitHub</a>
+        <a href="/tags/Windows/" rel="tag"> Windows</a>
+        <a href="/tags/Regedit/" rel="tag"> Regedit</a>
+        <a href="/tags/PowerShell/" rel="tag"> PowerShell</a>
       </span>
     </span>
 </div>
@@ -1123,115 +1277,14 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>Git 简易教程</p>
+          <blockquote>
+<p>一个存放 Windows 各种配置和各种命令的地方，毕竟 Windows 的功能有的藏的实在是深或者是没有直接的入口。这种东西大多网络收集，且都是网上存在的，找不到具体出处，所以此处不列出出处。</p>
+</blockquote>
+<h3 id="注册表相关"><a href="#注册表相关" class="headerlink" title="注册表相关"></a>注册表相关</h3><p>“regedit.exe” 是 Windows 系统的注册表编辑器，是 Registry Editor 的缩写。其实质上是一个庞大的数据库，它存储这下面这些内容：软、硬件的有关配置和状态信息，应用程序和资源管理器外壳的初始条件、首选项和卸载数据；计算机的整个系统的设置和各种许可，文件扩展名与应用程序的关联，硬件的描述、状态和属性；计算机性能纪录和底层的系统状态信息，以及各类其他数据。（摘自百度百科）</p>
+<p>通常可使用 <code>win + r</code> 运行输入 <code>regedit</code> 打开。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2017/03/18/git-tutorial/">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.timerever.tk/2017/03/13/docker-learning-trip-6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/12376409?v=4">
-      <meta itemprop="name" content="timerever">
-      <meta itemprop="description" content="Just another blog.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="A Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2017/03/13/docker-learning-trip-6/" class="post-title-link" itemprop="url">Docker 学习之旅（六）：使用 Docker 搭建 Java Web 运行环境</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2017-03-13 09:58:28" itemprop="dateCreated datePublished" datetime="2017-03-13T09:58:28+08:00">2017-03-13</time>
-    </span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.2k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>4 分钟</span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a>
-        </span>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-tags"></i>
-      </span>
-      <span class="post-meta-item-text">标签：</span>
-      <span class="post-tags">
-        <a href="/tags/Docker/" rel="tag"> Docker</a>
-        <a href="/tags/Java-Web/" rel="tag"> Java Web</a>
-      </span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Docker 从入门到放弃系列之使用 Docker 搭建 Java Web 运行环境</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/03/13/docker-learning-trip-6/">
+              <a class="btn" href="/2017/04/04/windows-init/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
