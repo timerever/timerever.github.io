@@ -11,7 +11,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#222">
-  <meta name="google-site-verification" content="CjGJdH8_BHGuUxzi06DlaW_9PF8iUgxceKsMT0ad1s0">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -411,7 +410,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>因为项目上使用了 Hibernate Metamodel，而且自定义映射了数据库的 json 字段类型，导致生成的 Metamodel 属性类型有误。虽然并没有用映射的这些属性做 <code>CriteriaQuery</code>，所以其实在项目的使用上没有影响，但是启动时还是会报一个 ERROR 日志，所以寻找一个能够根治的解决办法。</p>
+          <p>因为项目上使用了 Hibernate Metamodel，而且自定义映射了数据库的 JSON 字段类型，导致生成的 Metamodel 属性类型有误。虽然并没有用映射的这些属性做 <code>CriteriaQuery</code>，所以其实在项目的使用上没有影响，但是启动时还是会报一个 ERROR 日志，所以寻找一个能够根治的解决办法。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR org.hibernate.metamodel.internal.MetadataContext [MetadataContext.java:491] - HHH015007: Illegal argument on static metamodel field injection : Foo_#bars; expected type : org.hibernate.metamodel.model.domain.internal.SingularAttributeImpl; encountered type : javax.persistence.metamodel.MapAttribute</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">

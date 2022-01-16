@@ -11,7 +11,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#222">
-  <meta name="google-site-verification" content="CjGJdH8_BHGuUxzi06DlaW_9PF8iUgxceKsMT0ad1s0">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -21,16 +20,16 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"blog.timerever.tk","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
-<meta name="description" content="因为项目上使用了 Hibernate Metamodel，而且自定义映射了数据库的 json 字段类型，导致生成的 Metamodel 属性类型有误。虽然并没有用映射的这些属性做 CriteriaQuery，所以其实在项目的使用上没有影响，但是启动时还是会报一个 ERROR 日志，所以寻找一个能够根治的解决办法。 1ERROR org.hibernate.metamodel.internal.Me">
+<meta name="description" content="因为项目上使用了 Hibernate Metamodel，而且自定义映射了数据库的 JSON 字段类型，导致生成的 Metamodel 属性类型有误。虽然并没有用映射的这些属性做 CriteriaQuery，所以其实在项目的使用上没有影响，但是启动时还是会报一个 ERROR 日志，所以寻找一个能够根治的解决办法。 1ERROR org.hibernate.metamodel.internal.Me">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hibernate 解决 Metamodel 属性类型错误问题">
 <meta property="og:url" content="https://blog.timerever.tk/2021/12/02/hibernate-incorrect-metamodel-with-no-reationship/index.html">
 <meta property="og:site_name" content="A Blog">
-<meta property="og:description" content="因为项目上使用了 Hibernate Metamodel，而且自定义映射了数据库的 json 字段类型，导致生成的 Metamodel 属性类型有误。虽然并没有用映射的这些属性做 CriteriaQuery，所以其实在项目的使用上没有影响，但是启动时还是会报一个 ERROR 日志，所以寻找一个能够根治的解决办法。 1ERROR org.hibernate.metamodel.internal.Me">
+<meta property="og:description" content="因为项目上使用了 Hibernate Metamodel，而且自定义映射了数据库的 JSON 字段类型，导致生成的 Metamodel 属性类型有误。虽然并没有用映射的这些属性做 CriteriaQuery，所以其实在项目的使用上没有影响，但是启动时还是会报一个 ERROR 日志，所以寻找一个能够根治的解决办法。 1ERROR org.hibernate.metamodel.internal.Me">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://blog.timerever.tk/2021/12/02/hibernate-incorrect-metamodel-with-no-reationship/hibernate-incorrect-metamodel-with-no-reationship-1.png">
 <meta property="article:published_time" content="2021-12-02T03:41:48.000Z">
-<meta property="article:modified_time" content="2022-01-13T11:03:25.332Z">
+<meta property="article:modified_time" content="2022-01-16T14:28:11.759Z">
 <meta property="article:author" content="timerever">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="Hibernate">
@@ -312,13 +311,13 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>因为项目上使用了 Hibernate Metamodel，而且自定义映射了数据库的 json 字段类型，导致生成的 Metamodel 属性类型有误。虽然并没有用映射的这些属性做 <code>CriteriaQuery</code>，所以其实在项目的使用上没有影响，但是启动时还是会报一个 ERROR 日志，所以寻找一个能够根治的解决办法。</p>
+        <p>因为项目上使用了 Hibernate Metamodel，而且自定义映射了数据库的 JSON 字段类型，导致生成的 Metamodel 属性类型有误。虽然并没有用映射的这些属性做 <code>CriteriaQuery</code>，所以其实在项目的使用上没有影响，但是启动时还是会报一个 ERROR 日志，所以寻找一个能够根治的解决办法。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR org.hibernate.metamodel.internal.MetadataContext [MetadataContext.java:491] - HHH015007: Illegal argument on static metamodel field injection : Foo_#bars; expected type : org.hibernate.metamodel.model.domain.internal.SingularAttributeImpl; encountered type : javax.persistence.metamodel.MapAttribute</span><br></pre></td></tr></table></figure>
 
 <span id="more"></span>
 
-<h3 id="一、定位问题"><a href="#一、定位问题" class="headerlink" title="一、定位问题"></a>一、定位问题</h3><p><strong>首先是背景信息：</strong>因为前端需要在数据库存储 JSON 字段，而且现在版本的 MySQL 天然支持 JSON ，所以建表时采用了 JSON 作为字段类型。然后在 JPA 实体层面，引入了 <code>hibernate-types</code> 依赖来增加 Hibernate 对 JSON 的支持，字段属性增加了 <code>@Type(type = &quot;json&quot;)</code> 注解，本身定义为了 <code>Map</code> 类型。</p>
-<p>其实在 Hibernate 对 JSON 处理这件事情上，传统方案是通过自定义 <code>Convert</code> 来实现。或者可能不是 JSON Object 而是 JSON Array，但无论是那种情况，均会遇到同样的问题。</p>
+<h3 id="一、定位问题"><a href="#一、定位问题" class="headerlink" title="一、定位问题"></a>一、定位问题</h3><p><strong>首先是背景信息：</strong> 因为前端需要在数据库存储 JSON 字段，而且现在版本的 MySQL 天然支持 JSON ，所以建表时采用了 JSON 作为字段类型。然后在 JPA 实体层面，引入了 <code>hibernate-types</code> 依赖来增加 Hibernate 对 JSON 的支持，字段属性增加了 <code>@Type(type = &quot;json&quot;)</code> 注解，本身定义为了 <code>Map</code> 类型。</p>
+<p>其实在 Hibernate 对 JSON 处理这件事情上，传统方案是通过自定义 <code>Convert</code> 来实现。或者可能不是 JSON Object 而是 JSON Array，但无论是哪种情况，均会遇到同样的问题。</p>
 <p>通过报错信息，对代码进行 DEBUG 后得知，Hibernate 在启动时，会根据实体属性是否存在与其他实体的关系，生成不同的 <code>Attribute</code>。比如 OneToMany 一对多关系就会生成 <code>ListAttribute</code> 或 <code>SetAttribute</code>，没有关系的属性都是 <code>SingularAttribute</code>。而启动时通过反射，会 set Metamodel 的对应属性，我们可以在 target 下面看见，Metamodel 的类型为 <code>MapAttribute</code>，所以我们可以确定，问题就出在了生成 Metamodel 的时候。具体是不是直接拿实体定义的数据类型来生成的我没有去看源码，不过可以肯定的是它在判断类型的时候缺少额外的判断。</p>
 <h3 id="二、解决问题"><a href="#二、解决问题" class="headerlink" title="二、解决问题"></a>二、解决问题</h3><p>同样作为一个共性问题，在 Goolge 进行搜索后，定位到了一条仍然是 Hibernate 官方 Bug 追踪的链接 <a target="_blank" rel="noopener" href="https://hibernate.atlassian.net/browse/HHH-12338">Incorrect metamodel for basic collections</a>。简单的来说，就是当前已经在 5.5.0.Alpha1 的版本中得到了解决，不过如果你认真看了下面整个的 Activity 记录，就会发现仍然是存在一个小插曲。</p>
 <h3 id="三、插曲"><a href="#三、插曲" class="headerlink" title="三、插曲"></a>三、插曲</h3><p>这个问题是在 2018 年的 3 月份被提出来的，而 5.5.0.Alpha1 已经是 2021 年 8 月份的事情了，照理说这么一个小问题不会需要三年多的时间来处理，而这个疑问的答案就在下面的讨论之中。</p>
