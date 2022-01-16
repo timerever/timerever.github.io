@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://blog.timerever.tk</id>
+    <title>A Blog • Posts by &#34;ruby&#34; tag</title>
+    <link href="https://blog.timerever.tk" />
+    <updated>2017-01-26T03:37:45.000Z</updated>
+    <category term="Java" />
+    <category term="HttpClient" />
+    <category term="Design Pattern" />
+    <category term="Docker" />
+    <category term="Dockerfile" />
+    <category term="Java Web" />
+    <category term="Factory Patterns" />
+    <category term="Linux" />
+    <category term="C" />
+    <category term="Android" />
+    <category term="Huawei" />
+    <category term="CyanogenMod" />
+    <category term="Git" />
+    <category term="GitHub" />
+    <category term="Hibernate" />
+    <category term="Keycloak" />
+    <category term="OAuth2" />
+    <category term="SSO" />
+    <category term="VMware" />
+    <category term="vmdk" />
+    <category term="wget" />
+    <category term="Regular Expression" />
+    <category term="Ubuntu" />
+    <category term="Ruby" />
+    <category term="Jekyll" />
+    <category term="Windows" />
+    <category term="Regedit" />
+    <category term="PowerShell" />
+    <entry>
+        <id>https://blog.timerever.tk/2017/01/26/unused-jekyll-on-ubuntu/</id>
+        <title>记录未使用的 Jekyll 环境搭建</title>
+        <link rel="alternate" href="https://blog.timerever.tk/2017/01/26/unused-jekyll-on-ubuntu/"/>
+        <content type="html">&lt;p&gt;自从win10出现了 Bash on Ubuntu，自己便喜欢上了它，&lt;del&gt;甚至抛弃了虚拟机&lt;/del&gt;（双系统还是存在的）。正好最近厌烦了 wp，毕竟太臃肿了，对于我这种没事闲的只会随便写写的没太大用处。&lt;/p&gt;
+&lt;p&gt;然后就想起了自己沉睡已久的 github，不是因为 github 的免费且无限流量，主要是喜欢 github 上静态页面的简约，百度了下现在的方式，大多是 Jelly 来搭建的，不喜欢在 windows 上装各种软件的我就这么选择了 Bash on Ubuntu，这也是本文的来源。&lt;/p&gt;
+&lt;h3 id=&#34;前期准备&#34;&gt;&lt;a href=&#34;#前期准备&#34; class=&#34;headerlink&#34; title=&#34;前期准备&#34;&gt;&lt;/a&gt;前期准备&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://jekyll.com.cn/&#34;&gt;Jekyll 中文官网&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.ruby-lang.org/&#34;&gt;Ruby官网&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+
+&lt;h3 id=&#34;环境搭建&#34;&gt;&lt;a href=&#34;#环境搭建&#34; class=&#34;headerlink&#34; title=&#34;环境搭建&#34;&gt;&lt;/a&gt;环境搭建&lt;/h3&gt;&lt;p&gt;由于 Ubuntu 的仓库里各软件还是很多的，所以首先选择了 apt 方式安装。&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;$ sudo apt-get install ruby&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;$ gem install jekyll&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;结果出错，ruby 版本太低，输入 ruby -v 查询后是1.95的版本，需求是2点多版本。&lt;/p&gt;
+&lt;h3 id=&#34;换用源码编译安装&#34;&gt;&lt;a href=&#34;#换用源码编译安装&#34; class=&#34;headerlink&#34; title=&#34;换用源码编译安装&#34;&gt;&lt;/a&gt;换用源码编译安装&lt;/h3&gt;&lt;p&gt;Linux 下安装软件，至少是我自己的通常思维是先用自带的包管理器安装，如果没有对应的软件包或者版本太低或有缺陷，通常会到官网选择编译安装。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;首先安装编译环境&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;$ sudo apt-get install build-essential cmake&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;ul&gt;
+&lt;li&gt;然后下载源码编译安装&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;$ wget https://cache.ruby-lang.org/pub/ruby/2.4/ruby-2.4.0.tar.gz&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;$ tar -zxvf ruby-2.4.0.tar.gz&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;$ &lt;span class=&#34;built_in&#34;&gt;cd&lt;/span&gt; ruby-2.4.0&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;$ ./configure&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;$ make&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;$ sudo make install&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;在修改 gem 源时出现错误，使用的是国内的 https 源，提示 openssl 有问题。然而系统是安有 openssl 的，而且编译的时候并没有看到有关 openssl 的配置（也有可能是我没有仔细看）。提示可以使用 http 的方式添加源，不过略微强迫症，于是宣告源码编译安装失败。&lt;/p&gt;
+&lt;h3 id=&#34;rvm-方式安装&#34;&gt;&lt;a href=&#34;#rvm-方式安装&#34; class=&#34;headerlink&#34; title=&#34;rvm 方式安装&#34;&gt;&lt;/a&gt;rvm 方式安装&lt;/h3&gt;&lt;p&gt;这也是在网上查到的第三种也是常见的最后一种安装方式，首先安装 rvm 然后用 rvm 安装 ruby。&lt;/p&gt;
+&lt;figure class=&#34;highlight bash&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;$ curl -L https://get.rvm.io | bash -s stable&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;$ &lt;span class=&#34;built_in&#34;&gt;source&lt;/span&gt; ~/.rvm/scripts/rvm&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;$ rvm requirements&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;$ rvm install ruby&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;$ gem install jekyll&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;成功安装，安装的 ruby 版本为2.3.3。&lt;/p&gt;
+</content>
+        <category term="Linux" />
+        <category term="Ubuntu" />
+        <category term="Ruby" />
+        <category term="Jekyll" />
+        <updated>2017-01-26T03:37:45.000Z</updated>
+    </entry>
+</feed>

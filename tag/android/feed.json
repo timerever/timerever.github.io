@@ -1,0 +1,20 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "A Blog • All posts by \"android\" tag",
+    "description": "Just another blog.",
+    "home_page_url": "https://blog.timerever.tk",
+    "items": [
+        {
+            "id": "https://blog.timerever.tk/2017/02/27/frequently-used-commands-while-flashing-android/",
+            "url": "https://blog.timerever.tk/2017/02/27/frequently-used-commands-while-flashing-android/",
+            "title": "刷 CM 过程中对使用的常用刷机命令的记录",
+            "date_published": "2017-02-27T10:01:17.000Z",
+            "content_html": "<blockquote>\n<p>终于决定把手里这台荣耀6 刷成 CM，无奈华为只开源 4.4.4 的内核代码，只有 CM 11 的非官方包，哭。</p>\n</blockquote>\n<p>寻着 XDA 上开发者给的步骤给走，给了两个 rec 一个无法挂载内置储存卡然后没外置的选项（不过也是因为这个才有了本文），一个有问题直接手机进了救援模式，也是汗颜，索性自己手里有 rec 成功解决了。</p>\n<p>文中说把刷机包放到外置内存卡目录下，然后进入 rec 傻眼了并没有找到从外置内存卡安装刷机包的选项，于是无奈自己尝试用 adb 传送刷机包。</p>\n<p>至于为什么以前不怎么用 adb，主要是由于华为这机子很难从关机状态进入 fastboot，官方让插着 USB 线关机进入但是成功率不高，所以以前都是用论坛正好给出的脚本从开机状态进入，正好熟悉下 adb 记录于此。</p>\n<span id=\"more\"></span>\n\n<h3 id=\"adb-命令\"><a href=\"#adb-命令\" class=\"headerlink\" title=\"adb 命令\"></a>adb 命令</h3><ul>\n<li><a href=\"https://developer.android.com/studio/command-line/adb.html\">官方文档</a></li>\n</ul>\n<figure class=\"highlight bash\"><table><tr><td class=\"gutter\"><pre><span class=\"line\">1</span><br><span class=\"line\">2</span><br><span class=\"line\">3</span><br><span class=\"line\">4</span><br><span class=\"line\">5</span><br><span class=\"line\">6</span><br><span class=\"line\">7</span><br><span class=\"line\">8</span><br></pre></td><td class=\"code\"><pre><span class=\"line\">$ adb devices <span class=\"comment\"># 查询连接设备</span></span><br><span class=\"line\">$ adb install &lt;apkfile&gt; <span class=\"comment\"># 安装apk文件</span></span><br><span class=\"line\">$ adb uninstall &lt;package&gt; <span class=\"comment\"># 卸载软件</span></span><br><span class=\"line\">$ adb push foo.txt /sdcard/foo.txt <span class=\"comment\">#发送foo.txt文件</span></span><br><span class=\"line\">$ adb pull /sdcard/foo.txt foo.txt <span class=\"comment\">#传送foo.txt文件到本地</span></span><br><span class=\"line\">$ adb reboot <span class=\"comment\"># 重启</span></span><br><span class=\"line\">$ adb reboot recovery <span class=\"comment\"># 重启到recovery</span></span><br><span class=\"line\">$ adb reboot bootloader <span class=\"comment\"># 重启到fastboot</span></span><br></pre></td></tr></table></figure>\n\n<h3 id=\"fastboot-命令\"><a href=\"#fastboot-命令\" class=\"headerlink\" title=\"fastboot 命令\"></a>fastboot 命令</h3><figure class=\"highlight bash\"><table><tr><td class=\"gutter\"><pre><span class=\"line\">1</span><br><span class=\"line\">2</span><br><span class=\"line\">3</span><br><span class=\"line\">4</span><br></pre></td><td class=\"code\"><pre><span class=\"line\">$ fastboot flash boot boot.img <span class=\"comment\"># 刷入boot</span></span><br><span class=\"line\">$ fastboot flash recovery recovery.img <span class=\"comment\"># 同上，刷入recovery</span></span><br><span class=\"line\">......</span><br><span class=\"line\">$ fastboot reboot <span class=\"comment\"># 重启</span></span><br></pre></td></tr></table></figure>\n",
+            "tags": [
+                "Android",
+                "Huawei",
+                "CyanogenMod"
+            ]
+        }
+    ]
+}

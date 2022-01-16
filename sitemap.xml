@@ -4,22 +4,12 @@
 
     <sitemap>
         <loc>https://blog.timerever.tk/post-sitemap.xml</loc>
-        <lastmod>2022-01-16T14:28:11.763Z</lastmod>
+        <lastmod>2022-01-16T15:06:59.562Z</lastmod>
     </sitemap>
 
     <sitemap>
         <loc>https://blog.timerever.tk/page-sitemap.xml</loc>
-        <lastmod>2022-01-16T14:28:11.763Z</lastmod>
-    </sitemap>
-
-    <sitemap>
-        <loc>https://blog.timerever.tk/category-sitemap.xml</loc>
-        <lastmod>2022-01-16T14:28:11.763Z</lastmod>
-    </sitemap>
-
-    <sitemap>
-        <loc>https://blog.timerever.tk/tag-sitemap.xml</loc>
-        <lastmod>2022-01-16T14:28:11.763Z</lastmod>
+        <lastmod>2022-01-16T15:06:59.562Z</lastmod>
     </sitemap>
 
 </sitemapindex>

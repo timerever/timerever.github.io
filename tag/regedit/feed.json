@@ -1,0 +1,20 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "A Blog • All posts by \"regedit\" tag",
+    "description": "Just another blog.",
+    "home_page_url": "https://blog.timerever.tk",
+    "items": [
+        {
+            "id": "https://blog.timerever.tk/2017/04/04/windows-init/",
+            "url": "https://blog.timerever.tk/2017/04/04/windows-init/",
+            "title": "Windows 配置",
+            "date_published": "2017-04-04T06:44:47.000Z",
+            "content_html": "<blockquote>\n<p>一个存放 Windows 各种配置和各种命令的地方，毕竟 Windows 的功能有的藏的实在是深或者是没有直接的入口。这种东西大多网络收集，且都是网上存在的，找不到具体出处，所以此处不列出出处。</p>\n</blockquote>\n<h3 id=\"注册表相关\"><a href=\"#注册表相关\" class=\"headerlink\" title=\"注册表相关\"></a>注册表相关</h3><p>“regedit.exe” 是 Windows 系统的注册表编辑器，是 Registry Editor 的缩写。其实质上是一个庞大的数据库，它存储这下面这些内容：软、硬件的有关配置和状态信息，应用程序和资源管理器外壳的初始条件、首选项和卸载数据；计算机的整个系统的设置和各种许可，文件扩展名与应用程序的关联，硬件的描述、状态和属性；计算机性能纪录和底层的系统状态信息，以及各类其他数据。（摘自百度百科）</p>\n<p>通常可使用 <code>win + r</code> 运行输入 <code>regedit</code> 打开。</p>\n<span id=\"more\"></span>\n\n<h4 id=\"删除我的电脑中应用添加的图标\"><a href=\"#删除我的电脑中应用添加的图标\" class=\"headerlink\" title=\"删除我的电脑中应用添加的图标\"></a>删除我的电脑中应用添加的图标</h4><p>由于一般使用绿色版，所以接触的不是很多，但印象中百度云管家、360 云盘这种东西都是会增加图标的，而且有的应用添加的图标是不能右键删除的，这里记录下使用注册表的解决方法。</p>\n<p>接触到的图标都是在下列位置新建<strong>注册表项</strong>，发现其余的再补充。</p>\n<pre><code>HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\n</code></pre>\n<p>其中一个项对应一个图标，但没有很好的办法辨别其对应关系，在图标很多时建议先备份再删除。</p>\n<p>日常电脑中没有那种烦人的图标，这次因为有一个出现才去找解决办法删掉了，所以，已经没有图可以截了。</p>\n<h4 id=\"Win10-系统图片打开方式恢复默认照片查看器\"><a href=\"#Win10-系统图片打开方式恢复默认照片查看器\" class=\"headerlink\" title=\"Win10 系统图片打开方式恢复默认照片查看器\"></a>Win10 系统图片打开方式恢复默认照片查看器</h4><pre><code>HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows Photo Viewer\\Capabilities\\FileAssociations\n</code></pre>\n<p>其中每一个<strong>字符串值</strong>代表一种后缀的关联，数值名称为所想要关联的后缀，例如 <code>.jpg</code>，数值数据统一写 <code>PhotoViewer.FileAssoc.Tiff</code>，想恢复哪种右键关联就新建对应后缀的注册表<strong>字符串值</strong>即可。</p>\n<p><strong>已知此路径非唯一的恢复方式，存在其余注册表路径可以恢复。</strong></p>\n<p>不过，还是推荐使用 <a href=\"http://www.chuyu.me/zh-Hans/index.html\">Dism++</a> 恢复，方便快捷（Dism++ 采用的就是上面所列出的的注册表路径）。</p>\n<h3 id=\"PowerShell\"><a href=\"#PowerShell\" class=\"headerlink\" title=\"PowerShell\"></a>PowerShell</h3><h4 id=\"卸载Modern-应用\"><a href=\"#卸载Modern-应用\" class=\"headerlink\" title=\"卸载Modern 应用\"></a>卸载Modern 应用</h4><p>除了企业的 LTSB 长期支持版本，家庭版和专业版都会附带 Modern 应用，对于很少使用且不能直接卸载的，可以使用 PowerShell 来卸载部分应用。<br>仅列出无法右键卸载的，可用 PowerShell 卸载的部分应用。<br>闹钟：get-appxpackage <em>Microsoft.WindowsAlarms</em> | remove-appxpackage<br>人脉：get-appxpackage <em>Microsoft.People</em> | remove-appxpackage<br>信息：get-appxpackage <em>Microsoft.Messaging</em> | remove-appxpackage<br>StickyNote：get-appxpackage <em>Sticky</em> | remove-appxpackage</p>\n<h3 id=\"杂类\"><a href=\"#杂类\" class=\"headerlink\" title=\"杂类\"></a>杂类</h3><h4 id=\"关闭密码登录\"><a href=\"#关闭密码登录\" class=\"headerlink\" title=\"关闭密码登录\"></a>关闭密码登录</h4><p>由于各种原因，Windows 账户需要设置密码然而很烦每次开机都要输入密码，使用下面设置即可完成不需每次都输入密码即可自动登录系统。</p>\n<p>开始——运行——输入 <code>control userpasswords2</code>，取消 “要使用本计算机，用户必须输入用户名和密码” 勾选，点击确定关闭窗口后输入想自动登录的用户名和密码，确定后即可。</p>\n<h4 id=\"桌面图标设置\"><a href=\"#桌面图标设置\" class=\"headerlink\" title=\"桌面图标设置\"></a>桌面图标设置</h4><p>通常系统自带桌面图标的设置，可以在进入系统桌面后，右键个性化找到桌面图标设置选项（具体因系统而异）进行修改，然而对于服务器系统，右键并没有个性化选项，无法修改桌面图标，可使用下列命令调出设置窗口设置。</p>\n<p>开始——运行</p>\n<pre><code>rundll32.exe shell32.dll,Control_RunDLL desk.cpl,,0\n</code></pre>\n",
+            "tags": [
+                "Windows",
+                "Regedit",
+                "PowerShell"
+            ]
+        }
+    ]
+}
