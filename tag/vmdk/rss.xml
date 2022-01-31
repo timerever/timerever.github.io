@@ -13,20 +13,20 @@
         <category>Docker</category>
         <category>Dockerfile</category>
         <category>Java Web</category>
-        <category>Factory Patterns</category>
         <category>Linux</category>
         <category>C</category>
+        <category>Factory Patterns</category>
         <category>Android</category>
         <category>Huawei</category>
         <category>CyanogenMod</category>
         <category>Git</category>
         <category>GitHub</category>
         <category>Hibernate</category>
+        <category>VMware</category>
+        <category>vmdk</category>
         <category>Keycloak</category>
         <category>OAuth2</category>
         <category>SSO</category>
-        <category>VMware</category>
-        <category>vmdk</category>
         <category>wget</category>
         <category>Regular Expression</category>
         <category>Ubuntu</category>
@@ -55,7 +55,7 @@
 
 &lt;p&gt;记得转换完成后，删除或处理掉原来的文件，将新生成的文件名改为原文件名，亦或可以删除虚拟机配置中的原有硬盘并新添转换后的硬盘。&lt;/p&gt;
 &lt;p&gt;命令操作截图如下。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;conversion-by-cmd.png&#34; alt=&#34;Alt 操作截图&#34; title=&#34;操作截图&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/conversion-by-cmd.png&#34; alt=&#34;Alt 操作截图&#34; title=&#34;操作截图&#34;&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Virtual disk conversion successful.&lt;/p&gt;
 &lt;/blockquote&gt;

@@ -13,20 +13,20 @@
         <category>Docker</category>
         <category>Dockerfile</category>
         <category>Java Web</category>
-        <category>Factory Patterns</category>
         <category>Linux</category>
         <category>C</category>
+        <category>Factory Patterns</category>
         <category>Android</category>
         <category>Huawei</category>
         <category>CyanogenMod</category>
         <category>Git</category>
         <category>GitHub</category>
         <category>Hibernate</category>
+        <category>VMware</category>
+        <category>vmdk</category>
         <category>Keycloak</category>
         <category>OAuth2</category>
         <category>SSO</category>
-        <category>VMware</category>
-        <category>vmdk</category>
         <category>wget</category>
         <category>Regular Expression</category>
         <category>Ubuntu</category>
@@ -76,7 +76,7 @@
 &lt;h4 id=&#34;RUN&#34;&gt;&lt;a href=&#34;#RUN&#34; class=&#34;headerlink&#34; title=&#34;RUN&#34;&gt;&lt;/a&gt;RUN&lt;/h4&gt;&lt;p&gt;RUN指令将在当前映像之上的新层中执行任何命令，并提交执行结果，这个提交的的执行后的镜像将被 &lt;code&gt;Dockerfile&lt;/code&gt; 的其余步骤使用。&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;RUN&lt;/code&gt; 指令有两种形式：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;code&gt;RUN &amp;lt;command&amp;gt;&lt;/code&gt;（shell 形式，命令在 shell 中运行，对于 Linux 默认为 /bin/sh -c，而对于 Windows 默认为 cmd /S /C）&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;RUN &amp;lt;command&amp;gt;&lt;/code&gt;（shell 形式，命令在 shell 中运行，对于 Linux 默认为 &amp;#x2F;bin&amp;#x2F;sh -c，而对于 Windows 默认为 cmd &amp;#x2F;S &amp;#x2F;C）&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;RUN [&amp;quot;executable&amp;quot;, &amp;quot;param1&amp;quot;, &amp;quot;param2&amp;quot;]&lt;/code&gt;（执行形式）&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;APT-GET&#34;&gt;&lt;a href=&#34;#APT-GET&#34; class=&#34;headerlink&#34; title=&#34;APT-GET&#34;&gt;&lt;/a&gt;APT-GET&lt;/h4&gt;&lt;p&gt;这可能是 &lt;code&gt;RUN&lt;/code&gt; 命令的最多使用情况，但是你应该避免使用 &lt;code&gt;RUN apt-get upgrade&lt;/code&gt; 或是 &lt;code&gt;dist-upgrade&lt;/code&gt;，因为许多“必要”的包将不会在无特权的容器内部被升级。如果一个镜像所包含的基础镜像过期，请联系管理员。&lt;/p&gt;

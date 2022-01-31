@@ -307,7 +307,7 @@
 <p>一个好早就写了出来的教材，代没某大佬投递</p>
 </blockquote>
 <h1 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h1><p><strong>为什么要进行版本控制？</strong>  最简单的例子，当我们用文字处理软件工作时（如Word）需要进行修改，而有时候又不确定修改的内容是不是需要的，因此会产生许多个文件，如图：  </p>
-<p><img src="git-tutorial-1.png"></p>
+<p><img src="/git-tutorial-1.png"></p>
 <p>每一个文件都是在之前的文件基础上进行微小的修改，久而久之，不但文件冗杂，而且还不清楚修改的内容是什么，是一种很杂乱的方式。</p>
 <p>而版本控制就是解决这一问题——通过记录一个或若干文件内容变化，以便将来查阅特定版本修订情况的系统。</p>
 <p>采取版本控制后，你可以将文件还原到之前的状态，比较各状态之间的细节从而查出是修改了哪个地方，找出哪里出了问题。甚至你可以随意删改项目中的文件，照样可以恢复到之前的样子，因而增加了容错率，提供了更多可能性。</p>
@@ -747,7 +747,9 @@
           <p><code>wget</code> 是 Linux 下常用的一个命令行下载工具。由于此次需要下载的文件在国外，所以速度缓慢，然后就想到使用代理进行下载。使用 <code>--help</code> 查询了一番，发现并没有可以设置代理的地方，倒是有不走代理的选项，汗。</p>
 <p>因为是在终端使用，所以并不想使用全局代理，上网搜寻了一下关于 <code>wget</code> 使用代理的使用方法。</p>
 <ol>
-<li>修改 .wgetrc 文件 .wgetrc 文件位于 $HOME 目录下，修改添加代理设置。 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ vi .wgetrc</span><br><span class="line">use_proxy=on</span><br><span class="line">http_proxy=http://ip:port</span><br></pre></td></tr></table></figure></li>
+<li><p>修改 .wgetrc 文件</p>
+<p> .wgetrc 文件位于 $HOME 目录下，修改添加代理设置。</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ vi .wgetrc</span><br><span class="line">use_proxy=on</span><br><span class="line">http_proxy=http://ip:port</span><br></pre></td></tr></table></figure></li>
 </ol>
           <!--noindex-->
             <div class="post-button">

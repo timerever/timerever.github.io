@@ -13,20 +13,20 @@
         <category>Docker</category>
         <category>Dockerfile</category>
         <category>Java Web</category>
-        <category>Factory Patterns</category>
         <category>Linux</category>
         <category>C</category>
+        <category>Factory Patterns</category>
         <category>Android</category>
         <category>Huawei</category>
         <category>CyanogenMod</category>
         <category>Git</category>
         <category>GitHub</category>
         <category>Hibernate</category>
+        <category>VMware</category>
+        <category>vmdk</category>
         <category>Keycloak</category>
         <category>OAuth2</category>
         <category>SSO</category>
-        <category>VMware</category>
-        <category>vmdk</category>
         <category>wget</category>
         <category>Regular Expression</category>
         <category>Ubuntu</category>
@@ -53,7 +53,7 @@
 &lt;h3 id=&#34;二、解决问题&#34;&gt;&lt;a href=&#34;#二、解决问题&#34; class=&#34;headerlink&#34; title=&#34;二、解决问题&#34;&gt;&lt;/a&gt;二、解决问题&lt;/h3&gt;&lt;p&gt;同样作为一个共性问题，在 Goolge 进行搜索后，定位到了一条仍然是 Hibernate 官方 Bug 追踪的链接 &lt;a href=&#34;https://hibernate.atlassian.net/browse/HHH-12338&#34;&gt;Incorrect metamodel for basic collections&lt;/a&gt;。简单的来说，就是当前已经在 5.5.0.Alpha1 的版本中得到了解决，不过如果你认真看了下面整个的 Activity 记录，就会发现仍然是存在一个小插曲。&lt;/p&gt;
 &lt;h3 id=&#34;三、插曲&#34;&gt;&lt;a href=&#34;#三、插曲&#34; class=&#34;headerlink&#34; title=&#34;三、插曲&#34;&gt;&lt;/a&gt;三、插曲&lt;/h3&gt;&lt;p&gt;这个问题是在 2018 年的 3 月份被提出来的，而 5.5.0.Alpha1 已经是 2021 年 8 月份的事情了，照理说这么一个小问题不会需要三年多的时间来处理，而这个疑问的答案就在下面的讨论之中。&lt;/p&gt;
 &lt;p&gt;简单来说，这个问题在当月就被解决掉了，伴随着 5.2.17 的版本发布，这个问题理论上来说就不应该再存在了。然而事与愿违，在 5.2.17 版本发布之后，很快就有人提出了新的问题。在下面的 Comment 中有记录，同时这个人也单独提了一个 issue &lt;a href=&#34;https://hibernate.atlassian.net/browse/HHH-12581&#34;&gt;NPE for Criteria query containing fetch join as a regression of HHH-12338&lt;/a&gt;，即这次的改动造成了 NPE。然后可以看到在另一个维护者与之前 Vlad Mihalcea 的一番讨论之后，他们决定恢复这次的改动。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;hibernate-incorrect-metamodel-with-no-reationship-1.png&#34; alt=&#34;revert commit&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/hibernate-incorrect-metamodel-with-no-reationship-1.png&#34; alt=&#34;revert commit&#34;&gt;&lt;/p&gt;
 &lt;p&gt;但是回退了就意味着问题又回来了，上面提到的 Vlad Mihalcea 从红帽离职，不再维护 Hibernate 还弄了一个新的项目就是上面提到的 &lt;code&gt;hibernate-types&lt;/code&gt;。所以其他人在遇到相同的问题时，有部分和我们一样是采用的 &lt;code&gt;hibernate-types&lt;/code&gt; 方案，自然而然有人把问题又丢给了 Vlad Mihalcea，不过是在 &lt;code&gt;hibernate-types&lt;/code&gt; 项目。&lt;/p&gt;
 &lt;p&gt;于是 Vlad Mihalcea 在 Github 提了新的 PR，见 &lt;a href=&#34;https://github.com/hibernate/hibernate-orm/pull/3254&#34;&gt;HHH-12338 - Incorrect metamodel for basic collections&lt;/a&gt;。不过很不幸的是，并没有后续。&lt;/p&gt;
 &lt;p&gt;直到今年的 7 月，又一位开发者忍无可忍决定解决这个问题，提了新的 PR 出来，见 &lt;a href=&#34;https://github.com/hibernate/hibernate-orm/pull/4096&#34;&gt;HHH-14724 Test-case for metamodel compile error with converters and validation&lt;/a&gt;。这次终于引起了重视，并在一番努力之后，终于得到了合并，问题就此解决。&lt;/p&gt;
@@ -71,19 +71,19 @@
             <pubDate>Fri, 26 Nov 2021 07:21:10 +0000</pubDate>
             <description><![CDATA[ &lt;p&gt;之前在项目上使用了 Hibernate，并开启了基于 caffeine 的二级缓存。因为 Hibernate 会自动处理缓存，所以一直没怎么关注。直到最近，发现在一种特定的情况下，Hibernate 不会自动清除二级缓存里面的集合缓存。问题最后解决起来其实很简单，增加一个配置项的事。不过问题寻求解决的过程还是蛮繁琐的，并没有人能够直接告诉这个问题的答案，在此记录一下这个问题的排查过程。&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;太长不看版：Spring Boot 中设置属性 spring.jpa.properties.auto_evict_collection_cache=true 即可解决。&lt;/p&gt;
+&lt;p&gt;太长不看版：Spring Boot 中设置属性 spring.jpa.properties.auto_evict_collection_cache&amp;#x3D;true 即可解决。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
 
 &lt;h3 id=&#34;一、问题出现&#34;&gt;&lt;a href=&#34;#一、问题出现&#34; class=&#34;headerlink&#34; title=&#34;一、问题出现&#34;&gt;&lt;/a&gt;一、问题出现&lt;/h3&gt;&lt;p&gt;假定我这里有两个实体，分别为 &lt;code&gt;Parent&lt;/code&gt; 和 &lt;code&gt;Child&lt;/code&gt;。然后 Parent 与 Child 之间存在一对多的对应关系，即在 Parent 的实体中，存在一个属性 &lt;code&gt;private Set&amp;lt;Child&amp;gt; children&lt;/code&gt;，然后我们开启二级缓存 &lt;code&gt;@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)&lt;/code&gt;。在这种情况下，我们先访问 Parent 实体并获取其中的 &lt;code&gt;children&lt;/code&gt; 属性，确保其已被缓存。然后我们再单独操作 Child，我们新建一个 Child 对象 &lt;code&gt;Child child = new Child()&lt;/code&gt; 并设置其 Parent 的值 &lt;code&gt;child.setParent(parent)&lt;/code&gt; 并保存 Child 实体 &lt;code&gt;ChildRepository.save(child)&lt;/code&gt;。然后我们回过来获取 Parent，会发现 Parent 的 &lt;code&gt;children&lt;/code&gt; 的值仍为原数组对象， 没有我们新增的 &lt;code&gt;child&lt;/code&gt; 对象。&lt;/p&gt;
-&lt;p&gt;通过在 Google 上进行搜索，发现 stackoverflow 上存在几个类似的问题，再进一步的搜索后，发现在 Hibernate 官方 Bug 追踪网站上有人归纳并提出了这个问题 &lt;a href=&#34;https://hibernate.atlassian.net/browse/HHH-4910&#34;&gt;automatic L2 collection cache eviction when an element is added/updated/removed&lt;/a&gt;，可以看到不只是自己遇到的新增，修改/删除也会有类似的问题。&lt;/p&gt;
-&lt;h3 id=&#34;二、问题解决&#34;&gt;&lt;a href=&#34;#二、问题解决&#34; class=&#34;headerlink&#34; title=&#34;二、问题解决&#34;&gt;&lt;/a&gt;二、问题解决&lt;/h3&gt;&lt;p&gt;在上面链接的内容下方，问题提出者给出了一种 workaround 的方案，提供 &lt;code&gt;@PostPersist&lt;/code&gt;、&lt;code&gt;@PostRemove&lt;/code&gt; 及 &lt;code&gt;@PreUpdate&lt;/code&gt; 的监听，并在监听中自动清理缓存。以及在之前查阅 stackoverflow 时，也有人认为，你需要在操作多方元素的时候，同时操作一方对应的集合，对其进行 add/remove 操作。&lt;/p&gt;
+&lt;p&gt;通过在 Google 上进行搜索，发现 stackoverflow 上存在几个类似的问题，再进一步的搜索后，发现在 Hibernate 官方 Bug 追踪网站上有人归纳并提出了这个问题 &lt;a href=&#34;https://hibernate.atlassian.net/browse/HHH-4910&#34;&gt;automatic L2 collection cache eviction when an element is added&amp;#x2F;updated&amp;#x2F;removed&lt;/a&gt;，可以看到不只是自己遇到的新增，修改&amp;#x2F;删除也会有类似的问题。&lt;/p&gt;
+&lt;h3 id=&#34;二、问题解决&#34;&gt;&lt;a href=&#34;#二、问题解决&#34; class=&#34;headerlink&#34; title=&#34;二、问题解决&#34;&gt;&lt;/a&gt;二、问题解决&lt;/h3&gt;&lt;p&gt;在上面链接的内容下方，问题提出者给出了一种 workaround 的方案，提供 &lt;code&gt;@PostPersist&lt;/code&gt;、&lt;code&gt;@PostRemove&lt;/code&gt; 及 &lt;code&gt;@PreUpdate&lt;/code&gt; 的监听，并在监听中自动清理缓存。以及在之前查阅 stackoverflow 时，也有人认为，你需要在操作多方元素的时候，同时操作一方对应的集合，对其进行 add&amp;#x2F;remove 操作。&lt;/p&gt;
 &lt;p&gt;但不管怎么说，这些都是一些 workaround 方案，因为 Hibernate 本身是有能力自动处理这些事情的。话又说回来，既然问题很早就被提出了，比如这个链接中使用的版本是 &lt;code&gt;3.3.1&lt;/code&gt;，同时官方也已经记录了这个问题已经在 &lt;code&gt;4.3.0.Beta5&lt;/code&gt; 中被修复了，可是为什么我们还是会遇到这个问题？这个答案其实在下面的评论中。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;hibernate-automatic-2nd-collection-cache-eviction-1.png&#34; alt=&#34;Hibernate atlassian 下面的评论&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/hibernate-automatic-2nd-collection-cache-eviction-1.png&#34; alt=&#34;Hibernate atlassian 下面的评论&#34;&gt;&lt;/p&gt;
 &lt;p&gt;点进链接是 GitHub 的 PR 请求，讨论中详细地记录了从贡献者提出 PR 到最后并合并的整个流程。看下来大概就是，贡献者向负责人解释了为了提出这个改动、有负责人担心是不是会影响性能并期望做成可配置的、贡献者支持了配置项、PR 最终被合并。所以问题已经很明了了，功能上是已经被修复了，但是因为做成了配置项，所以默认没有启用，我们需要手动启用这个特性。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;hibernate-automatic-2nd-collection-cache-eviction-2.png&#34; alt=&#34;变成配置项的 commit&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/hibernate-automatic-2nd-collection-cache-eviction-2.png&#34; alt=&#34;变成配置项的 commit&#34;&gt;&lt;/p&gt;
 &lt;p&gt;所以我们从这里点进去，去看一下我们怎么才能打开这个特性。最后我们可以看到是在 &lt;code&gt;hibernate-core/src/main/java/org/hibernate/cfg/AvailableSettings.java&lt;/code&gt; 这个文件中定义了配置的名字。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;hibernate-automatic-2nd-collection-cache-eviction-3.png&#34; alt=&#34;配置项的名字&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/hibernate-automatic-2nd-collection-cache-eviction-3.png&#34; alt=&#34;配置项的名字&#34;&gt;&lt;/p&gt;
 &lt;p&gt;所以到这里，这个问题就算是最终解决了。&lt;/p&gt;
 &lt;h3 id=&#34;三、插曲&#34;&gt;&lt;a href=&#34;#三、插曲&#34; class=&#34;headerlink&#34; title=&#34;三、插曲&#34;&gt;&lt;/a&gt;三、插曲&lt;/h3&gt;&lt;p&gt;由于项目使用了 &lt;code&gt;spring-boot-starter-data-jpa&lt;/code&gt; 依赖，所以这个配置项的设置并不是上面 Hibernate 的改动所提及的，于是继续在 Google 用 &lt;code&gt;auto_evict_collection_cache&lt;/code&gt; 作为关键字进行搜索，寻找在 Spring Boot 中的配置方式。最终是得到了答案，Spring Boot 中的配置项为 &lt;code&gt;spring.jpa.properties.auto_evict_collection_cache&lt;/code&gt;，不过在此之外还发现了一个小插曲。&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://hibernate.atlassian.net/browse/HHH-10614&#34;&gt;Auto evict collection cache throws exception with null values&lt;/a&gt; 中描述了一个人开启了这个特性，然后在一个特定的情况下 Hibernate 会抛出异常。虽然这个问题很快就被解决了，不过现在回来想想，维护者在维护这种已经已经很庞大的项目时，对所有的改动都抱有谨慎的态度还是很有必要的。做成了配置项，虽然一方面会让很多不知道的人继续遇到这个问题，但同时也让很多无关的人避免了可能带来的新问题。所以这两种方案孰优孰劣，可能就见仁见智了吧。&lt;/p&gt;

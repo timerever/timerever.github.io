@@ -28,7 +28,7 @@
 <meta property="og:description" content="本篇是对 Dockerfile 文件的一个介绍，在了解完相关知识后，可以用 Dockerfile 文件创建一个简单的镜像。 参考和推荐文档链接：https:&#x2F;&#x2F;docs.docker.com&#x2F;engine&#x2F;userguide&#x2F;eng-image&#x2F;dockerfile_best-practices&#x2F;#general-guidelines-and-recommendations 更详细的 Docker">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2017-03-05T12:37:20.000Z">
-<meta property="article:modified_time" content="2022-01-16T15:06:59.550Z">
+<meta property="article:modified_time" content="2022-01-31T11:28:47.984Z">
 <meta property="article:author" content="timerever">
 <meta property="article:tag" content="Docker">
 <meta property="article:tag" content="Dockerfile">
@@ -343,7 +343,7 @@
 <h4 id="RUN"><a href="#RUN" class="headerlink" title="RUN"></a>RUN</h4><p>RUN指令将在当前映像之上的新层中执行任何命令，并提交执行结果，这个提交的的执行后的镜像将被 <code>Dockerfile</code> 的其余步骤使用。</p>
 <p><code>RUN</code> 指令有两种形式：</p>
 <ul>
-<li><code>RUN &lt;command&gt;</code>（shell 形式，命令在 shell 中运行，对于 Linux 默认为 /bin/sh -c，而对于 Windows 默认为 cmd /S /C）</li>
+<li><code>RUN &lt;command&gt;</code>（shell 形式，命令在 shell 中运行，对于 Linux 默认为 &#x2F;bin&#x2F;sh -c，而对于 Windows 默认为 cmd &#x2F;S &#x2F;C）</li>
 <li><code>RUN [&quot;executable&quot;, &quot;param1&quot;, &quot;param2&quot;]</code>（执行形式）</li>
 </ul>
 <h4 id="APT-GET"><a href="#APT-GET" class="headerlink" title="APT-GET"></a>APT-GET</h4><p>这可能是 <code>RUN</code> 命令的最多使用情况，但是你应该避免使用 <code>RUN apt-get upgrade</code> 或是 <code>dist-upgrade</code>，因为许多“必要”的包将不会在无特权的容器内部被升级。如果一个镜像所包含的基础镜像过期，请联系管理员。</p>

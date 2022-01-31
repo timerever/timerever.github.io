@@ -10,20 +10,20 @@
     <category term="Docker" />
     <category term="Dockerfile" />
     <category term="Java Web" />
-    <category term="Factory Patterns" />
     <category term="Linux" />
     <category term="C" />
+    <category term="Factory Patterns" />
     <category term="Android" />
     <category term="Huawei" />
     <category term="CyanogenMod" />
     <category term="Git" />
     <category term="GitHub" />
     <category term="Hibernate" />
+    <category term="VMware" />
+    <category term="vmdk" />
     <category term="Keycloak" />
     <category term="OAuth2" />
     <category term="SSO" />
-    <category term="VMware" />
-    <category term="vmdk" />
     <category term="wget" />
     <category term="Regular Expression" />
     <category term="Ubuntu" />
@@ -74,7 +74,7 @@
 &lt;/tr&gt;
 &lt;/thead&gt;
 &lt;tbody&gt;&lt;tr&gt;
-&lt;td align=&#34;left&#34;&gt;SA_NODEFER/SA_NOMASK&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;SA_NODEFER&amp;#x2F;SA_NOMASK&lt;/td&gt;
 &lt;td align=&#34;left&#34;&gt;当捕捉到此信号时，在执行其信号捕捉函数时，系统不会自动阻塞此信号&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
@@ -86,7 +86,7 @@
 &lt;td align=&#34;left&#34;&gt;可让重启的系统调用重新起作用&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td align=&#34;left&#34;&gt;SA_ONESHOT/SA_RESETHAND&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;SA_ONESHOT&amp;#x2F;SA_RESETHAND&lt;/td&gt;
 &lt;td align=&#34;left&#34;&gt;自定义信号只执行一次，在执行完毕后恢复信号的系统默认动作&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;&lt;/table&gt;

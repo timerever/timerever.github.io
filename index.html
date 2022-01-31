@@ -476,7 +476,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.9k</span>
+      <span>2k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -518,7 +518,7 @@
     <div class="post-body" itemprop="articleBody">
           <p>之前在项目上使用了 Hibernate，并开启了基于 caffeine 的二级缓存。因为 Hibernate 会自动处理缓存，所以一直没怎么关注。直到最近，发现在一种特定的情况下，Hibernate 不会自动清除二级缓存里面的集合缓存。问题最后解决起来其实很简单，增加一个配置项的事。不过问题寻求解决的过程还是蛮繁琐的，并没有人能够直接告诉这个问题的答案，在此记录一下这个问题的排查过程。</p>
 <blockquote>
-<p>太长不看版：Spring Boot 中设置属性 spring.jpa.properties.auto_evict_collection_cache=true 即可解决。</p>
+<p>太长不看版：Spring Boot 中设置属性 spring.jpa.properties.auto_evict_collection_cache&#x3D;true 即可解决。</p>
 </blockquote>
           <!--noindex-->
             <div class="post-button">
@@ -1164,11 +1164,9 @@
 <h1 id="正则表达式的定义"><a href="#正则表达式的定义" class="headerlink" title="正则表达式的定义"></a>正则表达式的定义</h1><p><strong>什么是正则表达式？</strong>一个正则表达式对应着一堆字符串，这些字符串构成一个集合，它们的共同特点就是匹配于这个正则表达式。例如：a(a|b) * b 就对应着第一个字符为a，最后一个字符为b，由a和b构成的字符串。 </p>
 <p>正则表达式有三种核心的基本结构：</p>
 <ol>
-<li> <em>连接</em>：如 abc，由 a, b, c连接而成。</li>
-<li><em>或</em>：如 a|b|c，表示是 a 或 b 或 c。<pre><code>  ab|bcd表示ab或bcd。
-</code></pre>
-</li>
-<li> <em>闭包</em>：如a*b，表示0或若干个a和一个b连接而成的字符串。</li>
+<li><em>连接</em>：如 abc，由 a, b, c连接而成。</li>
+<li><em>或</em>：如 a|b|c，表示是 a 或 b 或 c。<br> ab|bcd表示ab或bcd。</li>
+<li><em>闭包</em>：如a*b，表示0或若干个a和一个b连接而成的字符串。</li>
 </ol>
 <p>以上就是最最最基本的结构，是构成正则表达式的基础。</p>
           <!--noindex-->
