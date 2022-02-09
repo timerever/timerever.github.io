@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -173,7 +173,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-count">29</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -224,6 +224,117 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.timerever.tk/2022/02/09/custom-jackson-serializer-for-clob-type/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/12376409?v=4">
+      <meta itemprop="name" content="timerever">
+      <meta itemprop="description" content="Just another blog.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/02/09/custom-jackson-serializer-for-clob-type/" class="post-title-link" itemprop="url">自定义 Jackson Serializer 解决无法序列化 SerialClob 的问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-02-09 15:49:35" itemprop="dateCreated datePublished" datetime="2022-02-09T15:49:35+08:00">2022-02-09</time>
+    </span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>21 分钟</span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-tags"></i>
+      </span>
+      <span class="post-meta-item-text">标签：</span>
+      <span class="post-tags">
+        <a href="/tags/Java/" rel="tag"> Java</a>
+        <a href="/tags/Jackson/" rel="tag"> Jackson</a>
+      </span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>由于种种原因，项目上在做数据查询时，没有选择任何的 ORM 框架而是使用了 <code>JdbcTemplate</code> 进行数据库查询。查询出来也没做太多事情，只是简单地对数据做了下封装，然后直接返回给了前端。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Map&lt;String, Object&gt;&gt; data = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">JdbcTemplate jdbcTemplate = <span class="keyword">new</span> JdbcTemplate(ds);</span><br><span class="line">SqlRowSet sqlRowSet = jdbcTemplate.queryForRowSet(sql);</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> columnSize = sqlRowSet.getMetaData().getColumnNames().length;</span><br><span class="line"><span class="keyword">while</span> (sqlRowSet.next()) &#123;</span><br><span class="line">	Map&lt;String, Object&gt; tmp = <span class="keyword">new</span> LinkedHashMap&lt;&gt;();</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= columnSize; i++) &#123;</span><br><span class="line">		tmp.put(i + <span class="string">&quot;&quot;</span>, sqlRowSet.getObject(i));</span><br><span class="line">	&#125;</span><br><span class="line">	data.add(tmp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>本来一直岁月静好，知道某一天查了一张新表，然后后台报了异常：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">Caused by: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class java.io.ByteArrayInputStream and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: com.demo.web.rest.util.ResponseEnvelope[&quot;data&quot;]-&gt;com.demo.service.dto.SqlQueryDto[&quot;data&quot;]-&gt;java.util.ArrayList[0]-&gt;java.util.LinkedHashMap[&quot;LOG_MSG&quot;]-&gt;javax.sql.rowset.serial.SerialClob[&quot;asciiStream&quot;])</span><br><span class="line">	at com.fasterxml.jackson.databind.exc.InvalidDefinitionException.from(InvalidDefinitionException.java:77)</span><br><span class="line">	at com.fasterxml.jackson.databind.SerializerProvider.reportBadDefinition(SerializerProvider.java:1300)</span><br><span class="line">	at com.fasterxml.jackson.databind.DatabindContext.reportBadDefinition(DatabindContext.java:400)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.failForEmpty(UnknownSerializer.java:46)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.serialize(UnknownSerializer.java:29)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:728)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:774)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:178)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.std.MapSerializer.serializeFields(MapSerializer.java:808)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.std.MapSerializer.serializeWithoutTypeInfo(MapSerializer.java:764)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.std.MapSerializer.serialize(MapSerializer.java:720)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.std.MapSerializer.serialize(MapSerializer.java:35)</span><br><span class="line">	at com.fasterxml.jackson.datatype.hibernate5.PersistentCollectionSerializer.serialize(PersistentCollectionSerializer.java:244)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.impl.IndexedListSerializer.serializeContents(IndexedListSerializer.java:119)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.impl.IndexedListSerializer.serialize(IndexedListSerializer.java:79)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.impl.IndexedListSerializer.serialize(IndexedListSerializer.java:18)</span><br><span class="line">	at com.fasterxml.jackson.datatype.hibernate5.PersistentCollectionSerializer.serialize(PersistentCollectionSerializer.java:244)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:728)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:774)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:178)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:728)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:774)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:178)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider._serialize(DefaultSerializerProvider.java:480)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.serializeValue(DefaultSerializerProvider.java:319)</span><br><span class="line">	at com.fasterxml.jackson.databind.ObjectWriter$Prefetch.serialize(ObjectWriter.java:1518)</span><br><span class="line">	at com.fasterxml.jackson.databind.ObjectWriter.writeValue(ObjectWriter.java:1007)</span><br><span class="line">	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.writeInternal(AbstractJackson2HttpMessageConverter.java:454)</span><br><span class="line">	... 123 common frames omitted</span><br></pre></td></tr></table></figure>
+
+<p>乍一看，可以通过提示所说的设置 <code>SerializationFeature.FAIL_ON_EMPTY_BEANS</code> 为 <code>false</code> 来避免这个问题，但这个问题其实远远没有这么简单。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/02/09/custom-jackson-serializer-for-clob-type/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1173,116 +1284,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2017/04/09/regular-expression/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.timerever.tk/2017/04/04/windows-init/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/12376409?v=4">
-      <meta itemprop="name" content="timerever">
-      <meta itemprop="description" content="Just another blog.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="A Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2017/04/04/windows-init/" class="post-title-link" itemprop="url">Windows 配置</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2017-04-04 14:44:47" itemprop="dateCreated datePublished" datetime="2017-04-04T14:44:47+08:00">2017-04-04</time>
-    </span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.6k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>6 分钟</span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Windows/" itemprop="url" rel="index"><span itemprop="name">Windows</span></a>
-        </span>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-tags"></i>
-      </span>
-      <span class="post-meta-item-text">标签：</span>
-      <span class="post-tags">
-        <a href="/tags/Windows/" rel="tag"> Windows</a>
-        <a href="/tags/Regedit/" rel="tag"> Regedit</a>
-        <a href="/tags/PowerShell/" rel="tag"> PowerShell</a>
-      </span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <blockquote>
-<p>一个存放 Windows 各种配置和各种命令的地方，毕竟 Windows 的功能有的藏的实在是深或者是没有直接的入口。这种东西大多网络收集，且都是网上存在的，找不到具体出处，所以此处不列出出处。</p>
-</blockquote>
-<h3 id="注册表相关"><a href="#注册表相关" class="headerlink" title="注册表相关"></a>注册表相关</h3><p>“regedit.exe” 是 Windows 系统的注册表编辑器，是 Registry Editor 的缩写。其实质上是一个庞大的数据库，它存储这下面这些内容：软、硬件的有关配置和状态信息，应用程序和资源管理器外壳的初始条件、首选项和卸载数据；计算机的整个系统的设置和各种许可，文件扩展名与应用程序的关联，硬件的描述、状态和属性；计算机性能纪录和底层的系统状态信息，以及各类其他数据。（摘自百度百科）</p>
-<p>通常可使用 <code>win + r</code> 运行输入 <code>regedit</code> 打开。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/04/04/windows-init/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>

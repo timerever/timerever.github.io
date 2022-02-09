@@ -38,6 +38,70 @@
       </tags>
   </entry>
   <entry>
+    <title>自定义 Jackson Serializer 解决无法序列化 SerialClob 的问题</title>
+    <url>/2022/02/09/custom-jackson-serializer-for-clob-type/</url>
+    <content><![CDATA[<p>由于种种原因，项目上在做数据查询时，没有选择任何的 ORM 框架而是使用了 <code>JdbcTemplate</code> 进行数据库查询。查询出来也没做太多事情，只是简单地对数据做了下封装，然后直接返回给了前端。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;Map&lt;String, Object&gt;&gt; data = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">JdbcTemplate jdbcTemplate = <span class="keyword">new</span> JdbcTemplate(ds);</span><br><span class="line">SqlRowSet sqlRowSet = jdbcTemplate.queryForRowSet(sql);</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> columnSize = sqlRowSet.getMetaData().getColumnNames().length;</span><br><span class="line"><span class="keyword">while</span> (sqlRowSet.next()) &#123;</span><br><span class="line">	Map&lt;String, Object&gt; tmp = <span class="keyword">new</span> LinkedHashMap&lt;&gt;();</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= columnSize; i++) &#123;</span><br><span class="line">		tmp.put(i + <span class="string">&quot;&quot;</span>, sqlRowSet.getObject(i));</span><br><span class="line">	&#125;</span><br><span class="line">	data.add(tmp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>本来一直岁月静好，知道某一天查了一张新表，然后后台报了异常：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">Caused by: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class java.io.ByteArrayInputStream and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: com.demo.web.rest.util.ResponseEnvelope[&quot;data&quot;]-&gt;com.demo.service.dto.SqlQueryDto[&quot;data&quot;]-&gt;java.util.ArrayList[0]-&gt;java.util.LinkedHashMap[&quot;LOG_MSG&quot;]-&gt;javax.sql.rowset.serial.SerialClob[&quot;asciiStream&quot;])</span><br><span class="line">	at com.fasterxml.jackson.databind.exc.InvalidDefinitionException.from(InvalidDefinitionException.java:77)</span><br><span class="line">	at com.fasterxml.jackson.databind.SerializerProvider.reportBadDefinition(SerializerProvider.java:1300)</span><br><span class="line">	at com.fasterxml.jackson.databind.DatabindContext.reportBadDefinition(DatabindContext.java:400)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.failForEmpty(UnknownSerializer.java:46)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.serialize(UnknownSerializer.java:29)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:728)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:774)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:178)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.std.MapSerializer.serializeFields(MapSerializer.java:808)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.std.MapSerializer.serializeWithoutTypeInfo(MapSerializer.java:764)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.std.MapSerializer.serialize(MapSerializer.java:720)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.std.MapSerializer.serialize(MapSerializer.java:35)</span><br><span class="line">	at com.fasterxml.jackson.datatype.hibernate5.PersistentCollectionSerializer.serialize(PersistentCollectionSerializer.java:244)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.impl.IndexedListSerializer.serializeContents(IndexedListSerializer.java:119)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.impl.IndexedListSerializer.serialize(IndexedListSerializer.java:79)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.impl.IndexedListSerializer.serialize(IndexedListSerializer.java:18)</span><br><span class="line">	at com.fasterxml.jackson.datatype.hibernate5.PersistentCollectionSerializer.serialize(PersistentCollectionSerializer.java:244)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:728)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:774)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:178)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:728)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:774)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:178)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider._serialize(DefaultSerializerProvider.java:480)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.serializeValue(DefaultSerializerProvider.java:319)</span><br><span class="line">	at com.fasterxml.jackson.databind.ObjectWriter$Prefetch.serialize(ObjectWriter.java:1518)</span><br><span class="line">	at com.fasterxml.jackson.databind.ObjectWriter.writeValue(ObjectWriter.java:1007)</span><br><span class="line">	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.writeInternal(AbstractJackson2HttpMessageConverter.java:454)</span><br><span class="line">	... 123 common frames omitted</span><br></pre></td></tr></table></figure>
+
+<p>乍一看，可以通过提示所说的设置 <code>SerializationFeature.FAIL_ON_EMPTY_BEANS</code> 为 <code>false</code> 来避免这个问题，但这个问题其实远远没有这么简单。</p>
+<span id="more"></span>
+
+<h3 id="尝试按照提示解决"><a href="#尝试按照提示解决" class="headerlink" title="尝试按照提示解决"></a>尝试按照提示解决</h3><p>既然异常中已经给出了解决方案，所以我们可以先尝试用给出的方案解决。由于我们是 spring 项目，所以我们可以很简单地通过在 yaml 中添加配置而不是采用写大段代码的方式来设置这个序列化属性：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">jackson:</span></span><br><span class="line">    <span class="attr">serialization:</span></span><br><span class="line">      <span class="attr">FAIL_ON_EMPTY_BEANS:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<p>让我们再调用下接口。好，没问题，不报错了！再看眼返回值，等等，这是个啥？</p>
+<p><img src="/custom-jackson-serializer-for-clob-type-1.png" alt="并不是所期望的结果"></p>
+<p>这个字段明明在数据库中是有值的，而且正常也不会变成这种嵌套结构，所以看来这个解决办法并不可行。</p>
+<h3 id="寻找问题根源"><a href="#寻找问题根源" class="headerlink" title="寻找问题根源"></a>寻找问题根源</h3><p>所以简单的解决方式不行，就只能按部就班先看问题出在哪里了。废话不多说，既然我们知道了问题出在哪个字段，就直接打个断点先看眼程序拿到的返回值是什么样子。</p>
+<p>已知数据库是 H2，对应的字段类型为 <code>CHARACTER LARGE OBJECT</code>，再看眼拿到的值：</p>
+<p><img src="/custom-jackson-serializer-for-clob-type-2.png" alt="实际拿到的返回值"></p>
+<p>可以看到，程序所拿到的返回值是 <code>javax.sql.rowset.serial.SerialClob</code> 的对象，而这个对象里面所包含的 <code>clob</code> 字段就是 H2 的 <code>org.h2.jdbc.JdbcClob</code> 对象。</p>
+<p><img src="/custom-jackson-serializer-for-clob-type-3.png" alt="SerialClob 类"></p>
+<p>也就是说，默认情况下 Jackson 无法序列化 <code>SerialClob</code> 这个类所创建的对象，是不是由于 <code>clob</code> 字段所包含的具体实现类导致的并没有进一步研究，因为数据库的种类很多，我们需要着手做的是解决这个不能序列化的问题。</p>
+<h3 id="自定义-Serializer-解决问题"><a href="#自定义-Serializer-解决问题" class="headerlink" title="自定义 Serializer 解决问题"></a>自定义 Serializer 解决问题</h3><p>我们知道 Jackson 可以通过扩展 <code>Module</code> 来支持更多类型的序列化操作，所以我们也可以采用同样的方式来增加对 <code>SerialClob</code> 的支持。</p>
+<p>不过我们不需要自定义 <code>Module</code>，使用自带的 <code>SimpleModule</code> 即可，要做的只是自定义对应的 Serializer：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SerialClobSerializer</span> <span class="keyword">extends</span> <span class="title">JsonSerializer</span>&lt;<span class="title">SerialClob</span>&gt; </span>&#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">serialize</span><span class="params">(SerialClob clob, JsonGenerator gen, SerializerProvider serializers)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			gen.writeString(clob.getCharacterStream(), (<span class="keyword">int</span>) clob.length());</span><br><span class="line">		&#125; <span class="keyword">catch</span> (SerialException e) &#123;</span><br><span class="line">			log.error(<span class="string">&quot;Serialize SerialClob error&quot;</span>, e);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后要做的就是将自定义的 <code>SerialClobSerializer</code> 注册到 ObjectMapper 中去，通常网上的方法都是自定义创建全局的 <code>ObjectMapper</code> 供 Spring 使用。这个方法定制化强，完全由自己来创建 <code>ObjectMapper</code>，但个人希望在可以应用 Spring 默认创建的 <code>ObjectMapper</code> 属性的同时，将 <code>SerialClobSerializer</code> 注册进去，所以采用下面的方法：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JacksonConfiguration</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> ObjectMapper objectMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostConstruct</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">customSerializerSupport</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        objectMapper.registerModule(<span class="keyword">new</span> SimpleModule().addSerializer(SerialClob.class, <span class="keyword">new</span> SerialClobSerializer()));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>到此，问题就得到了解决，调用接口后不再报错，且可以返回正确的结果。</p>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>Jackson</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Docker 学习之旅（零）：出师不利</title>
+    <url>/2017/03/02/docker-learning-trip-0/</url>
+    <content><![CDATA[<p>Docker——这是一个自出现以来就发展迅猛并获得成功的引擎。自从选择这个方向学习以来，一直在各个地方看到这个名词，但也只是大概了解到这是一个一般企业才会采用的东西。</p>
+<p>寒假放假前的课程设计，邀请了企业的人拿来了企业的真实项目来让我们学习，有幸在课余时间与主管技术的老师咨询讨论了一下。其中有一个话题就说到了 Docker，也是符合之前自己所想，老师也是说，像我们平时自己用，拿自己电脑跑或者租个 vps 什么的也就够了，也是用不上这种东西，不过从交谈中也大概了解到了应用 Docker 的优势，比如统一测试环境，比如秒级启动随时恢复等等等等。</p>
+<p>秉承着热爱计算机相关的一切的原则，还是决定先大概看一下这个东西，虽然可能实用性真的接近于零，不过就像自己选择这个专业一样，不是出于为了找工作或者怎样怎样的功利的心态，而是所谓的，真的是“热爱学习”。</p>
+<p>所以作为一只准程序猿，那么要做的第一件事便是打开官网寻找官方文档（所谓程序员必会通用技能），然后就是阅读英文文档（另一项必会技能）。</p>
+<span id="more"></span>
+
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>使用的环境是 Ubuntu 的 16.10，默认的源里有 Docker，只需按照官网手册就可轻松安装。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo apt-get install \</span><br><span class="line">    apt-transport-https \</span><br><span class="line">    ca-certificates \</span><br><span class="line">    curl \</span><br><span class="line">    software-properties-common</span><br><span class="line">$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</span><br><span class="line">$ sudo apt-key fingerprint 0EBFCD88</span><br><span class="line">$ sudo add-apt-repository \</span><br><span class="line">   <span class="string">&quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu \</span></span><br><span class="line"><span class="string">   <span class="subst">$(lsb_release -cs)</span> \</span></span><br><span class="line"><span class="string">   stable&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>等等，怎么有些不对，记得以前看到的源的指纹长度比这还要长……</p>
+<p>还以为是找错了文档，结果打开历史记录一看原来真的是文档改变了，最显而易见的就是网站的 favicon 颜色变深了，也确定了文档就是在今天中午或下午更新了（明明早上起来还看过的，摔！）。</p>
+<p>所以看来是写不成第一篇了，之前被称作 docker 和 docker-engine 的东西已经成为了旧版，现在出现的是 Docker CE 和 Docker EE，文档的开始已经让卸载旧版了。不过可能是因为刚刚更新，Docker CE 和 Docker EE 所指向的链接还不能打开，看来真正的旅程应该是等着文档补全然后再开始了（虽然知道“学习之旅”的翻译是中式英语但是真的找不到合适的翻译了）。</p>
+]]></content>
+      <categories>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>软件设计模式</title>
     <url>/2017/04/28/design-patterns/</url>
     <content><![CDATA[<h1 id="模式和软件模式"><a href="#模式和软件模式" class="headerlink" title="模式和软件模式"></a>模式和软件模式</h1><blockquote>
@@ -145,29 +209,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Docker 学习之旅（零）：出师不利</title>
-    <url>/2017/03/02/docker-learning-trip-0/</url>
-    <content><![CDATA[<p>Docker——这是一个自出现以来就发展迅猛并获得成功的引擎。自从选择这个方向学习以来，一直在各个地方看到这个名词，但也只是大概了解到这是一个一般企业才会采用的东西。</p>
-<p>寒假放假前的课程设计，邀请了企业的人拿来了企业的真实项目来让我们学习，有幸在课余时间与主管技术的老师咨询讨论了一下。其中有一个话题就说到了 Docker，也是符合之前自己所想，老师也是说，像我们平时自己用，拿自己电脑跑或者租个 vps 什么的也就够了，也是用不上这种东西，不过从交谈中也大概了解到了应用 Docker 的优势，比如统一测试环境，比如秒级启动随时恢复等等等等。</p>
-<p>秉承着热爱计算机相关的一切的原则，还是决定先大概看一下这个东西，虽然可能实用性真的接近于零，不过就像自己选择这个专业一样，不是出于为了找工作或者怎样怎样的功利的心态，而是所谓的，真的是“热爱学习”。</p>
-<p>所以作为一只准程序猿，那么要做的第一件事便是打开官网寻找官方文档（所谓程序员必会通用技能），然后就是阅读英文文档（另一项必会技能）。</p>
-<span id="more"></span>
-
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>使用的环境是 Ubuntu 的 16.10，默认的源里有 Docker，只需按照官网手册就可轻松安装。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo apt-get install \</span><br><span class="line">    apt-transport-https \</span><br><span class="line">    ca-certificates \</span><br><span class="line">    curl \</span><br><span class="line">    software-properties-common</span><br><span class="line">$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</span><br><span class="line">$ sudo apt-key fingerprint 0EBFCD88</span><br><span class="line">$ sudo add-apt-repository \</span><br><span class="line">   <span class="string">&quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu \</span></span><br><span class="line"><span class="string">   <span class="subst">$(lsb_release -cs)</span> \</span></span><br><span class="line"><span class="string">   stable&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>等等，怎么有些不对，记得以前看到的源的指纹长度比这还要长……</p>
-<p>还以为是找错了文档，结果打开历史记录一看原来真的是文档改变了，最显而易见的就是网站的 favicon 颜色变深了，也确定了文档就是在今天中午或下午更新了（明明早上起来还看过的，摔！）。</p>
-<p>所以看来是写不成第一篇了，之前被称作 docker 和 docker-engine 的东西已经成为了旧版，现在出现的是 Docker CE 和 Docker EE，文档的开始已经让卸载旧版了。不过可能是因为刚刚更新，Docker CE 和 Docker EE 所指向的链接还不能打开，看来真正的旅程应该是等着文档补全然后再开始了（虽然知道“学习之旅”的翻译是中式英语但是真的找不到合适的翻译了）。</p>
-]]></content>
-      <categories>
-        <category>Docker</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Docker 学习之旅（一）：Docker 的安装</title>
     <url>/2017/03/03/docker-learning-trip-1/</url>
     <content><![CDATA[<blockquote>
@@ -234,6 +275,30 @@
 
 <p>然后继续操作完成配置。</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ sudo systemctl daemon-reload</span><br><span class="line">$ systemctl show --property=Environment docker # 验证配置是否已经重载，将显示上面配置的信息</span><br><span class="line">$ sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Docker 学习之旅（三）：创建基础镜像</title>
+    <url>/2017/03/06/docker-learning-trip-3/</url>
+    <content><![CDATA[<p>基础镜像，官方说法是 <strong>base image</strong>，官方解释为“ <strong>An image that has no parent is a base image.</strong> ”也就是说，没有父镜像的镜像就是基础镜像，我们要做的就是创建一个基础镜像。</p>
+<p>文档链接：<a href="https://docs.docker.com/engine/userguide/eng-image/baseimages/">https://docs.docker.com/engine/userguide/eng-image/baseimages/</a></p>
+<span id="more"></span>
+
+<h3 id="使用-tar-创建一个完整镜像"><a href="#使用-tar-创建一个完整镜像" class="headerlink" title="使用 tar 创建一个完整镜像"></a>使用 <code>tar</code> 创建一个完整镜像</h3><p>执行 <code>$ docker run raring cat /etc/lsb-release</code> 命令时报错且解决无果，可能 Debian 的发行版和 Ubuntu还是存在些许差异。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ docker run raring cat /etc/lsb-release</span><br><span class="line">container_linux.go:247: starting container process caused &quot;exec: \&quot;cat\&quot;: executable file not found in $PATH&quot;</span><br><span class="line">docker: Error response from daemon: oci runtime error: container_linux.go:247: starting container process caused &quot;exec: \&quot;cat\&quot;: executable file not found in $PATH&quot;.</span><br><span class="line">ERRO[0000] error getting events from daemon: net/http: request canceled</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用-scratch-创建一个简单的基础镜像"><a href="#使用-scratch-创建一个简单的基础镜像" class="headerlink" title="使用 scratch 创建一个简单的基础镜像"></a>使用 scratch 创建一个简单的基础镜像</h3><p>当 <code>scratch</code> 在 Docker 的库中出现时，你不能 pull、run 或者在其他镜像标记这个名字，但是你可以在你的 <code>Dockerfile</code> 文件中引用它。</p>
+<p>例如，使用 <code>scratch</code> 创建一个最小化的容器：</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">FROM</span> scratch</span><br><span class="line"><span class="keyword">ADD</span><span class="bash"> hello /</span></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> [<span class="string">&quot;/hello&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<p>然后你可以在当前目录使用 <code>docker build --tag hello .</code> 来构建容器。在这里需要 hello 文件，你可以从 Docker Github 的 <a href="https://github.com/docker-library/hello-world/blob/master/hello.c">示例源代码</a> 中下载并编译，过程如下。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ vi Dockerfile</span><br><span class="line">$ wget https://raw.githubusercontent.com/docker-library/hello-world/master/hello.c</span><br><span class="line">$ gcc -o hello -static -nostartfiles hello.c</span><br><span class="line">$ docker build --tag hello .</span><br><span class="line">$ docker run hello</span><br><span class="line"></span><br><span class="line">Hello from Docker!</span><br><span class="line">This message shows that your installation appears to be working correctly.</span><br><span class="line"></span><br><span class="line">To generate this message, Docker took the following steps:</span><br><span class="line"> 1. The Docker client contacted the Docker daemon.</span><br><span class="line"> 2. The Docker daemon pulled the <span class="string">&quot;hello-world&quot;</span> image from the Docker Hub.</span><br><span class="line"> 3. The Docker daemon created a new container from that image <span class="built_in">which</span> runs the</span><br><span class="line">    executable that produces the output you are currently reading.</span><br><span class="line"> 4. The Docker daemon streamed that output to the Docker client, <span class="built_in">which</span> sent it</span><br><span class="line">    to your terminal.</span><br><span class="line"></span><br><span class="line">To try something more ambitious, you can run an Ubuntu container with:</span><br><span class="line"> $ docker run -it ubuntu bash</span><br><span class="line"></span><br><span class="line">Share images, automate workflows, and more with a free Docker ID:</span><br><span class="line"> https://cloud.docker.com/</span><br><span class="line"></span><br><span class="line">For more examples and ideas, visit:</span><br><span class="line"> https://docs.docker.com/engine/userguide/</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>Docker</category>
@@ -338,57 +403,6 @@ ENTRYPOINT command param1 param2（shell 形式）
       </tags>
   </entry>
   <entry>
-    <title>Docker 学习之旅（三）：创建基础镜像</title>
-    <url>/2017/03/06/docker-learning-trip-3/</url>
-    <content><![CDATA[<p>基础镜像，官方说法是 <strong>base image</strong>，官方解释为“ <strong>An image that has no parent is a base image.</strong> ”也就是说，没有父镜像的镜像就是基础镜像，我们要做的就是创建一个基础镜像。</p>
-<p>文档链接：<a href="https://docs.docker.com/engine/userguide/eng-image/baseimages/">https://docs.docker.com/engine/userguide/eng-image/baseimages/</a></p>
-<span id="more"></span>
-
-<h3 id="使用-tar-创建一个完整镜像"><a href="#使用-tar-创建一个完整镜像" class="headerlink" title="使用 tar 创建一个完整镜像"></a>使用 <code>tar</code> 创建一个完整镜像</h3><p>执行 <code>$ docker run raring cat /etc/lsb-release</code> 命令时报错且解决无果，可能 Debian 的发行版和 Ubuntu还是存在些许差异。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ docker run raring cat /etc/lsb-release</span><br><span class="line">container_linux.go:247: starting container process caused &quot;exec: \&quot;cat\&quot;: executable file not found in $PATH&quot;</span><br><span class="line">docker: Error response from daemon: oci runtime error: container_linux.go:247: starting container process caused &quot;exec: \&quot;cat\&quot;: executable file not found in $PATH&quot;.</span><br><span class="line">ERRO[0000] error getting events from daemon: net/http: request canceled</span><br></pre></td></tr></table></figure>
-
-<h3 id="使用-scratch-创建一个简单的基础镜像"><a href="#使用-scratch-创建一个简单的基础镜像" class="headerlink" title="使用 scratch 创建一个简单的基础镜像"></a>使用 scratch 创建一个简单的基础镜像</h3><p>当 <code>scratch</code> 在 Docker 的库中出现时，你不能 pull、run 或者在其他镜像标记这个名字，但是你可以在你的 <code>Dockerfile</code> 文件中引用它。</p>
-<p>例如，使用 <code>scratch</code> 创建一个最小化的容器：</p>
-<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">FROM</span> scratch</span><br><span class="line"><span class="keyword">ADD</span><span class="bash"> hello /</span></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> [<span class="string">&quot;/hello&quot;</span>]</span></span><br></pre></td></tr></table></figure>
-
-<p>然后你可以在当前目录使用 <code>docker build --tag hello .</code> 来构建容器。在这里需要 hello 文件，你可以从 Docker Github 的 <a href="https://github.com/docker-library/hello-world/blob/master/hello.c">示例源代码</a> 中下载并编译，过程如下。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ vi Dockerfile</span><br><span class="line">$ wget https://raw.githubusercontent.com/docker-library/hello-world/master/hello.c</span><br><span class="line">$ gcc -o hello -static -nostartfiles hello.c</span><br><span class="line">$ docker build --tag hello .</span><br><span class="line">$ docker run hello</span><br><span class="line"></span><br><span class="line">Hello from Docker!</span><br><span class="line">This message shows that your installation appears to be working correctly.</span><br><span class="line"></span><br><span class="line">To generate this message, Docker took the following steps:</span><br><span class="line"> 1. The Docker client contacted the Docker daemon.</span><br><span class="line"> 2. The Docker daemon pulled the <span class="string">&quot;hello-world&quot;</span> image from the Docker Hub.</span><br><span class="line"> 3. The Docker daemon created a new container from that image <span class="built_in">which</span> runs the</span><br><span class="line">    executable that produces the output you are currently reading.</span><br><span class="line"> 4. The Docker daemon streamed that output to the Docker client, <span class="built_in">which</span> sent it</span><br><span class="line">    to your terminal.</span><br><span class="line"></span><br><span class="line">To try something more ambitious, you can run an Ubuntu container with:</span><br><span class="line"> $ docker run -it ubuntu bash</span><br><span class="line"></span><br><span class="line">Share images, automate workflows, and more with a free Docker ID:</span><br><span class="line"> https://cloud.docker.com/</span><br><span class="line"></span><br><span class="line">For more examples and ideas, visit:</span><br><span class="line"> https://docs.docker.com/engine/userguide/</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Docker</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Docker 学习之旅（五）：Docker 下的 srceenfetch</title>
-    <url>/2017/03/11/docker-learning-trip-5/</url>
-    <content><![CDATA[<p>在之前介绍了 <code>Dockerfile</code> 文件和 Docker Hub 的使用，现在就来完整的应用其创建一个 Docker 下的 srceenfetch。</p>
-<h4 id="关于-srceenfetch"><a href="#关于-srceenfetch" class="headerlink" title="关于 srceenfetch"></a>关于 srceenfetch</h4><p>srceenfetch 基本是我在每一个 Linux 主机都会安装的程序，大概就是用来秀 Linux 和一个简略但直观地展示硬件环境的一个应用程序。</p>
-<p>该项目托管在 GitHub，项目地址为：<a href="https://github.com/KittyKatt/screenFetch">https://github.com/KittyKatt/screenFetch</a>。</p>
-<span id="more"></span>
-
-<h3 id="创建-Docker-Hub-仓库"><a href="#创建-Docker-Hub-仓库" class="headerlink" title="创建 Docker Hub 仓库"></a>创建 Docker Hub 仓库</h3><p>在 Docker Hub 网页上创建一个 Docker Hub 仓库，具体操作很简单，不再赘述。</p>
-<p>此处创建的仓库为：<code>timerever/screenfetch</code></p>
-<h3 id="构建镜像"><a href="#构建镜像" class="headerlink" title="构建镜像"></a>构建镜像</h3><h4 id="创建-Dockerfile-文件"><a href="#创建-Dockerfile-文件" class="headerlink" title="创建 Dockerfile 文件"></a>创建 Dockerfile 文件</h4><p>因为 screenfetch 在 Ubuntu 中可以直接通过 <code>apt-get</code> 安装，所以直接使用 Ubuntu 源安装。</p>
-<p>创建 <code>Dockerfile</code> 文件。</p>
-<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line">$ vi Dockerfile</span><br><span class="line"><span class="keyword">FROM</span> ubuntu</span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt-get update &amp;&amp; apt-get install -y screenfetch</span></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> screenfetch</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="构建镜像并运行"><a href="#构建镜像并运行" class="headerlink" title="构建镜像并运行"></a>构建镜像并运行</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker build -t <span class="string">&quot;timerever/screenfetch&quot;</span> .</span><br><span class="line">$ docker run timerever/screenfetch</span><br></pre></td></tr></table></figure>
-
-<h3 id="上传镜像"><a href="#上传镜像" class="headerlink" title="上传镜像"></a>上传镜像</h3><pre><code>docker push timerever/screenfetch
-</code></pre>
-<p>如果没有登录，先使用 <code>docker login</code> 登录即可。</p>
-]]></content>
-      <categories>
-        <category>Docker</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Docker 学习之旅（四）：Docker Hub</title>
     <url>/2017/03/09/docker-learning-trip-4/</url>
     <content><![CDATA[<p>Docker Hub 是一个由 Docker 公司负责维护的公共注册中心，它包含了超过 15,000 个可用来下载和构建容器的镜像，并且还提供认证、工作组结构、工作流工具（比如 webhooks）、构建触发器以及私有工具（比如私有仓库可用于存储你并不想公开分享的镜像）。</p>
@@ -421,6 +435,33 @@ ENTRYPOINT command param1 param2（shell 形式）
 <h4 id="省略其余"><a href="#省略其余" class="headerlink" title="省略其余"></a>省略其余</h4><p>省略其余还未了解及用到的部分，请自行查阅文档。</p>
 <h3 id="自动构建"><a href="#自动构建" class="headerlink" title="自动构建"></a>自动构建</h3><p>有其优点，当然也有其缺点，大体上就是通过链接到 GitHub 或是 Bitbucket 然后再使用。虽然使用过这两个 git 的管理工具，但是初入 Docker 暂不打算先了解自动构建，后期有精力或有需求再看。</p>
 <h3 id="继续省略其余"><a href="#继续省略其余" class="headerlink" title="继续省略其余"></a>继续省略其余</h3><p>个人认为的入门级应用就这些，其余的不再赘述，有需要的可以自行查看官方文档。</p>
+]]></content>
+      <categories>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Docker 学习之旅（五）：Docker 下的 srceenfetch</title>
+    <url>/2017/03/11/docker-learning-trip-5/</url>
+    <content><![CDATA[<p>在之前介绍了 <code>Dockerfile</code> 文件和 Docker Hub 的使用，现在就来完整的应用其创建一个 Docker 下的 srceenfetch。</p>
+<h4 id="关于-srceenfetch"><a href="#关于-srceenfetch" class="headerlink" title="关于 srceenfetch"></a>关于 srceenfetch</h4><p>srceenfetch 基本是我在每一个 Linux 主机都会安装的程序，大概就是用来秀 Linux 和一个简略但直观地展示硬件环境的一个应用程序。</p>
+<p>该项目托管在 GitHub，项目地址为：<a href="https://github.com/KittyKatt/screenFetch">https://github.com/KittyKatt/screenFetch</a>。</p>
+<span id="more"></span>
+
+<h3 id="创建-Docker-Hub-仓库"><a href="#创建-Docker-Hub-仓库" class="headerlink" title="创建 Docker Hub 仓库"></a>创建 Docker Hub 仓库</h3><p>在 Docker Hub 网页上创建一个 Docker Hub 仓库，具体操作很简单，不再赘述。</p>
+<p>此处创建的仓库为：<code>timerever/screenfetch</code></p>
+<h3 id="构建镜像"><a href="#构建镜像" class="headerlink" title="构建镜像"></a>构建镜像</h3><h4 id="创建-Dockerfile-文件"><a href="#创建-Dockerfile-文件" class="headerlink" title="创建 Dockerfile 文件"></a>创建 Dockerfile 文件</h4><p>因为 screenfetch 在 Ubuntu 中可以直接通过 <code>apt-get</code> 安装，所以直接使用 Ubuntu 源安装。</p>
+<p>创建 <code>Dockerfile</code> 文件。</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line">$ vi Dockerfile</span><br><span class="line"><span class="keyword">FROM</span> ubuntu</span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt-get update &amp;&amp; apt-get install -y screenfetch</span></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> screenfetch</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="构建镜像并运行"><a href="#构建镜像并运行" class="headerlink" title="构建镜像并运行"></a>构建镜像并运行</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker build -t <span class="string">&quot;timerever/screenfetch&quot;</span> .</span><br><span class="line">$ docker run timerever/screenfetch</span><br></pre></td></tr></table></figure>
+
+<h3 id="上传镜像"><a href="#上传镜像" class="headerlink" title="上传镜像"></a>上传镜像</h3><pre><code>docker push timerever/screenfetch
+</code></pre>
+<p>如果没有登录，先使用 <code>docker login</code> 登录即可。</p>
 ]]></content>
       <categories>
         <category>Docker</category>
@@ -1065,6 +1106,26 @@ Checking connectivity... done.
       </tags>
   </entry>
   <entry>
+    <title>对 “pthread_create” 未定义的引用</title>
+    <url>/2017/04/26/undefined-reference-to-pthread_create/</url>
+    <content><![CDATA[<p>今天在对 Linux 多线程编程进行学习时，在编译代码时出现了问题。</p>
+<p>由于使用了 <code>pthread_create</code>, <code>pthread_join</code> 等函数，在使用 <code>gcc</code> 编译时，出现了 <strong>对 ‘pthread_create’ 未定义的引用</strong> 的错误，在上网查询后，得知 pthread 库不是 Linux 系统默认的库，所以在编译时需要添加 <code>-lpthread</code> 参数来使用 libpthread.a 库进行编译。</p>
+<pre><code># gcc -o pthread -lpthread pthread.c
+</code></pre>
+<p>结果还是失败。再次上网查阅，得知 <code>-lpthread</code> 应该放到最后面，修改后编译通过。</p>
+<pre><code># gcc thread.c -o thread.c -lpthread
+</code></pre>
+<p><strong>参考链接：<a href="http://blog.csdn.net/besfanfei/article/details/7542396">http://blog.csdn.net/besfanfei/article/details/7542396</a></strong></p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>C</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>正则表达式原理探究</title>
     <url>/2017/04/09/regular-expression/</url>
     <content><![CDATA[<blockquote>
@@ -1149,26 +1210,6 @@ Checking connectivity... done.
       </categories>
       <tags>
         <tag>Regular Expression</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>对 “pthread_create” 未定义的引用</title>
-    <url>/2017/04/26/undefined-reference-to-pthread_create/</url>
-    <content><![CDATA[<p>今天在对 Linux 多线程编程进行学习时，在编译代码时出现了问题。</p>
-<p>由于使用了 <code>pthread_create</code>, <code>pthread_join</code> 等函数，在使用 <code>gcc</code> 编译时，出现了 <strong>对 ‘pthread_create’ 未定义的引用</strong> 的错误，在上网查询后，得知 pthread 库不是 Linux 系统默认的库，所以在编译时需要添加 <code>-lpthread</code> 参数来使用 libpthread.a 库进行编译。</p>
-<pre><code># gcc -o pthread -lpthread pthread.c
-</code></pre>
-<p>结果还是失败。再次上网查阅，得知 <code>-lpthread</code> 应该放到最后面，修改后编译通过。</p>
-<pre><code># gcc thread.c -o thread.c -lpthread
-</code></pre>
-<p><strong>参考链接：<a href="http://blog.csdn.net/besfanfei/article/details/7542396">http://blog.csdn.net/besfanfei/article/details/7542396</a></strong></p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>C</tag>
       </tags>
   </entry>
   <entry>
