@@ -362,6 +362,33 @@ ENTRYPOINT command param1 param2（shell 形式）
       </tags>
   </entry>
   <entry>
+    <title>Docker 学习之旅（五）：Docker 下的 srceenfetch</title>
+    <url>/2017/03/11/docker-learning-trip-5/</url>
+    <content><![CDATA[<p>在之前介绍了 <code>Dockerfile</code> 文件和 Docker Hub 的使用，现在就来完整的应用其创建一个 Docker 下的 srceenfetch。</p>
+<h4 id="关于-srceenfetch"><a href="#关于-srceenfetch" class="headerlink" title="关于 srceenfetch"></a>关于 srceenfetch</h4><p>srceenfetch 基本是我在每一个 Linux 主机都会安装的程序，大概就是用来秀 Linux 和一个简略但直观地展示硬件环境的一个应用程序。</p>
+<p>该项目托管在 GitHub，项目地址为：<a href="https://github.com/KittyKatt/screenFetch">https://github.com/KittyKatt/screenFetch</a>。</p>
+<span id="more"></span>
+
+<h3 id="创建-Docker-Hub-仓库"><a href="#创建-Docker-Hub-仓库" class="headerlink" title="创建 Docker Hub 仓库"></a>创建 Docker Hub 仓库</h3><p>在 Docker Hub 网页上创建一个 Docker Hub 仓库，具体操作很简单，不再赘述。</p>
+<p>此处创建的仓库为：<code>timerever/screenfetch</code></p>
+<h3 id="构建镜像"><a href="#构建镜像" class="headerlink" title="构建镜像"></a>构建镜像</h3><h4 id="创建-Dockerfile-文件"><a href="#创建-Dockerfile-文件" class="headerlink" title="创建 Dockerfile 文件"></a>创建 Dockerfile 文件</h4><p>因为 screenfetch 在 Ubuntu 中可以直接通过 <code>apt-get</code> 安装，所以直接使用 Ubuntu 源安装。</p>
+<p>创建 <code>Dockerfile</code> 文件。</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line">$ vi Dockerfile</span><br><span class="line"><span class="keyword">FROM</span> ubuntu</span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt-get update &amp;&amp; apt-get install -y screenfetch</span></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> screenfetch</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="构建镜像并运行"><a href="#构建镜像并运行" class="headerlink" title="构建镜像并运行"></a>构建镜像并运行</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker build -t <span class="string">&quot;timerever/screenfetch&quot;</span> .</span><br><span class="line">$ docker run timerever/screenfetch</span><br></pre></td></tr></table></figure>
+
+<h3 id="上传镜像"><a href="#上传镜像" class="headerlink" title="上传镜像"></a>上传镜像</h3><pre><code>docker push timerever/screenfetch
+</code></pre>
+<p>如果没有登录，先使用 <code>docker login</code> 登录即可。</p>
+]]></content>
+      <categories>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Docker 学习之旅（四）：Docker Hub</title>
     <url>/2017/03/09/docker-learning-trip-4/</url>
     <content><![CDATA[<p>Docker Hub 是一个由 Docker 公司负责维护的公共注册中心，它包含了超过 15,000 个可用来下载和构建容器的镜像，并且还提供认证、工作组结构、工作流工具（比如 webhooks）、构建触发器以及私有工具（比如私有仓库可用于存储你并不想公开分享的镜像）。</p>
@@ -394,33 +421,6 @@ ENTRYPOINT command param1 param2（shell 形式）
 <h4 id="省略其余"><a href="#省略其余" class="headerlink" title="省略其余"></a>省略其余</h4><p>省略其余还未了解及用到的部分，请自行查阅文档。</p>
 <h3 id="自动构建"><a href="#自动构建" class="headerlink" title="自动构建"></a>自动构建</h3><p>有其优点，当然也有其缺点，大体上就是通过链接到 GitHub 或是 Bitbucket 然后再使用。虽然使用过这两个 git 的管理工具，但是初入 Docker 暂不打算先了解自动构建，后期有精力或有需求再看。</p>
 <h3 id="继续省略其余"><a href="#继续省略其余" class="headerlink" title="继续省略其余"></a>继续省略其余</h3><p>个人认为的入门级应用就这些，其余的不再赘述，有需要的可以自行查看官方文档。</p>
-]]></content>
-      <categories>
-        <category>Docker</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Docker 学习之旅（五）：Docker 下的 srceenfetch</title>
-    <url>/2017/03/11/docker-learning-trip-5/</url>
-    <content><![CDATA[<p>在之前介绍了 <code>Dockerfile</code> 文件和 Docker Hub 的使用，现在就来完整的应用其创建一个 Docker 下的 srceenfetch。</p>
-<h4 id="关于-srceenfetch"><a href="#关于-srceenfetch" class="headerlink" title="关于 srceenfetch"></a>关于 srceenfetch</h4><p>srceenfetch 基本是我在每一个 Linux 主机都会安装的程序，大概就是用来秀 Linux 和一个简略但直观地展示硬件环境的一个应用程序。</p>
-<p>该项目托管在 GitHub，项目地址为：<a href="https://github.com/KittyKatt/screenFetch">https://github.com/KittyKatt/screenFetch</a>。</p>
-<span id="more"></span>
-
-<h3 id="创建-Docker-Hub-仓库"><a href="#创建-Docker-Hub-仓库" class="headerlink" title="创建 Docker Hub 仓库"></a>创建 Docker Hub 仓库</h3><p>在 Docker Hub 网页上创建一个 Docker Hub 仓库，具体操作很简单，不再赘述。</p>
-<p>此处创建的仓库为：<code>timerever/screenfetch</code></p>
-<h3 id="构建镜像"><a href="#构建镜像" class="headerlink" title="构建镜像"></a>构建镜像</h3><h4 id="创建-Dockerfile-文件"><a href="#创建-Dockerfile-文件" class="headerlink" title="创建 Dockerfile 文件"></a>创建 Dockerfile 文件</h4><p>因为 screenfetch 在 Ubuntu 中可以直接通过 <code>apt-get</code> 安装，所以直接使用 Ubuntu 源安装。</p>
-<p>创建 <code>Dockerfile</code> 文件。</p>
-<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line">$ vi Dockerfile</span><br><span class="line"><span class="keyword">FROM</span> ubuntu</span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt-get update &amp;&amp; apt-get install -y screenfetch</span></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> screenfetch</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="构建镜像并运行"><a href="#构建镜像并运行" class="headerlink" title="构建镜像并运行"></a>构建镜像并运行</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker build -t <span class="string">&quot;timerever/screenfetch&quot;</span> .</span><br><span class="line">$ docker run timerever/screenfetch</span><br></pre></td></tr></table></figure>
-
-<h3 id="上传镜像"><a href="#上传镜像" class="headerlink" title="上传镜像"></a>上传镜像</h3><pre><code>docker push timerever/screenfetch
-</code></pre>
-<p>如果没有登录，先使用 <code>docker login</code> 登录即可。</p>
 ]]></content>
       <categories>
         <category>Docker</category>
@@ -1065,26 +1065,6 @@ Checking connectivity... done.
       </tags>
   </entry>
   <entry>
-    <title>对 “pthread_create” 未定义的引用</title>
-    <url>/2017/04/26/undefined-reference-to-pthread_create/</url>
-    <content><![CDATA[<p>今天在对 Linux 多线程编程进行学习时，在编译代码时出现了问题。</p>
-<p>由于使用了 <code>pthread_create</code>, <code>pthread_join</code> 等函数，在使用 <code>gcc</code> 编译时，出现了 <strong>对 ‘pthread_create’ 未定义的引用</strong> 的错误，在上网查询后，得知 pthread 库不是 Linux 系统默认的库，所以在编译时需要添加 <code>-lpthread</code> 参数来使用 libpthread.a 库进行编译。</p>
-<pre><code># gcc -o pthread -lpthread pthread.c
-</code></pre>
-<p>结果还是失败。再次上网查阅，得知 <code>-lpthread</code> 应该放到最后面，修改后编译通过。</p>
-<pre><code># gcc thread.c -o thread.c -lpthread
-</code></pre>
-<p><strong>参考链接：<a href="http://blog.csdn.net/besfanfei/article/details/7542396">http://blog.csdn.net/besfanfei/article/details/7542396</a></strong></p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>C</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>正则表达式原理探究</title>
     <url>/2017/04/09/regular-expression/</url>
     <content><![CDATA[<blockquote>
@@ -1169,6 +1149,26 @@ Checking connectivity... done.
       </categories>
       <tags>
         <tag>Regular Expression</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>对 “pthread_create” 未定义的引用</title>
+    <url>/2017/04/26/undefined-reference-to-pthread_create/</url>
+    <content><![CDATA[<p>今天在对 Linux 多线程编程进行学习时，在编译代码时出现了问题。</p>
+<p>由于使用了 <code>pthread_create</code>, <code>pthread_join</code> 等函数，在使用 <code>gcc</code> 编译时，出现了 <strong>对 ‘pthread_create’ 未定义的引用</strong> 的错误，在上网查询后，得知 pthread 库不是 Linux 系统默认的库，所以在编译时需要添加 <code>-lpthread</code> 参数来使用 libpthread.a 库进行编译。</p>
+<pre><code># gcc -o pthread -lpthread pthread.c
+</code></pre>
+<p>结果还是失败。再次上网查阅，得知 <code>-lpthread</code> 应该放到最后面，修改后编译通过。</p>
+<pre><code># gcc thread.c -o thread.c -lpthread
+</code></pre>
+<p><strong>参考链接：<a href="http://blog.csdn.net/besfanfei/article/details/7542396">http://blog.csdn.net/besfanfei/article/details/7542396</a></strong></p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>C</tag>
       </tags>
   </entry>
   <entry>
