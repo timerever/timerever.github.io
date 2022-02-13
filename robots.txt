@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /404.html
+Disallow: /categories/
+Disallow: /tags/
+Disallow: /archives/
+Disallow: /about/
+
+Sitemap: https://blog.timerever.tk/post-sitemap.xml
