@@ -264,14 +264,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.5k</span>
+      <span>1.6k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>5 分钟</span>
+      <span>6 分钟</span>
     </span>
 
   
@@ -307,7 +307,11 @@
           <p>偶然间看到了一道算法题，第一眼看起来还挺简单，但是想了想发现不止这么简单，应该会有更优解。拿“波浪排序”作为关键字在百度上进行搜索，发现并没有相关题目。又以“sort wave”为关键字在谷歌上进行搜索，终于发现了相关解析，这里用自己的方式记录一下解题思路。</p>
 <p>首先来看题目：</p>
 <blockquote>
-<p>将给定的数组中的元素进行波浪形排序。<br>波浪形排序是指: arr[0] ≥ arr[1] ≤ arr[2] ≥ arr[3] ≤ arr[4] ≥ arr[5]<br>例如:<br>输入: 1, 2, 6, 7, 5, 3, 4<br>输出: 4, 1, 7, 5, 6, 2, 3</p>
+<p>将给定的数组中的元素进行波浪形排序，输出任意正确结果。<br />
+波浪形排序是指: arr[0] ≥ arr[1] ≤ arr[2] ≥ arr[3] ≤ arr[4] ≥ arr[5]<br />
+例如:<br />
+输入: 1, 2, 6, 7, 5, 3, 4<br />
+输出: 4, 1, 7, 5, 6, 2, 3</p>
 </blockquote>
 <p>解法参考：<a target="_blank" rel="noopener" href="https://www.enjoyalgorithms.com/blog/sort-an-array-in-a-waveform">Sort an array in a waveform</a></p>
           <!--noindex-->
@@ -416,10 +420,8 @@
     <div class="post-body" itemprop="articleBody">
           <p>由于种种原因，项目上在做数据查询时，没有选择任何的 ORM 框架而是使用了 <code>JdbcTemplate</code> 进行数据库查询。查询出来也没做太多事情，只是简单地对数据做了下封装，然后直接返回给了前端。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Map&lt;String, Object&gt;&gt; data = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">JdbcTemplate jdbcTemplate = <span class="keyword">new</span> JdbcTemplate(ds);</span><br><span class="line">SqlRowSet sqlRowSet = jdbcTemplate.queryForRowSet(sql);</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> columnSize = sqlRowSet.getMetaData().getColumnNames().length;</span><br><span class="line"><span class="keyword">while</span> (sqlRowSet.next()) &#123;</span><br><span class="line">	Map&lt;String, Object&gt; tmp = <span class="keyword">new</span> LinkedHashMap&lt;&gt;();</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= columnSize; i++) &#123;</span><br><span class="line">		tmp.put(i + <span class="string">&quot;&quot;</span>, sqlRowSet.getObject(i));</span><br><span class="line">	&#125;</span><br><span class="line">	data.add(tmp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>本来一直岁月静好，知道某一天查了一张新表，然后后台报了异常：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">Caused by: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class java.io.ByteArrayInputStream and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: com.demo.web.rest.util.ResponseEnvelope[&quot;data&quot;]-&gt;com.demo.service.dto.SqlQueryDto[&quot;data&quot;]-&gt;java.util.ArrayList[0]-&gt;java.util.LinkedHashMap[&quot;LOG_MSG&quot;]-&gt;javax.sql.rowset.serial.SerialClob[&quot;asciiStream&quot;])</span><br><span class="line">	at com.fasterxml.jackson.databind.exc.InvalidDefinitionException.from(InvalidDefinitionException.java:77)</span><br><span class="line">	at com.fasterxml.jackson.databind.SerializerProvider.reportBadDefinition(SerializerProvider.java:1300)</span><br><span class="line">	at com.fasterxml.jackson.databind.DatabindContext.reportBadDefinition(DatabindContext.java:400)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.failForEmpty(UnknownSerializer.java:46)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.serialize(UnknownSerializer.java:29)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:728)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:774)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:178)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.std.MapSerializer.serializeFields(MapSerializer.java:808)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.std.MapSerializer.serializeWithoutTypeInfo(MapSerializer.java:764)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.std.MapSerializer.serialize(MapSerializer.java:720)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.std.MapSerializer.serialize(MapSerializer.java:35)</span><br><span class="line">	at com.fasterxml.jackson.datatype.hibernate5.PersistentCollectionSerializer.serialize(PersistentCollectionSerializer.java:244)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.impl.IndexedListSerializer.serializeContents(IndexedListSerializer.java:119)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.impl.IndexedListSerializer.serialize(IndexedListSerializer.java:79)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.impl.IndexedListSerializer.serialize(IndexedListSerializer.java:18)</span><br><span class="line">	at com.fasterxml.jackson.datatype.hibernate5.PersistentCollectionSerializer.serialize(PersistentCollectionSerializer.java:244)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:728)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:774)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:178)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:728)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:774)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:178)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider._serialize(DefaultSerializerProvider.java:480)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.serializeValue(DefaultSerializerProvider.java:319)</span><br><span class="line">	at com.fasterxml.jackson.databind.ObjectWriter$Prefetch.serialize(ObjectWriter.java:1518)</span><br><span class="line">	at com.fasterxml.jackson.databind.ObjectWriter.writeValue(ObjectWriter.java:1007)</span><br><span class="line">	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.writeInternal(AbstractJackson2HttpMessageConverter.java:454)</span><br><span class="line">	... 123 common frames omitted</span><br></pre></td></tr></table></figure>
-
 <p>乍一看，可以通过提示所说的设置 <code>SerializationFeature.FAIL_ON_EMPTY_BEANS</code> 为 <code>false</code> 来避免这个问题，但这个问题其实远远没有这么简单。</p>
           <!--noindex-->
             <div class="post-button">
@@ -698,7 +700,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2k</span>
+      <span>1.9k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -740,7 +742,7 @@
     <div class="post-body" itemprop="articleBody">
           <p>之前在项目上使用了 Hibernate，并开启了基于 caffeine 的二级缓存。因为 Hibernate 会自动处理缓存，所以一直没怎么关注。直到最近，发现在一种特定的情况下，Hibernate 不会自动清除二级缓存里面的集合缓存。问题最后解决起来其实很简单，增加一个配置项的事。不过问题寻求解决的过程还是蛮繁琐的，并没有人能够直接告诉这个问题的答案，在此记录一下这个问题的排查过程。</p>
 <blockquote>
-<p>太长不看版：Spring Boot 中设置属性 spring.jpa.properties.auto_evict_collection_cache&#x3D;true 即可解决。</p>
+<p>太长不看版：Spring Boot 中设置属性 spring.jpa.properties.auto_evict_collection_cache=true 即可解决。</p>
 </blockquote>
           <!--noindex-->
             <div class="post-button">
@@ -951,7 +953,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="模式和软件模式"><a href="#模式和软件模式" class="headerlink" title="模式和软件模式"></a>模式和软件模式</h1><blockquote>
+          <h1 id="模式和软件模式"><a class="markdownIt-Anchor" href="#模式和软件模式"></a> 模式和软件模式</h1>
+<blockquote>
 <p>A pattern is a solution to a problem in a context.</p>
 </blockquote>
 <p><strong>模式</strong> 起源于建筑学，每个模式都描述了一个在我们的环境中不断出现的问题，然后描述了该问题的解决方案的核心，通过这种方式我们可以无数次的重用那些已有的解决方案，无需再重复相同的工作。</p>
@@ -1168,7 +1171,10 @@
     <div class="post-body" itemprop="articleBody">
           <p>在对嵌入式 Linux 系统程序开发中的进程间通信进行学习时，涉及到了信号集函数组，书中给出的示例如下：</p>
 <blockquote>
-<p>该实例首先把 SIGQUIT、SIGINT 两个信号加入信号集，然后将该信号集设为阻塞状态，<br>并在该状态下使程序暂停 5 秒。接下来再将信号集设置为非阻塞状态，再对这两个信号分别<br>操作，其中 SIGQUIT 执行默认操作，而 SIGINT 执行用户自定义函数的操作。源代码如下<br>所示：</p>
+<p>该实例首先把 SIGQUIT、SIGINT 两个信号加入信号集，然后将该信号集设为阻塞状态，<br />
+并在该状态下使程序暂停 5 秒。接下来再将信号集设置为非阻塞状态，再对这两个信号分别<br />
+操作，其中 SIGQUIT 执行默认操作，而 SIGINT 执行用户自定义函数的操作。源代码如下<br />
+所示：</p>
 </blockquote>
           <!--noindex-->
             <div class="post-button">
@@ -1275,7 +1281,8 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>在使用 Apache HttpComponents 时，需要访问一个第三方接口进行数据传输，但是由于对方使用的是 Let’s Encrypt 的证书，虽然浏览器是信任的，但是在调试的时候发现程序并不信任,所以采用自定义 SSLContext 的方式解决该问题。</p>
-<h3 id="查找官方解决方案"><a href="#查找官方解决方案" class="headerlink" title="查找官方解决方案"></a>查找官方解决方案</h3><p>作为一只程序猿，翻官方文档肯定是首选方案。官方提供了一种 Custom SSL context 的实现。</p>
+<h3 id="查找官方解决方案"><a class="markdownIt-Anchor" href="#查找官方解决方案"></a> 查找官方解决方案</h3>
+<p>作为一只程序猿，翻官方文档肯定是首选方案。官方提供了一种 Custom SSL context 的实现。</p>
 <p><a target="_blank" rel="noopener" href="http://hc.apache.org/httpcomponents-client-4.5.x/httpclient/examples/org/apache/http/examples/client/ClientCustomSSL.java">http://hc.apache.org/httpcomponents-client-4.5.x/httpclient/examples/org/apache/http/examples/client/ClientCustomSSL.java</a></p>
           <!--noindex-->
             <div class="post-button">
@@ -1344,6 +1351,11 @@
   
 
 
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css" integrity="sha256-94CNZ/bJtwrBYZrXhCOBvpB4rZUzBnvAsirFv31TMGo=" crossorigin="anonymous">
 
 
 

@@ -28,7 +28,7 @@
 <meta property="og:description" content="所以之前弄得都差不多算是白弄了，一切还需要从头开始。  由于使用的环境为 Ubuntu 的 16.10 最新稳定版本，所以打开 Ubuntu 的文档进行安装，以下命令全部来源于官方文档。 为了防止惨剧的再次发生，记录下此时的版本，页面右上角显示为 Docker 17.03。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2017-03-03T02:50:38.000Z">
-<meta property="article:modified_time" content="2022-03-04T06:16:06.791Z">
+<meta property="article:modified_time" content="2022-03-04T10:17:54.672Z">
 <meta property="article:author" content="timerever">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
@@ -151,7 +151,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%B8%E8%BD%BD%E6%97%A7%E7%89%88%E6%9C%AC"><span class="nav-text">卸载旧版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-Docker"><span class="nav-text">安装 Docker</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E6%BA%90"><span class="nav-text">添加源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-Docker-1"><span class="nav-text">安装 Docker</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0-Docker"><span class="nav-text">更新 Docker</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux-%E4%B8%8B%E7%9A%84%E5%8F%AF%E9%80%89%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4"><span class="nav-text">Linux 下的可选安装步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E9%9D%9E-root-%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86-Docker"><span class="nav-text">使用非 root 用户管理 Docker</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF-Docker-%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF"><span class="nav-text">使 Docker 开机自启</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE-HTTP-%E4%BB%A3%E7%90%86"><span class="nav-text">设置 HTTP 代理</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%B8%E8%BD%BD%E6%97%A7%E7%89%88%E6%9C%AC"><span class="nav-text"> 卸载旧版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-docker"><span class="nav-text"> 安装 Docker</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E6%BA%90"><span class="nav-text"> 添加源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-docker-2"><span class="nav-text"> 安装 Docker</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0-docker"><span class="nav-text"> 更新 Docker</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#linux-%E4%B8%8B%E7%9A%84%E5%8F%AF%E9%80%89%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4"><span class="nav-text"> Linux 下的可选安装步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E9%9D%9E-root-%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86-docker"><span class="nav-text"> 使用非 root 用户管理 Docker</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF-docker-%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF"><span class="nav-text"> 使 Docker 开机自启</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE-http-%E4%BB%A3%E7%90%86"><span class="nav-text"> 设置 HTTP 代理</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -314,62 +314,57 @@
 <p>由于使用的环境为 Ubuntu 的 16.10 最新稳定版本，所以打开 Ubuntu 的文档进行安装，以下命令全部来源于官方文档。</p>
 <p>为了防止惨剧的再次发生，记录下此时的版本，页面右上角显示为 Docker 17.03。</p>
 <span id="more"></span>
-
-<h3 id="卸载旧版本"><a href="#卸载旧版本" class="headerlink" title="卸载旧版本"></a>卸载旧版本</h3><p>文档链接：<a target="_blank" rel="noopener" href="https://docs.docker.com/engine/installation/linux/ubuntu/#uninstall-old-versions">https://docs.docker.com/engine/installation/linux/ubuntu/#uninstall-old-versions</a></p>
+<h3 id="卸载旧版本"><a class="markdownIt-Anchor" href="#卸载旧版本"></a> 卸载旧版本</h3>
+<p>文档链接：<a target="_blank" rel="noopener" href="https://docs.docker.com/engine/installation/linux/ubuntu/#uninstall-old-versions">https://docs.docker.com/engine/installation/linux/ubuntu/#uninstall-old-versions</a></p>
 <p>因为安装了旧版本的 Docker，所以需要先卸载老版本，当然没有安装过就不需要进行这一步了。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get remove docker docker-engine</span><br></pre></td></tr></table></figure>
-
-<h3 id="安装-Docker"><a href="#安装-Docker" class="headerlink" title="安装 Docker"></a>安装 Docker</h3><p>文档链接：<a target="_blank" rel="noopener" href="https://docs.docker.com/engine/installation/linux/ubuntu/#install-docker">https://docs.docker.com/engine/installation/linux/ubuntu/#install-docker</a></p>
+<h3 id="安装-docker"><a class="markdownIt-Anchor" href="#安装-docker"></a> 安装 Docker</h3>
+<p>文档链接：<a target="_blank" rel="noopener" href="https://docs.docker.com/engine/installation/linux/ubuntu/#install-docker">https://docs.docker.com/engine/installation/linux/ubuntu/#install-docker</a></p>
 <p>因为 Docker 是有 Ubuntu 的源的，所以直接采用 apt 安装，方便快捷。</p>
 <p>之前忘记说了，此次更新 Docker 有了两个版本，分别是 Docker CE 和 Docker EE。从名字其实就可以大概猜出，一个是普通版（其实是社区版）一个是企业版。所以，当然是选择社区版，而且官方提到了社区版和企业版的安装是有所不同的，在此只记录社区版的安装。</p>
-<h4 id="添加源"><a href="#添加源" class="headerlink" title="添加源"></a>添加源</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install \</span><br><span class="line">    apt-transport-https \</span><br><span class="line">    ca-certificates \</span><br><span class="line">    curl \</span><br><span class="line">    software-properties-common</span><br><span class="line">$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</span><br><span class="line">$ sudo apt-key fingerprint 0EBFCD88</span><br><span class="line">$ sudo add-apt-repository \</span><br><span class="line">   <span class="string">&quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu \</span></span><br><span class="line"><span class="string">   <span class="subst">$(lsb_release -cs)</span> \</span></span><br><span class="line"><span class="string">   stable&quot;</span></span><br></pre></td></tr></table></figure>
-
+<h4 id="添加源"><a class="markdownIt-Anchor" href="#添加源"></a> 添加源</h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install \</span><br><span class="line">    apt-transport-https \</span><br><span class="line">    ca-certificates \</span><br><span class="line">    curl \</span><br><span class="line">    software-properties-common</span><br><span class="line">$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</span><br><span class="line">$ sudo apt-key fingerprint 0EBFCD88</span><br><span class="line">$ sudo add-apt-repository \</span><br><span class="line">   <span class="string">&quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu \</span></span><br><span class="line"><span class="string">   <span class="subst">$(lsb_release -cs)</span> \</span></span><br><span class="line"><span class="string">   stable&quot;</span></span><br></pre></td></tr></table></figure>
 <p>其中 <code>sudo apt-key fingerprint 0EBFCD88</code> 是用来验证源的 key 信息是否匹配，正确的信息应该为 <code>9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88</code>。</p>
 <p>这边使用的是 <code>stable</code> 版本，若要使用更新更快的 <code>edge</code> 版本，只需在最后一行的 <code>stable</code> 后面添加 <code>edge</code> 即可。对于这两个版本，官方解释如下。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Docker CE gives you the option to run stable or edge builds.</span><br><span class="line">* Stable builds are released once per quarter.</span><br><span class="line">* Edge builds are released once per month.</span><br></pre></td></tr></table></figure>
-
-<h4 id="安装-Docker-1"><a href="#安装-Docker-1" class="headerlink" title="安装 Docker"></a>安装 Docker</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update</span><br><span class="line">$ sudo apt-get install docker-ce</span><br></pre></td></tr></table></figure>
-
+<h4 id="安装-docker-2"><a class="markdownIt-Anchor" href="#安装-docker-2"></a> 安装 Docker</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update</span><br><span class="line">$ sudo apt-get install docker-ce</span><br></pre></td></tr></table></figure>
 <p>这样默认安装的总是最新版本的 Docker ，如果你想安装特定版本的 Docker ，可以使用 <code>sudo apt-get install docker-ce=&lt;VERSION&gt;</code> ，使用 <code>apt-cache madison docker-ce</code> 来显示可以安装的 Docker 版本。</p>
 <p>可以通过运行 <code>hello-world</code> 镜像来确认已将 Docker CE 正确安装。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run hello-world</span><br></pre></td></tr></table></figure>
-
-<h4 id="更新-Docker"><a href="#更新-Docker" class="headerlink" title="更新 Docker"></a>更新 Docker</h4><p>首先运行 <code>sudo apt-get update</code>，然后根据安装指南选择想要安装的新版本。</p>
-<h3 id="Linux-下的可选安装步骤"><a href="#Linux-下的可选安装步骤" class="headerlink" title="Linux 下的可选安装步骤"></a>Linux 下的可选安装步骤</h3><p>文档链接：<a target="_blank" rel="noopener" href="https://docs.docker.com/engine/installation/linux/linux-postinstall/">https://docs.docker.com/engine/installation/linux/linux-postinstall/</a></p>
+<h4 id="更新-docker"><a class="markdownIt-Anchor" href="#更新-docker"></a> 更新 Docker</h4>
+<p>首先运行 <code>sudo apt-get update</code>，然后根据安装指南选择想要安装的新版本。</p>
+<h3 id="linux-下的可选安装步骤"><a class="markdownIt-Anchor" href="#linux-下的可选安装步骤"></a> Linux 下的可选安装步骤</h3>
+<p>文档链接：<a target="_blank" rel="noopener" href="https://docs.docker.com/engine/installation/linux/linux-postinstall/">https://docs.docker.com/engine/installation/linux/linux-postinstall/</a></p>
 <p>此处只列出个人所使用的可选安装。</p>
-<h4 id="使用非-root-用户管理-Docker"><a href="#使用非-root-用户管理-Docker" class="headerlink" title="使用非 root 用户管理 Docker"></a>使用非 root 用户管理 Docker</h4><p>通过文档我们得知 <code>docker</code> 的守护进程绑定的是 Unix socket，默认情况下该 Unix socket 是属于 root 用户，其他用户只能通过 <code>sudo</code> 进行访问，而 <code>docker</code> 的守护进程一直是由 root 用户运行的。所以如果想不使用 <code>sudo</code> 来使用 Docker，可以把用户添加到 <code>docker</code> 用户组。</p>
+<h4 id="使用非-root-用户管理-docker"><a class="markdownIt-Anchor" href="#使用非-root-用户管理-docker"></a> 使用非 root 用户管理 Docker</h4>
+<p>通过文档我们得知 <code>docker</code> 的守护进程绑定的是 Unix socket，默认情况下该 Unix socket 是属于 root 用户，其他用户只能通过 <code>sudo</code> 进行访问，而 <code>docker</code> 的守护进程一直是由 root 用户运行的。所以如果想不使用 <code>sudo</code> 来使用 Docker，可以把用户添加到 <code>docker</code> 用户组。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo groupadd docker # 此处已经存在docker组可不执行操作</span><br><span class="line">$ sudo usermod -aG docker $USER</span><br></pre></td></tr></table></figure>
-
 <p>注销重新登入系统来使用户组更新。</p>
 <p>通过不加 <code>sudo</code> 命令的 <code>docker</code> 命令来验证。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run hello-world</span><br></pre></td></tr></table></figure>
-
-<h4 id="使-Docker-开机自启"><a href="#使-Docker-开机自启" class="headerlink" title="使 Docker 开机自启"></a>使 Docker 开机自启</h4><p>对于大多数的发行版本（RHEL, CentOS, Fedora, Ubuntu 16.04 and higher）使用 <code>systemd</code> 来管理开机自启动的服务，Ubuntu 14.10 及以下版本使用 <code>upstart</code>。</p>
+<h4 id="使-docker-开机自启"><a class="markdownIt-Anchor" href="#使-docker-开机自启"></a> 使 Docker 开机自启</h4>
+<p>对于大多数的发行版本（RHEL, CentOS, Fedora, Ubuntu 16.04 and higher）使用 <code>systemd</code> 来管理开机自启动的服务，Ubuntu 14.10 及以下版本使用 <code>upstart</code>。</p>
 <ul>
 <li><code>systemd</code></li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl enable docker # 开启自启动</span><br><span class="line">$ sudo systemctl disable docker # 关闭自启动</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><code>upstart</code></li>
 </ul>
 <p>Docker 自动使用 <code>upstart</code> 配置自启动，通过以下命令来禁用。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ echo manual | sudo tee /etc/init/docker.override</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><code>chkconfig</code></li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo chkconfig docker on</span><br></pre></td></tr></table></figure>
-
-<h4 id="设置-HTTP-代理"><a href="#设置-HTTP-代理" class="headerlink" title="设置 HTTP 代理"></a>设置 HTTP 代理</h4><p>因为 Docker 的服务器在国外，所以直连的速度很慢，就需要用国内的镜像或者使用 HTTP 代理，这里选择的是使用 HTTP 代理。该文档不在上面的可选安装步骤里，在后面的 Admin Guide 里面，链接：<a target="_blank" rel="noopener" href="https://docs.docker.com/engine/admin/systemd/#http-proxy">https://docs.docker.com/engine/admin/systemd/#http-proxy</a>。</p>
+<h4 id="设置-http-代理"><a class="markdownIt-Anchor" href="#设置-http-代理"></a> 设置 HTTP 代理</h4>
+<p>因为 Docker 的服务器在国外，所以直连的速度很慢，就需要用国内的镜像或者使用 HTTP 代理，这里选择的是使用 HTTP 代理。该文档不在上面的可选安装步骤里，在后面的 Admin Guide 里面，链接：<a target="_blank" rel="noopener" href="https://docs.docker.com/engine/admin/systemd/#http-proxy">https://docs.docker.com/engine/admin/systemd/#http-proxy</a>。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p /etc/systemd/system/docker.service.d</span><br><span class="line">$ vi /etc/systemd/system/docker.service.d/http-proxy.conf</span><br></pre></td></tr></table></figure>
-
 <p>添加下列内容，按实际情况修改。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[Service]</span><br><span class="line">Environment=&quot;HTTP_PROXY=http://proxy.example.com:80/&quot;</span><br></pre></td></tr></table></figure>
-
 <p>或者使用以下内容设置不通过代理的地址。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Environment=&quot;HTTP_PROXY=http://proxy.example.com:80/&quot; &quot;NO_PROXY=localhost,127.0.0.1,docker-registry.somecorporation.com&quot;</span><br></pre></td></tr></table></figure>
-
 <p>然后继续操作完成配置。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo systemctl daemon-reload</span><br><span class="line">$ systemctl show --property=Environment docker # 验证配置是否已经重载，将显示上面配置的信息</span><br><span class="line">$ sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
 
@@ -462,6 +457,11 @@
   
 
 
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css" integrity="sha256-94CNZ/bJtwrBYZrXhCOBvpB4rZUzBnvAsirFv31TMGo=" crossorigin="anonymous">
 
 
 

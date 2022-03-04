@@ -20,15 +20,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"blog.timerever.tk","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.10.1","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Docker Hub 是一个由 Docker 公司负责维护的公共注册中心，它包含了超过 15,000 个可用来下载和构建容器的镜像，并且还提供认证、工作组结构、工作流工具（比如 webhooks）、构建触发器以及私有工具（比如私有仓库可用于存储你并不想公开分享的镜像）。 总览Docker Hub 负责集中用户账号、镜像和公开的命名空间的信息，分别由不同的部分组成：  Web UI Meta-dat">
+    <meta name="description" content="Docker Hub 是一个由 Docker 公司负责维护的公共注册中心，它包含了超过 15,000 个可用来下载和构建容器的镜像，并且还提供认证、工作组结构、工作流工具（比如 webhooks）、构建触发器以及私有工具（比如私有仓库可用于存储你并不想公开分享的镜像）。  总览 Docker Hub 负责集中用户账号、镜像和公开的命名空间的信息，分别由不同的部分组成：  Web UI Meta-d">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker 学习之旅（四）：Docker Hub">
 <meta property="og:url" content="https://blog.timerever.tk/2017/03/09/docker-learning-trip-4/index.html">
 <meta property="og:site_name" content="A Blog">
-<meta property="og:description" content="Docker Hub 是一个由 Docker 公司负责维护的公共注册中心，它包含了超过 15,000 个可用来下载和构建容器的镜像，并且还提供认证、工作组结构、工作流工具（比如 webhooks）、构建触发器以及私有工具（比如私有仓库可用于存储你并不想公开分享的镜像）。 总览Docker Hub 负责集中用户账号、镜像和公开的命名空间的信息，分别由不同的部分组成：  Web UI Meta-dat">
+<meta property="og:description" content="Docker Hub 是一个由 Docker 公司负责维护的公共注册中心，它包含了超过 15,000 个可用来下载和构建容器的镜像，并且还提供认证、工作组结构、工作流工具（比如 webhooks）、构建触发器以及私有工具（比如私有仓库可用于存储你并不想公开分享的镜像）。  总览 Docker Hub 负责集中用户账号、镜像和公开的命名空间的信息，分别由不同的部分组成：  Web UI Meta-d">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2017-03-09T06:42:13.000Z">
-<meta property="article:modified_time" content="2022-03-04T06:16:06.791Z">
+<meta property="article:modified_time" content="2022-03-04T10:17:54.672Z">
 <meta property="article:author" content="timerever">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
@@ -151,7 +151,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E8%A7%88"><span class="nav-text">总览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-text">使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%A2%E9%98%9F%E5%92%8C%E7%BB%84%E7%BB%87"><span class="nav-text">团队和组织</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%93%E5%BA%93"><span class="nav-text">仓库</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%90%9C%E7%B4%A2%E9%95%9C%E5%83%8F"><span class="nav-text">搜索镜像</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%BA%90%E6%A0%87%E7%AD%BE"><span class="nav-text">查看源标签</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%96%B0%E4%BB%93%E5%BA%93"><span class="nav-text">创建新仓库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8A%E4%BC%A0%E9%95%9C%E5%83%8F"><span class="nav-text">上传镜像</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9C%81%E7%95%A5%E5%85%B6%E4%BD%99"><span class="nav-text">省略其余</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA"><span class="nav-text">自动构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%A7%E7%BB%AD%E7%9C%81%E7%95%A5%E5%85%B6%E4%BD%99"><span class="nav-text">继续省略其余</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E8%A7%88"><span class="nav-text"> 总览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-text"> 使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%A2%E9%98%9F%E5%92%8C%E7%BB%84%E7%BB%87"><span class="nav-text"> 团队和组织</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%93%E5%BA%93"><span class="nav-text"> 仓库</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%90%9C%E7%B4%A2%E9%95%9C%E5%83%8F"><span class="nav-text"> 搜索镜像</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%BA%90%E6%A0%87%E7%AD%BE"><span class="nav-text"> 查看源标签</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%96%B0%E4%BB%93%E5%BA%93"><span class="nav-text"> 创建新仓库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8A%E4%BC%A0%E9%95%9C%E5%83%8F"><span class="nav-text"> 上传镜像</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9C%81%E7%95%A5%E5%85%B6%E4%BD%99"><span class="nav-text"> 省略其余</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BA"><span class="nav-text"> 自动构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%A7%E7%BB%AD%E7%9C%81%E7%95%A5%E5%85%B6%E4%BD%99"><span class="nav-text"> 继续省略其余</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -309,7 +309,8 @@
     
     <div class="post-body" itemprop="articleBody">
         <p>Docker Hub 是一个由 Docker 公司负责维护的公共注册中心，它包含了超过 15,000 个可用来下载和构建容器的镜像，并且还提供认证、工作组结构、工作流工具（比如 webhooks）、构建触发器以及私有工具（比如私有仓库可用于存储你并不想公开分享的镜像）。</p>
-<h3 id="总览"><a href="#总览" class="headerlink" title="总览"></a>总览</h3><p><a target="_blank" rel="noopener" href="https://docs.docker.com/docker-hub/">Docker Hub</a> 负责集中用户账号、镜像和公开的命名空间的信息，分别由不同的部分组成：</p>
+<h3 id="总览"><a class="markdownIt-Anchor" href="#总览"></a> 总览</h3>
+<p><a target="_blank" rel="noopener" href="https://docs.docker.com/docker-hub/">Docker Hub</a> 负责集中用户账号、镜像和公开的命名空间的信息，分别由不同的部分组成：</p>
 <ul>
 <li>Web UI</li>
 <li>Meta-data store (comments, stars, list public repositories)</li>
@@ -319,25 +320,32 @@
 <p>这仅仅是 Docker Hub 的一个基本组成，它对大多数的个人和小型企业是十分有帮助的。在改版后，文档将 Docker Hub 部分独立出去，这里遵循以前的顺序，介绍下 Docker Hub 的基础应用。</p>
 <p>有关于 Docker Hub 的文档：<a target="_blank" rel="noopener" href="https://docs.docker.com/docker-hub/">https://docs.docker.com/docker-hub/</a></p>
 <span id="more"></span>
-
-<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>没有登录帐号的情况下可以 <code>search</code> 或者 <code>pull</code> 镜像，但是不能 <code>push</code> 镜像。</p>
-<h3 id="团队和组织"><a href="#团队和组织" class="headerlink" title="团队和组织"></a>团队和组织</h3><p>太高大上，个人的我用不上，不太了解。</p>
-<h3 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h3><h4 id="搜索镜像"><a href="#搜索镜像" class="headerlink" title="搜索镜像"></a>搜索镜像</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ docker search centos</span><br><span class="line">NAME                                 DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED</span><br><span class="line">centos                               The official build of CentOS.                   1034      [OK]</span><br><span class="line">ansible/centos7-ansible              Ansible on Centos7                              43                   [OK]</span><br><span class="line">tutum/centos                         Centos image with SSH access. For the root...   13                   [OK]</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
+<h3 id="使用"><a class="markdownIt-Anchor" href="#使用"></a> 使用</h3>
+<p>没有登录帐号的情况下可以 <code>search</code> 或者 <code>pull</code> 镜像，但是不能 <code>push</code> 镜像。</p>
+<h3 id="团队和组织"><a class="markdownIt-Anchor" href="#团队和组织"></a> 团队和组织</h3>
+<p>太高大上，个人的我用不上，不太了解。</p>
+<h3 id="仓库"><a class="markdownIt-Anchor" href="#仓库"></a> 仓库</h3>
+<h4 id="搜索镜像"><a class="markdownIt-Anchor" href="#搜索镜像"></a> 搜索镜像</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ docker search centos</span><br><span class="line">NAME                                 DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED</span><br><span class="line">centos                               The official build of CentOS.                   1034      [OK]</span><br><span class="line">ansible/centos7-ansible              Ansible on Centos7                              43                   [OK]</span><br><span class="line">tutum/centos                         Centos image with SSH access. For the root...   13                   [OK]</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 <p>没有 <code>/</code> 的镜像说明来自顶层的官方镜像。</p>
 <p>可以使用 <code>docker pull &lt;imagename&gt;</code> 下载所需要的镜像。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ docker pull centos</span><br><span class="line">latest: Pulling from centos</span><br><span class="line">6941bfcbbfca: Pull complete</span><br><span class="line">41459f052977: Pull complete</span><br><span class="line">fd44297e2ddb: Already exists</span><br><span class="line">centos:latest: The image you are pulling has been verified. Important: image verification is a tech preview feature and should not be relied on to provide security.</span><br><span class="line">Digest: sha256:d601d3b928eb2954653c59e65862aabb31edefa868bd5148a41fa45004c12288</span><br><span class="line">Status: Downloaded newer image for centos:latest</span><br></pre></td></tr></table></figure>
-
-<h4 id="查看源标签"><a href="#查看源标签" class="headerlink" title="查看源标签"></a>查看源标签</h4><p>Docker Hub 的 “Tags” 显示了可以获取的版本和相关联的镜像大小。镜像大小是镜像和累积的所有父镜像之和，也是当你执行 <code>docker save</code> 时创建的 Tar 文件的大小。</p>
-<h4 id="创建新仓库"><a href="#创建新仓库" class="headerlink" title="创建新仓库"></a>创建新仓库</h4><p>有 xxxx 的命名规则，文档都有不再赘述，创建完成后就可以使用 <code>docker push</code> 来上传镜像。</p>
-<h4 id="上传镜像"><a href="#上传镜像" class="headerlink" title="上传镜像"></a>上传镜像</h4><p>在往 Docker Hub 上传镜像之前，你需要使用 Docker Hub 的用户名和仓库名来命名本地镜像。你可以通过使用特殊的 <code>:&lt;tag&gt;</code> 标签来往一个仓库添加多个镜像。如果不指明，则默认为 <code>latest</code>。</p>
+<h4 id="查看源标签"><a class="markdownIt-Anchor" href="#查看源标签"></a> 查看源标签</h4>
+<p>Docker Hub 的 “Tags” 显示了可以获取的版本和相关联的镜像大小。镜像大小是镜像和累积的所有父镜像之和，也是当你执行 <code>docker save</code> 时创建的 Tar 文件的大小。</p>
+<h4 id="创建新仓库"><a class="markdownIt-Anchor" href="#创建新仓库"></a> 创建新仓库</h4>
+<p>有 xxxx 的命名规则，文档都有不再赘述，创建完成后就可以使用 <code>docker push</code> 来上传镜像。</p>
+<h4 id="上传镜像"><a class="markdownIt-Anchor" href="#上传镜像"></a> 上传镜像</h4>
+<p>在往 Docker Hub 上传镜像之前，你需要使用 Docker Hub 的用户名和仓库名来命名本地镜像。你可以通过使用特殊的 <code>:&lt;tag&gt;</code> 标签来往一个仓库添加多个镜像。如果不指明，则默认为 <code>latest</code>。</p>
 <p>可以使用 <code>docker build -t &lt;hub-user&gt;/&lt;repo-name&gt;[:&lt;tag&gt;]</code> 在构建镜像时命名，使用 <code>docker tag &lt;existing-image&gt; &lt;hub-user&gt;/&lt;repo-name&gt;[:&lt;tag&gt;]</code> 重命名已经存在的本地镜像，或使用 <code>docker commit &lt;exiting-container&gt; &lt;hub-user&gt;/&lt;repo-name&gt;[:&lt;tag&gt;]</code> 来提交更改。</p>
 <p>然后就可以上传镜像。</p>
 <pre><code>$ docker push &lt;hub-user&gt;/&lt;repo-name&gt;:&lt;tag&gt;
 </code></pre>
-<h4 id="省略其余"><a href="#省略其余" class="headerlink" title="省略其余"></a>省略其余</h4><p>省略其余还未了解及用到的部分，请自行查阅文档。</p>
-<h3 id="自动构建"><a href="#自动构建" class="headerlink" title="自动构建"></a>自动构建</h3><p>有其优点，当然也有其缺点，大体上就是通过链接到 GitHub 或是 Bitbucket 然后再使用。虽然使用过这两个 git 的管理工具，但是初入 Docker 暂不打算先了解自动构建，后期有精力或有需求再看。</p>
-<h3 id="继续省略其余"><a href="#继续省略其余" class="headerlink" title="继续省略其余"></a>继续省略其余</h3><p>个人认为的入门级应用就这些，其余的不再赘述，有需要的可以自行查看官方文档。</p>
+<h4 id="省略其余"><a class="markdownIt-Anchor" href="#省略其余"></a> 省略其余</h4>
+<p>省略其余还未了解及用到的部分，请自行查阅文档。</p>
+<h3 id="自动构建"><a class="markdownIt-Anchor" href="#自动构建"></a> 自动构建</h3>
+<p>有其优点，当然也有其缺点，大体上就是通过链接到 GitHub 或是 Bitbucket 然后再使用。虽然使用过这两个 git 的管理工具，但是初入 Docker 暂不打算先了解自动构建，后期有精力或有需求再看。</p>
+<h3 id="继续省略其余"><a class="markdownIt-Anchor" href="#继续省略其余"></a> 继续省略其余</h3>
+<p>个人认为的入门级应用就这些，其余的不再赘述，有需要的可以自行查看官方文档。</p>
 
     </div>
 
@@ -428,6 +436,11 @@
   
 
 
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css" integrity="sha256-94CNZ/bJtwrBYZrXhCOBvpB4rZUzBnvAsirFv31TMGo=" crossorigin="anonymous">
 
 
 

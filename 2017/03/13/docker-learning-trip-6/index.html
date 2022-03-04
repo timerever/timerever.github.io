@@ -20,15 +20,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"blog.timerever.tk","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.10.1","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="学习 Docker 在一开始肯定不是去学习它的理论（至少对大部分人而言），而是学习它的使用方法进而去使用。大概搭建好了 Docker 的环境，也尝试了创建自己的 Docker 镜像，现在就可以尝试一些比较实用的东西，比如使用 Docker 来搭建 Java Web 运行环境。 寻找镜像既然官方的镜像那么多，那么我们为什么不先去看一下官方镜像呢？打开 Docker Hub 一搜索 tomcat，排在">
+    <meta name="description" content="学习 Docker 在一开始肯定不是去学习它的理论（至少对大部分人而言），而是学习它的使用方法进而去使用。大概搭建好了 Docker 的环境，也尝试了创建自己的 Docker 镜像，现在就可以尝试一些比较实用的东西，比如使用 Docker 来搭建 Java Web 运行环境。  寻找镜像 既然官方的镜像那么多，那么我们为什么不先去看一下官方镜像呢？打开 Docker Hub 一搜索 tomcat，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker 学习之旅（六）：使用 Docker 搭建 Java Web 运行环境">
 <meta property="og:url" content="https://blog.timerever.tk/2017/03/13/docker-learning-trip-6/index.html">
 <meta property="og:site_name" content="A Blog">
-<meta property="og:description" content="学习 Docker 在一开始肯定不是去学习它的理论（至少对大部分人而言），而是学习它的使用方法进而去使用。大概搭建好了 Docker 的环境，也尝试了创建自己的 Docker 镜像，现在就可以尝试一些比较实用的东西，比如使用 Docker 来搭建 Java Web 运行环境。 寻找镜像既然官方的镜像那么多，那么我们为什么不先去看一下官方镜像呢？打开 Docker Hub 一搜索 tomcat，排在">
+<meta property="og:description" content="学习 Docker 在一开始肯定不是去学习它的理论（至少对大部分人而言），而是学习它的使用方法进而去使用。大概搭建好了 Docker 的环境，也尝试了创建自己的 Docker 镜像，现在就可以尝试一些比较实用的东西，比如使用 Docker 来搭建 Java Web 运行环境。  寻找镜像 既然官方的镜像那么多，那么我们为什么不先去看一下官方镜像呢？打开 Docker Hub 一搜索 tomcat，">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2017-03-13T01:58:28.000Z">
-<meta property="article:modified_time" content="2022-03-04T06:16:06.791Z">
+<meta property="article:modified_time" content="2022-03-04T10:17:54.672Z">
 <meta property="article:author" content="timerever">
 <meta property="article:tag" content="Docker">
 <meta property="article:tag" content="Java Web">
@@ -152,7 +152,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%BB%E6%89%BE%E9%95%9C%E5%83%8F"><span class="nav-text">寻找镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E8%BF%90%E8%A1%8C-tomcat"><span class="nav-text">下载运行 tomcat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2-Java-Web-%E9%A1%B9%E7%9B%AE"><span class="nav-text">部署 Java Web 项目</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%8D%E5%88%B6%E6%96%87%E4%BB%B6"><span class="nav-text">复制文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E9%95%9C%E5%83%8F"><span class="nav-text">创建镜像</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E9%95%9C%E5%83%8F"><span class="nav-text">运行镜像</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%BB%E6%89%BE%E9%95%9C%E5%83%8F"><span class="nav-text"> 寻找镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E8%BF%90%E8%A1%8C-tomcat"><span class="nav-text"> 下载运行 tomcat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2-java-web-%E9%A1%B9%E7%9B%AE"><span class="nav-text"> 部署 Java Web 项目</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%8D%E5%88%B6%E6%96%87%E4%BB%B6"><span class="nav-text"> 复制文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E9%95%9C%E5%83%8F"><span class="nav-text"> 创建镜像</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E9%95%9C%E5%83%8F"><span class="nav-text"> 运行镜像</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -311,12 +311,13 @@
     
     <div class="post-body" itemprop="articleBody">
         <p>学习 Docker 在一开始肯定不是去学习它的理论（至少对大部分人而言），而是学习它的使用方法进而去使用。大概搭建好了 Docker 的环境，也尝试了创建自己的 Docker 镜像，现在就可以尝试一些比较实用的东西，比如使用 Docker 来搭建 Java Web 运行环境。</p>
-<h3 id="寻找镜像"><a href="#寻找镜像" class="headerlink" title="寻找镜像"></a>寻找镜像</h3><p>既然官方的镜像那么多，那么我们为什么不先去看一下官方镜像呢？打开 Docker Hub 一搜索 tomcat，排在第一个的就是。</p>
+<h3 id="寻找镜像"><a class="markdownIt-Anchor" href="#寻找镜像"></a> 寻找镜像</h3>
+<p>既然官方的镜像那么多，那么我们为什么不先去看一下官方镜像呢？打开 Docker Hub 一搜索 tomcat，排在第一个的就是。</p>
 <p>地址：<a target="_blank" rel="noopener" href="https://hub.docker.com/_/tomcat/">https://hub.docker.com/_/tomcat/</a></p>
 <p>这边选择 tomcat7 + jre7，但是通过查看构建所使用的 <code>Dockfile</code> 文件发现，tomcat 的官方源采用的是 jre7 是 openJDK7 的 jre，这里需要注意。</p>
 <span id="more"></span>
-
-<h3 id="下载运行-tomcat"><a href="#下载运行-tomcat" class="headerlink" title="下载运行 tomcat"></a>下载运行 tomcat</h3><p>tomcat 的默认启动参数为 <code>CMD [&quot;catalina.sh&quot;, &quot;run&quot;]</code>，启动方式为：</p>
+<h3 id="下载运行-tomcat"><a class="markdownIt-Anchor" href="#下载运行-tomcat"></a> 下载运行 tomcat</h3>
+<p>tomcat 的默认启动参数为 <code>CMD [&quot;catalina.sh&quot;, &quot;run&quot;]</code>，启动方式为：</p>
 <pre><code>docker run -it --rm tomcat:7.0
 </code></pre>
 <p>使用 <code>http://container-ip:8080</code> 在浏览器访问。</p>
@@ -324,8 +325,10 @@
 <pre><code>$ docker run -it --rm -p 8888:8080 tomcat:7.0
 </code></pre>
 <p>然后使用 <code>http://localhost:8888</code> 或是 <code>http://host-ip:8888</code> 访问。</p>
-<h3 id="部署-Java-Web-项目"><a href="#部署-Java-Web-项目" class="headerlink" title="部署 Java Web 项目"></a>部署 Java Web 项目</h3><p>文档上已经说明，对于 tomcat 7 ，tomcat 所在目录为 <code>/usr/local/tomcat</code>，所以对其进行修改完成部署。</p>
-<h4 id="复制文件"><a href="#复制文件" class="headerlink" title="复制文件"></a>复制文件</h4><p>先使用如下命令启动容器：</p>
+<h3 id="部署-java-web-项目"><a class="markdownIt-Anchor" href="#部署-java-web-项目"></a> 部署 Java Web 项目</h3>
+<p>文档上已经说明，对于 tomcat 7 ，tomcat 所在目录为 <code>/usr/local/tomcat</code>，所以对其进行修改完成部署。</p>
+<h4 id="复制文件"><a class="markdownIt-Anchor" href="#复制文件"></a> 复制文件</h4>
+<p>先使用如下命令启动容器：</p>
 <pre><code>$ docker run -it -v /home/ubuntu/tomcat:/mnt/war tomcat:7.0 /bin/bash
 </code></pre>
 <p>此处相关参数包括：</p>
@@ -337,11 +340,13 @@
 <p>即运行后进入容器命令行，并将主机的 <code>/home/ubuntu/tomcat</code> 挂载到了容器的 <code>/mnt/war</code> 目录。</p>
 <p>然后将部署文件拷贝到主机的 <code>/home/ubuntu/tomcat</code> 目录并继续在容器中操作部署程序。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cd webapps/ROOT/</span></span><br><span class="line"><span class="comment"># rm -rf *</span></span><br><span class="line"><span class="comment"># cp -r /mnt/war/* .</span></span><br><span class="line"><span class="comment"># exit</span></span><br></pre></td></tr></table></figure>
-<h4 id="创建镜像"><a href="#创建镜像" class="headerlink" title="创建镜像"></a>创建镜像</h4><p>此处需要记住刚才所运行容器的 ID，bash 里面 <code>root@0b2d4744734c</code> 的 ‘root@’ 后面的便是容器 ID。如果已经找不到，可使用 <code>docker ps -a</code> 查看之前所运行过的所有容器。</p>
+<h4 id="创建镜像"><a class="markdownIt-Anchor" href="#创建镜像"></a> 创建镜像</h4>
+<p>此处需要记住刚才所运行容器的 ID，bash 里面 <code>root@0b2d4744734c</code> 的 ‘root@’ 后面的便是容器 ID。如果已经找不到，可使用 <code>docker ps -a</code> 查看之前所运行过的所有容器。</p>
 <p>然后创建镜像。</p>
 <pre><code>$ docker commit 0b2d4744734c timerever/javaweb:1.0
 </code></pre>
-<h3 id="运行镜像"><a href="#运行镜像" class="headerlink" title="运行镜像"></a>运行镜像</h3><p>使用刚刚自定的名称运行镜像。</p>
+<h3 id="运行镜像"><a class="markdownIt-Anchor" href="#运行镜像"></a> 运行镜像</h3>
+<p>使用刚刚自定的名称运行镜像。</p>
 <pre><code>docker run -it --rm -p 8888:8080 timerever/javaweb:1.0 catalina.sh run
 </code></pre>
 
@@ -435,6 +440,11 @@
   
 
 
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css" integrity="sha256-94CNZ/bJtwrBYZrXhCOBvpB4rZUzBnvAsirFv31TMGo=" crossorigin="anonymous">
 
 
 

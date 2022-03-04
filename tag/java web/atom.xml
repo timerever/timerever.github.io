@@ -7,19 +7,19 @@
     <category term="Java" />
     <category term="HttpClient" />
     <category term="Jackson" />
-    <category term="Docker" />
     <category term="Design Pattern" />
+    <category term="Docker" />
     <category term="Dockerfile" />
     <category term="Java Web" />
+    <category term="Factory Patterns" />
     <category term="Linux" />
     <category term="C" />
     <category term="Android" />
     <category term="Huawei" />
     <category term="CyanogenMod" />
-    <category term="Factory Patterns" />
-    <category term="Hibernate" />
     <category term="Git" />
     <category term="GitHub" />
+    <category term="Hibernate" />
     <category term="Keycloak" />
     <category term="OAuth2" />
     <category term="SSO" />
@@ -40,12 +40,13 @@
         <title>Docker 学习之旅（六）：使用 Docker 搭建 Java Web 运行环境</title>
         <link rel="alternate" href="https://blog.timerever.tk/2017/03/13/docker-learning-trip-6/"/>
         <content type="html">&lt;p&gt;学习 Docker 在一开始肯定不是去学习它的理论（至少对大部分人而言），而是学习它的使用方法进而去使用。大概搭建好了 Docker 的环境，也尝试了创建自己的 Docker 镜像，现在就可以尝试一些比较实用的东西，比如使用 Docker 来搭建 Java Web 运行环境。&lt;/p&gt;
-&lt;h3 id=&#34;寻找镜像&#34;&gt;&lt;a href=&#34;#寻找镜像&#34; class=&#34;headerlink&#34; title=&#34;寻找镜像&#34;&gt;&lt;/a&gt;寻找镜像&lt;/h3&gt;&lt;p&gt;既然官方的镜像那么多，那么我们为什么不先去看一下官方镜像呢？打开 Docker Hub 一搜索 tomcat，排在第一个的就是。&lt;/p&gt;
+&lt;h3 id=&#34;寻找镜像&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#寻找镜像&#34;&gt;&lt;/a&gt; 寻找镜像&lt;/h3&gt;
+&lt;p&gt;既然官方的镜像那么多，那么我们为什么不先去看一下官方镜像呢？打开 Docker Hub 一搜索 tomcat，排在第一个的就是。&lt;/p&gt;
 &lt;p&gt;地址：&lt;a href=&#34;https://hub.docker.com/_/tomcat/&#34;&gt;https://hub.docker.com/_/tomcat/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;这边选择 tomcat7 + jre7，但是通过查看构建所使用的 &lt;code&gt;Dockfile&lt;/code&gt; 文件发现，tomcat 的官方源采用的是 jre7 是 openJDK7 的 jre，这里需要注意。&lt;/p&gt;
 &lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
-
-&lt;h3 id=&#34;下载运行-tomcat&#34;&gt;&lt;a href=&#34;#下载运行-tomcat&#34; class=&#34;headerlink&#34; title=&#34;下载运行 tomcat&#34;&gt;&lt;/a&gt;下载运行 tomcat&lt;/h3&gt;&lt;p&gt;tomcat 的默认启动参数为 &lt;code&gt;CMD [&amp;quot;catalina.sh&amp;quot;, &amp;quot;run&amp;quot;]&lt;/code&gt;，启动方式为：&lt;/p&gt;
+&lt;h3 id=&#34;下载运行-tomcat&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#下载运行-tomcat&#34;&gt;&lt;/a&gt; 下载运行 tomcat&lt;/h3&gt;
+&lt;p&gt;tomcat 的默认启动参数为 &lt;code&gt;CMD [&amp;quot;catalina.sh&amp;quot;, &amp;quot;run&amp;quot;]&lt;/code&gt;，启动方式为：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;docker run -it --rm tomcat:7.0
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;使用 &lt;code&gt;http://container-ip:8080&lt;/code&gt; 在浏览器访问。&lt;/p&gt;
@@ -53,8 +54,10 @@
 &lt;pre&gt;&lt;code&gt;$ docker run -it --rm -p 8888:8080 tomcat:7.0
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;然后使用 &lt;code&gt;http://localhost:8888&lt;/code&gt; 或是 &lt;code&gt;http://host-ip:8888&lt;/code&gt; 访问。&lt;/p&gt;
-&lt;h3 id=&#34;部署-Java-Web-项目&#34;&gt;&lt;a href=&#34;#部署-Java-Web-项目&#34; class=&#34;headerlink&#34; title=&#34;部署 Java Web 项目&#34;&gt;&lt;/a&gt;部署 Java Web 项目&lt;/h3&gt;&lt;p&gt;文档上已经说明，对于 tomcat 7 ，tomcat 所在目录为 &lt;code&gt;/usr/local/tomcat&lt;/code&gt;，所以对其进行修改完成部署。&lt;/p&gt;
-&lt;h4 id=&#34;复制文件&#34;&gt;&lt;a href=&#34;#复制文件&#34; class=&#34;headerlink&#34; title=&#34;复制文件&#34;&gt;&lt;/a&gt;复制文件&lt;/h4&gt;&lt;p&gt;先使用如下命令启动容器：&lt;/p&gt;
+&lt;h3 id=&#34;部署-java-web-项目&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#部署-java-web-项目&#34;&gt;&lt;/a&gt; 部署 Java Web 项目&lt;/h3&gt;
+&lt;p&gt;文档上已经说明，对于 tomcat 7 ，tomcat 所在目录为 &lt;code&gt;/usr/local/tomcat&lt;/code&gt;，所以对其进行修改完成部署。&lt;/p&gt;
+&lt;h4 id=&#34;复制文件&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#复制文件&#34;&gt;&lt;/a&gt; 复制文件&lt;/h4&gt;
+&lt;p&gt;先使用如下命令启动容器：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ docker run -it -v /home/ubuntu/tomcat:/mnt/war tomcat:7.0 /bin/bash
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;此处相关参数包括：&lt;/p&gt;
@@ -66,11 +69,13 @@
 &lt;p&gt;即运行后进入容器命令行，并将主机的 &lt;code&gt;/home/ubuntu/tomcat&lt;/code&gt; 挂载到了容器的 &lt;code&gt;/mnt/war&lt;/code&gt; 目录。&lt;/p&gt;
 &lt;p&gt;然后将部署文件拷贝到主机的 &lt;code&gt;/home/ubuntu/tomcat&lt;/code&gt; 目录并继续在容器中操作部署程序。&lt;/p&gt;
 &lt;figure class=&#34;highlight bash&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;# cd webapps/ROOT/&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;# rm -rf *&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;# cp -r /mnt/war/* .&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;# exit&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h4 id=&#34;创建镜像&#34;&gt;&lt;a href=&#34;#创建镜像&#34; class=&#34;headerlink&#34; title=&#34;创建镜像&#34;&gt;&lt;/a&gt;创建镜像&lt;/h4&gt;&lt;p&gt;此处需要记住刚才所运行容器的 ID，bash 里面 &lt;code&gt;root@0b2d4744734c&lt;/code&gt; 的 ‘root@’ 后面的便是容器 ID。如果已经找不到，可使用 &lt;code&gt;docker ps -a&lt;/code&gt; 查看之前所运行过的所有容器。&lt;/p&gt;
+&lt;h4 id=&#34;创建镜像&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#创建镜像&#34;&gt;&lt;/a&gt; 创建镜像&lt;/h4&gt;
+&lt;p&gt;此处需要记住刚才所运行容器的 ID，bash 里面 &lt;code&gt;root@0b2d4744734c&lt;/code&gt; 的 ‘root@’ 后面的便是容器 ID。如果已经找不到，可使用 &lt;code&gt;docker ps -a&lt;/code&gt; 查看之前所运行过的所有容器。&lt;/p&gt;
 &lt;p&gt;然后创建镜像。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ docker commit 0b2d4744734c timerever/javaweb:1.0
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;运行镜像&#34;&gt;&lt;a href=&#34;#运行镜像&#34; class=&#34;headerlink&#34; title=&#34;运行镜像&#34;&gt;&lt;/a&gt;运行镜像&lt;/h3&gt;&lt;p&gt;使用刚刚自定的名称运行镜像。&lt;/p&gt;
+&lt;h3 id=&#34;运行镜像&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#运行镜像&#34;&gt;&lt;/a&gt; 运行镜像&lt;/h3&gt;
+&lt;p&gt;使用刚刚自定的名称运行镜像。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;docker run -it --rm -p 8888:8080 timerever/javaweb:1.0 catalina.sh run
 &lt;/code&gt;&lt;/pre&gt;
 </content>
