@@ -8,26 +8,26 @@
         <pubDate>Sat, 29 Apr 2017 08:14:03 +0000</pubDate>
         <lastBuildDate>Sat, 29 Apr 2017 08:14:03 +0000</lastBuildDate>
         <category>Java</category>
-        <category>HttpClient</category>
         <category>Jackson</category>
+        <category>HttpClient</category>
         <category>Design Pattern</category>
         <category>Docker</category>
         <category>Dockerfile</category>
         <category>Java Web</category>
-        <category>Factory Patterns</category>
         <category>Linux</category>
         <category>C</category>
         <category>Android</category>
         <category>Huawei</category>
         <category>CyanogenMod</category>
+        <category>Factory Patterns</category>
+        <category>Hibernate</category>
         <category>Git</category>
         <category>GitHub</category>
-        <category>Hibernate</category>
+        <category>VMware</category>
+        <category>vmdk</category>
         <category>Keycloak</category>
         <category>OAuth2</category>
         <category>SSO</category>
-        <category>VMware</category>
-        <category>vmdk</category>
         <category>wget</category>
         <category>Regular Expression</category>
         <category>Algorithm</category>
@@ -167,8 +167,10 @@ SummerTextField
 
 &lt;h2 id=&#34;软件架构模式与软件设计模式的比较&#34;&gt;&lt;a href=&#34;#软件架构模式与软件设计模式的比较&#34; class=&#34;headerlink&#34; title=&#34;软件架构模式与软件设计模式的比较&#34;&gt;&lt;/a&gt;软件架构模式与软件设计模式的比较&lt;/h2&gt;&lt;p&gt;简略的来说，架构模式是整体上的大智慧，而软件模式更侧重于小技巧。&lt;/p&gt;
 &lt;p&gt;这里以 MVC 解决方案为例。&lt;/p&gt;
-&lt;h2 id=&#34;软件架构模式&#34;&gt;&lt;a href=&#34;#软件架构模式&#34; class=&#34;headerlink&#34; title=&#34;软件架构模式&#34;&gt;&lt;/a&gt;软件架构模式&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;/design-patterns-1.png&#34; alt=&#34;Alt MVC软件架构模式&#34; title=&#34;MVC软件架构模式&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;软件设计模式&#34;&gt;&lt;a href=&#34;#软件设计模式&#34; class=&#34;headerlink&#34; title=&#34;软件设计模式&#34;&gt;&lt;/a&gt;软件设计模式&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;/design-patterns-2.png&#34; alt=&#34;Alt MVC软件设计模式&#34; title=&#34;MVC软件设计模式&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;软件架构模式&#34;&gt;&lt;a href=&#34;#软件架构模式&#34; class=&#34;headerlink&#34; title=&#34;软件架构模式&#34;&gt;&lt;/a&gt;软件架构模式&lt;/h2&gt;&lt;img src=&#34;/2017/04/28/design-patterns/design-patterns-1.png&#34; class=&#34;&#34; title=&#34;MVC软件架构模式&#34;&gt;
+
+&lt;h2 id=&#34;软件设计模式&#34;&gt;&lt;a href=&#34;#软件设计模式&#34; class=&#34;headerlink&#34; title=&#34;软件设计模式&#34;&gt;&lt;/a&gt;软件设计模式&lt;/h2&gt;&lt;img src=&#34;/2017/04/28/design-patterns/design-patterns-2.png&#34; class=&#34;&#34; title=&#34;MVC软件设计模式&#34;&gt;
+
 &lt;p&gt;所谓软件设计模式：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;在软件模式中，设计模式是研究最为深入的分支。&lt;/li&gt;
@@ -186,7 +188,8 @@ SummerTextField
 &lt;li&gt;模式有重要的人为因素：所有的软件服务于人类的舒适或生活质量，而最好的模式追求它的实用性和美学。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;软件设计模式分类&#34;&gt;&lt;a href=&#34;#软件设计模式分类&#34; class=&#34;headerlink&#34; title=&#34;软件设计模式分类&#34;&gt;&lt;/a&gt;软件设计模式分类&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;软件设计模式&lt;/strong&gt; 按照不同的分类标准可以分为不同的类别，例如按 &lt;strong&gt;目的&lt;/strong&gt; 可以分为 &lt;strong&gt;创建型&lt;/strong&gt;、&lt;strong&gt;结构型&lt;/strong&gt; 和 &lt;strong&gt;行为型&lt;/strong&gt;，按 &lt;strong&gt;范围&lt;/strong&gt; 可以分为 &lt;strong&gt;类&lt;/strong&gt; 和 &lt;strong&gt;对象&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/design-patterns-3.png&#34; alt=&#34;Alt 软件设计模式分类&#34; title=&#34;软件设计模式分类&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;/2017/04/28/design-patterns/design-patterns-3.png&#34; class=&#34;&#34; title=&#34;软件设计模式分类&#34;&gt;
+
 &lt;h4 id=&#34;创建型设计模式&#34;&gt;&lt;a href=&#34;#创建型设计模式&#34; class=&#34;headerlink&#34; title=&#34;创建型设计模式&#34;&gt;&lt;/a&gt;创建型设计模式&lt;/h4&gt;&lt;p&gt;&lt;strong&gt;创建型模式 (Creational Pattern)&lt;/strong&gt; 对类的实例化过程进行了抽象，能够将软件模块中对象的创建和对象的使用分离。为了使软件的结构更加清晰，外界对于这些对象只需要知道它们共同的接口，而不清楚其具体的实现细节，使整个系统的设计更加符合单一职责原则。&lt;/p&gt;
 &lt;p&gt;创建型模式在创建什么 (What)，由谁创建 (Who)，何时创建 (When) 等方面都为软件设计者提供了尽可能大的灵活性。创建型模式隐藏了类的实例的创建细节，通过隐藏对象如何被创建和组合在一起达到使整个系统独立的目的。&lt;/p&gt;
 &lt;p&gt;创建型设计模式包含：&lt;/p&gt;

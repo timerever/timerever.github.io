@@ -27,16 +27,16 @@
 <meta property="og:site_name" content="A Blog">
 <meta property="og:description" content="由于种种原因，项目上在做数据查询时，没有选择任何的 ORM 框架而是使用了 JdbcTemplate 进行数据库查询。查询出来也没做太多事情，只是简单地对数据做了下封装，然后直接返回给了前端。 123456789101112List&lt;Map&lt;String, Object&gt;&gt; data &#x3D; new ArrayList&lt;&gt;();JdbcTemplate jdbcTe">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://blog.timerever.tk/custom-jackson-serializer-for-clob-type-1.png">
-<meta property="og:image" content="https://blog.timerever.tk/custom-jackson-serializer-for-clob-type-2.png">
-<meta property="og:image" content="https://blog.timerever.tk/custom-jackson-serializer-for-clob-type-3.png">
+<meta property="og:image" content="https://blog.timerever.tk/2022/02/09/custom-jackson-serializer-for-clob-type/custom-jackson-serializer-for-clob-type-1.png">
+<meta property="og:image" content="https://blog.timerever.tk/2022/02/09/custom-jackson-serializer-for-clob-type/custom-jackson-serializer-for-clob-type-2.png">
+<meta property="og:image" content="https://blog.timerever.tk/2022/02/09/custom-jackson-serializer-for-clob-type/custom-jackson-serializer-for-clob-type-3.png">
 <meta property="article:published_time" content="2022-02-09T07:49:35.000Z">
-<meta property="article:modified_time" content="2022-03-04T05:31:58.260Z">
+<meta property="article:modified_time" content="2022-03-04T05:59:25.197Z">
 <meta property="article:author" content="timerever">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="Jackson">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://blog.timerever.tk/custom-jackson-serializer-for-clob-type-1.png">
+<meta name="twitter:image" content="https://blog.timerever.tk/2022/02/09/custom-jackson-serializer-for-clob-type/custom-jackson-serializer-for-clob-type-1.png">
 
 
 <link rel="canonical" href="https://blog.timerever.tk/2022/02/09/custom-jackson-serializer-for-clob-type/">
@@ -327,13 +327,16 @@
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">jackson:</span></span><br><span class="line">    <span class="attr">serialization:</span></span><br><span class="line">      <span class="attr">FAIL_ON_EMPTY_BEANS:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
 
 <p>让我们再调用下接口。好，没问题，不报错了！再看眼返回值，等等，这是个啥？</p>
-<p><img src="/custom-jackson-serializer-for-clob-type-1.png" alt="并不是所期望的结果"></p>
+<img src="/2022/02/09/custom-jackson-serializer-for-clob-type/custom-jackson-serializer-for-clob-type-1.png" class="" title="并不是所期望的结果">
+
 <p>这个字段明明在数据库中是有值的，而且正常也不会变成这种嵌套结构，所以看来这个解决办法并不可行。</p>
 <h3 id="寻找问题根源"><a href="#寻找问题根源" class="headerlink" title="寻找问题根源"></a>寻找问题根源</h3><p>所以简单的解决方式不行，就只能按部就班先看问题出在哪里了。废话不多说，既然我们知道了问题出在哪个字段，就直接打个断点先看眼程序拿到的返回值是什么样子。</p>
 <p>已知数据库是 H2，对应的字段类型为 <code>CHARACTER LARGE OBJECT</code>，再看眼拿到的值：</p>
-<p><img src="/custom-jackson-serializer-for-clob-type-2.png" alt="实际拿到的返回值"></p>
+<img src="/2022/02/09/custom-jackson-serializer-for-clob-type/custom-jackson-serializer-for-clob-type-2.png" class="" title="实际拿到的返回值">
+
 <p>可以看到，程序所拿到的返回值是 <code>javax.sql.rowset.serial.SerialClob</code> 的对象，而这个对象里面所包含的 <code>clob</code> 字段就是 H2 的 <code>org.h2.jdbc.JdbcClob</code> 对象。</p>
-<p><img src="/custom-jackson-serializer-for-clob-type-3.png" alt="SerialClob 类"></p>
+<img src="/2022/02/09/custom-jackson-serializer-for-clob-type/custom-jackson-serializer-for-clob-type-3.png" class="" title="SerialClob 类">
+
 <p>也就是说，默认情况下 Jackson 无法序列化 <code>SerialClob</code> 这个类所创建的对象，是不是由于 <code>clob</code> 字段所包含的具体实现类导致的并没有进一步研究，因为数据库的种类很多，我们需要着手做的是解决这个不能序列化的问题。</p>
 <h3 id="自定义-Serializer-解决问题"><a href="#自定义-Serializer-解决问题" class="headerlink" title="自定义 Serializer 解决问题"></a>自定义 Serializer 解决问题</h3><p>我们知道 Jackson 可以通过扩展 <code>Module</code> 来支持更多类型的序列化操作，所以我们也可以采用同样的方式来增加对 <code>SerialClob</code> 的支持。</p>
 <p>不过我们不需要自定义 <code>Module</code>，使用自带的 <code>SimpleModule</code> 即可，要做的只是自定义对应的 Serializer：</p>

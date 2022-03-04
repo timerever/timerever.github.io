@@ -8,26 +8,26 @@
         <pubDate>Thu, 03 Mar 2022 08:55:42 +0000</pubDate>
         <lastBuildDate>Thu, 03 Mar 2022 08:55:42 +0000</lastBuildDate>
         <category>Java</category>
-        <category>HttpClient</category>
         <category>Jackson</category>
+        <category>HttpClient</category>
         <category>Design Pattern</category>
         <category>Docker</category>
         <category>Dockerfile</category>
         <category>Java Web</category>
-        <category>Factory Patterns</category>
         <category>Linux</category>
         <category>C</category>
         <category>Android</category>
         <category>Huawei</category>
         <category>CyanogenMod</category>
+        <category>Factory Patterns</category>
+        <category>Hibernate</category>
         <category>Git</category>
         <category>GitHub</category>
-        <category>Hibernate</category>
+        <category>VMware</category>
+        <category>vmdk</category>
         <category>Keycloak</category>
         <category>OAuth2</category>
         <category>SSO</category>
-        <category>VMware</category>
-        <category>vmdk</category>
         <category>wget</category>
         <category>Regular Expression</category>
         <category>Algorithm</category>
@@ -61,11 +61,17 @@
 &lt;li&gt;升序排序后，偶数位（非数组下标位）的元素一定会大于等于前面的元素，将偶数位元素分别与前面的元素交换&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;图解&#34;&gt;&lt;a href=&#34;#图解&#34; class=&#34;headerlink&#34; title=&#34;图解&#34;&gt;&lt;/a&gt;图解&lt;/h4&gt;&lt;p&gt;第三种解法不需要额外的空间占用，把现成的图拿过来方便理解。&lt;/p&gt;
-&lt;p&gt;排序后：&lt;br&gt;&lt;img src=&#34;/sort-an-array-in-a-waveform-1.png&#34; alt=&#34;排序后&#34;&gt;&lt;/p&gt;
-&lt;p&gt;交换元素后：&lt;br&gt;&lt;img src=&#34;/sort-an-array-in-a-waveform-2.png&#34; alt=&#34;交换元素后&#34;&gt;&lt;/p&gt;
+&lt;p&gt;排序后：&lt;/p&gt;
+&lt;img src=&#34;/2022/03/03/sort-an-array-in-a-waveform/sort-an-array-in-a-waveform-1.png&#34; class=&#34;&#34; title=&#34;排序后&#34;&gt;
+
+&lt;p&gt;交换元素后：&lt;/p&gt;
+&lt;img src=&#34;/2022/03/03/sort-an-array-in-a-waveform/sort-an-array-in-a-waveform-2.png&#34; class=&#34;&#34; title=&#34;交换元素后&#34;&gt;
+
 &lt;h4 id=&#34;复杂度分析&#34;&gt;&lt;a href=&#34;#复杂度分析&#34; class=&#34;headerlink&#34; title=&#34;复杂度分析&#34;&gt;&lt;/a&gt;复杂度分析&lt;/h4&gt;&lt;p&gt;排序后再遍历处理的时间复杂度为排序的时间复杂度 + 后续遍历处理时间复杂度，最优为：O(n\log_2 n) + O(n) &amp;#x3D; O(n\log_2 n)&lt;br&gt;空间复杂度仍然取决于使用的排序算法 + 后续处理是否需要占用空间，最优为堆排 + 交换解法 &amp;#x3D; O(1)&lt;/p&gt;
 &lt;h3 id=&#34;二、一次遍历解决&#34;&gt;&lt;a href=&#34;#二、一次遍历解决&#34; class=&#34;headerlink&#34; title=&#34;二、一次遍历解决&#34;&gt;&lt;/a&gt;二、一次遍历解决&lt;/h3&gt;&lt;p&gt;这道题的最优解在于，我们能否不使用排序，仅使用一次遍历完成波浪排序。&lt;/p&gt;
-&lt;p&gt;从上面的结果可以看出，符合要求的答案，偶数位的元素，一定小于等于其前面和其后面的元素（对应题目要求的 arr[0] ≥ arr[1] ≤ arr[2]、arr[2] ≥ arr[3] ≤ arr[4]）。所以我们可以认为，对于每个偶数位元素，其一定是与相邻两个的元素比较中的最小值。那么我们就遍历偶数位元素，与其相邻元素为一组，将其交换为组内的最小值。然后我们可以看到，划分并遍历元素组的时候，遍历步长为 2，而元素为 3 个一组，所以奇数位元素会参与两次比较交换。&lt;br&gt;画了个图便于理解，数是随便写的，看上去好看一点：&lt;br&gt;&lt;img src=&#34;/sort-an-array-in-a-waveform-3.png&#34; alt=&#34;对元素分组&#34;&gt;&lt;/p&gt;
+&lt;p&gt;从上面的结果可以看出，符合要求的答案，偶数位的元素，一定小于等于其前面和其后面的元素（对应题目要求的 arr[0] ≥ arr[1] ≤ arr[2]、arr[2] ≥ arr[3] ≤ arr[4]）。所以我们可以认为，对于每个偶数位元素，其一定是与相邻两个的元素比较中的最小值。那么我们就遍历偶数位元素，与其相邻元素为一组，将其交换为组内的最小值。然后我们可以看到，划分并遍历元素组的时候，遍历步长为 2，而元素为 3 个一组，所以奇数位元素会参与两次比较交换。&lt;br&gt;画了个图便于理解，数是随便写的，看上去直观一点：&lt;/p&gt;
+&lt;img src=&#34;/2022/03/03/sort-an-array-in-a-waveform/sort-an-array-in-a-waveform-3.png&#34; class=&#34;&#34; title=&#34;对元素分组&#34;&gt;
+
 &lt;p&gt;所以我们还需要解决的问题就是，当一次交换后，比如上图中的 30-10-50 排列好后，在以 20 为中心进行分组交换的时候，50 如果再次被交换后，会不会破坏左边已经排列好的结构。这里就需要定义我们的交换策略。&lt;/p&gt;
 &lt;p&gt;对于每组 3 个元素，可能会有以下情况并分别进行处理：&lt;/p&gt;
 &lt;ul&gt;
@@ -79,7 +85,7 @@
 &lt;li&gt;如果数组长度为奇数，则正好可以完全分组&lt;/li&gt;
 &lt;li&gt;如果数组长度为偶数，则最后会有一个元素未参与比较。再看回上面那张图，在已经排列好 30-10-50-20-70-30-80 的情况下&lt;ul&gt;
 &lt;li&gt;假设最后的值为 15（即小于等于倒数第二位的值），则无需处理&lt;/li&gt;
-&lt;li&gt;假设最后的值为 90（即大于倒数第二位的值），则直接进行交换。由于倒数第二位的元素为上一分组最右端元素，此种交换情况会将其变大，由于上面的逻辑，所以仍不会破坏原有结构&lt;br&gt;&lt;img src=&#34;/sort-an-array-in-a-waveform-4.png&#34; alt=&#34;假设最后的值为 90 的情况&#34;&gt;&lt;/li&gt;
+&lt;li&gt;假设最后的值为 90（即大于倒数第二位的值），则直接进行交换。由于倒数第二位的元素为上一分组最右端元素，此种交换情况会将其变大，由于上面的逻辑，所以仍不会破坏原有结构 &lt;img src=&#34;/2022/03/03/sort-an-array-in-a-waveform/sort-an-array-in-a-waveform-4.png&#34; class=&#34;&#34; title=&#34;假设最后的值为 90 的情况&#34;&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;

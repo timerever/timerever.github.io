@@ -5,26 +5,26 @@
     <link href="https://blog.timerever.tk" />
     <updated>2022-03-03T08:55:42.000Z</updated>
     <category term="Java" />
-    <category term="HttpClient" />
     <category term="Jackson" />
+    <category term="HttpClient" />
     <category term="Design Pattern" />
     <category term="Docker" />
     <category term="Dockerfile" />
     <category term="Java Web" />
-    <category term="Factory Patterns" />
     <category term="Linux" />
     <category term="C" />
     <category term="Android" />
     <category term="Huawei" />
     <category term="CyanogenMod" />
+    <category term="Factory Patterns" />
+    <category term="Hibernate" />
     <category term="Git" />
     <category term="GitHub" />
-    <category term="Hibernate" />
+    <category term="VMware" />
+    <category term="vmdk" />
     <category term="Keycloak" />
     <category term="OAuth2" />
     <category term="SSO" />
-    <category term="VMware" />
-    <category term="vmdk" />
     <category term="wget" />
     <category term="Regular Expression" />
     <category term="Algorithm" />
@@ -55,11 +55,17 @@
 &lt;li&gt;升序排序后，偶数位（非数组下标位）的元素一定会大于等于前面的元素，将偶数位元素分别与前面的元素交换&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;图解&#34;&gt;&lt;a href=&#34;#图解&#34; class=&#34;headerlink&#34; title=&#34;图解&#34;&gt;&lt;/a&gt;图解&lt;/h4&gt;&lt;p&gt;第三种解法不需要额外的空间占用，把现成的图拿过来方便理解。&lt;/p&gt;
-&lt;p&gt;排序后：&lt;br&gt;&lt;img src=&#34;/sort-an-array-in-a-waveform-1.png&#34; alt=&#34;排序后&#34;&gt;&lt;/p&gt;
-&lt;p&gt;交换元素后：&lt;br&gt;&lt;img src=&#34;/sort-an-array-in-a-waveform-2.png&#34; alt=&#34;交换元素后&#34;&gt;&lt;/p&gt;
+&lt;p&gt;排序后：&lt;/p&gt;
+&lt;img src=&#34;/2022/03/03/sort-an-array-in-a-waveform/sort-an-array-in-a-waveform-1.png&#34; class=&#34;&#34; title=&#34;排序后&#34;&gt;
+
+&lt;p&gt;交换元素后：&lt;/p&gt;
+&lt;img src=&#34;/2022/03/03/sort-an-array-in-a-waveform/sort-an-array-in-a-waveform-2.png&#34; class=&#34;&#34; title=&#34;交换元素后&#34;&gt;
+
 &lt;h4 id=&#34;复杂度分析&#34;&gt;&lt;a href=&#34;#复杂度分析&#34; class=&#34;headerlink&#34; title=&#34;复杂度分析&#34;&gt;&lt;/a&gt;复杂度分析&lt;/h4&gt;&lt;p&gt;排序后再遍历处理的时间复杂度为排序的时间复杂度 + 后续遍历处理时间复杂度，最优为：O(n\log_2 n) + O(n) &amp;#x3D; O(n\log_2 n)&lt;br&gt;空间复杂度仍然取决于使用的排序算法 + 后续处理是否需要占用空间，最优为堆排 + 交换解法 &amp;#x3D; O(1)&lt;/p&gt;
 &lt;h3 id=&#34;二、一次遍历解决&#34;&gt;&lt;a href=&#34;#二、一次遍历解决&#34; class=&#34;headerlink&#34; title=&#34;二、一次遍历解决&#34;&gt;&lt;/a&gt;二、一次遍历解决&lt;/h3&gt;&lt;p&gt;这道题的最优解在于，我们能否不使用排序，仅使用一次遍历完成波浪排序。&lt;/p&gt;
-&lt;p&gt;从上面的结果可以看出，符合要求的答案，偶数位的元素，一定小于等于其前面和其后面的元素（对应题目要求的 arr[0] ≥ arr[1] ≤ arr[2]、arr[2] ≥ arr[3] ≤ arr[4]）。所以我们可以认为，对于每个偶数位元素，其一定是与相邻两个的元素比较中的最小值。那么我们就遍历偶数位元素，与其相邻元素为一组，将其交换为组内的最小值。然后我们可以看到，划分并遍历元素组的时候，遍历步长为 2，而元素为 3 个一组，所以奇数位元素会参与两次比较交换。&lt;br&gt;画了个图便于理解，数是随便写的，看上去好看一点：&lt;br&gt;&lt;img src=&#34;/sort-an-array-in-a-waveform-3.png&#34; alt=&#34;对元素分组&#34;&gt;&lt;/p&gt;
+&lt;p&gt;从上面的结果可以看出，符合要求的答案，偶数位的元素，一定小于等于其前面和其后面的元素（对应题目要求的 arr[0] ≥ arr[1] ≤ arr[2]、arr[2] ≥ arr[3] ≤ arr[4]）。所以我们可以认为，对于每个偶数位元素，其一定是与相邻两个的元素比较中的最小值。那么我们就遍历偶数位元素，与其相邻元素为一组，将其交换为组内的最小值。然后我们可以看到，划分并遍历元素组的时候，遍历步长为 2，而元素为 3 个一组，所以奇数位元素会参与两次比较交换。&lt;br&gt;画了个图便于理解，数是随便写的，看上去直观一点：&lt;/p&gt;
+&lt;img src=&#34;/2022/03/03/sort-an-array-in-a-waveform/sort-an-array-in-a-waveform-3.png&#34; class=&#34;&#34; title=&#34;对元素分组&#34;&gt;
+
 &lt;p&gt;所以我们还需要解决的问题就是，当一次交换后，比如上图中的 30-10-50 排列好后，在以 20 为中心进行分组交换的时候，50 如果再次被交换后，会不会破坏左边已经排列好的结构。这里就需要定义我们的交换策略。&lt;/p&gt;
 &lt;p&gt;对于每组 3 个元素，可能会有以下情况并分别进行处理：&lt;/p&gt;
 &lt;ul&gt;
@@ -73,7 +79,7 @@
 &lt;li&gt;如果数组长度为奇数，则正好可以完全分组&lt;/li&gt;
 &lt;li&gt;如果数组长度为偶数，则最后会有一个元素未参与比较。再看回上面那张图，在已经排列好 30-10-50-20-70-30-80 的情况下&lt;ul&gt;
 &lt;li&gt;假设最后的值为 15（即小于等于倒数第二位的值），则无需处理&lt;/li&gt;
-&lt;li&gt;假设最后的值为 90（即大于倒数第二位的值），则直接进行交换。由于倒数第二位的元素为上一分组最右端元素，此种交换情况会将其变大，由于上面的逻辑，所以仍不会破坏原有结构&lt;br&gt;&lt;img src=&#34;/sort-an-array-in-a-waveform-4.png&#34; alt=&#34;假设最后的值为 90 的情况&#34;&gt;&lt;/li&gt;
+&lt;li&gt;假设最后的值为 90（即大于倒数第二位的值），则直接进行交换。由于倒数第二位的元素为上一分组最右端元素，此种交换情况会将其变大，由于上面的逻辑，所以仍不会破坏原有结构 &lt;img src=&#34;/2022/03/03/sort-an-array-in-a-waveform/sort-an-array-in-a-waveform-4.png&#34; class=&#34;&#34; title=&#34;假设最后的值为 90 的情况&#34;&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -105,13 +111,16 @@
 &lt;figure class=&#34;highlight yaml&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;attr&#34;&gt;spring:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;attr&#34;&gt;jackson:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;attr&#34;&gt;serialization:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;      &lt;span class=&#34;attr&#34;&gt;FAIL_ON_EMPTY_BEANS:&lt;/span&gt; &lt;span class=&#34;literal&#34;&gt;false&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 
 &lt;p&gt;让我们再调用下接口。好，没问题，不报错了！再看眼返回值，等等，这是个啥？&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/custom-jackson-serializer-for-clob-type-1.png&#34; alt=&#34;并不是所期望的结果&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;/2022/02/09/custom-jackson-serializer-for-clob-type/custom-jackson-serializer-for-clob-type-1.png&#34; class=&#34;&#34; title=&#34;并不是所期望的结果&#34;&gt;
+
 &lt;p&gt;这个字段明明在数据库中是有值的，而且正常也不会变成这种嵌套结构，所以看来这个解决办法并不可行。&lt;/p&gt;
 &lt;h3 id=&#34;寻找问题根源&#34;&gt;&lt;a href=&#34;#寻找问题根源&#34; class=&#34;headerlink&#34; title=&#34;寻找问题根源&#34;&gt;&lt;/a&gt;寻找问题根源&lt;/h3&gt;&lt;p&gt;所以简单的解决方式不行，就只能按部就班先看问题出在哪里了。废话不多说，既然我们知道了问题出在哪个字段，就直接打个断点先看眼程序拿到的返回值是什么样子。&lt;/p&gt;
 &lt;p&gt;已知数据库是 H2，对应的字段类型为 &lt;code&gt;CHARACTER LARGE OBJECT&lt;/code&gt;，再看眼拿到的值：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/custom-jackson-serializer-for-clob-type-2.png&#34; alt=&#34;实际拿到的返回值&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;/2022/02/09/custom-jackson-serializer-for-clob-type/custom-jackson-serializer-for-clob-type-2.png&#34; class=&#34;&#34; title=&#34;实际拿到的返回值&#34;&gt;
+
 &lt;p&gt;可以看到，程序所拿到的返回值是 &lt;code&gt;javax.sql.rowset.serial.SerialClob&lt;/code&gt; 的对象，而这个对象里面所包含的 &lt;code&gt;clob&lt;/code&gt; 字段就是 H2 的 &lt;code&gt;org.h2.jdbc.JdbcClob&lt;/code&gt; 对象。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/custom-jackson-serializer-for-clob-type-3.png&#34; alt=&#34;SerialClob 类&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;/2022/02/09/custom-jackson-serializer-for-clob-type/custom-jackson-serializer-for-clob-type-3.png&#34; class=&#34;&#34; title=&#34;SerialClob 类&#34;&gt;
+
 &lt;p&gt;也就是说，默认情况下 Jackson 无法序列化 &lt;code&gt;SerialClob&lt;/code&gt; 这个类所创建的对象，是不是由于 &lt;code&gt;clob&lt;/code&gt; 字段所包含的具体实现类导致的并没有进一步研究，因为数据库的种类很多，我们需要着手做的是解决这个不能序列化的问题。&lt;/p&gt;
 &lt;h3 id=&#34;自定义-Serializer-解决问题&#34;&gt;&lt;a href=&#34;#自定义-Serializer-解决问题&#34; class=&#34;headerlink&#34; title=&#34;自定义 Serializer 解决问题&#34;&gt;&lt;/a&gt;自定义 Serializer 解决问题&lt;/h3&gt;&lt;p&gt;我们知道 Jackson 可以通过扩展 &lt;code&gt;Module&lt;/code&gt; 来支持更多类型的序列化操作，所以我们也可以采用同样的方式来增加对 &lt;code&gt;SerialClob&lt;/code&gt; 的支持。&lt;/p&gt;
 &lt;p&gt;不过我们不需要自定义 &lt;code&gt;Module&lt;/code&gt;，使用自带的 &lt;code&gt;SimpleModule&lt;/code&gt; 即可，要做的只是自定义对应的 Serializer：&lt;/p&gt;
@@ -364,8 +373,10 @@ SummerTextField
 
 &lt;h2 id=&#34;软件架构模式与软件设计模式的比较&#34;&gt;&lt;a href=&#34;#软件架构模式与软件设计模式的比较&#34; class=&#34;headerlink&#34; title=&#34;软件架构模式与软件设计模式的比较&#34;&gt;&lt;/a&gt;软件架构模式与软件设计模式的比较&lt;/h2&gt;&lt;p&gt;简略的来说，架构模式是整体上的大智慧，而软件模式更侧重于小技巧。&lt;/p&gt;
 &lt;p&gt;这里以 MVC 解决方案为例。&lt;/p&gt;
-&lt;h2 id=&#34;软件架构模式&#34;&gt;&lt;a href=&#34;#软件架构模式&#34; class=&#34;headerlink&#34; title=&#34;软件架构模式&#34;&gt;&lt;/a&gt;软件架构模式&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;/design-patterns-1.png&#34; alt=&#34;Alt MVC软件架构模式&#34; title=&#34;MVC软件架构模式&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;软件设计模式&#34;&gt;&lt;a href=&#34;#软件设计模式&#34; class=&#34;headerlink&#34; title=&#34;软件设计模式&#34;&gt;&lt;/a&gt;软件设计模式&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;/design-patterns-2.png&#34; alt=&#34;Alt MVC软件设计模式&#34; title=&#34;MVC软件设计模式&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;软件架构模式&#34;&gt;&lt;a href=&#34;#软件架构模式&#34; class=&#34;headerlink&#34; title=&#34;软件架构模式&#34;&gt;&lt;/a&gt;软件架构模式&lt;/h2&gt;&lt;img src=&#34;/2017/04/28/design-patterns/design-patterns-1.png&#34; class=&#34;&#34; title=&#34;MVC软件架构模式&#34;&gt;
+
+&lt;h2 id=&#34;软件设计模式&#34;&gt;&lt;a href=&#34;#软件设计模式&#34; class=&#34;headerlink&#34; title=&#34;软件设计模式&#34;&gt;&lt;/a&gt;软件设计模式&lt;/h2&gt;&lt;img src=&#34;/2017/04/28/design-patterns/design-patterns-2.png&#34; class=&#34;&#34; title=&#34;MVC软件设计模式&#34;&gt;
+
 &lt;p&gt;所谓软件设计模式：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;在软件模式中，设计模式是研究最为深入的分支。&lt;/li&gt;
@@ -383,7 +394,8 @@ SummerTextField
 &lt;li&gt;模式有重要的人为因素：所有的软件服务于人类的舒适或生活质量，而最好的模式追求它的实用性和美学。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;软件设计模式分类&#34;&gt;&lt;a href=&#34;#软件设计模式分类&#34; class=&#34;headerlink&#34; title=&#34;软件设计模式分类&#34;&gt;&lt;/a&gt;软件设计模式分类&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;软件设计模式&lt;/strong&gt; 按照不同的分类标准可以分为不同的类别，例如按 &lt;strong&gt;目的&lt;/strong&gt; 可以分为 &lt;strong&gt;创建型&lt;/strong&gt;、&lt;strong&gt;结构型&lt;/strong&gt; 和 &lt;strong&gt;行为型&lt;/strong&gt;，按 &lt;strong&gt;范围&lt;/strong&gt; 可以分为 &lt;strong&gt;类&lt;/strong&gt; 和 &lt;strong&gt;对象&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/design-patterns-3.png&#34; alt=&#34;Alt 软件设计模式分类&#34; title=&#34;软件设计模式分类&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;/2017/04/28/design-patterns/design-patterns-3.png&#34; class=&#34;&#34; title=&#34;软件设计模式分类&#34;&gt;
+
 &lt;h4 id=&#34;创建型设计模式&#34;&gt;&lt;a href=&#34;#创建型设计模式&#34; class=&#34;headerlink&#34; title=&#34;创建型设计模式&#34;&gt;&lt;/a&gt;创建型设计模式&lt;/h4&gt;&lt;p&gt;&lt;strong&gt;创建型模式 (Creational Pattern)&lt;/strong&gt; 对类的实例化过程进行了抽象，能够将软件模块中对象的创建和对象的使用分离。为了使软件的结构更加清晰，外界对于这些对象只需要知道它们共同的接口，而不清楚其具体的实现细节，使整个系统的设计更加符合单一职责原则。&lt;/p&gt;
 &lt;p&gt;创建型模式在创建什么 (What)，由谁创建 (Who)，何时创建 (When) 等方面都为软件设计者提供了尽可能大的灵活性。创建型模式隐藏了类的实例的创建细节，通过隐藏对象如何被创建和组合在一起达到使整个系统独立的目的。&lt;/p&gt;
 &lt;p&gt;创建型设计模式包含：&lt;/p&gt;
