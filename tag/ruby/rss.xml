@@ -8,10 +8,10 @@
         <pubDate>Thu, 26 Jan 2017 03:37:45 +0000</pubDate>
         <lastBuildDate>Thu, 26 Jan 2017 03:37:45 +0000</lastBuildDate>
         <category>Java</category>
-        <category>Jackson</category>
         <category>HttpClient</category>
-        <category>Design Pattern</category>
+        <category>Jackson</category>
         <category>Docker</category>
+        <category>Design Pattern</category>
         <category>Dockerfile</category>
         <category>Java Web</category>
         <category>Linux</category>
@@ -23,11 +23,11 @@
         <category>Hibernate</category>
         <category>Git</category>
         <category>GitHub</category>
-        <category>VMware</category>
-        <category>vmdk</category>
         <category>Keycloak</category>
         <category>OAuth2</category>
         <category>SSO</category>
+        <category>VMware</category>
+        <category>vmdk</category>
         <category>wget</category>
         <category>Regular Expression</category>
         <category>Algorithm</category>

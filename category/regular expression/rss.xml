@@ -8,10 +8,10 @@
         <pubDate>Sun, 09 Apr 2017 08:52:41 +0000</pubDate>
         <lastBuildDate>Sun, 09 Apr 2017 08:52:41 +0000</lastBuildDate>
         <category>Java</category>
-        <category>Jackson</category>
         <category>HttpClient</category>
-        <category>Design Pattern</category>
+        <category>Jackson</category>
         <category>Docker</category>
+        <category>Design Pattern</category>
         <category>Dockerfile</category>
         <category>Java Web</category>
         <category>Linux</category>
@@ -23,11 +23,11 @@
         <category>Hibernate</category>
         <category>Git</category>
         <category>GitHub</category>
-        <category>VMware</category>
-        <category>vmdk</category>
         <category>Keycloak</category>
         <category>OAuth2</category>
         <category>SSO</category>
+        <category>VMware</category>
+        <category>vmdk</category>
         <category>wget</category>
         <category>Regular Expression</category>
         <category>Algorithm</category>
@@ -62,14 +62,18 @@
 &lt;p&gt;+ 是由那些基本操作完成的？(文章末尾给出答案)&lt;/p&gt;
 &lt;p&gt;基本的语法就介绍到这，这篇文章并不是主要讲应用。有兴趣朋友可以在网上搜索完整的语法规则，非常详细。&lt;/p&gt;
 &lt;h1 id=&#34;非确定有限状态自动机&#34;&gt;&lt;a href=&#34;#非确定有限状态自动机&#34; class=&#34;headerlink&#34; title=&#34;非确定有限状态自动机&#34;&gt;&lt;/a&gt;非确定有限状态自动机&lt;/h1&gt;&lt;h2 id=&#34;DFA&#34;&gt;&lt;a href=&#34;#DFA&#34; class=&#34;headerlink&#34; title=&#34;DFA&#34;&gt;&lt;/a&gt;DFA&lt;/h2&gt;&lt;p&gt;DFA 又叫确定有限状态自动机，即对于一个输入，它的输出状态是确定的。如图：  &lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/regular-expression-1.png&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;/2017/04/09/regular-expression/regular-expression-1.png&#34; class=&#34;&#34;&gt;
+
+
 &lt;p&gt;对于这个自动机，输出边是 Turn On 和 Turn Off 的动作，Turn On 导致状态变为 On，Turn Off 导致状态变为 Off。&lt;br&gt;这两个动作所导致的结果是可以预料的，确定的。所以说是确定有限状态自动机。&lt;/p&gt;
 &lt;h2 id=&#34;NFA&#34;&gt;&lt;a href=&#34;#NFA&#34; class=&#34;headerlink&#34; title=&#34;NFA&#34;&gt;&lt;/a&gt;NFA&lt;/h2&gt;&lt;p&gt;NFA 叫非确定有限状态自动机，和 DFA 的唯一区别是它的输出是非确定的，DFA是NFA的一个子集。如图：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/regular-expression-2.png&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;/2017/04/09/regular-expression/regular-expression-2.png&#34; class=&#34;&#34;&gt;
+
 &lt;p&gt;还是那个例子，只不过状态 Off 的 Turn On 操作多了一个新的状态 Down  &lt;/p&gt;
 &lt;p&gt;当我们进行 Turn On 操作时无法确定到达的是 On 还是 Down，因此是无法根据当前状态和输出边确定下一状态的，这就叫做非确定性有限状态自动机。&lt;/p&gt;
 &lt;h2 id=&#34;实例&#34;&gt;&lt;a href=&#34;#实例&#34; class=&#34;headerlink&#34; title=&#34;实例&#34;&gt;&lt;/a&gt;实例&lt;/h2&gt;&lt;p&gt;我们先来看一个示例，它说明了 NFA 的性质和操作。如图：  &lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/regular-expression-3.png&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;/2017/04/09/regular-expression/regular-expression-3.png&#34; class=&#34;&#34;&gt;
+
 &lt;p&gt;（图表示((A*B|AC)D)所对应的 NFA）&lt;/p&gt;
 &lt;p&gt;我们定义的NFA有以下特点：     &lt;/p&gt;
 &lt;ol&gt;
@@ -93,19 +97,20 @@
 &lt;h2 id=&#34;NFA-的构造&#34;&gt;&lt;a href=&#34;#NFA-的构造&#34; class=&#34;headerlink&#34; title=&#34;NFA 的构造&#34;&gt;&lt;/a&gt;NFA 的构造&lt;/h2&gt;&lt;p&gt;长串的正则表达式都是三个基本操作和括号构成的，因此我们的NFA也可以看作成若干基本操作拼接而成，下面就来介绍一下基本操作所对应的 NFA。  &lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;p&gt;连接操作：字符加状态匹配即可。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/regular-expression-4.png&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;/2017/04/09/regular-expression/regular-expression-4.png&#34; class=&#34;&#34;&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;括号：用栈处理。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;闭包操作：   &lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;出现在单个字符之后：在该字符和 * 之间添加两条 ε- 转换。&lt;br&gt; &lt;img src=&#34;/regular-expression-5.png&#34;&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;出现在单个字符之后：在该字符和 * 之间添加两条 ε- 转换。  &lt;/p&gt;
+&lt;img src=&#34;/2017/04/09/regular-expression/regular-expression-5.png&#34; class=&#34;&#34;&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p&gt;出现在右括号之后：在栈顶的左括号和 * 之间添加两条 ε- 转换。&lt;br&gt; &lt;img src=&#34;/regular-expression-6.png&#34;&gt;&lt;/p&gt;
-&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;出现在右括号之后：在栈顶的左括号和 * 之间添加两条 ε- 转换。  &lt;/p&gt;
+&lt;img src=&#34;/2017/04/09/regular-expression/regular-expression-6.png&#34; class=&#34;&#34;&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p&gt;或：A|B中A和B都是正则表达式。同样也是添加两条ε-转换，一条从左括号指向&lt;br&gt;B中第一个字符，另一条从|字符指向右括号。这使NFA能够进行选择。&lt;img src=&#34;/regular-expression-7.png&#34;&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;或：A|B中A和B都是正则表达式。同样也是添加两条ε-转换，一条从左括号指向&lt;br&gt;B中第一个字符，另一条从|字符指向右括号。这使NFA能够进行选择。&lt;img src=&#34;/2017/04/09/regular-expression/regular-expression-7.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;运用以上几个基本的 NFA，我们可以拼接出任意 NFA。  &lt;/p&gt;

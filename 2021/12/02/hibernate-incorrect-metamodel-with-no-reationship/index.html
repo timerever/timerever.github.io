@@ -27,14 +27,14 @@
 <meta property="og:site_name" content="A Blog">
 <meta property="og:description" content="因为项目上使用了 Hibernate Metamodel，而且自定义映射了数据库的 JSON 字段类型，导致生成的 Metamodel 属性类型有误。虽然并没有用映射的这些属性做 CriteriaQuery，所以其实在项目的使用上没有影响，但是启动时还是会报一个 ERROR 日志，所以寻找一个能够根治的解决办法。 1ERROR org.hibernate.metamodel.internal.Me">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://blog.timerever.tk/hibernate-incorrect-metamodel-with-no-reationship-1.png">
+<meta property="og:image" content="https://blog.timerever.tk/2021/12/02/hibernate-incorrect-metamodel-with-no-reationship/hibernate-incorrect-metamodel-with-no-reationship-1.png">
 <meta property="article:published_time" content="2021-12-02T03:41:48.000Z">
-<meta property="article:modified_time" content="2022-03-04T05:59:25.209Z">
+<meta property="article:modified_time" content="2022-03-04T06:16:06.799Z">
 <meta property="article:author" content="timerever">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="Hibernate">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://blog.timerever.tk/hibernate-incorrect-metamodel-with-no-reationship-1.png">
+<meta name="twitter:image" content="https://blog.timerever.tk/2021/12/02/hibernate-incorrect-metamodel-with-no-reationship/hibernate-incorrect-metamodel-with-no-reationship-1.png">
 
 
 <link rel="canonical" href="https://blog.timerever.tk/2021/12/02/hibernate-incorrect-metamodel-with-no-reationship/">
@@ -323,7 +323,8 @@
 <h3 id="二、解决问题"><a href="#二、解决问题" class="headerlink" title="二、解决问题"></a>二、解决问题</h3><p>同样作为一个共性问题，在 Goolge 进行搜索后，定位到了一条仍然是 Hibernate 官方 Bug 追踪的链接 <a target="_blank" rel="noopener" href="https://hibernate.atlassian.net/browse/HHH-12338">Incorrect metamodel for basic collections</a>。简单的来说，就是当前已经在 5.5.0.Alpha1 的版本中得到了解决，不过如果你认真看了下面整个的 Activity 记录，就会发现仍然是存在一个小插曲。</p>
 <h3 id="三、插曲"><a href="#三、插曲" class="headerlink" title="三、插曲"></a>三、插曲</h3><p>这个问题是在 2018 年的 3 月份被提出来的，而 5.5.0.Alpha1 已经是 2021 年 8 月份的事情了，照理说这么一个小问题不会需要三年多的时间来处理，而这个疑问的答案就在下面的讨论之中。</p>
 <p>简单来说，这个问题在当月就被解决掉了，伴随着 5.2.17 的版本发布，这个问题理论上来说就不应该再存在了。然而事与愿违，在 5.2.17 版本发布之后，很快就有人提出了新的问题。在下面的 Comment 中有记录，同时这个人也单独提了一个 issue <a target="_blank" rel="noopener" href="https://hibernate.atlassian.net/browse/HHH-12581">NPE for Criteria query containing fetch join as a regression of HHH-12338</a>，即这次的改动造成了 NPE。然后可以看到在另一个维护者与之前 Vlad Mihalcea 的一番讨论之后，他们决定恢复这次的改动。</p>
-<p><img src="/hibernate-incorrect-metamodel-with-no-reationship-1.png" alt="revert commit"></p>
+<img src="/2021/12/02/hibernate-incorrect-metamodel-with-no-reationship/hibernate-incorrect-metamodel-with-no-reationship-1.png" class="" title="revert commit">
+
 <p>但是回退了就意味着问题又回来了，上面提到的 Vlad Mihalcea 从红帽离职，不再维护 Hibernate 还弄了一个新的项目就是上面提到的 <code>hibernate-types</code>。所以其他人在遇到相同的问题时，有部分和我们一样是采用的 <code>hibernate-types</code> 方案，自然而然有人把问题又丢给了 Vlad Mihalcea，不过是在 <code>hibernate-types</code> 项目。</p>
 <p>于是 Vlad Mihalcea 在 Github 提了新的 PR，见 <a target="_blank" rel="noopener" href="https://github.com/hibernate/hibernate-orm/pull/3254">HHH-12338 - Incorrect metamodel for basic collections</a>。不过很不幸的是，并没有后续。</p>
 <p>直到今年的 7 月，又一位开发者忍无可忍决定解决这个问题，提了新的 PR 出来，见 <a target="_blank" rel="noopener" href="https://github.com/hibernate/hibernate-orm/pull/4096">HHH-14724 Test-case for metamodel compile error with converters and validation</a>。这次终于引起了重视，并在一番努力之后，终于得到了合并，问题就此解决。</p>

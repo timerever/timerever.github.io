@@ -5,10 +5,10 @@
     <link href="https://blog.timerever.tk" />
     <updated>2017-04-04T06:44:47.000Z</updated>
     <category term="Java" />
-    <category term="Jackson" />
     <category term="HttpClient" />
-    <category term="Design Pattern" />
+    <category term="Jackson" />
     <category term="Docker" />
+    <category term="Design Pattern" />
     <category term="Dockerfile" />
     <category term="Java Web" />
     <category term="Linux" />
@@ -20,11 +20,11 @@
     <category term="Hibernate" />
     <category term="Git" />
     <category term="GitHub" />
-    <category term="VMware" />
-    <category term="vmdk" />
     <category term="Keycloak" />
     <category term="OAuth2" />
     <category term="SSO" />
+    <category term="VMware" />
+    <category term="vmdk" />
     <category term="wget" />
     <category term="Regular Expression" />
     <category term="Algorithm" />

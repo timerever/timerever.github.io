@@ -5,10 +5,10 @@
     <link href="https://blog.timerever.tk" />
     <updated>2022-03-03T08:55:42.000Z</updated>
     <category term="Java" />
-    <category term="Jackson" />
     <category term="HttpClient" />
-    <category term="Design Pattern" />
+    <category term="Jackson" />
     <category term="Docker" />
+    <category term="Design Pattern" />
     <category term="Dockerfile" />
     <category term="Java Web" />
     <category term="Linux" />
@@ -20,11 +20,11 @@
     <category term="Hibernate" />
     <category term="Git" />
     <category term="GitHub" />
-    <category term="VMware" />
-    <category term="vmdk" />
     <category term="Keycloak" />
     <category term="OAuth2" />
     <category term="SSO" />
+    <category term="VMware" />
+    <category term="vmdk" />
     <category term="wget" />
     <category term="Regular Expression" />
     <category term="Algorithm" />
@@ -150,11 +150,13 @@
 &lt;figure class=&#34;highlight java&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;12&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;class&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;MyIdentityProvider&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;AbstractOAuth2IdentityProvider&lt;/span&gt;&amp;lt;&lt;span class=&#34;title&#34;&gt;OAuth2IdentityProviderConfig&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;class&#34;&gt;        &lt;span class=&#34;keyword&#34;&gt;implements&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;SocialIdentityProvider&lt;/span&gt;&amp;lt;&lt;span class=&#34;title&#34;&gt;OAuth2IdentityProviderConfig&lt;/span&gt;&amp;gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;function&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;MyIdentityProvider&lt;/span&gt;&lt;span class=&#34;params&#34;&gt;(KeycloakSession session, OAuth2IdentityProviderConfig config)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &lt;span class=&#34;keyword&#34;&gt;super&lt;/span&gt;(session, config);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;meta&#34;&gt;@Override&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;function&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;protected&lt;/span&gt; String &lt;span class=&#34;title&#34;&gt;getDefaultScopes&lt;/span&gt;&lt;span class=&#34;params&#34;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &lt;span class=&#34;keyword&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;null&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 
 &lt;h3 id=&#34;1-自定义-IdentityProviderFactory&#34;&gt;&lt;a href=&#34;#1-自定义-IdentityProviderFactory&#34; class=&#34;headerlink&#34; title=&#34;1. 自定义 IdentityProviderFactory&#34;&gt;&lt;/a&gt;1. 自定义 IdentityProviderFactory&lt;/h3&gt;&lt;p&gt;我们先来看一下 GitHub 的 &lt;code&gt;GitHubIdentityProviderFactory&lt;/code&gt;，很简单，有一个唯一的 &lt;code&gt;PROVIDER_ID&lt;/code&gt;，然后 &lt;code&gt;getName&lt;/code&gt; 方法返回了一个名称用于展示。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/keycloak-custom-idp-1.png&#34; alt=&#34;Github IdentityProviderFactory&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;/2022/01/05/keycloak-custom-idp/keycloak-custom-idp-1.png&#34; class=&#34;&#34; title=&#34;Github IdentityProviderFactory&#34;&gt;
+
 &lt;p&gt;我们照着改一下即可。&lt;/p&gt;
 &lt;figure class=&#34;highlight java&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;24&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;class&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;MyIdentityProviderFactoryFactory&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;AbstractIdentityProviderFactory&lt;/span&gt;&amp;lt;&lt;span class=&#34;title&#34;&gt;MyIdentityProvider&lt;/span&gt;&amp;gt; &lt;span class=&#34;keyword&#34;&gt;implements&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;SocialIdentityProviderFactory&lt;/span&gt;&amp;lt;&lt;span class=&#34;title&#34;&gt;MyIdentityProvider&lt;/span&gt;&amp;gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;keyword&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;static&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;final&lt;/span&gt; String PROVIDER_ID = &lt;span class=&#34;string&#34;&gt;&amp;quot;my-idp&amp;quot;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;meta&#34;&gt;@Override&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;function&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;public&lt;/span&gt; String &lt;span class=&#34;title&#34;&gt;getName&lt;/span&gt;&lt;span class=&#34;params&#34;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &lt;span class=&#34;keyword&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;&amp;quot;My IDP&amp;quot;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;meta&#34;&gt;@Override&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;function&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;public&lt;/span&gt; MyIdentityProvider &lt;span class=&#34;title&#34;&gt;create&lt;/span&gt;&lt;span class=&#34;params&#34;&gt;(KeycloakSession session, IdentityProviderModel model)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &lt;span class=&#34;keyword&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;new&lt;/span&gt; MyIdentityProvider(session, &lt;span class=&#34;keyword&#34;&gt;new&lt;/span&gt; OAuth2IdentityProviderConfig(model));&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;meta&#34;&gt;@Override&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;function&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;public&lt;/span&gt; IdentityProviderModel &lt;span class=&#34;title&#34;&gt;createConfig&lt;/span&gt;&lt;span class=&#34;params&#34;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &lt;span class=&#34;keyword&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;new&lt;/span&gt; OAuth2IdentityProviderConfig();&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;meta&#34;&gt;@Override&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;function&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;public&lt;/span&gt; String &lt;span class=&#34;title&#34;&gt;getId&lt;/span&gt;&lt;span class=&#34;params&#34;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        &lt;span class=&#34;keyword&#34;&gt;return&lt;/span&gt; PROVIDER_ID;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 
-&lt;h3 id=&#34;2-自定义-IdentityProvider&#34;&gt;&lt;a href=&#34;#2-自定义-IdentityProvider&#34; class=&#34;headerlink&#34; title=&#34;2. 自定义 IdentityProvider&#34;&gt;&lt;/a&gt;2. 自定义 IdentityProvider&lt;/h3&gt;&lt;h4 id=&#34;先定义并在构造时传入-Authorize、Token-及-Profile-的-Url。&#34;&gt;&lt;a href=&#34;#先定义并在构造时传入-Authorize、Token-及-Profile-的-Url。&#34; class=&#34;headerlink&#34; title=&#34;先定义并在构造时传入 Authorize、Token 及 Profile 的 Url。&#34;&gt;&lt;/a&gt;先定义并在构造时传入 Authorize、Token 及 Profile 的 Url。&lt;/h4&gt;&lt;p&gt;&lt;img src=&#34;/keycloak-custom-idp-2.png&#34; alt=&#34;AUTH URL&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;2-自定义-IdentityProvider&#34;&gt;&lt;a href=&#34;#2-自定义-IdentityProvider&#34; class=&#34;headerlink&#34; title=&#34;2. 自定义 IdentityProvider&#34;&gt;&lt;/a&gt;2. 自定义 IdentityProvider&lt;/h3&gt;&lt;h4 id=&#34;先定义并在构造时传入-Authorize、Token-及-Profile-的-Url。&#34;&gt;&lt;a href=&#34;#先定义并在构造时传入-Authorize、Token-及-Profile-的-Url。&#34; class=&#34;headerlink&#34; title=&#34;先定义并在构造时传入 Authorize、Token 及 Profile 的 Url。&#34;&gt;&lt;/a&gt;先定义并在构造时传入 Authorize、Token 及 Profile 的 Url。&lt;/h4&gt;&lt;img src=&#34;/2022/01/05/keycloak-custom-idp/keycloak-custom-idp-2.png&#34; class=&#34;&#34; title=&#34;AUTH URL&#34;&gt;
+
 &lt;h4 id=&#34;重写必须要求实现的抽象方法&#34;&gt;&lt;a href=&#34;#重写必须要求实现的抽象方法&#34; class=&#34;headerlink&#34; title=&#34;重写必须要求实现的抽象方法&#34;&gt;&lt;/a&gt;重写必须要求实现的抽象方法&lt;/h4&gt;&lt;p&gt;重写 &lt;code&gt;getDefaultScopes&lt;/code&gt; 的抽象方法，返回自定义 SCOPE。&lt;/p&gt;
 &lt;h4 id=&#34;按需重写方法&#34;&gt;&lt;a href=&#34;#按需重写方法&#34; class=&#34;headerlink&#34; title=&#34;按需重写方法&#34;&gt;&lt;/a&gt;按需重写方法&lt;/h4&gt;&lt;p&gt;首先重写 &lt;code&gt;supportsExternalExchange&lt;/code&gt;方法，写死返回 &lt;code&gt;true&lt;/code&gt;。这个官方文档也没有找到注释，但是各实现类均这么重写的，所以这里我们也一起重写。&lt;/p&gt;
 &lt;p&gt;由于我们继承了 &lt;code&gt;AbstractOAuth2IdentityProvider&lt;/code&gt;，剩下的可以直接看抽象类的实现，按需重写非标准定义下无法使用默认实现调用的方法。&lt;/p&gt;
@@ -167,7 +169,8 @@
 &lt;figure class=&#34;highlight java&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;@Override&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;function&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;public&lt;/span&gt; Object &lt;span class=&#34;title&#34;&gt;callback&lt;/span&gt;&lt;span class=&#34;params&#34;&gt;(RealmModel realm, AuthenticationCallback callback, EventBuilder event)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;keyword&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;new&lt;/span&gt; MyEndpoint(callback, realm, event);&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 
 &lt;h3 id=&#34;4-注册-IdentityProviderFactory&#34;&gt;&lt;a href=&#34;#4-注册-IdentityProviderFactory&#34; class=&#34;headerlink&#34; title=&#34;4. 注册 IdentityProviderFactory&#34;&gt;&lt;/a&gt;4. 注册 IdentityProviderFactory&lt;/h3&gt;&lt;p&gt;在 &lt;code&gt;resources&lt;/code&gt; 文件夹下，新建 &lt;code&gt;MEAT-INF&lt;/code&gt; 文件夹，并在其下面建立 &lt;code&gt;services&lt;/code&gt; 文件。新增 &lt;code&gt;org.keycloak.broker.social.SocialIdentityProviderFactory&lt;/code&gt; 文件，在里面直接填写 &lt;code&gt;MyIdentityProviderFactory&lt;/code&gt; 的全限定类名即可。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/keycloak-custom-idp-3.png&#34; alt=&#34;注册 IdentityProviderFactory&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;/2022/01/05/keycloak-custom-idp/keycloak-custom-idp-3.png&#34; class=&#34;&#34; title=&#34;注册 IdentityProviderFactory&#34;&gt;
+
 &lt;hr&gt;
 &lt;p&gt;大体流程就是这样，OAuth2 认证后回调默认的 &lt;code&gt;EndPoint&lt;/code&gt; 类的 &lt;code&gt;authResponse&lt;/code&gt; 方法。如果大体流程标准，且回调参数标准，可以直接参照默认实现，按需重写所调用的 &lt;code&gt;IdentityProvider&lt;/code&gt; 方法；如果回调参数会流程不标准，则需要自定义 EndPoint 并进行注册，再重写 &lt;code&gt;authResponse&lt;/code&gt; 方法。&lt;/p&gt;
 &lt;h2 id=&#34;二、自定义-IdentityProvider-配置页&#34;&gt;&lt;a href=&#34;#二、自定义-IdentityProvider-配置页&#34; class=&#34;headerlink&#34; title=&#34;二、自定义 IdentityProvider 配置页&#34;&gt;&lt;/a&gt;二、自定义 IdentityProvider 配置页&lt;/h2&gt;&lt;blockquote&gt;
@@ -178,7 +181,8 @@
 &lt;p&gt;将打包后的 jar 文件复制到 &lt;code&gt;standalone\deployments\&lt;/code&gt; 文件夹，不需要重启服务，Keycloak 会自动热部署，并在同级目录生成 &lt;code&gt;文件名.deployed&lt;/code&gt; 文件。&lt;/p&gt;
 &lt;p&gt;如果后续调用时出现 问题，可以参考 &lt;a href=&#34;https://stackoverflow.com/questions/57778240/noclassdeffounderror-in-a-provider-jar-when-using-a-class-from-org-keycloak-auth&#34;&gt;NoClassDefFoundError in a provider jar&lt;/a&gt; 在 &lt;code&gt;maven-jar-plugin&lt;/code&gt; 插件配置依赖即可。&lt;/p&gt;
 &lt;h2 id=&#34;四、使用自定义-IDP&#34;&gt;&lt;a href=&#34;#四、使用自定义-IDP&#34; class=&#34;headerlink&#34; title=&#34;四、使用自定义 IDP&#34;&gt;&lt;/a&gt;四、使用自定义 IDP&lt;/h2&gt;&lt;p&gt;回到 Keycloak 后台，右上角点击 &lt;code&gt;Server Info&lt;/code&gt;，切到 &lt;code&gt;Providers&lt;/code&gt; Tab，如果在 &lt;code&gt;social&lt;/code&gt; 栏看到了 &lt;code&gt;my-idp&lt;/code&gt;（即上面定义的 provider id），说明部署成功，在 Identity Providers 后台正常新增即可。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/keycloak-custom-idp-4.png&#34; alt=&#34;展示出了 my-idp&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;/2022/01/05/keycloak-custom-idp/keycloak-custom-idp-4.png&#34; class=&#34;&#34; title=&#34;展示出了 my-idp&#34;&gt;
+
 &lt;h2 id=&#34;五、自定义-UserAttributeMapper&#34;&gt;&lt;a href=&#34;#五、自定义-UserAttributeMapper&#34; class=&#34;headerlink&#34; title=&#34;五、自定义 UserAttributeMapper&#34;&gt;&lt;/a&gt;五、自定义 UserAttributeMapper&lt;/h2&gt;&lt;p&gt;由于之前我们需要额外储存用户信息，所以在重写 &lt;code&gt;extractIdentityFromProfile&lt;/code&gt; 方法时，使用了 &lt;code&gt;setUserAttribute&lt;/code&gt; 方法设置自定义属性。但由于 Keycloak 是冗余的用户数据，我们希望用户每次登录后，都可以自动更新用户信息。我们当然可以在 IDP 的配置中设置 &lt;code&gt;Sync Mode&lt;/code&gt; 为 &lt;code&gt;force&lt;/code&gt; 来每次更新用户信息，但此时只会自动同步更新 User 中 Details Tab 下的基本信息，不会再次同步 Attributes。&lt;br&gt;正常我们就会想到，可以通过设置 IDP 的 Mappers 来进行属性的放置，结果就会发现，&lt;code&gt;Mapper Type&lt;/code&gt; 只有三个 Hardcoded 开头的硬编码的 Mapper。所以为了能够重新使用 &lt;code&gt;Attribute Importer&lt;/code&gt;，需要我们自定义一个 &lt;code&gt;UserAttributeMapper&lt;/code&gt;。&lt;/p&gt;
 &lt;h3 id=&#34;1-自定义-UserAttributeMapper&#34;&gt;&lt;a href=&#34;#1-自定义-UserAttributeMapper&#34; class=&#34;headerlink&#34; title=&#34;1. 自定义 UserAttributeMapper&#34;&gt;&lt;/a&gt;1. 自定义 UserAttributeMapper&lt;/h3&gt;&lt;p&gt;仍然参考 GitHub 的 &lt;code&gt;GitHubUserAttributeMapper&lt;/code&gt;，直接拷贝过来，将 &lt;code&gt;PROVIDER_ID&lt;/code&gt; 改成自己的即可。&lt;/p&gt;
 &lt;figure class=&#34;highlight java&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;15&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;class&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;MyUserAttributeMapper&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;AbstractJsonUserAttributeMapper&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;	&lt;span class=&#34;keyword&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;static&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;final&lt;/span&gt; String PROVIDER_ID = &lt;span class=&#34;string&#34;&gt;&amp;quot;my-idp-user-attribute-mapper&amp;quot;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;	&lt;span class=&#34;keyword&#34;&gt;private&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;static&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;final&lt;/span&gt; String[] cp = &lt;span class=&#34;keyword&#34;&gt;new&lt;/span&gt; String[] &amp;#123; MyIdentityProviderFactory.PROVIDER_ID &amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;	&lt;span class=&#34;meta&#34;&gt;@Override&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;	&lt;span class=&#34;keyword&#34;&gt;public&lt;/span&gt; String[] getCompatibleProviders() &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;		&lt;span class=&#34;keyword&#34;&gt;return&lt;/span&gt; cp;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;	&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;	&lt;span class=&#34;meta&#34;&gt;@Override&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;	&lt;span class=&#34;function&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;public&lt;/span&gt; String &lt;span class=&#34;title&#34;&gt;getId&lt;/span&gt;&lt;span class=&#34;params&#34;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;		&lt;span class=&#34;keyword&#34;&gt;return&lt;/span&gt; PROVIDER_ID;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;	&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -207,7 +211,8 @@
 &lt;h3 id=&#34;二、解决问题&#34;&gt;&lt;a href=&#34;#二、解决问题&#34; class=&#34;headerlink&#34; title=&#34;二、解决问题&#34;&gt;&lt;/a&gt;二、解决问题&lt;/h3&gt;&lt;p&gt;同样作为一个共性问题，在 Goolge 进行搜索后，定位到了一条仍然是 Hibernate 官方 Bug 追踪的链接 &lt;a href=&#34;https://hibernate.atlassian.net/browse/HHH-12338&#34;&gt;Incorrect metamodel for basic collections&lt;/a&gt;。简单的来说，就是当前已经在 5.5.0.Alpha1 的版本中得到了解决，不过如果你认真看了下面整个的 Activity 记录，就会发现仍然是存在一个小插曲。&lt;/p&gt;
 &lt;h3 id=&#34;三、插曲&#34;&gt;&lt;a href=&#34;#三、插曲&#34; class=&#34;headerlink&#34; title=&#34;三、插曲&#34;&gt;&lt;/a&gt;三、插曲&lt;/h3&gt;&lt;p&gt;这个问题是在 2018 年的 3 月份被提出来的，而 5.5.0.Alpha1 已经是 2021 年 8 月份的事情了，照理说这么一个小问题不会需要三年多的时间来处理，而这个疑问的答案就在下面的讨论之中。&lt;/p&gt;
 &lt;p&gt;简单来说，这个问题在当月就被解决掉了，伴随着 5.2.17 的版本发布，这个问题理论上来说就不应该再存在了。然而事与愿违，在 5.2.17 版本发布之后，很快就有人提出了新的问题。在下面的 Comment 中有记录，同时这个人也单独提了一个 issue &lt;a href=&#34;https://hibernate.atlassian.net/browse/HHH-12581&#34;&gt;NPE for Criteria query containing fetch join as a regression of HHH-12338&lt;/a&gt;，即这次的改动造成了 NPE。然后可以看到在另一个维护者与之前 Vlad Mihalcea 的一番讨论之后，他们决定恢复这次的改动。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/hibernate-incorrect-metamodel-with-no-reationship-1.png&#34; alt=&#34;revert commit&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;/2021/12/02/hibernate-incorrect-metamodel-with-no-reationship/hibernate-incorrect-metamodel-with-no-reationship-1.png&#34; class=&#34;&#34; title=&#34;revert commit&#34;&gt;
+
 &lt;p&gt;但是回退了就意味着问题又回来了，上面提到的 Vlad Mihalcea 从红帽离职，不再维护 Hibernate 还弄了一个新的项目就是上面提到的 &lt;code&gt;hibernate-types&lt;/code&gt;。所以其他人在遇到相同的问题时，有部分和我们一样是采用的 &lt;code&gt;hibernate-types&lt;/code&gt; 方案，自然而然有人把问题又丢给了 Vlad Mihalcea，不过是在 &lt;code&gt;hibernate-types&lt;/code&gt; 项目。&lt;/p&gt;
 &lt;p&gt;于是 Vlad Mihalcea 在 Github 提了新的 PR，见 &lt;a href=&#34;https://github.com/hibernate/hibernate-orm/pull/3254&#34;&gt;HHH-12338 - Incorrect metamodel for basic collections&lt;/a&gt;。不过很不幸的是，并没有后续。&lt;/p&gt;
 &lt;p&gt;直到今年的 7 月，又一位开发者忍无可忍决定解决这个问题，提了新的 PR 出来，见 &lt;a href=&#34;https://github.com/hibernate/hibernate-orm/pull/4096&#34;&gt;HHH-14724 Test-case for metamodel compile error with converters and validation&lt;/a&gt;。这次终于引起了重视，并在一番努力之后，终于得到了合并，问题就此解决。&lt;/p&gt;
@@ -233,11 +238,14 @@
 &lt;p&gt;通过在 Google 上进行搜索，发现 stackoverflow 上存在几个类似的问题，再进一步的搜索后，发现在 Hibernate 官方 Bug 追踪网站上有人归纳并提出了这个问题 &lt;a href=&#34;https://hibernate.atlassian.net/browse/HHH-4910&#34;&gt;automatic L2 collection cache eviction when an element is added&amp;#x2F;updated&amp;#x2F;removed&lt;/a&gt;，可以看到不只是自己遇到的新增，修改&amp;#x2F;删除也会有类似的问题。&lt;/p&gt;
 &lt;h3 id=&#34;二、问题解决&#34;&gt;&lt;a href=&#34;#二、问题解决&#34; class=&#34;headerlink&#34; title=&#34;二、问题解决&#34;&gt;&lt;/a&gt;二、问题解决&lt;/h3&gt;&lt;p&gt;在上面链接的内容下方，问题提出者给出了一种 workaround 的方案，提供 &lt;code&gt;@PostPersist&lt;/code&gt;、&lt;code&gt;@PostRemove&lt;/code&gt; 及 &lt;code&gt;@PreUpdate&lt;/code&gt; 的监听，并在监听中自动清理缓存。以及在之前查阅 stackoverflow 时，也有人认为，你需要在操作多方元素的时候，同时操作一方对应的集合，对其进行 add&amp;#x2F;remove 操作。&lt;/p&gt;
 &lt;p&gt;但不管怎么说，这些都是一些 workaround 方案，因为 Hibernate 本身是有能力自动处理这些事情的。话又说回来，既然问题很早就被提出了，比如这个链接中使用的版本是 &lt;code&gt;3.3.1&lt;/code&gt;，同时官方也已经记录了这个问题已经在 &lt;code&gt;4.3.0.Beta5&lt;/code&gt; 中被修复了，可是为什么我们还是会遇到这个问题？这个答案其实在下面的评论中。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/hibernate-automatic-2nd-collection-cache-eviction-1.png&#34; alt=&#34;Hibernate atlassian 下面的评论&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;/2021/11/26/hibernate-automatic-2nd-collection-cache-eviction/hibernate-automatic-2nd-collection-cache-eviction-1.png&#34; class=&#34;&#34; title=&#34;Hibernate atlassian 下面的评论&#34;&gt;
+
 &lt;p&gt;点进链接是 GitHub 的 PR 请求，讨论中详细地记录了从贡献者提出 PR 到最后并合并的整个流程。看下来大概就是，贡献者向负责人解释了为了提出这个改动、有负责人担心是不是会影响性能并期望做成可配置的、贡献者支持了配置项、PR 最终被合并。所以问题已经很明了了，功能上是已经被修复了，但是因为做成了配置项，所以默认没有启用，我们需要手动启用这个特性。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/hibernate-automatic-2nd-collection-cache-eviction-2.png&#34; alt=&#34;变成配置项的 commit&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;/2021/11/26/hibernate-automatic-2nd-collection-cache-eviction/hibernate-automatic-2nd-collection-cache-eviction-2.png&#34; class=&#34;&#34; title=&#34;变成配置项的 commit&#34;&gt;
+
 &lt;p&gt;所以我们从这里点进去，去看一下我们怎么才能打开这个特性。最后我们可以看到是在 &lt;code&gt;hibernate-core/src/main/java/org/hibernate/cfg/AvailableSettings.java&lt;/code&gt; 这个文件中定义了配置的名字。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/hibernate-automatic-2nd-collection-cache-eviction-3.png&#34; alt=&#34;配置项的名字&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;/2021/11/26/hibernate-automatic-2nd-collection-cache-eviction/hibernate-automatic-2nd-collection-cache-eviction-3.png&#34; class=&#34;&#34; title=&#34;配置项的名字&#34;&gt;
+
 &lt;p&gt;所以到这里，这个问题就算是最终解决了。&lt;/p&gt;
 &lt;h3 id=&#34;三、插曲&#34;&gt;&lt;a href=&#34;#三、插曲&#34; class=&#34;headerlink&#34; title=&#34;三、插曲&#34;&gt;&lt;/a&gt;三、插曲&lt;/h3&gt;&lt;p&gt;由于项目使用了 &lt;code&gt;spring-boot-starter-data-jpa&lt;/code&gt; 依赖，所以这个配置项的设置并不是上面 Hibernate 的改动所提及的，于是继续在 Google 用 &lt;code&gt;auto_evict_collection_cache&lt;/code&gt; 作为关键字进行搜索，寻找在 Spring Boot 中的配置方式。最终是得到了答案，Spring Boot 中的配置项为 &lt;code&gt;spring.jpa.properties.auto_evict_collection_cache&lt;/code&gt;，不过在此之外还发现了一个小插曲。&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://hibernate.atlassian.net/browse/HHH-10614&#34;&gt;Auto evict collection cache throws exception with null values&lt;/a&gt; 中描述了一个人开启了这个特性，然后在一个特定的情况下 Hibernate 会抛出异常。虽然这个问题很快就被解决了，不过现在回来想想，维护者在维护这种已经已经很庞大的项目时，对所有的改动都抱有谨慎的态度还是很有必要的。做成了配置项，虽然一方面会让很多不知道的人继续遇到这个问题，但同时也让很多无关的人避免了可能带来的新问题。所以这两种方案孰优孰劣，可能就见仁见智了吧。&lt;/p&gt;
@@ -266,8 +274,10 @@ Motorbike
 &lt;li&gt;工厂类负责创建的对象比较少；由于创建的对象较少，不会造成工厂方法中的业务逻辑太过复杂。&lt;/li&gt;
 &lt;li&gt;客户端只知道传入工厂类的参数，对于如何创建对象不关心；客户端既不需要关心创建细节，甚至连类名都不需要记住，只需要知道类型所对应的参数。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;模式结构&#34;&gt;&lt;a href=&#34;#模式结构&#34; class=&#34;headerlink&#34; title=&#34;模式结构&#34;&gt;&lt;/a&gt;模式结构&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;/factory-patterns-with-java-1.png&#34; alt=&#34;Alt 简单工厂模式模式结构&#34;&gt;&lt;/p&gt;
-&lt;h3 id=&#34;举例&#34;&gt;&lt;a href=&#34;#举例&#34; class=&#34;headerlink&#34; title=&#34;举例&#34;&gt;&lt;/a&gt;举例&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;/factory-patterns-with-java-2.png&#34; alt=&#34;Alt 简单工厂模式举例&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;模式结构&#34;&gt;&lt;a href=&#34;#模式结构&#34; class=&#34;headerlink&#34; title=&#34;模式结构&#34;&gt;&lt;/a&gt;模式结构&lt;/h3&gt;&lt;img src=&#34;/2017/04/29/factory-patterns-with-java/factory-patterns-with-java-1.png&#34; class=&#34;&#34; title=&#34;简单工厂模式模式结构&#34;&gt;
+
+&lt;h3 id=&#34;举例&#34;&gt;&lt;a href=&#34;#举例&#34; class=&#34;headerlink&#34; title=&#34;举例&#34;&gt;&lt;/a&gt;举例&lt;/h3&gt;&lt;img src=&#34;/2017/04/29/factory-patterns-with-java/factory-patterns-with-java-2.png&#34; class=&#34;&#34; title=&#34;简单工厂模式举例&#34;&gt;
+
 &lt;p&gt;假如这里有一个农场充当工厂类，通过告知农场所需要的水果类型返回所需的水果，即通过传入不同的参数获取不同的对象。&lt;/p&gt;
 &lt;p&gt;对象类：&lt;/p&gt;
 &lt;figure class=&#34;highlight java&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;24&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;/* Fruit.java */&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;abstract&lt;/span&gt; &lt;span class=&#34;class&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;Fruit&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;/* Apple.java */&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;class&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;Apple&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;Fruit&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;function&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;Apple&lt;/span&gt;&lt;span class=&#34;params&#34;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        System.out.println(&lt;span class=&#34;keyword&#34;&gt;this&lt;/span&gt;.getClass().getSimpleName());&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;/* Banana.java */&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;class&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;Banana&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;Fruit&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;function&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;Banana&lt;/span&gt;&lt;span class=&#34;params&#34;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        System.out.println(&lt;span class=&#34;keyword&#34;&gt;this&lt;/span&gt;.getClass().getSimpleName());&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;/* Orange.java */&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;class&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;Orange&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;Fruit&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;function&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;Orange&lt;/span&gt;&lt;span class=&#34;params&#34;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        System.out.println(&lt;span class=&#34;keyword&#34;&gt;this&lt;/span&gt;.getClass().getSimpleName());&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -287,9 +297,11 @@ Orange
 &lt;p&gt;所谓开闭原则，就是对扩展开放，对修改关闭。“开”是指对于组件功能的扩展是开放的，是允许对其进行功能扩展的，“闭”是对原有代码的修改是封闭的，即修改原有的代码对外部的使用是透明的。即对模块行为进行扩展时，不必改动模块的源代码或者二进制代码，所以就出现了工厂模式。&lt;/p&gt;
 &lt;p&gt;参见：&lt;a href=&#34;http://baike.baidu.com/item/%E5%BC%80%E9%97%AD%E5%8E%9F%E5%88%99&#34;&gt;http://baike.baidu.com/item/%E5%BC%80%E9%97%AD%E5%8E%9F%E5%88%99&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;现假如有一个生产各种按钮的工厂，通过对该系统进行修改，不再设计一个按钮工厂类来统一负责所有产品的创建，而是将具体按钮的创建过程交给专门的工厂子类去完成，我们先定义一个抽象的按钮工厂类，再定义具体的工厂类来生成圆形按钮、矩形按钮、菱形按钮等，它们实现在在抽象按钮工厂中定义的方法。这种抽象化的结果使这种结构可以在不修改具体工厂类的情况下引进新的产品，如果出现新的按钮类型，只需要为这种新类型的按钮创建一个具体的工厂类就可以获得该新按钮的实例，这一特点无疑使得工厂方法模式具有超越简单工厂模式的优越性，更加符合“开闭原则”。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/factory-patterns-with-java-3.png&#34; alt=&#34;Alt 简单工厂模式&#34;&gt; &lt;img src=&#34;/factory-patterns-with-java-4.png&#34; alt=&#34;Alt 工厂模式&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;/2017/04/29/factory-patterns-with-java/factory-patterns-with-java-3.png&#34; class=&#34;&#34; title=&#34;简单工厂模式&#34;&gt; &lt;img src=&#34;/2017/04/29/factory-patterns-with-java/factory-patterns-with-java-4.png&#34; class=&#34;&#34; title=&#34;工厂模式&#34;&gt;
+
 &lt;h3 id=&#34;定义-1&#34;&gt;&lt;a href=&#34;#定义-1&#34; class=&#34;headerlink&#34; title=&#34;定义&#34;&gt;&lt;/a&gt;定义&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;工厂方法模式 (Factory Method Pattern)&lt;/strong&gt; 又称为工厂模式，也叫虚拟构造器 (Virtual Constructor) 模式或者多态工厂 (Polymorphic Factory) 模式，它属于类创建型模式。在工厂方法模式中，工厂父类负责定义创建产品对象的公共接口，而工厂子类则负责生成具体的产品对象，这样做的目的是将产品类的实例化操作延迟到工厂子类中完成，即通过工厂子类来确定究竟应该实例化哪—个具体产品类。&lt;/p&gt;
-&lt;h3 id=&#34;模式结构-1&#34;&gt;&lt;a href=&#34;#模式结构-1&#34; class=&#34;headerlink&#34; title=&#34;模式结构&#34;&gt;&lt;/a&gt;模式结构&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;/factory-patterns-with-java-5.png&#34; alt=&#34;Alt 工厂模式模式结构&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;模式结构-1&#34;&gt;&lt;a href=&#34;#模式结构-1&#34; class=&#34;headerlink&#34; title=&#34;模式结构&#34;&gt;&lt;/a&gt;模式结构&lt;/h3&gt;&lt;img src=&#34;/2017/04/29/factory-patterns-with-java/factory-patterns-with-java-5.png&#34; class=&#34;&#34; title=&#34;工厂模式模式结构&#34;&gt;
+
 &lt;h3 id=&#34;举例-1&#34;&gt;&lt;a href=&#34;#举例-1&#34; class=&#34;headerlink&#34; title=&#34;举例&#34;&gt;&lt;/a&gt;举例&lt;/h3&gt;&lt;p&gt;对上面的按钮工厂的工厂模式实现。&lt;/p&gt;
 &lt;p&gt;对象类：&lt;/p&gt;
 &lt;figure class=&#34;highlight java&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;25&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;26&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;27&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;/* Button.java */&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;abstract&lt;/span&gt; &lt;span class=&#34;class&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;Button&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;/* CircleButton.java */&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;class&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;CircleButton&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;Button&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;function&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;CircleButton&lt;/span&gt;&lt;span class=&#34;params&#34;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        System.out.println(&lt;span class=&#34;keyword&#34;&gt;this&lt;/span&gt;.getClass().getSimpleName());&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;/* DiamondButton.java */&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;class&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;DiamondButton&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;Button&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;function&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;DiamondButton&lt;/span&gt;&lt;span class=&#34;params&#34;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        System.out.println(&lt;span class=&#34;keyword&#34;&gt;this&lt;/span&gt;.getClass().getSimpleName());&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;comment&#34;&gt;/* RectangleButton.java */&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;class&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;RectangleButton&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;Button&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;function&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;title&#34;&gt;RectangleButton&lt;/span&gt;&lt;span class=&#34;params&#34;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;        System.out.println(&lt;span class=&#34;keyword&#34;&gt;this&lt;/span&gt;.getClass().getSimpleName());&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -315,16 +327,19 @@ DiamondButton
 &lt;li&gt;当系统所提供的工厂生产的具体产品并不是一个简单的对象，而是多个位于不同产品等级结构、属于不同类型的具体产品时就可以使用抽象工厂模式。&lt;/li&gt;
 &lt;li&gt;抽象工厂模式是所有形式的工厂模式中最为抽象和最具一般性的一种形式。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;/factory-patterns-with-java-6.png&#34; alt=&#34;Alt 抽象工厂模式应用场景&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;/2017/04/29/factory-patterns-with-java/factory-patterns-with-java-6.png&#34; class=&#34;&#34; title=&#34;抽象工厂模式应用场景&#34;&gt;
+
 &lt;h3 id=&#34;模式适用环境&#34;&gt;&lt;a href=&#34;#模式适用环境&#34; class=&#34;headerlink&#34; title=&#34;模式适用环境&#34;&gt;&lt;/a&gt;模式适用环境&lt;/h3&gt;&lt;ul&gt;
 &lt;li&gt;一个系统不应当依赖于产品类实例如何被创建、组合和表达的细节。&lt;/li&gt;
 &lt;li&gt;系统中有多于一个的产品族，但每次只使用其中某一产品族。&lt;/li&gt;
 &lt;li&gt;属于同一个产品族的产品将在一起使用，这一约束必须在系统的设计中体现出来。&lt;/li&gt;
 &lt;li&gt;产品等级结构稳定，设计完成之后，不会向系统中增加新的产品等级结构或者删除已有的产品等级结构。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;模式结构-2&#34;&gt;&lt;a href=&#34;#模式结构-2&#34; class=&#34;headerlink&#34; title=&#34;模式结构&#34;&gt;&lt;/a&gt;模式结构&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;/factory-patterns-with-java-7.png&#34; alt=&#34;Alt 抽象工厂模式模式结构&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;模式结构-2&#34;&gt;&lt;a href=&#34;#模式结构-2&#34; class=&#34;headerlink&#34; title=&#34;模式结构&#34;&gt;&lt;/a&gt;模式结构&lt;/h3&gt;&lt;img src=&#34;/2017/04/29/factory-patterns-with-java/factory-patterns-with-java-7.png&#34; class=&#34;&#34; title=&#34;抽象工厂模式模式结构&#34;&gt;
+
 &lt;h3 id=&#34;举例-2&#34;&gt;&lt;a href=&#34;#举例-2&#34; class=&#34;headerlink&#34; title=&#34;举例&#34;&gt;&lt;/a&gt;举例&lt;/h3&gt;&lt;p&gt;某软件公司要开发一套界面皮肤库，可以对基于 .NET 平台的桌面软件进行界面美化。用户在使用时可以通过菜单来选择皮肤，不同的皮肤将提供视觉效果不同的按钮、文本框、组合框等界面元素，例如春天 (Spring) 风格的皮肤将提供浅绿色的按钮、绿色边框的文本框和绿色边框的组合框，而夏天 (Summer) 风格的皮肤则提供浅蓝色的按钮、蓝色边框的文本框和蓝色边框的组合框，其结构示意图如下图所示：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/factory-patterns-with-java-8.png&#34; alt=&#34;Alt 抽象工厂模式举例&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;/2017/04/29/factory-patterns-with-java/factory-patterns-with-java-8.png&#34; class=&#34;&#34; title=&#34;抽象工厂模式举例&#34;&gt;
+
 &lt;p&gt;该皮肤库需要具备良好的灵活性和可扩展性，用户可以自由选择不同的皮肤，开发人员可以在不修改既有代码的基础上增加新的皮肤，现使用抽象工厂模式来设计该界面皮肤库。&lt;/p&gt;
 &lt;p&gt;对象类：&lt;/p&gt;
 &lt;ul&gt;
@@ -589,14 +604,18 @@ SummerTextField
 &lt;p&gt;+ 是由那些基本操作完成的？(文章末尾给出答案)&lt;/p&gt;
 &lt;p&gt;基本的语法就介绍到这，这篇文章并不是主要讲应用。有兴趣朋友可以在网上搜索完整的语法规则，非常详细。&lt;/p&gt;
 &lt;h1 id=&#34;非确定有限状态自动机&#34;&gt;&lt;a href=&#34;#非确定有限状态自动机&#34; class=&#34;headerlink&#34; title=&#34;非确定有限状态自动机&#34;&gt;&lt;/a&gt;非确定有限状态自动机&lt;/h1&gt;&lt;h2 id=&#34;DFA&#34;&gt;&lt;a href=&#34;#DFA&#34; class=&#34;headerlink&#34; title=&#34;DFA&#34;&gt;&lt;/a&gt;DFA&lt;/h2&gt;&lt;p&gt;DFA 又叫确定有限状态自动机，即对于一个输入，它的输出状态是确定的。如图：  &lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/regular-expression-1.png&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;/2017/04/09/regular-expression/regular-expression-1.png&#34; class=&#34;&#34;&gt;
+
+
 &lt;p&gt;对于这个自动机，输出边是 Turn On 和 Turn Off 的动作，Turn On 导致状态变为 On，Turn Off 导致状态变为 Off。&lt;br&gt;这两个动作所导致的结果是可以预料的，确定的。所以说是确定有限状态自动机。&lt;/p&gt;
 &lt;h2 id=&#34;NFA&#34;&gt;&lt;a href=&#34;#NFA&#34; class=&#34;headerlink&#34; title=&#34;NFA&#34;&gt;&lt;/a&gt;NFA&lt;/h2&gt;&lt;p&gt;NFA 叫非确定有限状态自动机，和 DFA 的唯一区别是它的输出是非确定的，DFA是NFA的一个子集。如图：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/regular-expression-2.png&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;/2017/04/09/regular-expression/regular-expression-2.png&#34; class=&#34;&#34;&gt;
+
 &lt;p&gt;还是那个例子，只不过状态 Off 的 Turn On 操作多了一个新的状态 Down  &lt;/p&gt;
 &lt;p&gt;当我们进行 Turn On 操作时无法确定到达的是 On 还是 Down，因此是无法根据当前状态和输出边确定下一状态的，这就叫做非确定性有限状态自动机。&lt;/p&gt;
 &lt;h2 id=&#34;实例&#34;&gt;&lt;a href=&#34;#实例&#34; class=&#34;headerlink&#34; title=&#34;实例&#34;&gt;&lt;/a&gt;实例&lt;/h2&gt;&lt;p&gt;我们先来看一个示例，它说明了 NFA 的性质和操作。如图：  &lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/regular-expression-3.png&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;/2017/04/09/regular-expression/regular-expression-3.png&#34; class=&#34;&#34;&gt;
+
 &lt;p&gt;（图表示((A*B|AC)D)所对应的 NFA）&lt;/p&gt;
 &lt;p&gt;我们定义的NFA有以下特点：     &lt;/p&gt;
 &lt;ol&gt;
@@ -620,19 +639,20 @@ SummerTextField
 &lt;h2 id=&#34;NFA-的构造&#34;&gt;&lt;a href=&#34;#NFA-的构造&#34; class=&#34;headerlink&#34; title=&#34;NFA 的构造&#34;&gt;&lt;/a&gt;NFA 的构造&lt;/h2&gt;&lt;p&gt;长串的正则表达式都是三个基本操作和括号构成的，因此我们的NFA也可以看作成若干基本操作拼接而成，下面就来介绍一下基本操作所对应的 NFA。  &lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;p&gt;连接操作：字符加状态匹配即可。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/regular-expression-4.png&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;/2017/04/09/regular-expression/regular-expression-4.png&#34; class=&#34;&#34;&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;括号：用栈处理。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;闭包操作：   &lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;出现在单个字符之后：在该字符和 * 之间添加两条 ε- 转换。&lt;br&gt; &lt;img src=&#34;/regular-expression-5.png&#34;&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;出现在单个字符之后：在该字符和 * 之间添加两条 ε- 转换。  &lt;/p&gt;
+&lt;img src=&#34;/2017/04/09/regular-expression/regular-expression-5.png&#34; class=&#34;&#34;&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p&gt;出现在右括号之后：在栈顶的左括号和 * 之间添加两条 ε- 转换。&lt;br&gt; &lt;img src=&#34;/regular-expression-6.png&#34;&gt;&lt;/p&gt;
-&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;出现在右括号之后：在栈顶的左括号和 * 之间添加两条 ε- 转换。  &lt;/p&gt;
+&lt;img src=&#34;/2017/04/09/regular-expression/regular-expression-6.png&#34; class=&#34;&#34;&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p&gt;或：A|B中A和B都是正则表达式。同样也是添加两条ε-转换，一条从左括号指向&lt;br&gt;B中第一个字符，另一条从|字符指向右括号。这使NFA能够进行选择。&lt;img src=&#34;/regular-expression-7.png&#34;&gt;&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;或：A|B中A和B都是正则表达式。同样也是添加两条ε-转换，一条从左括号指向&lt;br&gt;B中第一个字符，另一条从|字符指向右括号。这使NFA能够进行选择。&lt;img src=&#34;/2017/04/09/regular-expression/regular-expression-7.png&#34; class=&#34;&#34;&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;运用以上几个基本的 NFA，我们可以拼接出任意 NFA。  &lt;/p&gt;
@@ -691,10 +711,10 @@ SummerTextField
         <title>Git 简易教程</title>
         <link rel="alternate" href="https://blog.timerever.tk/2017/03/18/git-tutorial/"/>
         <content type="html">&lt;blockquote&gt;
-&lt;p&gt;一个好早就写了出来的教材，代没某大佬投递&lt;/p&gt;
+&lt;p&gt;一个好早就写了出来的教材，代某位大佬发表&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h1 id=&#34;版本控制&#34;&gt;&lt;a href=&#34;#版本控制&#34; class=&#34;headerlink&#34; title=&#34;版本控制&#34;&gt;&lt;/a&gt;版本控制&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;为什么要进行版本控制？&lt;/strong&gt;  最简单的例子，当我们用文字处理软件工作时（如Word）需要进行修改，而有时候又不确定修改的内容是不是需要的，因此会产生许多个文件，如图：  &lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/git-tutorial-1.png&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;/2017/03/18/git-tutorial/git-tutorial-1.png&#34; class=&#34;&#34;&gt;
 &lt;p&gt;每一个文件都是在之前的文件基础上进行微小的修改，久而久之，不但文件冗杂，而且还不清楚修改的内容是什么，是一种很杂乱的方式。&lt;/p&gt;
 &lt;p&gt;而版本控制就是解决这一问题——通过记录一个或若干文件内容变化，以便将来查阅特定版本修订情况的系统。&lt;/p&gt;
 &lt;p&gt;采取版本控制后，你可以将文件还原到之前的状态，比较各状态之间的细节从而查出是修改了哪个地方，找出哪里出了问题。甚至你可以随意删改项目中的文件，照样可以恢复到之前的样子，因而增加了容错率，提供了更多可能性。&lt;/p&gt;
@@ -702,7 +722,9 @@ SummerTextField
 &lt;p&gt;&lt;em&gt;我们所说的git就是一个分布式版本控制软件，GitHub就是一个git的托管服务。&lt;/em&gt;&lt;/p&gt;
 &lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
 &lt;h1 id=&#34;git本地操作&#34;&gt;&lt;a href=&#34;#git本地操作&#34; class=&#34;headerlink&#34; title=&#34;git本地操作&#34;&gt;&lt;/a&gt;git本地操作&lt;/h1&gt;&lt;p&gt;git设计简单，是完全分布式，允许成千上万个并行开发的分支(Branch)，有能力管理超大规模的项目，是目前首选的版本控制软件。&lt;/p&gt;
-&lt;h2 id=&#34;一、工作流程&#34;&gt;&lt;a href=&#34;#一、工作流程&#34; class=&#34;headerlink&#34; title=&#34;一、工作流程&#34;&gt;&lt;/a&gt;一、工作流程&lt;/h2&gt;&lt;p&gt;git的三个工作区域，对应着三种状态：&lt;br&gt;&lt;img src=&#34;/git-tutorial-2.png&#34;&gt;&lt;br&gt;git 工作流程如下：    &lt;/p&gt;
+&lt;h2 id=&#34;一、工作流程&#34;&gt;&lt;a href=&#34;#一、工作流程&#34; class=&#34;headerlink&#34; title=&#34;一、工作流程&#34;&gt;&lt;/a&gt;一、工作流程&lt;/h2&gt;&lt;p&gt;git的三个工作区域，对应着三种状态：  &lt;/p&gt;
+&lt;img src=&#34;/2017/03/18/git-tutorial/git-tutorial-2.png&#34; class=&#34;&#34;&gt;
+&lt;p&gt;git 工作流程如下：    &lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;p&gt;在工作目录中修改文件。（modified）  &lt;/p&gt;
 &lt;/li&gt;
@@ -782,10 +804,16 @@ test
 &lt;p&gt;以上就是git的本地基本操作，包括创建一个仓库，更改、暂存和提交，查看仓库的提交历史，版本回退。&lt;/p&gt;
 &lt;h1 id=&#34;分支&#34;&gt;&lt;a href=&#34;#分支&#34; class=&#34;headerlink&#34; title=&#34;分支&#34;&gt;&lt;/a&gt;分支&lt;/h1&gt;&lt;p&gt;分支是把工作从主线上分离开来，以免影响开发主线。在不同的分支上你可以尝试各种各样的增删改，实现不同的设想。而git的分支模型是它最突出的特点，也是git脱颖而出的原因。&lt;/p&gt;
 &lt;h2 id=&#34;一、分支概念&#34;&gt;&lt;a href=&#34;#一、分支概念&#34; class=&#34;headerlink&#34; title=&#34;一、分支概念&#34;&gt;&lt;/a&gt;一、分支概念&lt;/h2&gt;&lt;p&gt;在版本回退里，你可以回溯到之前的任意版本，而这些版本都是处于一条时间线上，这条时间线就是一个分支。&lt;br&gt;默认的分支为master分支，本身可以看做一个指针，HEAD指针则指向master指针，如图：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/git-tutorial-3.png&#34;&gt;&lt;/p&gt;
-&lt;p&gt;每次提交都会多出一个节点，指针也随之移动。&lt;br&gt;当我们创建新的分支时，也就创建了一个新的指针，我们通过命令将HEAD指针移到新指针上：&lt;br&gt;&lt;img src=&#34;/git-tutorial-4.png&#34;&gt;&lt;/p&gt;
-&lt;p&gt;新提交一次后，新指针向前移动，master指针不变，这就产生了分支：&lt;br&gt;我们可以将两条分支合并，之后可以删掉新分支。&lt;br&gt;&lt;img src=&#34;/git-tutorial-5.png&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/git-tutorial-6.png&#34;&gt;&lt;br&gt;这样就完成了分支的合并。&lt;/p&gt;
+&lt;img src=&#34;/2017/03/18/git-tutorial/git-tutorial-3.png&#34; class=&#34;&#34;&gt;
+
+&lt;p&gt;每次提交都会多出一个节点，指针也随之移动。&lt;br&gt;当我们创建新的分支时，也就创建了一个新的指针，我们通过命令将HEAD指针移到新指针上：    &lt;/p&gt;
+&lt;img src=&#34;/2017/03/18/git-tutorial/git-tutorial-4.png&#34; class=&#34;&#34;&gt;
+
+&lt;p&gt;新提交一次后，新指针向前移动，master指针不变，这就产生了分支：&lt;br&gt;我们可以将两条分支合并，之后可以删掉新分支。  &lt;/p&gt;
+&lt;img src=&#34;/2017/03/18/git-tutorial/git-tutorial-5.png&#34; class=&#34;&#34;&gt;
+
+&lt;img src=&#34;/2017/03/18/git-tutorial/git-tutorial-6.png&#34; class=&#34;&#34;&gt;
+&lt;p&gt;这样就完成了分支的合并。&lt;/p&gt;
 &lt;h2 id=&#34;二、分支使用&#34;&gt;&lt;a href=&#34;#二、分支使用&#34; class=&#34;headerlink&#34; title=&#34;二、分支使用&#34;&gt;&lt;/a&gt;二、分支使用&lt;/h2&gt;&lt;p&gt;1.git branch：查看当前所有分支      &lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;$ git branch
 * master
@@ -831,8 +859,12 @@ $ ls
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt; 进入github的帐户设置，点击左侧的SSH and GPG keys，将~&amp;#x2F;.ssh&amp;#x2F;id_rsa.pub公钥文件的内容粘贴到文本区，然后点击”Add key”    &lt;/p&gt;
 &lt;p&gt; SSH访问配置成功     &lt;/p&gt;
-&lt;h3 id=&#34;创建、维护和管理你自己的项目。&#34;&gt;&lt;a href=&#34;#创建、维护和管理你自己的项目。&#34; class=&#34;headerlink&#34; title=&#34;创建、维护和管理你自己的项目。&#34;&gt;&lt;/a&gt;创建、维护和管理你自己的项目。&lt;/h3&gt;&lt;p&gt;1.点击页面右上角的＋号，点击New repository按钮&lt;br&gt;&lt;img src=&#34;/git-tutorial-7.png&#34;&gt;&lt;br&gt; &lt;img src=&#34;/git-tutorial-8.png&#34;&gt;&lt;/p&gt;
-&lt;p&gt;Respository name是必填项目，而其余都是选填项，可以默认。&lt;br&gt;点击Create respository按钮  ，即创建了一个新的仓库&lt;br&gt;这时候可以将项目分享给其他人，通过HTTP和SSH的形式。&lt;br&gt;&lt;img src=&#34;/git-tutorial-9.png&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;创建、维护和管理你自己的项目。&#34;&gt;&lt;a href=&#34;#创建、维护和管理你自己的项目。&#34; class=&#34;headerlink&#34; title=&#34;创建、维护和管理你自己的项目。&#34;&gt;&lt;/a&gt;创建、维护和管理你自己的项目。&lt;/h3&gt;&lt;p&gt;1.点击页面右上角的＋号，点击New repository按钮  &lt;/p&gt;
+&lt;img src=&#34;/2017/03/18/git-tutorial/git-tutorial-7.png&#34; class=&#34;&#34;&gt;
+&lt;img src=&#34;/2017/03/18/git-tutorial/git-tutorial-8.png&#34; class=&#34;&#34;&gt;
+&lt;p&gt;Respository name是必填项目，而其余都是选填项，可以默认。&lt;br&gt;点击Create respository按钮  ，即创建了一个新的仓库&lt;br&gt;这时候可以将项目分享给其他人，通过HTTP和SSH的形式。   &lt;/p&gt;
+&lt;img src=&#34;/2017/03/18/git-tutorial/git-tutorial-9.png&#34; class=&#34;&#34;&gt;
+
 &lt;p&gt; 2.对仓库进行操作，使本地和github同步  &lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;     $ git remote add origin     **********（仓库地址）   
     （添加远程仓库至本地）
@@ -855,9 +887,10 @@ Checking connectivity... done.
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;   此时远程仓库的文件全部克隆至本地。&lt;/p&gt;
 &lt;p&gt; 4.添加合作者&lt;br&gt;点击边栏的 “Settings” 链接，然后从左侧菜单中选择 “Collaborators” 。 然后，在输入框中填写用户名，点击 “Add collaborator.” 此时可以给予他们提交的权限。  &lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/git-tutorial-10.png&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;/2017/03/18/git-tutorial/git-tutorial-10.png&#34; class=&#34;&#34;&gt;
+
 &lt;p&gt;5.Fork按钮可以将他人项目派生下来，在你的空间中创建一个完全属于你的项目副本。  &lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/git-tutorial-11.png&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;/2017/03/18/git-tutorial/git-tutorial-11.png&#34; class=&#34;&#34;&gt;
 &lt;p&gt;如何对项目做出贡献呢？    &lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;p&gt;将派生出的副本克隆到本地&lt;/p&gt;
@@ -1242,7 +1275,8 @@ ENTRYPOINT command param1 param2（shell 形式）
 
 &lt;p&gt;记得转换完成后，删除或处理掉原来的文件，将新生成的文件名改为原文件名，亦或可以删除虚拟机配置中的原有硬盘并新添转换后的硬盘。&lt;/p&gt;
 &lt;p&gt;命令操作截图如下。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/conversion-by-cmd.png&#34; alt=&#34;Alt 操作截图&#34; title=&#34;操作截图&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;/2017/03/01/merge-multiple-vmdk&#39;s-into-single-vmdk/conversion-by-cmd.png&#34; class=&#34;&#34; title=&#34;操作截图&#34;&gt;
+
 &lt;blockquote&gt;
 &lt;p&gt;Virtual disk conversion successful.&lt;/p&gt;
 &lt;/blockquote&gt;

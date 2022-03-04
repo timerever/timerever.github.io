@@ -20,31 +20,31 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"blog.timerever.tk","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.10.1","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="一个好早就写了出来的教材，代没某大佬投递  版本控制为什么要进行版本控制？  最简单的例子，当我们用文字处理软件工作时（如Word）需要进行修改，而有时候又不确定修改的内容是不是需要的，因此会产生许多个文件，如图：    每一个文件都是在之前的文件基础上进行微小的修改，久而久之，不但文件冗杂，而且还不清楚修改的内容是什么，是一种很杂乱的方式。 而版本控制就是解决这一问题——通过记录一个或若干文件">
+    <meta name="description" content="一个好早就写了出来的教材，代某位大佬发表  版本控制为什么要进行版本控制？  最简单的例子，当我们用文字处理软件工作时（如Word）需要进行修改，而有时候又不确定修改的内容是不是需要的，因此会产生许多个文件，如图：    每一个文件都是在之前的文件基础上进行微小的修改，久而久之，不但文件冗杂，而且还不清楚修改的内容是什么，是一种很杂乱的方式。 而版本控制就是解决这一问题——通过记录一个或若干文件">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Git 简易教程">
 <meta property="og:url" content="https://blog.timerever.tk/2017/03/18/git-tutorial/index.html">
 <meta property="og:site_name" content="A Blog">
-<meta property="og:description" content="一个好早就写了出来的教材，代没某大佬投递  版本控制为什么要进行版本控制？  最简单的例子，当我们用文字处理软件工作时（如Word）需要进行修改，而有时候又不确定修改的内容是不是需要的，因此会产生许多个文件，如图：    每一个文件都是在之前的文件基础上进行微小的修改，久而久之，不但文件冗杂，而且还不清楚修改的内容是什么，是一种很杂乱的方式。 而版本控制就是解决这一问题——通过记录一个或若干文件">
+<meta property="og:description" content="一个好早就写了出来的教材，代某位大佬发表  版本控制为什么要进行版本控制？  最简单的例子，当我们用文字处理软件工作时（如Word）需要进行修改，而有时候又不确定修改的内容是不是需要的，因此会产生许多个文件，如图：    每一个文件都是在之前的文件基础上进行微小的修改，久而久之，不但文件冗杂，而且还不清楚修改的内容是什么，是一种很杂乱的方式。 而版本控制就是解决这一问题——通过记录一个或若干文件">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://blog.timerever.tk/git-tutorial-1.png">
-<meta property="og:image" content="https://blog.timerever.tk/git-tutorial-2.png">
-<meta property="og:image" content="https://blog.timerever.tk/git-tutorial-3.png">
-<meta property="og:image" content="https://blog.timerever.tk/git-tutorial-4.png">
-<meta property="og:image" content="https://blog.timerever.tk/git-tutorial-5.png">
-<meta property="og:image" content="https://blog.timerever.tk/git-tutorial-6.png">
-<meta property="og:image" content="https://blog.timerever.tk/git-tutorial-7.png">
-<meta property="og:image" content="https://blog.timerever.tk/git-tutorial-8.png">
-<meta property="og:image" content="https://blog.timerever.tk/git-tutorial-9.png">
-<meta property="og:image" content="https://blog.timerever.tk/git-tutorial-10.png">
-<meta property="og:image" content="https://blog.timerever.tk/git-tutorial-11.png">
+<meta property="og:image" content="https://blog.timerever.tk/2017/03/18/git-tutorial/git-tutorial-1.png">
+<meta property="og:image" content="https://blog.timerever.tk/2017/03/18/git-tutorial/git-tutorial-2.png">
+<meta property="og:image" content="https://blog.timerever.tk/2017/03/18/git-tutorial/git-tutorial-3.png">
+<meta property="og:image" content="https://blog.timerever.tk/2017/03/18/git-tutorial/git-tutorial-4.png">
+<meta property="og:image" content="https://blog.timerever.tk/2017/03/18/git-tutorial/git-tutorial-5.png">
+<meta property="og:image" content="https://blog.timerever.tk/2017/03/18/git-tutorial/git-tutorial-6.png">
+<meta property="og:image" content="https://blog.timerever.tk/2017/03/18/git-tutorial/git-tutorial-7.png">
+<meta property="og:image" content="https://blog.timerever.tk/2017/03/18/git-tutorial/git-tutorial-8.png">
+<meta property="og:image" content="https://blog.timerever.tk/2017/03/18/git-tutorial/git-tutorial-9.png">
+<meta property="og:image" content="https://blog.timerever.tk/2017/03/18/git-tutorial/git-tutorial-10.png">
+<meta property="og:image" content="https://blog.timerever.tk/2017/03/18/git-tutorial/git-tutorial-11.png">
 <meta property="article:published_time" content="2017-03-18T03:07:37.000Z">
-<meta property="article:modified_time" content="2022-03-04T05:59:25.209Z">
+<meta property="article:modified_time" content="2022-03-04T06:16:06.799Z">
 <meta property="article:author" content="timerever">
 <meta property="article:tag" content="Git">
 <meta property="article:tag" content="GitHub">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://blog.timerever.tk/git-tutorial-1.png">
+<meta name="twitter:image" content="https://blog.timerever.tk/2017/03/18/git-tutorial/git-tutorial-1.png">
 
 
 <link rel="canonical" href="https://blog.timerever.tk/2017/03/18/git-tutorial/">
@@ -323,10 +323,10 @@
     
     <div class="post-body" itemprop="articleBody">
         <blockquote>
-<p>一个好早就写了出来的教材，代没某大佬投递</p>
+<p>一个好早就写了出来的教材，代某位大佬发表</p>
 </blockquote>
 <h1 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h1><p><strong>为什么要进行版本控制？</strong>  最简单的例子，当我们用文字处理软件工作时（如Word）需要进行修改，而有时候又不确定修改的内容是不是需要的，因此会产生许多个文件，如图：  </p>
-<p><img src="/git-tutorial-1.png"></p>
+<img src="/2017/03/18/git-tutorial/git-tutorial-1.png" class="">
 <p>每一个文件都是在之前的文件基础上进行微小的修改，久而久之，不但文件冗杂，而且还不清楚修改的内容是什么，是一种很杂乱的方式。</p>
 <p>而版本控制就是解决这一问题——通过记录一个或若干文件内容变化，以便将来查阅特定版本修订情况的系统。</p>
 <p>采取版本控制后，你可以将文件还原到之前的状态，比较各状态之间的细节从而查出是修改了哪个地方，找出哪里出了问题。甚至你可以随意删改项目中的文件，照样可以恢复到之前的样子，因而增加了容错率，提供了更多可能性。</p>
@@ -334,7 +334,9 @@
 <p><em>我们所说的git就是一个分布式版本控制软件，GitHub就是一个git的托管服务。</em></p>
 <span id="more"></span>
 <h1 id="git本地操作"><a href="#git本地操作" class="headerlink" title="git本地操作"></a>git本地操作</h1><p>git设计简单，是完全分布式，允许成千上万个并行开发的分支(Branch)，有能力管理超大规模的项目，是目前首选的版本控制软件。</p>
-<h2 id="一、工作流程"><a href="#一、工作流程" class="headerlink" title="一、工作流程"></a>一、工作流程</h2><p>git的三个工作区域，对应着三种状态：<br><img src="/git-tutorial-2.png"><br>git 工作流程如下：    </p>
+<h2 id="一、工作流程"><a href="#一、工作流程" class="headerlink" title="一、工作流程"></a>一、工作流程</h2><p>git的三个工作区域，对应着三种状态：  </p>
+<img src="/2017/03/18/git-tutorial/git-tutorial-2.png" class="">
+<p>git 工作流程如下：    </p>
 <ol>
 <li><p>在工作目录中修改文件。（modified）  </p>
 </li>
@@ -414,10 +416,16 @@ test
 <p>以上就是git的本地基本操作，包括创建一个仓库，更改、暂存和提交，查看仓库的提交历史，版本回退。</p>
 <h1 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h1><p>分支是把工作从主线上分离开来，以免影响开发主线。在不同的分支上你可以尝试各种各样的增删改，实现不同的设想。而git的分支模型是它最突出的特点，也是git脱颖而出的原因。</p>
 <h2 id="一、分支概念"><a href="#一、分支概念" class="headerlink" title="一、分支概念"></a>一、分支概念</h2><p>在版本回退里，你可以回溯到之前的任意版本，而这些版本都是处于一条时间线上，这条时间线就是一个分支。<br>默认的分支为master分支，本身可以看做一个指针，HEAD指针则指向master指针，如图：</p>
-<p><img src="/git-tutorial-3.png"></p>
-<p>每次提交都会多出一个节点，指针也随之移动。<br>当我们创建新的分支时，也就创建了一个新的指针，我们通过命令将HEAD指针移到新指针上：<br><img src="/git-tutorial-4.png"></p>
-<p>新提交一次后，新指针向前移动，master指针不变，这就产生了分支：<br>我们可以将两条分支合并，之后可以删掉新分支。<br><img src="/git-tutorial-5.png"></p>
-<p><img src="/git-tutorial-6.png"><br>这样就完成了分支的合并。</p>
+<img src="/2017/03/18/git-tutorial/git-tutorial-3.png" class="">
+
+<p>每次提交都会多出一个节点，指针也随之移动。<br>当我们创建新的分支时，也就创建了一个新的指针，我们通过命令将HEAD指针移到新指针上：    </p>
+<img src="/2017/03/18/git-tutorial/git-tutorial-4.png" class="">
+
+<p>新提交一次后，新指针向前移动，master指针不变，这就产生了分支：<br>我们可以将两条分支合并，之后可以删掉新分支。  </p>
+<img src="/2017/03/18/git-tutorial/git-tutorial-5.png" class="">
+
+<img src="/2017/03/18/git-tutorial/git-tutorial-6.png" class="">
+<p>这样就完成了分支的合并。</p>
 <h2 id="二、分支使用"><a href="#二、分支使用" class="headerlink" title="二、分支使用"></a>二、分支使用</h2><p>1.git branch：查看当前所有分支      </p>
 <pre><code>$ git branch
 * master
@@ -463,8 +471,12 @@ $ ls
 </code></pre>
 <p> 进入github的帐户设置，点击左侧的SSH and GPG keys，将~&#x2F;.ssh&#x2F;id_rsa.pub公钥文件的内容粘贴到文本区，然后点击”Add key”    </p>
 <p> SSH访问配置成功     </p>
-<h3 id="创建、维护和管理你自己的项目。"><a href="#创建、维护和管理你自己的项目。" class="headerlink" title="创建、维护和管理你自己的项目。"></a>创建、维护和管理你自己的项目。</h3><p>1.点击页面右上角的＋号，点击New repository按钮<br><img src="/git-tutorial-7.png"><br> <img src="/git-tutorial-8.png"></p>
-<p>Respository name是必填项目，而其余都是选填项，可以默认。<br>点击Create respository按钮  ，即创建了一个新的仓库<br>这时候可以将项目分享给其他人，通过HTTP和SSH的形式。<br><img src="/git-tutorial-9.png"></p>
+<h3 id="创建、维护和管理你自己的项目。"><a href="#创建、维护和管理你自己的项目。" class="headerlink" title="创建、维护和管理你自己的项目。"></a>创建、维护和管理你自己的项目。</h3><p>1.点击页面右上角的＋号，点击New repository按钮  </p>
+<img src="/2017/03/18/git-tutorial/git-tutorial-7.png" class="">
+<img src="/2017/03/18/git-tutorial/git-tutorial-8.png" class="">
+<p>Respository name是必填项目，而其余都是选填项，可以默认。<br>点击Create respository按钮  ，即创建了一个新的仓库<br>这时候可以将项目分享给其他人，通过HTTP和SSH的形式。   </p>
+<img src="/2017/03/18/git-tutorial/git-tutorial-9.png" class="">
+
 <p> 2.对仓库进行操作，使本地和github同步  </p>
 <pre><code>     $ git remote add origin     **********（仓库地址）   
     （添加远程仓库至本地）
@@ -487,9 +499,10 @@ Checking connectivity... done.
 </code></pre>
 <p>   此时远程仓库的文件全部克隆至本地。</p>
 <p> 4.添加合作者<br>点击边栏的 “Settings” 链接，然后从左侧菜单中选择 “Collaborators” 。 然后，在输入框中填写用户名，点击 “Add collaborator.” 此时可以给予他们提交的权限。  </p>
-<p><img src="/git-tutorial-10.png"></p>
+<img src="/2017/03/18/git-tutorial/git-tutorial-10.png" class="">
+
 <p>5.Fork按钮可以将他人项目派生下来，在你的空间中创建一个完全属于你的项目副本。  </p>
-<p><img src="/git-tutorial-11.png"></p>
+<img src="/2017/03/18/git-tutorial/git-tutorial-11.png" class="">
 <p>如何对项目做出贡献呢？    </p>
 <ol>
 <li><p>将派生出的副本克隆到本地</p>

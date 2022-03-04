@@ -10,17 +10,8 @@
     
     
     <url>
-        <loc>https://blog.timerever.tk/about/</loc>
-        <lastmod>2022-03-04T05:59:25.213Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    
-    
-    
-    <url>
         <loc>https://blog.timerever.tk/categories/</loc>
-        <lastmod>2022-03-04T05:59:25.213Z</lastmod>
+        <lastmod>2022-03-04T06:16:06.803Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -29,7 +20,16 @@
     
     <url>
         <loc>https://blog.timerever.tk/tags/</loc>
-        <lastmod>2022-03-04T05:59:25.213Z</lastmod>
+        <lastmod>2022-03-04T06:16:06.803Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    
+    
+    <url>
+        <loc>https://blog.timerever.tk/about/</loc>
+        <lastmod>2022-03-04T06:16:06.803Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -38,7 +38,7 @@
     
     <url>
         <loc>https://blog.timerever.tk/404.html</loc>
-        <lastmod>2022-03-04T05:59:25.197Z</lastmod>
+        <lastmod>2022-03-04T06:16:06.787Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
