@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://blog.timerever.tk/2022/03/03/sort-an-array-in-a-waveform/sort-an-array-in-a-waveform-3.png">
 <meta property="og:image" content="https://blog.timerever.tk/2022/03/03/sort-an-array-in-a-waveform/sort-an-array-in-a-waveform-4.png">
 <meta property="article:published_time" content="2022-03-03T08:55:42.000Z">
-<meta property="article:modified_time" content="2022-03-04T10:17:54.680Z">
+<meta property="article:modified_time" content="2022-03-07T06:52:03.152Z">
 <meta property="article:author" content="timerever">
 <meta property="article:tag" content="Algorithm">
 <meta property="article:tag" content="Sort">
@@ -157,7 +157,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80-%E6%8E%92%E5%BA%8F%E8%A7%A3%E6%B3%95"><span class="nav-text"> 一、排序解法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%BE%E8%A7%A3"><span class="nav-text"> 图解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90"><span class="nav-text"> 复杂度分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C-%E4%B8%80%E6%AC%A1%E9%81%8D%E5%8E%86%E8%A7%A3%E5%86%B3"><span class="nav-text"> 二、一次遍历解决</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90-2"><span class="nav-text"> 复杂度分析</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80-%E6%8E%92%E5%BA%8F%E8%A7%A3%E6%B3%95"><span class="nav-text"> 一、排序解法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%BE%E8%A7%A3"><span class="nav-text"> 图解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-text"> 代码实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90"><span class="nav-text"> 复杂度分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C-%E4%B8%80%E6%AC%A1%E9%81%8D%E5%8E%86%E8%A7%A3%E5%86%B3"><span class="nav-text"> 二、一次遍历解决</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0-2"><span class="nav-text"> 代码实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90-2"><span class="nav-text"> 复杂度分析</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -172,7 +172,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-count">26</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -183,7 +183,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-count">33</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -275,14 +275,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.6k</span>
+      <span>2.3k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>6 分钟</span>
+      <span>9 分钟</span>
     </span>
 
   
@@ -334,12 +334,15 @@
 <li>算出数组中间元素，则将整个数组划分为了小半区和大半区，然后同样分别往两端拿取各半区元素，完成排序</li>
 <li>升序排序后，偶数位（非数组下标位）的元素一定会大于等于前面的元素，将偶数位元素分别与前面的元素交换</li>
 </ul>
+<p>因为第三种解法不需要额外的空间占用，所以我们主要关注第三种解法。</p>
 <h4 id="图解"><a class="markdownIt-Anchor" href="#图解"></a> 图解</h4>
-<p>第三种解法不需要额外的空间占用，把现成的图拿过来方便理解。</p>
-<p>排序后：</p>
+<p>把参考链接里面现成的图拿过来方便理解。</p>
+<p>对原数组进行排序：</p>
 <img src="/2022/03/03/sort-an-array-in-a-waveform/sort-an-array-in-a-waveform-1.png" class="" title="排序后">
-<p>交换元素后：</p>
+<p>然后分别交换偶数位及前面的元素：</p>
 <img src="/2022/03/03/sort-an-array-in-a-waveform/sort-an-array-in-a-waveform-2.png" class="" title="交换元素后">
+<h4 id="代码实现"><a class="markdownIt-Anchor" href="#代码实现"></a> 代码实现</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">int</span>[] sort(<span class="keyword">int</span>[] arr) &#123;</span><br><span class="line"></span><br><span class="line">    Arrays.sort(arr);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> tmp;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; arr.length; i = i + <span class="number">2</span>) &#123;</span><br><span class="line">        tmp = arr[i - <span class="number">1</span>];</span><br><span class="line">        arr[i - <span class="number">1</span>] = arr[i];</span><br><span class="line">        arr[i] = tmp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="复杂度分析"><a class="markdownIt-Anchor" href="#复杂度分析"></a> 复杂度分析</h4>
 <p>排序后再遍历处理的时间复杂度为排序的时间复杂度 + 后续遍历处理时间复杂度，最优为：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><msub><mo><mi>log</mi><mo>⁡</mo></mo><mn>2</mn></msub><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n\log_2 n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.20696799999999996em;"><span style="top:-2.4558600000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24414em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span> + <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span> = <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><msub><mo><mi>log</mi><mo>⁡</mo></mo><mn>2</mn></msub><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n\log_2 n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop"><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.20696799999999996em;"><span style="top:-2.4558600000000004em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24414em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span><br />
 空间复杂度仍然取决于使用的排序算法 + 后续处理是否需要占用空间，最优为：堆排 + 交换解法 = <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord">1</span><span class="mclose">)</span></span></span></span></p>
@@ -368,6 +371,8 @@
 </li>
 </ul>
 <p>所以整体基于这种步长为 2 的遍历和上述交换逻辑，一次遍历就可以完成要求的波浪排序。</p>
+<h4 id="代码实现-2"><a class="markdownIt-Anchor" href="#代码实现-2"></a> 代码实现</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">int</span>[] sort(<span class="keyword">int</span>[] arr) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (arr.length &lt; <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> arr;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> tmp;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; arr.length - <span class="number">1</span>; i = i + <span class="number">2</span>) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (arr[i] &gt; arr[i - <span class="number">1</span>]) &#123;</span><br><span class="line">            tmp = arr[i - <span class="number">1</span>];</span><br><span class="line">            arr[i - <span class="number">1</span>] = arr[i];</span><br><span class="line">            arr[i] = tmp;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (arr[i] &gt; arr[i + <span class="number">1</span>]) &#123;</span><br><span class="line">            tmp = arr[i + <span class="number">1</span>];</span><br><span class="line">            arr[i + <span class="number">1</span>] = arr[i];</span><br><span class="line">            arr[i] = tmp;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 最后的边界</span></span><br><span class="line">    <span class="keyword">if</span> (arr.length % <span class="number">2</span> == <span class="number">0</span> &amp;&amp; arr[arr.length - <span class="number">1</span>] &gt; arr[arr.length - <span class="number">2</span>]) &#123;</span><br><span class="line">        tmp = arr[arr.length - <span class="number">2</span>];</span><br><span class="line">        arr[arr.length - <span class="number">2</span>] = arr[arr.length - <span class="number">1</span>];</span><br><span class="line">        arr[arr.length - <span class="number">1</span>] = tmp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="复杂度分析-2"><a class="markdownIt-Anchor" href="#复杂度分析-2"></a> 复杂度分析</h4>
 <p>最后再来看一眼复杂度：</p>
 <ul>
@@ -410,8 +415,8 @@
             <div class="post-nav-item">
             </div>
             <div class="post-nav-item">
-                <a href="/2022/02/09/custom-jackson-serializer-for-clob-type/" rel="next" title="自定义 Jackson Serializer 解决无法序列化 SerialClob 的问题">
-                  自定义 Jackson Serializer 解决无法序列化 SerialClob 的问题 <i class="fa fa-chevron-right"></i>
+                <a href="/2022/03/01/resolve-class-not-found-in-sharding-jdbc/" rel="next" title="修复 Sharding-JDBC 使用时的两次 NoClassDefFoundError">
+                  修复 Sharding-JDBC 使用时的两次 NoClassDefFoundError <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>

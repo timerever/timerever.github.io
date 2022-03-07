@@ -30,6 +30,8 @@
         <category>vmdk</category>
         <category>wget</category>
         <category>Regular Expression</category>
+        <category>Sharding</category>
+        <category>Sharding-JDBC</category>
         <category>Algorithm</category>
         <category>Sort</category>
         <category>Ubuntu</category>
