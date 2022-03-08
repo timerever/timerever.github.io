@@ -20,6 +20,9 @@
     <category term="Git" />
     <category term="GitHub" />
     <category term="Hibernate" />
+    <category term="Kubernetes" />
+    <category term="K8s" />
+    <category term="K3s" />
     <category term="Keycloak" />
     <category term="OAuth2" />
     <category term="SSO" />

@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title>A Blog • Posts by &#34;k8s&#34; tag</title>
+        <link>https://blog.timerever.tk</link>
+        <description>Just another blog.</description>
+        <language>zh-CN</language>
+        <pubDate>Fri, 14 Jan 2022 11:04:07 +0000</pubDate>
+        <lastBuildDate>Fri, 14 Jan 2022 11:04:07 +0000</lastBuildDate>
+        <category>Java</category>
+        <category>HttpClient</category>
+        <category>Jackson</category>
+        <category>Design Pattern</category>
+        <category>Docker</category>
+        <category>Dockerfile</category>
+        <category>Java Web</category>
+        <category>Factory Patterns</category>
+        <category>Linux</category>
+        <category>C</category>
+        <category>Android</category>
+        <category>Huawei</category>
+        <category>CyanogenMod</category>
+        <category>Git</category>
+        <category>GitHub</category>
+        <category>Hibernate</category>
+        <category>Kubernetes</category>
+        <category>K8s</category>
+        <category>K3s</category>
+        <category>Keycloak</category>
+        <category>OAuth2</category>
+        <category>SSO</category>
+        <category>VMware</category>
+        <category>vmdk</category>
+        <category>wget</category>
+        <category>Regular Expression</category>
+        <category>Sharding</category>
+        <category>Sharding-JDBC</category>
+        <category>Algorithm</category>
+        <category>Sort</category>
+        <category>Ubuntu</category>
+        <category>Ruby</category>
+        <category>Jekyll</category>
+        <category>Windows</category>
+        <category>Regedit</category>
+        <category>PowerShell</category>
+        <item>
+            <guid isPermalink="true">https://blog.timerever.tk/2022/01/14/install-k3s-on-multi-node/</guid>
+            <title>K3s 多节点集群安装</title>
+            <link>https://blog.timerever.tk/2022/01/14/install-k3s-on-multi-node/</link>
+            <category>Kubernetes</category>
+            <category>K8s</category>
+            <category>K3s</category>
+            <pubDate>Fri, 14 Jan 2022 11:04:07 +0000</pubDate>
+            <description><![CDATA[ &lt;p&gt;K3s 是轻量级的 Kubernetes，精简了很多 K8s 组件，非常适合在性能较弱的机器上运行，支持 IoT 设备，支持 arm 架构，很适合在 vps 上轻量部署。正好手里有几台 vps，于是决定用 K3s 统一进行管理。&lt;/p&gt;
+&lt;p&gt;官网：&lt;a href=&#34;https://k3s.io/&#34;&gt;K3s 官网&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;在官网下面有 Get Started 部分，列出了启动 server 和 agent 节点的简单命令，但是对我们而言还不够，所以参考官网文档进行安装配置。具体的安装文档可以参见：&lt;a href=&#34;https://docs.rancher.cn/docs/k3s/installation/install-options/_index&#34;&gt;安装选项介绍&lt;/a&gt;。&lt;/p&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+&lt;h2 id=&#34;k3s-安装&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#k3s-安装&#34;&gt;&lt;/a&gt; K3s 安装&lt;/h2&gt;
+&lt;h3 id=&#34;准备工作&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#准备工作&#34;&gt;&lt;/a&gt; 准备工作&lt;/h3&gt;
+&lt;p&gt;由于 K3s 默认运行环境为 containerd，所以为了使用 Docker 作为运行时，需要先在各节点正常安装 Docker，安装过程不再赘述。&lt;/p&gt;
+&lt;h3 id=&#34;安装-master-节点&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#安装-master-节点&#34;&gt;&lt;/a&gt; 安装 master 节点&lt;/h3&gt;
+&lt;p&gt;根据个人需求，按需设置 master 节点的安装参数。由于个人使用，不要多节点部署实现高可用，所以禁用 servicelb 组件。traefik 虽然是 K3s 自带的网络组件，但是其默认会占用 80 和 443 端口，所以也不打算使用。最后完整的安装参数为：&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;curl -sfL https://get.k3s.io | INSTALL_K3S_SKIP_SELINUX_RPM=true INSTALL_K3S_EXEC=&amp;quot;--docker --disable servicelb --disable traefik --disable-cloud-controller&amp;quot; sh -&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 或使用国内镜像&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;curl -sfL http://rancher-mirror.cnrancher.com/k3s/k3s-install.sh | INSTALL_K3S_MIRROR=cn INSTALL_K3S_SKIP_SELINUX_RPM=true INSTALL_K3S_EXEC=&amp;quot;--docker --disable servicelb --disable traefik --disable-cloud-controller&amp;quot; sh -&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;安装完成之后我们可以通过 &lt;code&gt;kubectl get node&lt;/code&gt; 来看一下节点的情况：&lt;/p&gt;
+&lt;img src=&#34;/2022/01/14/install-k3s-on-multi-node/install-k3s-on-multi-node-1.png&#34; class=&#34;&#34; title=&#34;节点信息&#34;&gt;
+&lt;h3 id=&#34;安装-agent-节点&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#安装-agent-节点&#34;&gt;&lt;/a&gt; 安装 agent 节点&lt;/h3&gt;
+&lt;p&gt;由于 agent 节点需要与 master 节点进行通信校验，在安装时需要指定 token，所以需要从 master 节点获取安装 token：&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;root@ubuntu-master:~# cat /var/lib/rancher/k3s/server/node-token&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;K10995e6e37eec07447411d8f8fcf025c3ed6f9a134e30e896ac4c2a7c4f8e6b587::server:f0af86641d91b09cc7707f25586b77e5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;然后与 master 节点类似，指定 agent 节点的参数进行安装：&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;curl -sfL https://get.k3s.io | K3S_URL=https://MASTER_URL:6443 K3S_TOKEN=NODE_TOKEN INSTALL_K3S_SKIP_SELINUX_RPM=true INSTALL_K3S_EXEC=&amp;quot;--docker&amp;quot; sh -&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 或使用国内镜像&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;curl -sfL http://rancher-mirror.cnrancher.com/k3s/k3s-install.sh | INSTALL_K3S_MIRROR=cn K3S_URL=https://MASTER_URL:6443 K3S_TOKEN=NODE_TOKEN INSTALL_K3S_SKIP_SELINUX_RPM=true INSTALL_K3S_EXEC=&amp;quot;--docker&amp;quot; sh -&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;然后同样的方式，安装其他 agent 节点。&lt;/p&gt;
+&lt;h3 id=&#34;验证安装&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#验证安装&#34;&gt;&lt;/a&gt; 验证安装&lt;/h3&gt;
+&lt;p&gt;各节点安装完成后，再次在 master 节点查看各节点状态：&lt;/p&gt;
+&lt;img src=&#34;/2022/01/14/install-k3s-on-multi-node/install-k3s-on-multi-node-2.png&#34; class=&#34;&#34; title=&#34;安装完 agent 节点后的节点信息&#34;&gt;
+&lt;h2 id=&#34;k3s-配置&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#k3s-配置&#34;&gt;&lt;/a&gt; K3s 配置&lt;/h2&gt;
+&lt;h3 id=&#34;为-master-分配-worker-角色&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#为-master-分配-worker-角色&#34;&gt;&lt;/a&gt; 为 master 分配 worker 角色&lt;/h3&gt;
+&lt;p&gt;默认情况下，master 节点只有 control-plane 和 master 两个角色，但是由于 master 节点性能过剩，所以可以为 master 节点添加 worker 角色来运行服务：&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;kubectl label node $&amp;#123;node&amp;#125; node-role.kubernetes.io/worker=worker&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;然后我们再来看一下节点信息：&lt;/p&gt;
+&lt;img src=&#34;/2022/01/14/install-k3s-on-multi-node/install-k3s-on-multi-node-3.png&#34; class=&#34;&#34; title=&#34;为 master 分配 worker 角色后的节点信息&#34;&gt;
+&lt;h3 id=&#34;在-agent-节点上使用-kubectl-命令&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#在-agent-节点上使用-kubectl-命令&#34;&gt;&lt;/a&gt; 在 agent 节点上使用 &lt;code&gt;kubectl&lt;/code&gt; 命令&lt;/h3&gt;
+&lt;p&gt;默认 agent 节点安装完毕后，是不能使用 &lt;code&gt;kubectl&lt;/code&gt; 命令的：&lt;/p&gt;
+&lt;img src=&#34;/2022/01/14/install-k3s-on-multi-node/install-k3s-on-multi-node-4.png&#34; class=&#34;&#34; title=&#34;agent 节点默认不能使用 kubectl 命令&#34;&gt;
+&lt;p&gt;我们可以通过环境变量指定配置文件位置，或在使用 &lt;code&gt;kubectl&lt;/code&gt; 命令时指定配置文件位置，但为了方便使用需要 &lt;code&gt;EXPORT&lt;/code&gt; 环境变量或者设置 &lt;code&gt;alias&lt;/code&gt; 别名。不过我们可以把配置文件放在 &lt;code&gt;~/.kube/config&lt;/code&gt;，这样 &lt;code&gt;kubectl&lt;/code&gt; 命令可以自动应用配置文件。把 master 节点机器上的 &lt;code&gt;/etc/rancher/k3s/k3s.yaml&lt;/code&gt; 文件内容写入到 &lt;code&gt;config&lt;/code&gt; 文件，不要忘记修改 server 地址改为 master 节点地址：&lt;/p&gt;
+&lt;img src=&#34;/2022/01/14/install-k3s-on-multi-node/install-k3s-on-multi-node-5.png&#34; class=&#34;&#34; title=&#34;修改配置文件&#34;&gt;
+&lt;p&gt;然后我们再来执行下 &lt;code&gt;kubectl&lt;/code&gt; 命令，执行正常：&lt;/p&gt;
+&lt;img src=&#34;/2022/01/14/install-k3s-on-multi-node/install-k3s-on-multi-node-6.png&#34; class=&#34;&#34; title=&#34;应用 kubectl 配置文件&#34;&gt;
+&lt;h3 id=&#34;安装-kubernetes-仪表盘&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#安装-kubernetes-仪表盘&#34;&gt;&lt;/a&gt; 安装 Kubernetes 仪表盘&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;参考文档：&lt;a href=&#34;https://docs.rancher.cn/docs/k3s/installation/kube-dashboard/_index&#34;&gt;Kubernetes 仪表盘&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;部署仪表盘程序&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#部署仪表盘程序&#34;&gt;&lt;/a&gt; 部署仪表盘程序&lt;/h4&gt;
+&lt;p&gt;首先直接用 Kubernetes 官方的推荐配置进行部署：&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;GITHUB_URL=https://github.com/kubernetes/dashboard/releases&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;VERSION_KUBE_DASHBOARD=$(curl -w &amp;#x27;%&amp;#123;url_effective&amp;#125;&amp;#x27; -I -L -s -S $&amp;#123;GITHUB_URL&amp;#125;/latest -o /dev/null | sed -e &amp;#x27;s|.*/||&amp;#x27;)&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;k3s kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/$&amp;#123;VERSION_KUBE_DASHBOARD&amp;#125;/aio/deploy/recommended.yaml&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h4 id=&#34;配置仪表盘角色&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#配置仪表盘角色&#34;&gt;&lt;/a&gt; 配置仪表盘角色&lt;/h4&gt;
+&lt;p&gt;按文档创建用户相关 yml 配置文件:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;dashboard.admin-user.yml&lt;/code&gt;&lt;/p&gt;
+&lt;figure class=&#34;highlight yaml&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;attr&#34;&gt;apiVersion:&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;v1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;attr&#34;&gt;kind:&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;ServiceAccount&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;attr&#34;&gt;metadata:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;attr&#34;&gt;name:&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;admin-user&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;attr&#34;&gt;namespace:&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;kubernetes-dashboard&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;code&gt;dashboard.admin-user-role.yml&lt;/code&gt;&lt;/p&gt;
+&lt;figure class=&#34;highlight yaml&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;12&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;attr&#34;&gt;apiVersion:&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;rbac.authorization.k8s.io/v1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;attr&#34;&gt;kind:&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;ClusterRoleBinding&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;attr&#34;&gt;metadata:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;attr&#34;&gt;name:&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;admin-user&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;attr&#34;&gt;roleRef:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;attr&#34;&gt;apiGroup:&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;rbac.authorization.k8s.io&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;attr&#34;&gt;kind:&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;ClusterRole&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;attr&#34;&gt;name:&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;cluster-admin&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;attr&#34;&gt;subjects:&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;bullet&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;kind:&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;ServiceAccount&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;attr&#34;&gt;name:&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;admin-user&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;attr&#34;&gt;namespace:&lt;/span&gt; &lt;span class=&#34;string&#34;&gt;kubernetes-dashboard&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;然后部署用户角色配置：&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;k3s kubectl create -f dashboard.admin-user.yml -f dashboard.admin-user-role.yml&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;img src=&#34;/2022/01/14/install-k3s-on-multi-node/install-k3s-on-multi-node-7.png&#34; class=&#34;&#34; title=&#34;应用角色配置&#34;&gt;
+&lt;p&gt;最后获取仪表盘 token 以供访问：&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;k3s kubectl -n kubernetes-dashboard describe secret admin-user-token | grep &amp;#x27;^token&amp;#x27;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;img src=&#34;/2022/01/14/install-k3s-on-multi-node/install-k3s-on-multi-node-8.png&#34; class=&#34;&#34; title=&#34;获取仪表盘 token&#34;&gt;
+&lt;h4 id=&#34;测试访问仪表盘&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#测试访问仪表盘&#34;&gt;&lt;/a&gt; 测试访问仪表盘&lt;/h4&gt;
+&lt;p&gt;由于 Kubernetes 仪表盘运行在集群内部，无法直接从外部访问，所以我们需要使用集群代理。打开一个新窗口，并执行一下命令开启代理：&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;k3s kubectl proxy&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;然后可以通过 &lt;code&gt;http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/&lt;/code&gt; 来访问 Kubernetes 仪表盘。&lt;/p&gt;
+&lt;p&gt;或是直接使用端口转发，但是同样需要保持前台运行：&lt;/p&gt;
+&lt;figure class=&#34;highlight shell&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 首先获取 service name 和暴露端口&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;kubectl get service -nkubernetes-dashboard&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 然后进行端口转发&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;kubectl port-forward service/kubernetes-dashboard 8443:443 -nkubernetes-dashboard&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;meta&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;bash&#34;&gt; 如果需要远端访问的话&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;kubectl port-forward service/kubernetes-dashboard 8443:443 -nkubernetes-dashboard --address 0.0.0.0&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h4 id=&#34;配置端口转发&#34;&gt;&lt;a class=&#34;markdownIt-Anchor&#34; href=&#34;#配置端口转发&#34;&gt;&lt;/a&gt; 配置端口转发&lt;/h4&gt;
+&lt;p&gt;为了使用方便，当然不能每次都打开终端启动代理来访问 Kubernetes 仪表盘。但是由于我们安装的时候没有安装 lb 和网络组件，所以只能使用 NodePort 来对外暴露服务。同理也适用于其他服务。&lt;/p&gt;
+&lt;p&gt;首先打开 Kubernetes 仪表盘，切换到 &lt;code&gt;kubernetes-dashboard&lt;/code&gt; 命名空间，然后打开 Service tab 页，编辑 kubernetes-dashboard 项。将配置文件中 &lt;code&gt;type&lt;/code&gt; 的值改为 &lt;code&gt;NodePort&lt;/code&gt;，然后在 &lt;code&gt;ports&lt;/code&gt; 下面添加 &lt;code&gt;nodePort: 31001&lt;/code&gt;，其中 &lt;code&gt;31001&lt;/code&gt; 是宿主机要监听的端口号，修改完成后点击更新应用配置。&lt;/p&gt;
+&lt;img src=&#34;/2022/01/14/install-k3s-on-multi-node/install-k3s-on-multi-node-9.png&#34; class=&#34;&#34; title=&#34;修改 service&#34;&gt;
+&lt;p&gt;注意，由于 NodePort 限制，默认限制端口范围只能为 30000-32767，具体可以看 kubernetes 官方文档：&lt;a href=&#34;https://kubernetes.io/zh/docs/concepts/services-networking/service/#type-nodeport&#34;&gt;NodePort 类型&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;配置更新后就可以直接从外部用浏览器访问宿主机映射之后的端口，或者再结合反代对外暴露使用。&lt;/p&gt;
+ ]]></description>
+        </item>
+    </channel>
+</rss>

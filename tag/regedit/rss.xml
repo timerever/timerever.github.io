@@ -23,6 +23,9 @@
         <category>Git</category>
         <category>GitHub</category>
         <category>Hibernate</category>
+        <category>Kubernetes</category>
+        <category>K8s</category>
+        <category>K3s</category>
         <category>Keycloak</category>
         <category>OAuth2</category>
         <category>SSO</category>
