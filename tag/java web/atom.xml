@@ -28,10 +28,12 @@
     <category term="SSO" />
     <category term="VMware" />
     <category term="vmdk" />
+    <category term="MySQL" />
     <category term="wget" />
     <category term="Regular Expression" />
     <category term="Sharding" />
     <category term="Sharding-JDBC" />
+    <category term="Translate" />
     <category term="Algorithm" />
     <category term="Sort" />
     <category term="Ubuntu" />

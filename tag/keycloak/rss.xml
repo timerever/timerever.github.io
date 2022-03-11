@@ -31,10 +31,12 @@
         <category>SSO</category>
         <category>VMware</category>
         <category>vmdk</category>
+        <category>MySQL</category>
         <category>wget</category>
         <category>Regular Expression</category>
         <category>Sharding</category>
         <category>Sharding-JDBC</category>
+        <category>Translate</category>
         <category>Algorithm</category>
         <category>Sort</category>
         <category>Ubuntu</category>
