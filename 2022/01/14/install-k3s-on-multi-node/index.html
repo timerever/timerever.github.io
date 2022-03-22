@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.0.0">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.1.0">
 
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
@@ -37,7 +37,7 @@
 <meta property="og:image" content="https://blog.timerever.tk/2022/01/14/install-k3s-on-multi-node/install-k3s-on-multi-node-8.png">
 <meta property="og:image" content="https://blog.timerever.tk/2022/01/14/install-k3s-on-multi-node/install-k3s-on-multi-node-9.png">
 <meta property="article:published_time" content="2022-01-14T11:04:07.000Z">
-<meta property="article:modified_time" content="2022-03-11T10:18:58.746Z">
+<meta property="article:modified_time" content="2022-03-22T06:49:44.964Z">
 <meta property="article:author" content="timerever">
 <meta property="article:tag" content="Kubernetes">
 <meta property="article:tag" content="K8s">
@@ -178,18 +178,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-count">39</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -331,14 +331,14 @@
 <p>由于 K3s 默认运行环境为 containerd，所以为了使用 Docker 作为运行时，需要先在各节点正常安装 Docker，安装过程不再赘述。</p>
 <h3 id="安装-master-节点"><a class="markdownIt-Anchor" href="#安装-master-节点"></a> 安装 master 节点</h3>
 <p>根据个人需求，按需设置 master 节点的安装参数。由于个人使用，不要多节点部署实现高可用，所以禁用 servicelb 组件。traefik 虽然是 K3s 自带的网络组件，但是其默认会占用 80 和 443 端口，所以也不打算使用。最后完整的安装参数为：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -sfL https://get.k3s.io | INSTALL_K3S_SKIP_SELINUX_RPM=true INSTALL_K3S_EXEC=&quot;--docker --disable servicelb --disable traefik --disable-cloud-controller&quot; sh -</span><br><span class="line"><span class="meta">#</span><span class="bash"> 或使用国内镜像</span></span><br><span class="line">curl -sfL http://rancher-mirror.cnrancher.com/k3s/k3s-install.sh | INSTALL_K3S_MIRROR=cn INSTALL_K3S_SKIP_SELINUX_RPM=true INSTALL_K3S_EXEC=&quot;--docker --disable servicelb --disable traefik --disable-cloud-controller&quot; sh -</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -sfL https://get.k3s.io | INSTALL_K3S_SKIP_SELINUX_RPM=true INSTALL_K3S_EXEC=&quot;--docker --disable servicelb --disable traefik --disable-cloud-controller&quot; sh -</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或使用国内镜像</span></span><br><span class="line">curl -sfL http://rancher-mirror.cnrancher.com/k3s/k3s-install.sh | INSTALL_K3S_MIRROR=cn INSTALL_K3S_SKIP_SELINUX_RPM=true INSTALL_K3S_EXEC=&quot;--docker --disable servicelb --disable traefik --disable-cloud-controller&quot; sh -</span><br></pre></td></tr></table></figure>
 <p>安装完成之后我们可以通过 <code>kubectl get node</code> 来看一下节点的情况：</p>
 <img src="/2022/01/14/install-k3s-on-multi-node/install-k3s-on-multi-node-1.png" class="" title="节点信息">
 <h3 id="安装-agent-节点"><a class="markdownIt-Anchor" href="#安装-agent-节点"></a> 安装 agent 节点</h3>
 <p>由于 agent 节点需要与 master 节点进行通信校验，在安装时需要指定 token，所以需要从 master 节点获取安装 token：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@ubuntu-master:~# cat /var/lib/rancher/k3s/server/node-token</span><br><span class="line">K10995e6e37eec07447411d8f8fcf025c3ed6f9a134e30e896ac4c2a7c4f8e6b587::server:f0af86641d91b09cc7707f25586b77e5</span><br></pre></td></tr></table></figure>
 <p>然后与 master 节点类似，指定 agent 节点的参数进行安装：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -sfL https://get.k3s.io | K3S_URL=https://MASTER_URL:6443 K3S_TOKEN=NODE_TOKEN INSTALL_K3S_SKIP_SELINUX_RPM=true INSTALL_K3S_EXEC=&quot;--docker&quot; sh -</span><br><span class="line"><span class="meta">#</span><span class="bash"> 或使用国内镜像</span></span><br><span class="line">curl -sfL http://rancher-mirror.cnrancher.com/k3s/k3s-install.sh | INSTALL_K3S_MIRROR=cn K3S_URL=https://MASTER_URL:6443 K3S_TOKEN=NODE_TOKEN INSTALL_K3S_SKIP_SELINUX_RPM=true INSTALL_K3S_EXEC=&quot;--docker&quot; sh -</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -sfL https://get.k3s.io | K3S_URL=https://MASTER_URL:6443 K3S_TOKEN=NODE_TOKEN INSTALL_K3S_SKIP_SELINUX_RPM=true INSTALL_K3S_EXEC=&quot;--docker&quot; sh -</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或使用国内镜像</span></span><br><span class="line">curl -sfL http://rancher-mirror.cnrancher.com/k3s/k3s-install.sh | INSTALL_K3S_MIRROR=cn K3S_URL=https://MASTER_URL:6443 K3S_TOKEN=NODE_TOKEN INSTALL_K3S_SKIP_SELINUX_RPM=true INSTALL_K3S_EXEC=&quot;--docker&quot; sh -</span><br></pre></td></tr></table></figure>
 <p>然后同样的方式，安装其他 agent 节点。</p>
 <h3 id="验证安装"><a class="markdownIt-Anchor" href="#验证安装"></a> 验证安装</h3>
 <p>各节点安装完成后，再次在 master 节点查看各节点状态：</p>
@@ -380,7 +380,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">k3s kubectl proxy</span><br></pre></td></tr></table></figure>
 <p>然后可以通过 <code>http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/</code> 来访问 Kubernetes 仪表盘。</p>
 <p>或是直接使用端口转发，但是同样需要保持前台运行：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 首先获取 service name 和暴露端口</span></span><br><span class="line">kubectl get service -nkubernetes-dashboard</span><br><span class="line"><span class="meta">#</span><span class="bash"> 然后进行端口转发</span></span><br><span class="line">kubectl port-forward service/kubernetes-dashboard 8443:443 -nkubernetes-dashboard</span><br><span class="line"><span class="meta">#</span><span class="bash"> 如果需要远端访问的话</span></span><br><span class="line">kubectl port-forward service/kubernetes-dashboard 8443:443 -nkubernetes-dashboard --address 0.0.0.0</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">首先获取 service name 和暴露端口</span></span><br><span class="line">kubectl get service -nkubernetes-dashboard</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">然后进行端口转发</span></span><br><span class="line">kubectl port-forward service/kubernetes-dashboard 8443:443 -nkubernetes-dashboard</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">如果需要远端访问的话</span></span><br><span class="line">kubectl port-forward service/kubernetes-dashboard 8443:443 -nkubernetes-dashboard --address 0.0.0.0</span><br></pre></td></tr></table></figure>
 <h4 id="配置端口转发"><a class="markdownIt-Anchor" href="#配置端口转发"></a> 配置端口转发</h4>
 <p>为了使用方便，当然不能每次都打开终端启动代理来访问 Kubernetes 仪表盘。但是由于我们安装的时候没有安装 lb 和网络组件，所以只能使用 NodePort 来对外暴露服务。同理也适用于其他服务。</p>
 <p>首先打开 Kubernetes 仪表盘，切换到 <code>kubernetes-dashboard</code> 命名空间，然后打开 Service tab 页，编辑 kubernetes-dashboard 项。将配置文件中 <code>type</code> 的值改为 <code>NodePort</code>，然后在 <code>ports</code> 下面添加 <code>nodePort: 31001</code>，其中 <code>31001</code> 是宿主机要监听的端口号，修改完成后点击更新应用配置。</p>

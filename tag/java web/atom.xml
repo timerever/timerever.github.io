@@ -11,15 +11,15 @@
     <category term="Docker" />
     <category term="Dockerfile" />
     <category term="Java Web" />
-    <category term="Factory Patterns" />
     <category term="Linux" />
     <category term="C" />
     <category term="Android" />
     <category term="Huawei" />
     <category term="CyanogenMod" />
+    <category term="Factory Patterns" />
+    <category term="Hibernate" />
     <category term="Git" />
     <category term="GitHub" />
-    <category term="Hibernate" />
     <category term="Kubernetes" />
     <category term="K8s" />
     <category term="K3s" />
@@ -29,6 +29,7 @@
     <category term="VMware" />
     <category term="vmdk" />
     <category term="MySQL" />
+    <category term="Tutorial" />
     <category term="wget" />
     <category term="Regular Expression" />
     <category term="Sharding" />

@@ -14,15 +14,15 @@
         <category>Docker</category>
         <category>Dockerfile</category>
         <category>Java Web</category>
-        <category>Factory Patterns</category>
         <category>Linux</category>
         <category>C</category>
         <category>Android</category>
         <category>Huawei</category>
         <category>CyanogenMod</category>
+        <category>Factory Patterns</category>
+        <category>Hibernate</category>
         <category>Git</category>
         <category>GitHub</category>
-        <category>Hibernate</category>
         <category>Kubernetes</category>
         <category>K8s</category>
         <category>K3s</category>
@@ -32,6 +32,7 @@
         <category>VMware</category>
         <category>vmdk</category>
         <category>MySQL</category>
+        <category>Tutorial</category>
         <category>wget</category>
         <category>Regular Expression</category>
         <category>Sharding</category>
@@ -50,6 +51,7 @@
             <title>MySQL FEDERATED 存储引擎介绍及使用</title>
             <link>https://blog.timerever.tk/2022/02/28/mysql-federated-storage-engine-tutorials/</link>
             <category>MySQL</category>
+            <category>Tutorial</category>
             <pubDate>Mon, 28 Feb 2022 06:55:51 +0000</pubDate>
             <description><![CDATA[ &lt;p&gt;项目上遇到了一个需求，需要在 MySQL（不同实例）进行跨库 join 操作。我们都知道如果是同一实例，那么 MySQL 跨库查询肯定是没有问题的，但是不同实例的跨库查询之前一直没有做过。不过以前还在用 Oracle 的时候，Oracle 有个功能叫做 DATABASE LINK（参见 &lt;a href=&#34;https://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_5005.htm&#34;&gt;CREATE DATABASE LINK&lt;/a&gt;），是将远程数据库映射到本地，这样就可以在一个实例中访问其他数据库了。在谷歌搜索 MySQL 跨库查询的时候，发现 MySQL 也有类似的东西，叫做 FEDERATED 存储引擎。所以我们就可以使用 FEDERATED 将需要 join 的远端表映射到本地数据库，这样在做查询的时候使用上就跟本地表一样了。&lt;/p&gt;
 &lt;p&gt;官方文档：&lt;a href=&#34;https://dev.mysql.com/doc/refman/8.0/en/federated-storage-engine.html&#34;&gt;The FEDERATED Storage Engine&lt;/a&gt;&lt;/p&gt;

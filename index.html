@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.0.0">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.1.0">
 
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
@@ -162,18 +162,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-count">39</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -224,6 +224,113 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.timerever.tk/2022/03/15/trino-deploy-tutorials/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/12376409?v=4">
+      <meta itemprop="name" content="timerever">
+      <meta itemprop="description" content="Just another blog.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/03/15/trino-deploy-tutorials/" class="post-title-link" itemprop="url">Trino 介绍及部署使用</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-15 16:15:36" itemprop="dateCreated datePublished" datetime="2022-03-15T16:15:36+08:00">2022-03-15</time>
+    </span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>7.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>26 分钟</span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Trino/" itemprop="url" rel="index"><span itemprop="name">Trino</span></a>
+        </span>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-tags"></i>
+      </span>
+      <span class="post-meta-item-text">标签：</span>
+      <span class="post-tags">
+        <a href="/tags/MySQL/" rel="tag"> MySQL</a>
+        <a href="/tags/Tutorial/" rel="tag"> Tutorial</a>
+      </span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>之前我们提到项目上有一个跨库进行 MySQL join 操作的需求，当时选择使用了 MySQL 的 FEDERATED 存储引擎来解决这个问题，具体可以看 <a href="/2022/02/28/mysql-federated-storage-engine-tutorials/">MySQL FEDERATED 存储引擎介绍及使用</a>。但是 FEDERATED 本身只支持 MySQL 数据库，如果我们需要对多个不同种类的数据库进行关联操作，那么还是要依赖第三方组件来进行，比如这次要介绍的 Trino。</p>
+<p>Trino 是基于 Java 开发的高性能的、分布式的大数据 SQL 查询引擎，支持基本上所有的常见数据源以及你所想象不到的中间件存储比如 Kafka，同时也支持在单个查询中使用多个数据源来进行关联查询。</p>
+<p>官网：<a target="_blank" rel="noopener" href="https://trino.io/">Trino</a></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/15/trino-deploy-tutorials/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -512,6 +619,7 @@
       <span class="post-meta-item-text">标签：</span>
       <span class="post-tags">
         <a href="/tags/MySQL/" rel="tag"> MySQL</a>
+        <a href="/tags/Tutorial/" rel="tag"> Tutorial</a>
       </span>
     </span>
 </div>
@@ -630,7 +738,7 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>由于种种原因，项目上在做数据查询时，没有选择任何的 ORM 框架而是使用了 <code>JdbcTemplate</code> 进行数据库查询。查询出来也没做太多事情，只是简单地对数据做了下封装，然后直接返回给了前端。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Map&lt;String, Object&gt;&gt; data = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">JdbcTemplate jdbcTemplate = <span class="keyword">new</span> JdbcTemplate(ds);</span><br><span class="line">SqlRowSet sqlRowSet = jdbcTemplate.queryForRowSet(sql);</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> columnSize = sqlRowSet.getMetaData().getColumnNames().length;</span><br><span class="line"><span class="keyword">while</span> (sqlRowSet.next()) &#123;</span><br><span class="line">	Map&lt;String, Object&gt; tmp = <span class="keyword">new</span> LinkedHashMap&lt;&gt;();</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= columnSize; i++) &#123;</span><br><span class="line">		tmp.put(i + <span class="string">&quot;&quot;</span>, sqlRowSet.getObject(i));</span><br><span class="line">	&#125;</span><br><span class="line">	data.add(tmp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Map&lt;String, Object&gt;&gt; data = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line"><span class="type">JdbcTemplate</span> <span class="variable">jdbcTemplate</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">JdbcTemplate</span>(ds);</span><br><span class="line"><span class="type">SqlRowSet</span> <span class="variable">sqlRowSet</span> <span class="operator">=</span> jdbcTemplate.queryForRowSet(sql);</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="variable">columnSize</span> <span class="operator">=</span> sqlRowSet.getMetaData().getColumnNames().length;</span><br><span class="line"><span class="keyword">while</span> (sqlRowSet.next()) &#123;</span><br><span class="line">	Map&lt;String, Object&gt; tmp = <span class="keyword">new</span> <span class="title class_">LinkedHashMap</span>&lt;&gt;();</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt;= columnSize; i++) &#123;</span><br><span class="line">		tmp.put(i + <span class="string">&quot;&quot;</span>, sqlRowSet.getObject(i));</span><br><span class="line">	&#125;</span><br><span class="line">	data.add(tmp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>本来一直岁月静好，知道某一天查了一张新表，然后后台报了异常：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">Caused by: com.fasterxml.jackson.databind.exc.InvalidDefinitionException: No serializer found for class java.io.ByteArrayInputStream and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS) (through reference chain: com.demo.web.rest.util.ResponseEnvelope[&quot;data&quot;]-&gt;com.demo.service.dto.SqlQueryDto[&quot;data&quot;]-&gt;java.util.ArrayList[0]-&gt;java.util.LinkedHashMap[&quot;LOG_MSG&quot;]-&gt;javax.sql.rowset.serial.SerialClob[&quot;asciiStream&quot;])</span><br><span class="line">	at com.fasterxml.jackson.databind.exc.InvalidDefinitionException.from(InvalidDefinitionException.java:77)</span><br><span class="line">	at com.fasterxml.jackson.databind.SerializerProvider.reportBadDefinition(SerializerProvider.java:1300)</span><br><span class="line">	at com.fasterxml.jackson.databind.DatabindContext.reportBadDefinition(DatabindContext.java:400)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.failForEmpty(UnknownSerializer.java:46)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.impl.UnknownSerializer.serialize(UnknownSerializer.java:29)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:728)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:774)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:178)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.std.MapSerializer.serializeFields(MapSerializer.java:808)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.std.MapSerializer.serializeWithoutTypeInfo(MapSerializer.java:764)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.std.MapSerializer.serialize(MapSerializer.java:720)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.std.MapSerializer.serialize(MapSerializer.java:35)</span><br><span class="line">	at com.fasterxml.jackson.datatype.hibernate5.PersistentCollectionSerializer.serialize(PersistentCollectionSerializer.java:244)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.impl.IndexedListSerializer.serializeContents(IndexedListSerializer.java:119)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.impl.IndexedListSerializer.serialize(IndexedListSerializer.java:79)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.impl.IndexedListSerializer.serialize(IndexedListSerializer.java:18)</span><br><span class="line">	at com.fasterxml.jackson.datatype.hibernate5.PersistentCollectionSerializer.serialize(PersistentCollectionSerializer.java:244)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:728)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:774)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:178)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:728)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:774)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:178)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider._serialize(DefaultSerializerProvider.java:480)</span><br><span class="line">	at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.serializeValue(DefaultSerializerProvider.java:319)</span><br><span class="line">	at com.fasterxml.jackson.databind.ObjectWriter$Prefetch.serialize(ObjectWriter.java:1518)</span><br><span class="line">	at com.fasterxml.jackson.databind.ObjectWriter.writeValue(ObjectWriter.java:1007)</span><br><span class="line">	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.writeInternal(AbstractJackson2HttpMessageConverter.java:454)</span><br><span class="line">	... 123 common frames omitted</span><br></pre></td></tr></table></figure>
 <p>乍一看，可以通过提示所说的设置 <code>SerializationFeature.FAIL_ON_EMPTY_BEANS</code> 为 <code>false</code> 来避免这个问题，但这个问题其实远远没有这么简单。</p>
@@ -1174,112 +1282,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/11/26/hibernate-automatic-2nd-collection-cache-eviction/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.timerever.tk/2017/04/29/factory-patterns-with-java/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/12376409?v=4">
-      <meta itemprop="name" content="timerever">
-      <meta itemprop="description" content="Just another blog.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="A Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2017/04/29/factory-patterns-with-java/" class="post-title-link" itemprop="url">设计模式之工厂模式的 Java 实现</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2017-04-29 16:14:03" itemprop="dateCreated datePublished" datetime="2017-04-29T16:14:03+08:00">2017-04-29</time>
-    </span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>7.8k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>28 分钟</span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Design-Pattern/" itemprop="url" rel="index"><span itemprop="name">Design Pattern</span></a>
-        </span>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-tags"></i>
-      </span>
-      <span class="post-meta-item-text">标签：</span>
-      <span class="post-tags">
-        <a href="/tags/Java/" rel="tag"> Java</a>
-        <a href="/tags/Design-Pattern/" rel="tag"> Design Pattern</a>
-        <a href="/tags/Factory-Patterns/" rel="tag"> Factory Patterns</a>
-      </span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><strong>工厂模式</strong> 属于设计模式中创建型数据模式的一种，同时是软件设计模式中最常使用的模式。广义的工厂模式只是一个统称，其还可以继续分为 <strong>简单工厂模式</strong>、<strong>工厂模式</strong> 和 <strong>抽象工厂模式</strong>。这里对这些工厂模式进行说明并使用 Java 代码进行实现。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/04/29/factory-patterns-with-java/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>

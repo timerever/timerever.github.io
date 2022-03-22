@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.0.0">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.1.0">
 
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
@@ -28,7 +28,7 @@
 <meta property="og:description" content="基础镜像，官方说法是 base image，官方解释为“ An image that has no parent is a base image. ”也就是说，没有父镜像的镜像就是基础镜像，我们要做的就是创建一个基础镜像。 文档链接：https:&#x2F;&#x2F;docs.docker.com&#x2F;engine&#x2F;userguide&#x2F;eng-image&#x2F;baseimages&#x2F;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2017-03-06T02:37:56.000Z">
-<meta property="article:modified_time" content="2022-03-11T10:18:58.738Z">
+<meta property="article:modified_time" content="2022-03-22T06:49:44.956Z">
 <meta property="article:author" content="timerever">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
@@ -166,18 +166,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-count">39</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -317,7 +317,7 @@
 <h3 id="使用-scratch-创建一个简单的基础镜像"><a class="markdownIt-Anchor" href="#使用-scratch-创建一个简单的基础镜像"></a> 使用 scratch 创建一个简单的基础镜像</h3>
 <p>当 <code>scratch</code> 在 Docker 的库中出现时，你不能 pull、run 或者在其他镜像标记这个名字，但是你可以在你的 <code>Dockerfile</code> 文件中引用它。</p>
 <p>例如，使用 <code>scratch</code> 创建一个最小化的容器：</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> scratch</span><br><span class="line"><span class="keyword">ADD</span><span class="bash"> hello /</span></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> [<span class="string">&quot;/hello&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> scratch</span><br><span class="line"><span class="keyword">ADD</span><span class="language-bash"> hello /</span></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">&quot;/hello&quot;</span>]</span></span><br></pre></td></tr></table></figure>
 <p>然后你可以在当前目录使用 <code>docker build --tag hello .</code> 来构建容器。在这里需要 hello 文件，你可以从 Docker Github 的 <a target="_blank" rel="noopener" href="https://github.com/docker-library/hello-world/blob/master/hello.c">示例源代码</a> 中下载并编译，过程如下。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">$ vi Dockerfile</span><br><span class="line">$ wget https://raw.githubusercontent.com/docker-library/hello-world/master/hello.c</span><br><span class="line">$ gcc -o hello -static -nostartfiles hello.c</span><br><span class="line">$ docker build --tag hello .</span><br><span class="line">$ docker run hello</span><br><span class="line"></span><br><span class="line">Hello from Docker!</span><br><span class="line">This message shows that your installation appears to be working correctly.</span><br><span class="line"></span><br><span class="line">To generate this message, Docker took the following steps:</span><br><span class="line"> 1. The Docker client contacted the Docker daemon.</span><br><span class="line"> 2. The Docker daemon pulled the <span class="string">&quot;hello-world&quot;</span> image from the Docker Hub.</span><br><span class="line"> 3. The Docker daemon created a new container from that image <span class="built_in">which</span> runs the</span><br><span class="line">    executable that produces the output you are currently reading.</span><br><span class="line"> 4. The Docker daemon streamed that output to the Docker client, <span class="built_in">which</span> sent it</span><br><span class="line">    to your terminal.</span><br><span class="line"></span><br><span class="line">To try something more ambitious, you can run an Ubuntu container with:</span><br><span class="line"> $ docker run -it ubuntu bash</span><br><span class="line"></span><br><span class="line">Share images, automate workflows, and more with a free Docker ID:</span><br><span class="line"> https://cloud.docker.com/</span><br><span class="line"></span><br><span class="line">For more examples and ideas, visit:</span><br><span class="line"> https://docs.docker.com/engine/userguide/</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.0.0">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.1.0">
 
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
@@ -33,7 +33,7 @@
 <meta property="og:image" content="https://blog.timerever.tk/2022/01/07/soft-deletion-in-hibernate-things-you-may-miss/soft-deletion-in-hibernate-things-you-may-miss-4.png">
 <meta property="og:image" content="https://blog.timerever.tk/2022/01/07/soft-deletion-in-hibernate-things-you-may-miss/soft-deletion-in-hibernate-things-you-may-miss-5.png">
 <meta property="article:published_time" content="2022-01-07T11:34:47.000Z">
-<meta property="article:modified_time" content="2022-03-11T10:18:58.754Z">
+<meta property="article:modified_time" content="2022-03-22T06:49:44.972Z">
 <meta property="article:author" content="timerever">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="Hibernate">
@@ -174,18 +174,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-count">39</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -327,7 +327,7 @@
 <p>在这篇文章中我们将关注一些大部分讲述软删除方案的文章所未提到的细节。</p>
 <h4 id="sqldelete-where"><a class="markdownIt-Anchor" href="#sqldelete-where"></a> @SQLDelete + @Where</h4>
 <p>如果你以“soft deletion hibernate”为关键词在谷歌上进行搜索的话，你很可能找到 <a target="_blank" rel="noopener" href="https://www.baeldung.com/spring-jpa-soft-delete">Eugen Paraschiv</a>、<a target="_blank" rel="noopener" href="https://vladmihalcea.com/the-best-way-to-soft-delete-with-hibernate/">Vlad Mihalcea</a> 或是 <a target="_blank" rel="noopener" href="https://thorben-janssen.com/implement-soft-delete-hibernate/">Thorben Janssen</a> 写的教程。他们都建议使用 Hibernate 的 <code>@SQLDelete</code> 和 <code>@Where</code> 注解来让程序自动设置删除标识并可以在查询时自动过滤这些数据：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table(name = &quot;article&quot;)</span></span><br><span class="line"><span class="meta">@SQLDelete(sql = &quot;update article set deleted=true where id=?&quot;)</span></span><br><span class="line"><span class="meta">@Where(clause = &quot;deleted = false&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Article</span> </span>&#123;</span><br><span class="line">   <span class="meta">@Id</span></span><br><span class="line">   <span class="meta">@GeneratedValue(strategy = GenerationType.SEQUENCE)</span></span><br><span class="line">   <span class="meta">@Column(name = &quot;id&quot;, nullable = false)</span></span><br><span class="line">   <span class="keyword">private</span> Long id;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Column(name = &quot;deleted&quot;, nullable = false)</span></span><br><span class="line">   <span class="keyword">private</span> Boolean deleted = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// other properties, getters and setters omitted</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table(name = &quot;article&quot;)</span></span><br><span class="line"><span class="meta">@SQLDelete(sql = &quot;update article set deleted=true where id=?&quot;)</span></span><br><span class="line"><span class="meta">@Where(clause = &quot;deleted = false&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Article</span> &#123;</span><br><span class="line">   <span class="meta">@Id</span></span><br><span class="line">   <span class="meta">@GeneratedValue(strategy = GenerationType.SEQUENCE)</span></span><br><span class="line">   <span class="meta">@Column(name = &quot;id&quot;, nullable = false)</span></span><br><span class="line">   <span class="keyword">private</span> Long id;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Column(name = &quot;deleted&quot;, nullable = false)</span></span><br><span class="line">   <span class="keyword">private</span> <span class="type">Boolean</span> <span class="variable">deleted</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// other properties, getters and setters omitted</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><code>@SQLDelete</code> 注解会在 Hibernate 管理的对象被删除时执行我们设定好的原生 SQL 语句。<code>@Where</code> 注解通过将自身的查询条件自动追加到 SELECT 查询语句中来帮你自动过滤掉这些被标记为删除的数据。</p>
 <p>这个方法看上去是一剂良药，但是里面有坑。普通查询肯定可以正常工作，但是如果是关联查询呢？</p>
 <h4 id="关联查询所遇到的问题"><a class="markdownIt-Anchor" href="#关联查询所遇到的问题"></a> 关联查询所遇到的问题</h4>
@@ -341,7 +341,7 @@
 <p>好消息是，无论 FetchType 的值是什么或者用哪种查询方式（比如 entityManager、Criteria API、Spring Data JPA 等），上述结果都成立。</p>
 <h4 id="懒加载下的-manytoone-onetoone"><a class="markdownIt-Anchor" href="#懒加载下的-manytoone-onetoone"></a> 懒加载下的 ManyToOne &amp; OneToOne</h4>
 <p>让我们试着想象一下我们软删除了一篇文章，但我们不希望删除这篇文章下面的评论，因为这样在恢复文章时评论也会自动恢复。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table(name = &quot;comment&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Comment</span> </span>&#123;</span><br><span class="line">   ...</span><br><span class="line">   <span class="meta">@ManyToOne(fetch = FetchType.LAZY)</span></span><br><span class="line">   <span class="meta">@JoinColumn(name = &quot;article_id&quot;)</span></span><br><span class="line">   <span class="keyword">private</span> Article article;</span><br><span class="line">   ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table(name = &quot;comment&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Comment</span> &#123;</span><br><span class="line">   ...</span><br><span class="line">   <span class="meta">@ManyToOne(fetch = FetchType.LAZY)</span></span><br><span class="line">   <span class="meta">@JoinColumn(name = &quot;article_id&quot;)</span></span><br><span class="line">   <span class="keyword">private</span> Article article;</span><br><span class="line">   ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>现在，让我们尝试获取一条对应文章被删除的评论：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Optional&lt;Comment&gt; comment = commentRepository.findById(id);</span><br><span class="line">comment.ifPresent(com -&gt; logger.info(com.getArticle().getText()));</span><br></pre></td></tr></table></figure>
 <p>如果你在第一行打一个断点，你可以看到 article 属性的值是 Hibernate Proxy 对象。</p>
@@ -365,7 +365,7 @@
 <h4 id="约束和索引带来的问题"><a class="markdownIt-Anchor" href="#约束和索引带来的问题"></a> 约束和索引带来的问题</h4>
 <p>我们知道被软删除的实体和正常的实体均会被唯一约束和索引所限制，因此，常规的索引在这种情况下不再适用。假设一个 Author 实体的 login 字段有唯一约束，在软删除表中已有的记录后，记录仍然存在，所以正常状态的 Author 实体的同样的字段也不能再被设置为被软删除的相同的值。</p>
 <p>如果你正在使用 PostgreSQL，那么你很幸运，因为你可以使用部分索引：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">CREATE UNIQUE INDEX author_login_idx ON <span class="title">author</span> <span class="params">(login)</span> WHERE deleted </span>= <span class="keyword">false</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE UNIQUE INDEX author_login_idx ON <span class="title function_">author</span> <span class="params">(login)</span> <span class="type">WHERE</span> <span class="variable">deleted</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br></pre></td></tr></table></figure>
 <p>但如果你使用的是 MySQL，那么很不幸，这个问题无解。</p>
 <h4 id="结论"><a class="markdownIt-Anchor" href="#结论"></a> 结论</h4>
 <p>所以你可以看到，软删除是一个很容易被理解但不容易去实现的模式。看上去现在还没有一个完美的解决方案，至少 Hibernate 现阶段还没有提供。</p>

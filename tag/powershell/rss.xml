@@ -14,15 +14,15 @@
         <category>Docker</category>
         <category>Dockerfile</category>
         <category>Java Web</category>
-        <category>Factory Patterns</category>
         <category>Linux</category>
         <category>C</category>
         <category>Android</category>
         <category>Huawei</category>
         <category>CyanogenMod</category>
+        <category>Factory Patterns</category>
+        <category>Hibernate</category>
         <category>Git</category>
         <category>GitHub</category>
-        <category>Hibernate</category>
         <category>Kubernetes</category>
         <category>K8s</category>
         <category>K3s</category>
@@ -32,6 +32,7 @@
         <category>VMware</category>
         <category>vmdk</category>
         <category>MySQL</category>
+        <category>Tutorial</category>
         <category>wget</category>
         <category>Regular Expression</category>
         <category>Sharding</category>
