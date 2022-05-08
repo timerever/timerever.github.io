@@ -2,7 +2,7 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <url>
-        <loc>https://blog.timerever.tk/</loc>
+        <loc>https://sslover.me/</loc>
         <changefreq>daily</changefreq>
         <priority>1</priority>
     </url>
@@ -10,8 +10,8 @@
     
     
     <url>
-        <loc>https://blog.timerever.tk/about/</loc>
-        <lastmod>2022-03-22T06:49:44.976Z</lastmod>
+        <loc>https://sslover.me/categories/</loc>
+        <lastmod>2022-05-08T15:44:42.394Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -19,8 +19,8 @@
     
     
     <url>
-        <loc>https://blog.timerever.tk/categories/</loc>
-        <lastmod>2022-03-22T06:49:44.976Z</lastmod>
+        <loc>https://sslover.me/about/</loc>
+        <lastmod>2022-05-08T15:44:42.394Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -28,8 +28,8 @@
     
     
     <url>
-        <loc>https://blog.timerever.tk/tags/</loc>
-        <lastmod>2022-03-22T06:49:44.976Z</lastmod>
+        <loc>https://sslover.me/tags/</loc>
+        <lastmod>2022-05-08T15:44:42.394Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -37,8 +37,8 @@
     
     
     <url>
-        <loc>https://blog.timerever.tk/404.html</loc>
-        <lastmod>2022-03-22T06:49:44.952Z</lastmod>
+        <loc>https://sslover.me/404.html</loc>
+        <lastmod>2022-05-08T15:44:42.370Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
