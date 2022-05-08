@@ -10,7 +10,7 @@
 
     <url>
         <loc>https://sslover.me/2022/03/15/trino-deploy-tutorials/</loc>
-        <lastmod>2022-05-08T15:48:02.322Z</lastmod>
+        <lastmod>2022-05-08T16:06:46.545Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -18,7 +18,7 @@
 
     <url>
         <loc>https://sslover.me/2017/04/26/undefined-reference-to-pthread_create/</loc>
-        <lastmod>2022-05-08T15:48:02.322Z</lastmod>
+        <lastmod>2022-05-08T16:06:46.545Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -26,7 +26,7 @@
 
     <url>
         <loc>https://sslover.me/2017/01/26/unused-jekyll-on-ubuntu/</loc>
-        <lastmod>2022-05-08T15:48:02.322Z</lastmod>
+        <lastmod>2022-05-08T16:06:46.545Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -34,63 +34,7 @@
 
     <url>
         <loc>https://sslover.me/2017/04/04/windows-init/</loc>
-        <lastmod>2022-05-08T15:48:02.322Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://sslover.me/2022/01/07/soft-deletion-in-hibernate-things-you-may-miss/</loc>
-        <lastmod>2022-05-08T15:48:02.318Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://sslover.me/2022/03/03/sort-an-array-in-a-waveform/</loc>
-        <lastmod>2022-05-08T15:48:02.318Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://sslover.me/2022/01/05/keycloak-custom-idp/</loc>
-        <lastmod>2022-05-08T15:48:02.314Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://sslover.me/2017/03/01/merge-multiple-vmdk%27s-into-single-vmdk/</loc>
-        <lastmod>2022-05-08T15:48:02.314Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://sslover.me/2022/02/28/mysql-federated-storage-engine-tutorials/</loc>
-        <lastmod>2022-05-08T15:48:02.314Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://sslover.me/2017/03/06/proxy-with-wget/</loc>
-        <lastmod>2022-05-08T15:48:02.314Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://sslover.me/2017/04/09/regular-expression/</loc>
-        <lastmod>2022-05-08T15:48:02.314Z</lastmod>
+        <lastmod>2022-05-08T16:06:46.545Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -98,7 +42,63 @@
 
     <url>
         <loc>https://sslover.me/2022/03/01/resolve-class-not-found-in-sharding-jdbc/</loc>
-        <lastmod>2022-05-08T15:48:02.314Z</lastmod>
+        <lastmod>2022-05-08T16:06:46.541Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://sslover.me/2022/01/07/soft-deletion-in-hibernate-things-you-may-miss/</loc>
+        <lastmod>2022-05-08T16:06:46.541Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://sslover.me/2022/03/03/sort-an-array-in-a-waveform/</loc>
+        <lastmod>2022-05-08T16:06:46.541Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://sslover.me/2022/01/05/keycloak-custom-idp/</loc>
+        <lastmod>2022-05-08T16:06:46.537Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://sslover.me/2017/03/01/merge-multiple-vmdk%27s-into-single-vmdk/</loc>
+        <lastmod>2022-05-08T16:06:46.537Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://sslover.me/2022/02/28/mysql-federated-storage-engine-tutorials/</loc>
+        <lastmod>2022-05-08T16:06:46.537Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://sslover.me/2017/03/06/proxy-with-wget/</loc>
+        <lastmod>2022-05-08T16:06:46.537Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://sslover.me/2017/04/09/regular-expression/</loc>
+        <lastmod>2022-05-08T16:06:46.537Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -106,7 +106,7 @@
 
     <url>
         <loc>https://sslover.me/2017/04/24/fix-sigaction/</loc>
-        <lastmod>2022-05-08T15:48:02.310Z</lastmod>
+        <lastmod>2022-05-08T16:06:46.533Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -114,7 +114,7 @@
 
     <url>
         <loc>https://sslover.me/2017/02/27/frequently-used-commands-while-flashing-android/</loc>
-        <lastmod>2022-05-08T15:48:02.310Z</lastmod>
+        <lastmod>2022-05-08T16:06:46.533Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -122,7 +122,7 @@
 
     <url>
         <loc>https://sslover.me/2017/03/18/git-tutorial/</loc>
-        <lastmod>2022-05-08T15:48:02.310Z</lastmod>
+        <lastmod>2022-05-08T16:06:46.533Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -130,7 +130,7 @@
 
     <url>
         <loc>https://sslover.me/2021/11/26/hibernate-automatic-2nd-collection-cache-eviction/</loc>
-        <lastmod>2022-05-08T15:48:02.310Z</lastmod>
+        <lastmod>2022-05-08T16:06:46.533Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -138,7 +138,7 @@
 
     <url>
         <loc>https://sslover.me/2021/12/02/hibernate-incorrect-metamodel-with-no-reationship/</loc>
-        <lastmod>2022-05-08T15:48:02.310Z</lastmod>
+        <lastmod>2022-05-08T16:06:46.533Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -146,79 +146,7 @@
 
     <url>
         <loc>https://sslover.me/2022/01/14/install-k3s-on-multi-node/</loc>
-        <lastmod>2022-05-08T15:48:02.310Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://sslover.me/2017/04/23/client-custom-ssl/</loc>
-        <lastmod>2022-05-08T15:48:02.302Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://sslover.me/2022/02/09/custom-jackson-serializer-for-clob-type/</loc>
-        <lastmod>2022-05-08T15:48:02.302Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://sslover.me/2017/04/28/design-patterns/</loc>
-        <lastmod>2022-05-08T15:48:02.302Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://sslover.me/2017/03/02/docker-learning-trip-0/</loc>
-        <lastmod>2022-05-08T15:48:02.302Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://sslover.me/2017/03/03/docker-learning-trip-1/</loc>
-        <lastmod>2022-05-08T15:48:02.302Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://sslover.me/2017/03/05/docker-learning-trip-2/</loc>
-        <lastmod>2022-05-08T15:48:02.302Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://sslover.me/2017/03/06/docker-learning-trip-3/</loc>
-        <lastmod>2022-05-08T15:48:02.302Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://sslover.me/2017/03/09/docker-learning-trip-4/</loc>
-        <lastmod>2022-05-08T15:48:02.302Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>https://sslover.me/2017/03/11/docker-learning-trip-5/</loc>
-        <lastmod>2022-05-08T15:48:02.302Z</lastmod>
+        <lastmod>2022-05-08T16:06:46.533Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -226,7 +154,7 @@
 
     <url>
         <loc>https://sslover.me/2017/03/13/docker-learning-trip-6/</loc>
-        <lastmod>2022-05-08T15:48:02.302Z</lastmod>
+        <lastmod>2022-05-08T16:06:46.529Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -234,7 +162,79 @@
 
     <url>
         <loc>https://sslover.me/2017/04/29/factory-patterns-with-java/</loc>
-        <lastmod>2022-05-08T15:48:02.302Z</lastmod>
+        <lastmod>2022-05-08T16:06:46.529Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://sslover.me/2017/04/23/client-custom-ssl/</loc>
+        <lastmod>2022-05-08T16:06:46.525Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://sslover.me/2022/02/09/custom-jackson-serializer-for-clob-type/</loc>
+        <lastmod>2022-05-08T16:06:46.525Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://sslover.me/2017/04/28/design-patterns/</loc>
+        <lastmod>2022-05-08T16:06:46.525Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://sslover.me/2017/03/02/docker-learning-trip-0/</loc>
+        <lastmod>2022-05-08T16:06:46.525Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://sslover.me/2017/03/03/docker-learning-trip-1/</loc>
+        <lastmod>2022-05-08T16:06:46.525Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://sslover.me/2017/03/05/docker-learning-trip-2/</loc>
+        <lastmod>2022-05-08T16:06:46.525Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://sslover.me/2017/03/06/docker-learning-trip-3/</loc>
+        <lastmod>2022-05-08T16:06:46.525Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://sslover.me/2017/03/09/docker-learning-trip-4/</loc>
+        <lastmod>2022-05-08T16:06:46.525Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://sslover.me/2017/03/11/docker-learning-trip-5/</loc>
+        <lastmod>2022-05-08T16:06:46.525Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

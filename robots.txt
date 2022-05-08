@@ -5,4 +5,4 @@ Disallow: /tags/
 Disallow: /archives/
 Disallow: /about/
 
-Sitemap: https://blog.timerever.tk/post-sitemap.xml
+Sitemap: https://sslover.me/post-sitemap.xml
