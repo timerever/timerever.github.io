@@ -538,92 +538,6 @@ ENTRYPOINT command param1 param2（shell 形式）
       </tags>
   </entry>
   <entry>
-    <title>sigaction 自定义信号处理函数的“修复”</title>
-    <url>/2017/04/24/fix-sigaction/</url>
-    <content><![CDATA[<p>在对嵌入式 Linux 系统程序开发中的进程间通信进行学习时，涉及到了信号集函数组，书中给出的示例如下：</p>
-<blockquote>
-<p>该实例首先把 SIGQUIT、SIGINT 两个信号加入信号集，然后将该信号集设为阻塞状态，<br />
-并在该状态下使程序暂停 5 秒。接下来再将信号集设置为非阻塞状态，再对这两个信号分别<br />
-操作，其中 SIGQUIT 执行默认操作，而 SIGINT 执行用户自定义函数的操作。源代码如下<br />
-所示：</p>
-</blockquote>
-<span id="more"></span>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;signal.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">my_func</span><span class="params">(<span class="type">int</span> signum)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;If you want to quit,please try SIGQUIT\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">sigset_t</span> <span class="built_in">set</span>,pendset;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">sigaction</span> <span class="title">action1</span>,<span class="title">action2</span>;</span></span><br><span class="line">	<span class="keyword">if</span>(sigemptyset(&amp;<span class="built_in">set</span>)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigemptyset&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span>(sigaddset(&amp;<span class="built_in">set</span>,SIGQUIT)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigaddset&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span>(sigaddset(&amp;<span class="built_in">set</span>,SIGINT)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigaddset&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span>(sigprocmask(SIG_BLOCK,&amp;<span class="built_in">set</span>,<span class="literal">NULL</span>)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigprocmask&quot;</span>);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;blocked\n&quot;</span>);</span><br><span class="line">		sleep(<span class="number">5</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(sigprocmask(SIG_UNBLOCK,&amp;<span class="built_in">set</span>,<span class="literal">NULL</span>)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigprocmask&quot;</span>);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;unblock\n&quot;</span>);</span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">if</span>(sigismember(&amp;<span class="built_in">set</span>,SIGINT))&#123;</span><br><span class="line">			sigemptyset(&amp;action1.sa_mask);</span><br><span class="line">			action1.sa_handler=my_func;</span><br><span class="line">			sigaction(SIGINT,&amp;action1,<span class="literal">NULL</span>);</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(sigismember(&amp;<span class="built_in">set</span>,SIGQUIT))&#123;</span><br><span class="line">			sigemptyset(&amp;action2.sa_mask);</span><br><span class="line">			action2.sa_handler = SIG_DFL;</span><br><span class="line">			sigaction(SIGTERM,&amp;action2,<span class="literal">NULL</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>理论上，按说明所述及代码的编写，使用 <code>Ctrl-C</code> 传递 <code>SIGINT</code> 信号后，会转到自定义处理函数 <code>my_func</code>，但在实际操作中，在进入自定义处理函数后，程序直接退出。<strong>猜测</strong>是由于在进行自定义处理函数后，系统仍然对信号做了默认的处理。</p>
-<p>在请教老师后，给出了一种解决方案，对 <code>sigaction</code> 结构体中的 <code>sa_flags</code> 进行赋值，这里先贴出该结构体。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sigaction</span> &#123;</span></span><br><span class="line">	<span class="type">void</span> (*sa_handler)(<span class="type">int</span> signo);</span><br><span class="line">	<span class="type">sigset_t</span> sa_mask;</span><br><span class="line">	<span class="type">int</span> sa_flags;</span><br><span class="line">	<span class="type">void</span> (*sa_restore)(<span class="type">void</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>sa_handler</code> 是一个函数指针，指定信号关联函数，这里除可以是用户自定义的处理函数<br />
-外，还可以为 <code>SIG_DFL</code>（采用缺省的处理方式）或 <code>SIG_IGN</code>（忽略信号）。它的处理函数只<br />
-有一个参数，即信号值。<br />
-<code>sa_mask</code> 是一个信号集，它可以指定在信号处理程序执行过程中哪些信号应当被阻塞，<br />
-在调用信号捕获函数之前，该信号集要加入到信号的信号屏蔽字中。<br />
-<code>sa_flags</code> 中包含了许多标志位，是对信号进行处理的各个选择项。它的常见可选值如下：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">选项</th>
-<th style="text-align:left">含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">SA_NODEFER/SA_NOMASK</td>
-<td style="text-align:left">当捕捉到此信号时，在执行其信号捕捉函数时，系统不会自动阻塞此信号</td>
-</tr>
-<tr>
-<td style="text-align:left">SA_NOCLDSTOP</td>
-<td style="text-align:left">进程忽略子进程产生的任何 SIGSTOP、SIGTSTP、SIGTTIN 和 SIGTTOU 信号</td>
-</tr>
-<tr>
-<td style="text-align:left">SA_RESTART</td>
-<td style="text-align:left">可让重启的系统调用重新起作用</td>
-</tr>
-<tr>
-<td style="text-align:left">SA_ONESHOT/SA_RESETHAND</td>
-<td style="text-align:left">自定义信号只执行一次，在执行完毕后恢复信号的系统默认动作</td>
-</tr>
-</tbody>
-</table>
-<p>将 <code>sigaction</code> 结构体中的 <code>sa_flags</code> 成员赋值为 0，修改后的部分代码如下。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">	<span class="keyword">if</span>(sigismember(&amp;<span class="built_in">set</span>,SIGINT))&#123;</span><br><span class="line">		sigemptyset(&amp;action1.sa_mask);</span><br><span class="line">		action1.sa_handler=my_func;</span><br><span class="line">		action1.sa_flags=<span class="number">0</span>; <span class="comment">//添加此行</span></span><br><span class="line">		sigaction(SIGINT,&amp;action1,<span class="literal">NULL</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span>(sigismember(&amp;<span class="built_in">set</span>,SIGQUIT))&#123;</span><br><span class="line">		sigemptyset(&amp;action2.sa_mask);</span><br><span class="line">		action2.sa_handler = SIG_DFL;</span><br><span class="line">		sigaction(SIGTERM,&amp;action2,<span class="literal">NULL</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这样修改后，程序确实正常运行了。但是根据该书所述和在网上查询，始终未能理解为何这样操作，而且之后尝试赋其他值，依然正常运行。网上国内的氛围就是博客间互相复制互相抄袭，找不到多少主观的分析，所以一直未能解决，仅在此做下记录。</p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>C</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>刷 CM 过程中对使用的常用刷机命令的记录</title>
-    <url>/2017/02/27/frequently-used-commands-while-flashing-android/</url>
-    <content><![CDATA[<blockquote>
-<p>终于决定把手里这台荣耀6 刷成 CM，无奈华为只开源 4.4.4 的内核代码，只有 CM 11 的非官方包，哭。</p>
-</blockquote>
-<p>寻着 XDA 上开发者给的步骤给走，给了两个 rec 一个无法挂载内置储存卡然后没外置的选项（不过也是因为这个才有了本文），一个有问题直接手机进了救援模式，也是汗颜，索性自己手里有 rec 成功解决了。</p>
-<p>文中说把刷机包放到外置内存卡目录下，然后进入 rec 傻眼了并没有找到从外置内存卡安装刷机包的选项，于是无奈自己尝试用 adb 传送刷机包。</p>
-<p>至于为什么以前不怎么用 adb，主要是由于华为这机子很难从关机状态进入 fastboot，官方让插着 USB 线关机进入但是成功率不高，所以以前都是用论坛正好给出的脚本从开机状态进入，正好熟悉下 adb 记录于此。</p>
-<span id="more"></span>
-<h3 id="adb-命令"><a class="markdownIt-Anchor" href="#adb-命令"></a> adb 命令</h3>
-<ul>
-<li><a href="https://developer.android.com/studio/command-line/adb.html">官方文档</a></li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb devices <span class="comment"># 查询连接设备</span></span><br><span class="line">$ adb install &lt;apkfile&gt; <span class="comment"># 安装apk文件</span></span><br><span class="line">$ adb uninstall &lt;package&gt; <span class="comment"># 卸载软件</span></span><br><span class="line">$ adb push foo.txt /sdcard/foo.txt <span class="comment">#发送foo.txt文件</span></span><br><span class="line">$ adb pull /sdcard/foo.txt foo.txt <span class="comment">#传送foo.txt文件到本地</span></span><br><span class="line">$ adb reboot <span class="comment"># 重启</span></span><br><span class="line">$ adb reboot recovery <span class="comment"># 重启到recovery</span></span><br><span class="line">$ adb reboot bootloader <span class="comment"># 重启到fastboot</span></span><br></pre></td></tr></table></figure>
-<h3 id="fastboot-命令"><a class="markdownIt-Anchor" href="#fastboot-命令"></a> fastboot 命令</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ fastboot flash boot boot.img <span class="comment"># 刷入boot</span></span><br><span class="line">$ fastboot flash recovery recovery.img <span class="comment"># 同上，刷入recovery</span></span><br><span class="line">......</span><br><span class="line">$ fastboot reboot <span class="comment"># 重启</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
-        <tag>Huawei</tag>
-        <tag>CyanogenMod</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>设计模式之工厂模式的 Java 实现</title>
     <url>/2017/04/29/factory-patterns-with-java/</url>
     <content><![CDATA[<p><strong>工厂模式</strong> 属于设计模式中创建型数据模式的一种，同时是软件设计模式中最常使用的模式。广义的工厂模式只是一个统称，其还可以继续分为 <strong>简单工厂模式</strong>、<strong>工厂模式</strong> 和 <strong>抽象工厂模式</strong>。这里对这些工厂模式进行说明并使用 Java 代码进行实现。</p>
@@ -745,35 +659,89 @@ SummerTextField
       </tags>
   </entry>
   <entry>
-    <title>Hibernate 配置自动清除二级缓存之集合缓存</title>
-    <url>/2021/11/26/hibernate-automatic-2nd-collection-cache-eviction/</url>
-    <content><![CDATA[<p>之前在项目上使用了 Hibernate，并开启了基于 caffeine 的二级缓存。因为 Hibernate 会自动处理缓存，所以一直没怎么关注。直到最近，发现在一种特定的情况下，Hibernate 不会自动清除二级缓存里面的集合缓存。问题最后解决起来其实很简单，增加一个配置项的事。不过问题寻求解决的过程还是蛮繁琐的，并没有人能够直接告诉这个问题的答案，在此记录一下这个问题的排查过程。</p>
+    <title>sigaction 自定义信号处理函数的“修复”</title>
+    <url>/2017/04/24/fix-sigaction/</url>
+    <content><![CDATA[<p>在对嵌入式 Linux 系统程序开发中的进程间通信进行学习时，涉及到了信号集函数组，书中给出的示例如下：</p>
 <blockquote>
-<p>太长不看版：Spring Boot 中设置属性 spring.jpa.properties.auto_evict_collection_cache=true 即可解决。</p>
+<p>该实例首先把 SIGQUIT、SIGINT 两个信号加入信号集，然后将该信号集设为阻塞状态，<br />
+并在该状态下使程序暂停 5 秒。接下来再将信号集设置为非阻塞状态，再对这两个信号分别<br />
+操作，其中 SIGQUIT 执行默认操作，而 SIGINT 执行用户自定义函数的操作。源代码如下<br />
+所示：</p>
 </blockquote>
 <span id="more"></span>
-<h3 id="一-问题出现"><a class="markdownIt-Anchor" href="#一-问题出现"></a> 一、问题出现</h3>
-<p>假定我这里有两个实体，分别为 <code>Parent</code> 和 <code>Child</code>。然后 Parent 与 Child 之间存在一对多的对应关系，即在 Parent 的实体中，存在一个属性 <code>private Set&lt;Child&gt; children</code>，然后我们开启二级缓存 <code>@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)</code>。在这种情况下，我们先访问 Parent 实体并获取其中的 <code>children</code> 属性，确保其已被缓存。然后我们再单独操作 Child，我们新建一个 Child 对象 <code>Child child = new Child()</code> 并设置其 Parent 的值 <code>child.setParent(parent)</code> 并保存 Child 实体 <code>ChildRepository.save(child)</code>。然后我们回过来获取 Parent，会发现 Parent 的 <code>children</code> 的值仍为原数组对象， 没有我们新增的 <code>child</code> 对象。</p>
-<p>通过在 Google 上进行搜索，发现 stackoverflow 上存在几个类似的问题，再进一步的搜索后，发现在 Hibernate 官方 Bug 追踪网站上有人归纳并提出了这个问题 <a href="https://hibernate.atlassian.net/browse/HHH-4910">automatic L2 collection cache eviction when an element is added/updated/removed</a>，可以看到不只是自己遇到的新增，修改/删除也会有类似的问题。</p>
-<h3 id="二-问题解决"><a class="markdownIt-Anchor" href="#二-问题解决"></a> 二、问题解决</h3>
-<p>在上面链接的内容下方，问题提出者给出了一种 workaround 的方案，提供 <code>@PostPersist</code>、<code>@PostRemove</code> 及 <code>@PreUpdate</code> 的监听，并在监听中自动清理缓存。以及在之前查阅 stackoverflow 时，也有人认为，你需要在操作多方元素的时候，同时操作一方对应的集合，对其进行 add/remove 操作。</p>
-<p>但不管怎么说，这些都是一些 workaround 方案，因为 Hibernate 本身是有能力自动处理这些事情的。话又说回来，既然问题很早就被提出了，比如这个链接中使用的版本是 <code>3.3.1</code>，同时官方也已经记录了这个问题已经在 <code>4.3.0.Beta5</code> 中被修复了，可是为什么我们还是会遇到这个问题？这个答案其实在下面的评论中。</p>
-<img src="/2021/11/26/hibernate-automatic-2nd-collection-cache-eviction/hibernate-automatic-2nd-collection-cache-eviction-1.png" class="" title="Hibernate atlassian 下面的评论">
-<p>点进链接是 GitHub 的 PR 请求，讨论中详细地记录了从贡献者提出 PR 到最后并合并的整个流程。看下来大概就是，贡献者向负责人解释了为了提出这个改动、有负责人担心是不是会影响性能并期望做成可配置的、贡献者支持了配置项、PR 最终被合并。所以问题已经很明了了，功能上是已经被修复了，但是因为做成了配置项，所以默认没有启用，我们需要手动启用这个特性。</p>
-<img src="/2021/11/26/hibernate-automatic-2nd-collection-cache-eviction/hibernate-automatic-2nd-collection-cache-eviction-2.png" class="" title="变成配置项的 commit">
-<p>所以我们从这里点进去，去看一下我们怎么才能打开这个特性。最后我们可以看到是在 <code>hibernate-core/src/main/java/org/hibernate/cfg/AvailableSettings.java</code> 这个文件中定义了配置的名字。</p>
-<img src="/2021/11/26/hibernate-automatic-2nd-collection-cache-eviction/hibernate-automatic-2nd-collection-cache-eviction-3.png" class="" title="配置项的名字">
-<p>所以到这里，这个问题就算是最终解决了。</p>
-<h3 id="三-插曲"><a class="markdownIt-Anchor" href="#三-插曲"></a> 三、插曲</h3>
-<p>由于项目使用了 <code>spring-boot-starter-data-jpa</code> 依赖，所以这个配置项的设置并不是上面 Hibernate 的改动所提及的，于是继续在 Google 用 <code>auto_evict_collection_cache</code> 作为关键字进行搜索，寻找在 Spring Boot 中的配置方式。最终是得到了答案，Spring Boot 中的配置项为 <code>spring.jpa.properties.auto_evict_collection_cache</code>，不过在此之外还发现了一个小插曲。</p>
-<p><a href="https://hibernate.atlassian.net/browse/HHH-10614">Auto evict collection cache throws exception with null values</a> 中描述了一个人开启了这个特性，然后在一个特定的情况下 Hibernate 会抛出异常。虽然这个问题很快就被解决了，不过现在回来想想，维护者在维护这种已经已经很庞大的项目时，对所有的改动都抱有谨慎的态度还是很有必要的。做成了配置项，虽然一方面会让很多不知道的人继续遇到这个问题，但同时也让很多无关的人避免了可能带来的新问题。所以这两种方案孰优孰劣，可能就见仁见智了吧。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;signal.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">my_func</span><span class="params">(<span class="type">int</span> signum)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;If you want to quit,please try SIGQUIT\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">sigset_t</span> <span class="built_in">set</span>,pendset;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">sigaction</span> <span class="title">action1</span>,<span class="title">action2</span>;</span></span><br><span class="line">	<span class="keyword">if</span>(sigemptyset(&amp;<span class="built_in">set</span>)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigemptyset&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span>(sigaddset(&amp;<span class="built_in">set</span>,SIGQUIT)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigaddset&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span>(sigaddset(&amp;<span class="built_in">set</span>,SIGINT)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigaddset&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span>(sigprocmask(SIG_BLOCK,&amp;<span class="built_in">set</span>,<span class="literal">NULL</span>)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigprocmask&quot;</span>);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;blocked\n&quot;</span>);</span><br><span class="line">		sleep(<span class="number">5</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(sigprocmask(SIG_UNBLOCK,&amp;<span class="built_in">set</span>,<span class="literal">NULL</span>)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigprocmask&quot;</span>);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;unblock\n&quot;</span>);</span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">if</span>(sigismember(&amp;<span class="built_in">set</span>,SIGINT))&#123;</span><br><span class="line">			sigemptyset(&amp;action1.sa_mask);</span><br><span class="line">			action1.sa_handler=my_func;</span><br><span class="line">			sigaction(SIGINT,&amp;action1,<span class="literal">NULL</span>);</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(sigismember(&amp;<span class="built_in">set</span>,SIGQUIT))&#123;</span><br><span class="line">			sigemptyset(&amp;action2.sa_mask);</span><br><span class="line">			action2.sa_handler = SIG_DFL;</span><br><span class="line">			sigaction(SIGTERM,&amp;action2,<span class="literal">NULL</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>理论上，按说明所述及代码的编写，使用 <code>Ctrl-C</code> 传递 <code>SIGINT</code> 信号后，会转到自定义处理函数 <code>my_func</code>，但在实际操作中，在进入自定义处理函数后，程序直接退出。<strong>猜测</strong>是由于在进行自定义处理函数后，系统仍然对信号做了默认的处理。</p>
+<p>在请教老师后，给出了一种解决方案，对 <code>sigaction</code> 结构体中的 <code>sa_flags</code> 进行赋值，这里先贴出该结构体。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sigaction</span> &#123;</span></span><br><span class="line">	<span class="type">void</span> (*sa_handler)(<span class="type">int</span> signo);</span><br><span class="line">	<span class="type">sigset_t</span> sa_mask;</span><br><span class="line">	<span class="type">int</span> sa_flags;</span><br><span class="line">	<span class="type">void</span> (*sa_restore)(<span class="type">void</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>sa_handler</code> 是一个函数指针，指定信号关联函数，这里除可以是用户自定义的处理函数<br />
+外，还可以为 <code>SIG_DFL</code>（采用缺省的处理方式）或 <code>SIG_IGN</code>（忽略信号）。它的处理函数只<br />
+有一个参数，即信号值。<br />
+<code>sa_mask</code> 是一个信号集，它可以指定在信号处理程序执行过程中哪些信号应当被阻塞，<br />
+在调用信号捕获函数之前，该信号集要加入到信号的信号屏蔽字中。<br />
+<code>sa_flags</code> 中包含了许多标志位，是对信号进行处理的各个选择项。它的常见可选值如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">选项</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">SA_NODEFER/SA_NOMASK</td>
+<td style="text-align:left">当捕捉到此信号时，在执行其信号捕捉函数时，系统不会自动阻塞此信号</td>
+</tr>
+<tr>
+<td style="text-align:left">SA_NOCLDSTOP</td>
+<td style="text-align:left">进程忽略子进程产生的任何 SIGSTOP、SIGTSTP、SIGTTIN 和 SIGTTOU 信号</td>
+</tr>
+<tr>
+<td style="text-align:left">SA_RESTART</td>
+<td style="text-align:left">可让重启的系统调用重新起作用</td>
+</tr>
+<tr>
+<td style="text-align:left">SA_ONESHOT/SA_RESETHAND</td>
+<td style="text-align:left">自定义信号只执行一次，在执行完毕后恢复信号的系统默认动作</td>
+</tr>
+</tbody>
+</table>
+<p>将 <code>sigaction</code> 结构体中的 <code>sa_flags</code> 成员赋值为 0，修改后的部分代码如下。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">	<span class="keyword">if</span>(sigismember(&amp;<span class="built_in">set</span>,SIGINT))&#123;</span><br><span class="line">		sigemptyset(&amp;action1.sa_mask);</span><br><span class="line">		action1.sa_handler=my_func;</span><br><span class="line">		action1.sa_flags=<span class="number">0</span>; <span class="comment">//添加此行</span></span><br><span class="line">		sigaction(SIGINT,&amp;action1,<span class="literal">NULL</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span>(sigismember(&amp;<span class="built_in">set</span>,SIGQUIT))&#123;</span><br><span class="line">		sigemptyset(&amp;action2.sa_mask);</span><br><span class="line">		action2.sa_handler = SIG_DFL;</span><br><span class="line">		sigaction(SIGTERM,&amp;action2,<span class="literal">NULL</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样修改后，程序确实正常运行了。但是根据该书所述和在网上查询，始终未能理解为何这样操作，而且之后尝试赋其他值，依然正常运行。网上国内的氛围就是博客间互相复制互相抄袭，找不到多少主观的分析，所以一直未能解决，仅在此做下记录。</p>
 ]]></content>
       <categories>
-        <category>Java</category>
+        <category>Linux</category>
       </categories>
       <tags>
-        <tag>Java</tag>
-        <tag>Hibernate</tag>
+        <tag>Linux</tag>
+        <tag>C</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>刷 CM 过程中对使用的常用刷机命令的记录</title>
+    <url>/2017/02/27/frequently-used-commands-while-flashing-android/</url>
+    <content><![CDATA[<blockquote>
+<p>终于决定把手里这台荣耀6 刷成 CM，无奈华为只开源 4.4.4 的内核代码，只有 CM 11 的非官方包，哭。</p>
+</blockquote>
+<p>寻着 XDA 上开发者给的步骤给走，给了两个 rec 一个无法挂载内置储存卡然后没外置的选项（不过也是因为这个才有了本文），一个有问题直接手机进了救援模式，也是汗颜，索性自己手里有 rec 成功解决了。</p>
+<p>文中说把刷机包放到外置内存卡目录下，然后进入 rec 傻眼了并没有找到从外置内存卡安装刷机包的选项，于是无奈自己尝试用 adb 传送刷机包。</p>
+<p>至于为什么以前不怎么用 adb，主要是由于华为这机子很难从关机状态进入 fastboot，官方让插着 USB 线关机进入但是成功率不高，所以以前都是用论坛正好给出的脚本从开机状态进入，正好熟悉下 adb 记录于此。</p>
+<span id="more"></span>
+<h3 id="adb-命令"><a class="markdownIt-Anchor" href="#adb-命令"></a> adb 命令</h3>
+<ul>
+<li><a href="https://developer.android.com/studio/command-line/adb.html">官方文档</a></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb devices <span class="comment"># 查询连接设备</span></span><br><span class="line">$ adb install &lt;apkfile&gt; <span class="comment"># 安装apk文件</span></span><br><span class="line">$ adb uninstall &lt;package&gt; <span class="comment"># 卸载软件</span></span><br><span class="line">$ adb push foo.txt /sdcard/foo.txt <span class="comment">#发送foo.txt文件</span></span><br><span class="line">$ adb pull /sdcard/foo.txt foo.txt <span class="comment">#传送foo.txt文件到本地</span></span><br><span class="line">$ adb reboot <span class="comment"># 重启</span></span><br><span class="line">$ adb reboot recovery <span class="comment"># 重启到recovery</span></span><br><span class="line">$ adb reboot bootloader <span class="comment"># 重启到fastboot</span></span><br></pre></td></tr></table></figure>
+<h3 id="fastboot-命令"><a class="markdownIt-Anchor" href="#fastboot-命令"></a> fastboot 命令</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ fastboot flash boot boot.img <span class="comment"># 刷入boot</span></span><br><span class="line">$ fastboot flash recovery recovery.img <span class="comment"># 同上，刷入recovery</span></span><br><span class="line">......</span><br><span class="line">$ fastboot reboot <span class="comment"># 重启</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+        <tag>Huawei</tag>
+        <tag>CyanogenMod</tag>
       </tags>
   </entry>
   <entry>
@@ -1015,6 +983,38 @@ Checking connectivity... done.
       <tags>
         <tag>Git</tag>
         <tag>GitHub</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hibernate 配置自动清除二级缓存之集合缓存</title>
+    <url>/2021/11/26/hibernate-automatic-2nd-collection-cache-eviction/</url>
+    <content><![CDATA[<p>之前在项目上使用了 Hibernate，并开启了基于 caffeine 的二级缓存。因为 Hibernate 会自动处理缓存，所以一直没怎么关注。直到最近，发现在一种特定的情况下，Hibernate 不会自动清除二级缓存里面的集合缓存。问题最后解决起来其实很简单，增加一个配置项的事。不过问题寻求解决的过程还是蛮繁琐的，并没有人能够直接告诉这个问题的答案，在此记录一下这个问题的排查过程。</p>
+<blockquote>
+<p>太长不看版：Spring Boot 中设置属性 spring.jpa.properties.auto_evict_collection_cache=true 即可解决。</p>
+</blockquote>
+<span id="more"></span>
+<h3 id="一-问题出现"><a class="markdownIt-Anchor" href="#一-问题出现"></a> 一、问题出现</h3>
+<p>假定我这里有两个实体，分别为 <code>Parent</code> 和 <code>Child</code>。然后 Parent 与 Child 之间存在一对多的对应关系，即在 Parent 的实体中，存在一个属性 <code>private Set&lt;Child&gt; children</code>，然后我们开启二级缓存 <code>@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)</code>。在这种情况下，我们先访问 Parent 实体并获取其中的 <code>children</code> 属性，确保其已被缓存。然后我们再单独操作 Child，我们新建一个 Child 对象 <code>Child child = new Child()</code> 并设置其 Parent 的值 <code>child.setParent(parent)</code> 并保存 Child 实体 <code>ChildRepository.save(child)</code>。然后我们回过来获取 Parent，会发现 Parent 的 <code>children</code> 的值仍为原数组对象， 没有我们新增的 <code>child</code> 对象。</p>
+<p>通过在 Google 上进行搜索，发现 stackoverflow 上存在几个类似的问题，再进一步的搜索后，发现在 Hibernate 官方 Bug 追踪网站上有人归纳并提出了这个问题 <a href="https://hibernate.atlassian.net/browse/HHH-4910">automatic L2 collection cache eviction when an element is added/updated/removed</a>，可以看到不只是自己遇到的新增，修改/删除也会有类似的问题。</p>
+<h3 id="二-问题解决"><a class="markdownIt-Anchor" href="#二-问题解决"></a> 二、问题解决</h3>
+<p>在上面链接的内容下方，问题提出者给出了一种 workaround 的方案，提供 <code>@PostPersist</code>、<code>@PostRemove</code> 及 <code>@PreUpdate</code> 的监听，并在监听中自动清理缓存。以及在之前查阅 stackoverflow 时，也有人认为，你需要在操作多方元素的时候，同时操作一方对应的集合，对其进行 add/remove 操作。</p>
+<p>但不管怎么说，这些都是一些 workaround 方案，因为 Hibernate 本身是有能力自动处理这些事情的。话又说回来，既然问题很早就被提出了，比如这个链接中使用的版本是 <code>3.3.1</code>，同时官方也已经记录了这个问题已经在 <code>4.3.0.Beta5</code> 中被修复了，可是为什么我们还是会遇到这个问题？这个答案其实在下面的评论中。</p>
+<img src="/2021/11/26/hibernate-automatic-2nd-collection-cache-eviction/hibernate-automatic-2nd-collection-cache-eviction-1.png" class="" title="Hibernate atlassian 下面的评论">
+<p>点进链接是 GitHub 的 PR 请求，讨论中详细地记录了从贡献者提出 PR 到最后并合并的整个流程。看下来大概就是，贡献者向负责人解释了为了提出这个改动、有负责人担心是不是会影响性能并期望做成可配置的、贡献者支持了配置项、PR 最终被合并。所以问题已经很明了了，功能上是已经被修复了，但是因为做成了配置项，所以默认没有启用，我们需要手动启用这个特性。</p>
+<img src="/2021/11/26/hibernate-automatic-2nd-collection-cache-eviction/hibernate-automatic-2nd-collection-cache-eviction-2.png" class="" title="变成配置项的 commit">
+<p>所以我们从这里点进去，去看一下我们怎么才能打开这个特性。最后我们可以看到是在 <code>hibernate-core/src/main/java/org/hibernate/cfg/AvailableSettings.java</code> 这个文件中定义了配置的名字。</p>
+<img src="/2021/11/26/hibernate-automatic-2nd-collection-cache-eviction/hibernate-automatic-2nd-collection-cache-eviction-3.png" class="" title="配置项的名字">
+<p>所以到这里，这个问题就算是最终解决了。</p>
+<h3 id="三-插曲"><a class="markdownIt-Anchor" href="#三-插曲"></a> 三、插曲</h3>
+<p>由于项目使用了 <code>spring-boot-starter-data-jpa</code> 依赖，所以这个配置项的设置并不是上面 Hibernate 的改动所提及的，于是继续在 Google 用 <code>auto_evict_collection_cache</code> 作为关键字进行搜索，寻找在 Spring Boot 中的配置方式。最终是得到了答案，Spring Boot 中的配置项为 <code>spring.jpa.properties.auto_evict_collection_cache</code>，不过在此之外还发现了一个小插曲。</p>
+<p><a href="https://hibernate.atlassian.net/browse/HHH-10614">Auto evict collection cache throws exception with null values</a> 中描述了一个人开启了这个特性，然后在一个特定的情况下 Hibernate 会抛出异常。虽然这个问题很快就被解决了，不过现在回来想想，维护者在维护这种已经已经很庞大的项目时，对所有的改动都抱有谨慎的态度还是很有必要的。做成了配置项，虽然一方面会让很多不知道的人继续遇到这个问题，但同时也让很多无关的人避免了可能带来的新问题。所以这两种方案孰优孰劣，可能就见仁见智了吧。</p>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>Hibernate</tag>
       </tags>
   </entry>
   <entry>
@@ -1744,6 +1744,47 @@ B中第一个字符，另一条从|字符指向右括号。这使NFA能够进行
       </tags>
   </entry>
   <entry>
+    <title>记录未使用的 Jekyll 环境搭建</title>
+    <url>/2017/01/26/unused-jekyll-on-ubuntu/</url>
+    <content><![CDATA[<p>自从win10出现了 Bash on Ubuntu，自己便喜欢上了它，<s>甚至抛弃了虚拟机</s>（双系统还是存在的）。正好最近厌烦了 wp，毕竟太臃肿了，对于我这种没事闲的只会随便写写的没太大用处。</p>
+<p>然后就想起了自己沉睡已久的 github，不是因为 github 的免费且无限流量，主要是喜欢 github 上静态页面的简约，百度了下现在的方式，大多是 Jelly 来搭建的，不喜欢在 windows 上装各种软件的我就这么选择了 Bash on Ubuntu，这也是本文的来源。</p>
+<h3 id="前期准备"><a class="markdownIt-Anchor" href="#前期准备"></a> 前期准备</h3>
+<ul>
+<li><a href="http://jekyll.com.cn/">Jekyll 中文官网</a></li>
+<li><a href="http://www.ruby-lang.org/">Ruby官网</a></li>
+</ul>
+<span id="more"></span>
+<h3 id="环境搭建"><a class="markdownIt-Anchor" href="#环境搭建"></a> 环境搭建</h3>
+<p>由于 Ubuntu 的仓库里各软件还是很多的，所以首先选择了 apt 方式安装。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo apt-get install ruby</span><br><span class="line">$ gem install jekyll</span><br></pre></td></tr></table></figure>
+<p>结果出错，ruby 版本太低，输入 ruby -v 查询后是1.95的版本，需求是2点多版本。</p>
+<h3 id="换用源码编译安装"><a class="markdownIt-Anchor" href="#换用源码编译安装"></a> 换用源码编译安装</h3>
+<p>Linux 下安装软件，至少是我自己的通常思维是先用自带的包管理器安装，如果没有对应的软件包或者版本太低或有缺陷，通常会到官网选择编译安装。</p>
+<ul>
+<li>首先安装编译环境</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo apt-get install build-essential cmake</span><br></pre></td></tr></table></figure>
+<ul>
+<li>然后下载源码编译安装</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ wget https://cache.ruby-lang.org/pub/ruby/2.4/ruby-2.4.0.tar.gz</span><br><span class="line">$ tar -zxvf ruby-2.4.0.tar.gz</span><br><span class="line">$ <span class="built_in">cd</span> ruby-2.4.0</span><br><span class="line">$ ./configure</span><br><span class="line">$ make</span><br><span class="line">$ sudo make install</span><br></pre></td></tr></table></figure>
+<p>在修改 gem 源时出现错误，使用的是国内的 https 源，提示 openssl 有问题。然而系统是安有 openssl 的，而且编译的时候并没有看到有关 openssl 的配置（也有可能是我没有仔细看）。提示可以使用 http 的方式添加源，不过略微强迫症，于是宣告源码编译安装失败。</p>
+<h3 id="rvm-方式安装"><a class="markdownIt-Anchor" href="#rvm-方式安装"></a> rvm 方式安装</h3>
+<p>这也是在网上查到的第三种也是常见的最后一种安装方式，首先安装 rvm 然后用 rvm 安装 ruby。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ curl -L https://get.rvm.io | bash -s stable</span><br><span class="line">$ <span class="built_in">source</span> ~/.rvm/scripts/rvm</span><br><span class="line">$ rvm requirements</span><br><span class="line">$ rvm install ruby</span><br><span class="line">$ gem install jekyll</span><br></pre></td></tr></table></figure>
+<p>成功安装，安装的 ruby 版本为2.3.3。</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Ubuntu</tag>
+        <tag>Ruby</tag>
+        <tag>Jekyll</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Windows 配置</title>
     <url>/2017/04/04/windows-init/</url>
     <content><![CDATA[<blockquote>
@@ -1791,47 +1832,6 @@ StickyNote：get-appxpackage <em>Sticky</em> | remove-appxpackage</p>
         <tag>Windows</tag>
         <tag>Regedit</tag>
         <tag>PowerShell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>记录未使用的 Jekyll 环境搭建</title>
-    <url>/2017/01/26/unused-jekyll-on-ubuntu/</url>
-    <content><![CDATA[<p>自从win10出现了 Bash on Ubuntu，自己便喜欢上了它，<s>甚至抛弃了虚拟机</s>（双系统还是存在的）。正好最近厌烦了 wp，毕竟太臃肿了，对于我这种没事闲的只会随便写写的没太大用处。</p>
-<p>然后就想起了自己沉睡已久的 github，不是因为 github 的免费且无限流量，主要是喜欢 github 上静态页面的简约，百度了下现在的方式，大多是 Jelly 来搭建的，不喜欢在 windows 上装各种软件的我就这么选择了 Bash on Ubuntu，这也是本文的来源。</p>
-<h3 id="前期准备"><a class="markdownIt-Anchor" href="#前期准备"></a> 前期准备</h3>
-<ul>
-<li><a href="http://jekyll.com.cn/">Jekyll 中文官网</a></li>
-<li><a href="http://www.ruby-lang.org/">Ruby官网</a></li>
-</ul>
-<span id="more"></span>
-<h3 id="环境搭建"><a class="markdownIt-Anchor" href="#环境搭建"></a> 环境搭建</h3>
-<p>由于 Ubuntu 的仓库里各软件还是很多的，所以首先选择了 apt 方式安装。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo apt-get install ruby</span><br><span class="line">$ gem install jekyll</span><br></pre></td></tr></table></figure>
-<p>结果出错，ruby 版本太低，输入 ruby -v 查询后是1.95的版本，需求是2点多版本。</p>
-<h3 id="换用源码编译安装"><a class="markdownIt-Anchor" href="#换用源码编译安装"></a> 换用源码编译安装</h3>
-<p>Linux 下安装软件，至少是我自己的通常思维是先用自带的包管理器安装，如果没有对应的软件包或者版本太低或有缺陷，通常会到官网选择编译安装。</p>
-<ul>
-<li>首先安装编译环境</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo apt-get install build-essential cmake</span><br></pre></td></tr></table></figure>
-<ul>
-<li>然后下载源码编译安装</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ wget https://cache.ruby-lang.org/pub/ruby/2.4/ruby-2.4.0.tar.gz</span><br><span class="line">$ tar -zxvf ruby-2.4.0.tar.gz</span><br><span class="line">$ <span class="built_in">cd</span> ruby-2.4.0</span><br><span class="line">$ ./configure</span><br><span class="line">$ make</span><br><span class="line">$ sudo make install</span><br></pre></td></tr></table></figure>
-<p>在修改 gem 源时出现错误，使用的是国内的 https 源，提示 openssl 有问题。然而系统是安有 openssl 的，而且编译的时候并没有看到有关 openssl 的配置（也有可能是我没有仔细看）。提示可以使用 http 的方式添加源，不过略微强迫症，于是宣告源码编译安装失败。</p>
-<h3 id="rvm-方式安装"><a class="markdownIt-Anchor" href="#rvm-方式安装"></a> rvm 方式安装</h3>
-<p>这也是在网上查到的第三种也是常见的最后一种安装方式，首先安装 rvm 然后用 rvm 安装 ruby。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ curl -L https://get.rvm.io | bash -s stable</span><br><span class="line">$ <span class="built_in">source</span> ~/.rvm/scripts/rvm</span><br><span class="line">$ rvm requirements</span><br><span class="line">$ rvm install ruby</span><br><span class="line">$ gem install jekyll</span><br></pre></td></tr></table></figure>
-<p>成功安装，安装的 ruby 版本为2.3.3。</p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>Ubuntu</tag>
-        <tag>Ruby</tag>
-        <tag>Jekyll</tag>
       </tags>
   </entry>
 </search>
