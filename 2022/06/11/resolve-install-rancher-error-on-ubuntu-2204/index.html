@@ -20,29 +20,33 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"sslover.me","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="今天在对 Linux 多线程编程进行学习时，在编译代码时出现了问题。 由于使用了 pthread_create, pthread_join 等函数，在使用 gcc 编译时，出现了 对 ‘pthread_create’ 未定义的引用 的错误，在上网查询后，得知 pthread 库不是 Linux 系统默认的库，所以在编译时需要添加 -lpthread 参数来使用 libpthread.a 库进行编译">
+    <meta name="description" content="好不容易开到了 Oracle 的 Arm 机器，因为内存还是比较多的，所以打算用 Rancher 安装 k8s 使用。由于以前在生产环境使用 Ubuntu 安装过 Rancher，所以直接上手，可没想到这次一路波折。 因为 CentOS 8 已经停止维护了，Oracle 上面 CentOS 的镜像也更新成为了 CentOS Stream，加上也不太想用 Oracle Linux，所以直接开了最新的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="对 “pthread_create” 未定义的引用">
-<meta property="og:url" content="https://sslover.me/2017/04/26/undefined-reference-to-pthread_create/index.html">
+<meta property="og:title" content="解决 Ubuntu 22.04 下安装 Rancher 出现与 Docker 不兼容的问题">
+<meta property="og:url" content="https://sslover.me/2022/06/11/resolve-install-rancher-error-on-ubuntu-2204/index.html">
 <meta property="og:site_name" content="A Blog">
-<meta property="og:description" content="今天在对 Linux 多线程编程进行学习时，在编译代码时出现了问题。 由于使用了 pthread_create, pthread_join 等函数，在使用 gcc 编译时，出现了 对 ‘pthread_create’ 未定义的引用 的错误，在上网查询后，得知 pthread 库不是 Linux 系统默认的库，所以在编译时需要添加 -lpthread 参数来使用 libpthread.a 库进行编译">
+<meta property="og:description" content="好不容易开到了 Oracle 的 Arm 机器，因为内存还是比较多的，所以打算用 Rancher 安装 k8s 使用。由于以前在生产环境使用 Ubuntu 安装过 Rancher，所以直接上手，可没想到这次一路波折。 因为 CentOS 8 已经停止维护了，Oracle 上面 CentOS 的镜像也更新成为了 CentOS Stream，加上也不太想用 Oracle Linux，所以直接开了最新的">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2017-04-26T15:01:27.000Z">
-<meta property="article:modified_time" content="2022-07-22T13:43:57.252Z">
+<meta property="article:published_time" content="2022-06-11T05:04:13.000Z">
+<meta property="article:modified_time" content="2022-07-22T13:43:57.244Z">
 <meta property="article:author" content="timerever">
-<meta property="article:tag" content="Linux">
-<meta property="article:tag" content="C">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="Kubernetes">
+<meta property="article:tag" content="K8s">
+<meta property="article:tag" content="K3s">
+<meta property="article:tag" content="Rancher">
+<meta property="article:tag" content="Ubuntu">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://sslover.me/2017/04/26/undefined-reference-to-pthread_create/">
+<link rel="canonical" href="https://sslover.me/2022/06/11/resolve-install-rancher-error-on-ubuntu-2204/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://sslover.me/2017/04/26/undefined-reference-to-pthread_create/","path":"2017/04/26/undefined-reference-to-pthread_create/","title":"对 “pthread_create” 未定义的引用"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://sslover.me/2022/06/11/resolve-install-rancher-error-on-ubuntu-2204/","path":"2022/06/11/resolve-install-rancher-error-on-ubuntu-2204/","title":"解决 Ubuntu 22.04 下安装 Rancher 出现与 Docker 不兼容的问题"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>对 “pthread_create” 未定义的引用 | A Blog</title>
+<title>解决 Ubuntu 22.04 下安装 Rancher 出现与 Docker 不兼容的问题 | A Blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90849359-1"></script>
   <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-90849359-1","only_pageview":false}</script>
@@ -233,7 +237,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://sslover.me/2017/04/26/undefined-reference-to-pthread_create/">
+    <link itemprop="mainEntityOfPage" href="https://sslover.me/2022/06/11/resolve-install-rancher-error-on-ubuntu-2204/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://avatars.githubusercontent.com/u/12376409?v=4">
@@ -246,7 +250,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          对 “pthread_create” 未定义的引用
+          解决 Ubuntu 22.04 下安装 Rancher 出现与 Docker 不兼容的问题
         </h1>
 
         <div class="post-meta-container">
@@ -257,21 +261,21 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2017-04-26 23:01:27" itemprop="dateCreated datePublished" datetime="2017-04-26T23:01:27+08:00">2017-04-26</time>
+      <time title="创建时间：2022-06-11 13:04:13" itemprop="dateCreated datePublished" datetime="2022-06-11T13:04:13+08:00">2022-06-11</time>
     </span>
     <span class="post-meta-item" title="本文字数">
       <span class="post-meta-item-icon">
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>343</span>
+      <span>2k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>7 分钟</span>
     </span>
 
   
@@ -282,7 +286,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+          <a href="/categories/Kubernetes/" itemprop="url" rel="index"><span itemprop="name">Kubernetes</span></a>
         </span>
     </span>
     <span class="post-meta-item">
@@ -291,8 +295,12 @@
       </span>
       <span class="post-meta-item-text">标签：</span>
       <span class="post-tags">
-        <a href="/tags/Linux/" rel="tag"> Linux</a>
-        <a href="/tags/C/" rel="tag"> C</a>
+        <a href="/tags/Docker/" rel="tag"> Docker</a>
+        <a href="/tags/Kubernetes/" rel="tag"> Kubernetes</a>
+        <a href="/tags/K8s/" rel="tag"> K8s</a>
+        <a href="/tags/K3s/" rel="tag"> K3s</a>
+        <a href="/tags/Rancher/" rel="tag"> Rancher</a>
+        <a href="/tags/Ubuntu/" rel="tag"> Ubuntu</a>
       </span>
     </span>
 </div>
@@ -304,14 +312,22 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>今天在对 Linux 多线程编程进行学习时，在编译代码时出现了问题。</p>
-<p>由于使用了 <code>pthread_create</code>, <code>pthread_join</code> 等函数，在使用 <code>gcc</code> 编译时，出现了 <strong>对 ‘pthread_create’ 未定义的引用</strong> 的错误，在上网查询后，得知 pthread 库不是 Linux 系统默认的库，所以在编译时需要添加 <code>-lpthread</code> 参数来使用 libpthread.a 库进行编译。</p>
-<pre><code># gcc -o pthread -lpthread pthread.c
-</code></pre>
-<p>结果还是失败。再次上网查阅，得知 <code>-lpthread</code> 应该放到最后面，修改后编译通过。</p>
-<pre><code># gcc thread.c -o thread.c -lpthread
-</code></pre>
-<p><strong>参考链接：<a target="_blank" rel="noopener" href="http://blog.csdn.net/besfanfei/article/details/7542396">http://blog.csdn.net/besfanfei/article/details/7542396</a></strong></p>
+        <p>好不容易开到了 Oracle 的 Arm 机器，因为内存还是比较多的，所以打算用 Rancher 安装 k8s 使用。由于以前在生产环境使用 Ubuntu 安装过 Rancher，所以直接上手，可没想到这次一路波折。 因为 CentOS 8 已经停止维护了，Oracle 上面 CentOS 的镜像也更新成为了 CentOS Stream，加上也不太想用 Oracle Linux，所以直接开了最新的 Ubuntu 22.04，噩梦开始的地方。</p>
+<span id="more"></span>
+<p>最开始还是采用 Docker 的方式安装 Rancher，结果发现 Rancher 容器不断重启。查询日志后发现，在打印一些日志之后，每次都会出现 <code>k3s exited with: exit status 1</code> 错误。 由于之前的生产环境是 Ubuntu 20.04，而且 Rancher 官网并没有严格的操作系统支持说明，所以首先还是怀疑是系统问题。但是由于 Oracle Cloud 并没有提供重装系统功能，如果想初始化就只能删除重开机器。 加上 Arm 机器众所周知的原因，所以不敢冒险尝试删除重建机器。不过既然报错是 k3s 初始化失败，那么就自行安装 k3s 试一下，看一下具体的报错问题。k3s 安装过程果然报错， 输入 <code>journalctl -xeu k3s.service</code> 查看一下报错详情：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Failed to get unit file state for nm-cloud-setup.service: No such file or directory</span><br></pre></td></tr></table></figure>
+<p>看来是 Oracle 安装的 Ubuntu 没有自带网络服务，安装之后再试一下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install network-manager</span><br></pre></td></tr></table></figure>
+<p>发现还是报错，再来看一眼报错详情：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Failed to run kubelet&quot; err=&quot;failed to run Kubelet: misconfiguration: kubelet cgroup driver: \&quot;cgroupfs\&quot; is different from docker cgroup driver: \&quot;systemd\&quot;&quot;</span><br></pre></td></tr></table></figure>
+<p>这下问题就清楚了，原来 k8s 默认使用的 cgroup 是 <code>cgroupfs</code>，而 Docker 所使用的 cgroup 是 <code>systemd</code>，两者不一致。执行 <code>docker info</code> 我们也确实可以看到 <code>Cgroup Driver: systemd</code>。 搜寻了一下发现解决办法也很简单，要么指定 k8s 使用 <code>systemd</code> 的 cgroup，要么设置 Docker 使用 <code>cgroupfs</code>。由于 k3s 是自行初始化的，加之在安装 Rancher 的时候并没有给我们设置 k3s 的地方， 所以只能修改 Docker 的 cgroup 为 <code>cgroupfs</code>。</p>
+<p>创建或修改 <code>/etc/docker/daemon.json</code> 文件，添加如下内容后重启 docker：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;exec-opts&quot;: [&quot;native.cgroupdriver=cgroupfs&quot;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>再次执行 <code>docker info</code> 我们可以看到 cgroup 已经修改生效了：<code>Cgroup Driver: cgroupfs</code>。</p>
+<p>重启 k3s，发现 k3s 已经可以成功启动了。然后执行 <code>/usr/local/bin/k3s-uninstall.sh</code> 卸载 k3s，再安装一遍 rancher 来看一下。 结果发现还是在报错，这就很奇怪了，明明自己安装 k3s 是没有问题的了。 无奈只能去求助 Google，虽然看到了很多类似问题，但是一直未找到有效回复。 一番搜索后，发现 GitHub 上有个 Issue：<a target="_blank" rel="noopener" href="https://github.com/rancher/rancher/issues/35201">k3s exited with: exit status 1</a>。 虽然他是使用的 Debian 11，日志多打印出来了很多，不过最终的报错都是一样的。而且更重要的是，他所贴出的 docker 信息表名他 docker 的 cgroup 也是 <code>systemd</code>。 然后发现仅有的一条来自贡献者的回复成为了关键，他说 Debian 11 默认使用 cgroup v2，这与 k3s 并不兼容，需要将其切换到 cgroup v1。 好家伙，原来 cgroup 还有版本的问题，看来我们也要将 cgroup 切换到 v1。 在 Docker 的官方文档中找到了切换的方法：<a target="_blank" rel="noopener" href="https://docs.docker.com/config/containers/runmetrics/#changing-cgroup-version">Changing cgroup version</a>。 因为 Ubuntu 没有自带 <code>grubby</code> 命令，所以采用的是第二种手动修改 grub 引导文件的方式。</p>
+<p>执行 <code>sudo vi /etc/default/grub</code>，添加 <code>systemd.unified_cgroup_hierarchy=0</code> 到 <code>GRUB_CMDLINE_LINUX</code> 参数中，如果原来有内容记得保留，空格分割。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRUB_CMDLINE_LINUX=&quot;systemd.unified_cgroup_hierarchy=0&quot;</span><br></pre></td></tr></table></figure>
+<p>然后执行 <code>sudo update-grub</code> 更新下引导，重启之后发现 Rancher 可以正常安装了。</p>
 
     </div>
 
@@ -329,7 +345,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://sslover.me/2017/04/26/undefined-reference-to-pthread_create/" title="对 “pthread_create” 未定义的引用">https://sslover.me/2017/04/26/undefined-reference-to-pthread_create/</a>
+      <a href="https://sslover.me/2022/06/11/resolve-install-rancher-error-on-ubuntu-2204/" title="解决 Ubuntu 22.04 下安装 Rancher 出现与 Docker 不兼容的问题">https://sslover.me/2022/06/11/resolve-install-rancher-error-on-ubuntu-2204/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -338,21 +354,22 @@
 </div>
 
           <div class="post-tags">
-              <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
-              <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C</a>
+              <a href="/tags/Docker/" rel="tag"><i class="fa fa-tag"></i> Docker</a>
+              <a href="/tags/Kubernetes/" rel="tag"><i class="fa fa-tag"></i> Kubernetes</a>
+              <a href="/tags/K8s/" rel="tag"><i class="fa fa-tag"></i> K8s</a>
+              <a href="/tags/K3s/" rel="tag"><i class="fa fa-tag"></i> K3s</a>
+              <a href="/tags/Rancher/" rel="tag"><i class="fa fa-tag"></i> Rancher</a>
+              <a href="/tags/Ubuntu/" rel="tag"><i class="fa fa-tag"></i> Ubuntu</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2017/04/28/design-patterns/" rel="prev" title="软件设计模式">
-                  <i class="fa fa-chevron-left"></i> 软件设计模式
-                </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2017/04/24/fix-sigaction/" rel="next" title="sigaction 自定义信号处理函数的“修复”">
-                  sigaction 自定义信号处理函数的“修复” <i class="fa fa-chevron-right"></i>
+                <a href="/2022/05/15/use-zh-cn-locale-in-linux-on-chromebook/" rel="next" title="在 Chromebook 中配置 Linux 子系统的中文环境并安装中文输入法">
+                  在 Chromebook 中配置 Linux 子系统的中文环境并安装中文输入法 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
