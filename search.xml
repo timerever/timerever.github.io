@@ -1,6 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Apache HttpClient 4.5.x 忽略证书验证</title>
+    <url>/2017/04/23/client-custom-ssl/</url>
+    <content><![CDATA[<p>在使用 Apache HttpComponents 时，需要访问一个第三方接口进行数据传输，但是由于对方使用的是 Let’s Encrypt 的证书，虽然浏览器是信任的，但是在调试的时候发现程序并不信任,所以采用自定义 SSLContext 的方式解决该问题。</p>
+<h3 id="查找官方解决方案"><a class="markdownIt-Anchor" href="#查找官方解决方案"></a> 查找官方解决方案</h3>
+<p>作为一只程序猿，翻官方文档肯定是首选方案。官方提供了一种 Custom SSL context 的实现。</p>
+<p><a href="http://hc.apache.org/httpcomponents-client-4.5.x/httpclient/examples/org/apache/http/examples/client/ClientCustomSSL.java">http://hc.apache.org/httpcomponents-client-4.5.x/httpclient/examples/org/apache/http/examples/client/ClientCustomSSL.java</a></p>
+<span id="more"></span>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * ====================================================================</span></span><br><span class="line"><span class="comment"> * Licensed to the Apache Software Foundation (ASF) under one</span></span><br><span class="line"><span class="comment"> * or more contributor license agreements.  See the NOTICE file</span></span><br><span class="line"><span class="comment"> * distributed with this work for additional information</span></span><br><span class="line"><span class="comment"> * regarding copyright ownership.  The ASF licenses this file</span></span><br><span class="line"><span class="comment"> * to you under the Apache License, Version 2.0 (the</span></span><br><span class="line"><span class="comment"> * &quot;License&quot;); you may not use this file except in compliance</span></span><br><span class="line"><span class="comment"> * with the License.  You may obtain a copy of the License at</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> *   http://www.apache.org/licenses/LICENSE-2.0</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Unless required by applicable law or agreed to in writing,</span></span><br><span class="line"><span class="comment"> * software distributed under the License is distributed on an</span></span><br><span class="line"><span class="comment"> * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY</span></span><br><span class="line"><span class="comment"> * KIND, either express or implied.  See the License for the</span></span><br><span class="line"><span class="comment"> * specific language governing permissions and limitations</span></span><br><span class="line"><span class="comment"> * under the License.</span></span><br><span class="line"><span class="comment"> * ====================================================================</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * This software consists of voluntary contributions made by many</span></span><br><span class="line"><span class="comment"> * individuals on behalf of the Apache Software Foundation.  For more</span></span><br><span class="line"><span class="comment"> * information on the Apache Software Foundation, please see</span></span><br><span class="line"><span class="comment"> * &lt;http://www.apache.org/&gt;.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">package</span> org.apache.http.examples.client;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.net.ssl.SSLContext;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.http.HttpEntity;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.CloseableHttpResponse;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.HttpGet;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.conn.ssl.SSLConnectionSocketFactory;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.conn.ssl.TrustSelfSignedStrategy;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.client.CloseableHttpClient;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.client.HttpClients;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.ssl.SSLContexts;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.util.EntityUtils;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * This example demonstrates how to create secure connections with a custom SSL</span></span><br><span class="line"><span class="comment"> * context.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ClientCustomSSL</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="comment">// Trust own CA and all self-signed certs</span></span><br><span class="line">        <span class="type">SSLContext</span> <span class="variable">sslcontext</span> <span class="operator">=</span> SSLContexts.custom()</span><br><span class="line">                .loadTrustMaterial(<span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;my.keystore&quot;</span>), <span class="string">&quot;nopassword&quot;</span>.toCharArray(),</span><br><span class="line">                        <span class="keyword">new</span> <span class="title class_">TrustSelfSignedStrategy</span>())</span><br><span class="line">                .build();</span><br><span class="line">        <span class="comment">// Allow TLSv1 protocol only</span></span><br><span class="line">        <span class="type">SSLConnectionSocketFactory</span> <span class="variable">sslsf</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SSLConnectionSocketFactory</span>(</span><br><span class="line">                sslcontext,</span><br><span class="line">                <span class="keyword">new</span> <span class="title class_">String</span>[] &#123; <span class="string">&quot;TLSv1&quot;</span> &#125;,</span><br><span class="line">                <span class="literal">null</span>,</span><br><span class="line">                SSLConnectionSocketFactory.getDefaultHostnameVerifier());</span><br><span class="line">        <span class="type">CloseableHttpClient</span> <span class="variable">httpclient</span> <span class="operator">=</span> HttpClients.custom()</span><br><span class="line">                .setSSLSocketFactory(sslsf)</span><br><span class="line">                .build();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line"></span><br><span class="line">            <span class="type">HttpGet</span> <span class="variable">httpget</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HttpGet</span>(<span class="string">&quot;https://httpbin.org/&quot;</span>);</span><br><span class="line"></span><br><span class="line">            System.out.println(<span class="string">&quot;Executing request &quot;</span> + httpget.getRequestLine());</span><br><span class="line"></span><br><span class="line">            <span class="type">CloseableHttpResponse</span> <span class="variable">response</span> <span class="operator">=</span> httpclient.execute(httpget);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="type">HttpEntity</span> <span class="variable">entity</span> <span class="operator">=</span> response.getEntity();</span><br><span class="line"></span><br><span class="line">                System.out.println(<span class="string">&quot;----------------------------------------&quot;</span>);</span><br><span class="line">                System.out.println(response.getStatusLine());</span><br><span class="line">                EntityUtils.consume(entity);</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                response.close();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            httpclient.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于考虑到该接口为第三方接口，对方可能进行证书的更换，再加上由于所传输信息是可以公开的、非重要数据的数据，所以并不采用官方给出的导入证书而使用不进行检查直接信任的方式处理。</p>
+<h3 id="定义自己的-sslcontext"><a class="markdownIt-Anchor" href="#定义自己的-sslcontext"></a> 定义自己的 SSLContext</h3>
+<p>所以问题的关键在于自定义 <code>SSLContext</code>，查看其 <code>loadTrustMaterial</code> 方法的源代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> SSLContextBuilder <span class="title function_">loadTrustMaterial</span><span class="params">(</span></span><br><span class="line"><span class="params">        <span class="keyword">final</span> KeyStore truststore,</span></span><br><span class="line"><span class="params">        <span class="keyword">final</span> TrustStrategy trustStrategy)</span> <span class="keyword">throws</span> NoSuchAlgorithmException, KeyStoreException &#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="type">TrustManagerFactory</span> <span class="variable">tmfactory</span> <span class="operator">=</span> TrustManagerFactory.getInstance(</span><br><span class="line">            TrustManagerFactory.getDefaultAlgorithm());</span><br><span class="line">    tmfactory.init(truststore);</span><br><span class="line">    <span class="keyword">final</span> TrustManager[] tms = tmfactory.getTrustManagers();</span><br><span class="line">    <span class="keyword">if</span> (tms != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (trustStrategy != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; tms.length; i++) &#123;</span><br><span class="line">                <span class="keyword">final</span> <span class="type">TrustManager</span> <span class="variable">tm</span> <span class="operator">=</span> tms[i];</span><br><span class="line">                <span class="keyword">if</span> (tm <span class="keyword">instanceof</span> X509TrustManager) &#123;</span><br><span class="line">                    tms[i] = <span class="keyword">new</span> <span class="title class_">TrustManagerDelegate</span>(</span><br><span class="line">                            (X509TrustManager) tm, trustStrategy);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">final</span> TrustManager tm : tms) &#123;</span><br><span class="line">            <span class="built_in">this</span>.trustmanagers.add(tm);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可见这边是使用实现了 <code>TrustStrategy</code> 接口的 <code>TrustSelfSignedStrategy</code> 对 X509 证书进行管理，所以我们需要自定义一个 <code>TrustStrategy</code> 的实例。</p>
+<p>先查看 <code>TrustStrategy</code> 接口的源代码，发现除了继承了 <code>org.apache.http.ssl.TrustStrategy</code> 之外没有添加任何内容。由于该类在 http-core 包中，直接反编译查看得：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">TrustStrategy</span> &#123;</span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">isTrusted</span><span class="params">(X509Certificate[] var1, String var2)</span> <span class="keyword">throws</span> CertificateException;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所以这里需要重写 <code>isTrusted</code> 方法，不进行验证，直接返回 <code>true</code>。由于不需要导入 Keystore，所以直接给空值，代码如下。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">SSLContext</span> <span class="variable">sslcontext</span> <span class="operator">=</span> SSLContexts.custom()</span><br><span class="line">	    .loadTrustMaterial(<span class="literal">null</span>, <span class="keyword">new</span> <span class="title class_">TrustStrategy</span>() &#123;</span><br><span class="line">	        <span class="meta">@Override</span></span><br><span class="line">	        <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isTrusted</span><span class="params">(X509Certificate[] x509Certificates, String s)</span> <span class="keyword">throws</span> CertificateException &#123;</span><br><span class="line">	            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	        &#125;</span><br><span class="line">	    &#125;)</span><br><span class="line">	    .build();</span><br></pre></td></tr></table></figure>
+<h3 id="测试"><a class="markdownIt-Anchor" href="#测试"></a> 测试</h3>
+<p>修改后的完整代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.http.HttpEntity;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.CloseableHttpResponse;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.HttpGet;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.conn.ssl.SSLConnectionSocketFactory;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.conn.ssl.TrustStrategy;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.client.CloseableHttpClient;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.client.HttpClients;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.ssl.SSLContexts;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.util.EntityUtils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.net.ssl.SSLContext;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.security.KeyManagementException;</span><br><span class="line"><span class="keyword">import</span> java.security.KeyStoreException;</span><br><span class="line"><span class="keyword">import</span> java.security.NoSuchAlgorithmException;</span><br><span class="line"><span class="keyword">import</span> java.security.cert.CertificateException;</span><br><span class="line"><span class="keyword">import</span> java.security.cert.X509Certificate;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by timer on 2017/4/23.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestClientCustomSSL</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 自定义 SSLContext 使信任所有证书。</span></span><br><span class="line">        <span class="type">SSLContext</span> <span class="variable">sslcontext</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            sslcontext = SSLContexts.custom()</span><br><span class="line">	                .loadTrustMaterial(<span class="literal">null</span>, <span class="keyword">new</span> <span class="title class_">TrustStrategy</span>() &#123;</span><br><span class="line">	                    <span class="meta">@Override</span></span><br><span class="line">	                    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isTrusted</span><span class="params">(X509Certificate[] x509Certificates, String s)</span> <span class="keyword">throws</span> CertificateException &#123;</span><br><span class="line">	                        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	                    &#125;</span><br><span class="line">	                &#125;)</span><br><span class="line">	                .build();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (KeyManagementException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (KeyStoreException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 仅允许 TLSv1 协议</span></span><br><span class="line">        <span class="type">SSLConnectionSocketFactory</span> <span class="variable">sslsf</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SSLConnectionSocketFactory</span>(</span><br><span class="line">                sslcontext,</span><br><span class="line">                <span class="keyword">new</span> <span class="title class_">String</span>[] &#123; <span class="string">&quot;TLSv1&quot;</span> &#125;,</span><br><span class="line">                <span class="literal">null</span>,</span><br><span class="line">                SSLConnectionSocketFactory.getDefaultHostnameVerifier());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span>(<span class="type">CloseableHttpClient</span> <span class="variable">httpclient</span> <span class="operator">=</span> HttpClients.custom().setSSLSocketFactory(sslsf).build()) &#123;</span><br><span class="line"></span><br><span class="line">            <span class="type">HttpGet</span> <span class="variable">httpget</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HttpGet</span>(<span class="string">&quot;https://httpbin.org/get&quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">try</span>(<span class="type">CloseableHttpResponse</span> <span class="variable">response</span> <span class="operator">=</span> httpclient.execute(httpget)) &#123;</span><br><span class="line">                <span class="type">HttpEntity</span> <span class="variable">entity</span> <span class="operator">=</span> response.getEntity();</span><br><span class="line">                System.out.println(EntityUtils.toString(entity));</span><br><span class="line">                EntityUtils.consume(entity);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>成功访问，输出如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;args&quot;: &#123;&#125;, </span><br><span class="line">  &quot;headers&quot;: &#123;</span><br><span class="line">    &quot;Accept-Encoding&quot;: &quot;gzip,deflate&quot;, </span><br><span class="line">    &quot;Connection&quot;: &quot;close&quot;, </span><br><span class="line">    &quot;Host&quot;: &quot;httpbin.org&quot;, </span><br><span class="line">    &quot;User-Agent&quot;: &quot;Apache-HttpClient/4.5.3 (Java/1.8.0_121)&quot;</span><br><span class="line">  &#125;, </span><br><span class="line">  &quot;origin&quot;: &quot;60.219.211.8&quot;, </span><br><span class="line">  &quot;url&quot;: &quot;https://httpbin.org/get&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注：这里访问的并不是一个不受信任的站点，但是实际测试不受信任的站点也可以正常访问。</strong></p>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>HttpClient</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>自定义 Jackson Serializer 解决无法序列化 SerialClob 的问题</title>
     <url>/2022/02/09/custom-jackson-serializer-for-clob-type/</url>
     <content><![CDATA[<p>由于种种原因，项目上在做数据查询时，没有选择任何的 ORM 框架而是使用了 <code>JdbcTemplate</code> 进行数据库查询。查询出来也没做太多事情，只是简单地对数据做了下封装，然后直接返回给了前端。</p>
@@ -36,61 +69,6 @@
       <tags>
         <tag>Java</tag>
         <tag>Jackson</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Apache HttpClient 4.5.x 忽略证书验证</title>
-    <url>/2017/04/23/client-custom-ssl/</url>
-    <content><![CDATA[<p>在使用 Apache HttpComponents 时，需要访问一个第三方接口进行数据传输，但是由于对方使用的是 Let’s Encrypt 的证书，虽然浏览器是信任的，但是在调试的时候发现程序并不信任,所以采用自定义 SSLContext 的方式解决该问题。</p>
-<h3 id="查找官方解决方案"><a class="markdownIt-Anchor" href="#查找官方解决方案"></a> 查找官方解决方案</h3>
-<p>作为一只程序猿，翻官方文档肯定是首选方案。官方提供了一种 Custom SSL context 的实现。</p>
-<p><a href="http://hc.apache.org/httpcomponents-client-4.5.x/httpclient/examples/org/apache/http/examples/client/ClientCustomSSL.java">http://hc.apache.org/httpcomponents-client-4.5.x/httpclient/examples/org/apache/http/examples/client/ClientCustomSSL.java</a></p>
-<span id="more"></span>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * ====================================================================</span></span><br><span class="line"><span class="comment"> * Licensed to the Apache Software Foundation (ASF) under one</span></span><br><span class="line"><span class="comment"> * or more contributor license agreements.  See the NOTICE file</span></span><br><span class="line"><span class="comment"> * distributed with this work for additional information</span></span><br><span class="line"><span class="comment"> * regarding copyright ownership.  The ASF licenses this file</span></span><br><span class="line"><span class="comment"> * to you under the Apache License, Version 2.0 (the</span></span><br><span class="line"><span class="comment"> * &quot;License&quot;); you may not use this file except in compliance</span></span><br><span class="line"><span class="comment"> * with the License.  You may obtain a copy of the License at</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> *   http://www.apache.org/licenses/LICENSE-2.0</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Unless required by applicable law or agreed to in writing,</span></span><br><span class="line"><span class="comment"> * software distributed under the License is distributed on an</span></span><br><span class="line"><span class="comment"> * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY</span></span><br><span class="line"><span class="comment"> * KIND, either express or implied.  See the License for the</span></span><br><span class="line"><span class="comment"> * specific language governing permissions and limitations</span></span><br><span class="line"><span class="comment"> * under the License.</span></span><br><span class="line"><span class="comment"> * ====================================================================</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * This software consists of voluntary contributions made by many</span></span><br><span class="line"><span class="comment"> * individuals on behalf of the Apache Software Foundation.  For more</span></span><br><span class="line"><span class="comment"> * information on the Apache Software Foundation, please see</span></span><br><span class="line"><span class="comment"> * &lt;http://www.apache.org/&gt;.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">package</span> org.apache.http.examples.client;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.net.ssl.SSLContext;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.http.HttpEntity;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.CloseableHttpResponse;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.HttpGet;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.conn.ssl.SSLConnectionSocketFactory;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.conn.ssl.TrustSelfSignedStrategy;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.client.CloseableHttpClient;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.client.HttpClients;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.ssl.SSLContexts;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.util.EntityUtils;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * This example demonstrates how to create secure connections with a custom SSL</span></span><br><span class="line"><span class="comment"> * context.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ClientCustomSSL</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="comment">// Trust own CA and all self-signed certs</span></span><br><span class="line">        <span class="type">SSLContext</span> <span class="variable">sslcontext</span> <span class="operator">=</span> SSLContexts.custom()</span><br><span class="line">                .loadTrustMaterial(<span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;my.keystore&quot;</span>), <span class="string">&quot;nopassword&quot;</span>.toCharArray(),</span><br><span class="line">                        <span class="keyword">new</span> <span class="title class_">TrustSelfSignedStrategy</span>())</span><br><span class="line">                .build();</span><br><span class="line">        <span class="comment">// Allow TLSv1 protocol only</span></span><br><span class="line">        <span class="type">SSLConnectionSocketFactory</span> <span class="variable">sslsf</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SSLConnectionSocketFactory</span>(</span><br><span class="line">                sslcontext,</span><br><span class="line">                <span class="keyword">new</span> <span class="title class_">String</span>[] &#123; <span class="string">&quot;TLSv1&quot;</span> &#125;,</span><br><span class="line">                <span class="literal">null</span>,</span><br><span class="line">                SSLConnectionSocketFactory.getDefaultHostnameVerifier());</span><br><span class="line">        <span class="type">CloseableHttpClient</span> <span class="variable">httpclient</span> <span class="operator">=</span> HttpClients.custom()</span><br><span class="line">                .setSSLSocketFactory(sslsf)</span><br><span class="line">                .build();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line"></span><br><span class="line">            <span class="type">HttpGet</span> <span class="variable">httpget</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HttpGet</span>(<span class="string">&quot;https://httpbin.org/&quot;</span>);</span><br><span class="line"></span><br><span class="line">            System.out.println(<span class="string">&quot;Executing request &quot;</span> + httpget.getRequestLine());</span><br><span class="line"></span><br><span class="line">            <span class="type">CloseableHttpResponse</span> <span class="variable">response</span> <span class="operator">=</span> httpclient.execute(httpget);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="type">HttpEntity</span> <span class="variable">entity</span> <span class="operator">=</span> response.getEntity();</span><br><span class="line"></span><br><span class="line">                System.out.println(<span class="string">&quot;----------------------------------------&quot;</span>);</span><br><span class="line">                System.out.println(response.getStatusLine());</span><br><span class="line">                EntityUtils.consume(entity);</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                response.close();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            httpclient.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>由于考虑到该接口为第三方接口，对方可能进行证书的更换，再加上由于所传输信息是可以公开的、非重要数据的数据，所以并不采用官方给出的导入证书而使用不进行检查直接信任的方式处理。</p>
-<h3 id="定义自己的-sslcontext"><a class="markdownIt-Anchor" href="#定义自己的-sslcontext"></a> 定义自己的 SSLContext</h3>
-<p>所以问题的关键在于自定义 <code>SSLContext</code>，查看其 <code>loadTrustMaterial</code> 方法的源代码：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> SSLContextBuilder <span class="title function_">loadTrustMaterial</span><span class="params">(</span></span><br><span class="line"><span class="params">        <span class="keyword">final</span> KeyStore truststore,</span></span><br><span class="line"><span class="params">        <span class="keyword">final</span> TrustStrategy trustStrategy)</span> <span class="keyword">throws</span> NoSuchAlgorithmException, KeyStoreException &#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="type">TrustManagerFactory</span> <span class="variable">tmfactory</span> <span class="operator">=</span> TrustManagerFactory.getInstance(</span><br><span class="line">            TrustManagerFactory.getDefaultAlgorithm());</span><br><span class="line">    tmfactory.init(truststore);</span><br><span class="line">    <span class="keyword">final</span> TrustManager[] tms = tmfactory.getTrustManagers();</span><br><span class="line">    <span class="keyword">if</span> (tms != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (trustStrategy != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; tms.length; i++) &#123;</span><br><span class="line">                <span class="keyword">final</span> <span class="type">TrustManager</span> <span class="variable">tm</span> <span class="operator">=</span> tms[i];</span><br><span class="line">                <span class="keyword">if</span> (tm <span class="keyword">instanceof</span> X509TrustManager) &#123;</span><br><span class="line">                    tms[i] = <span class="keyword">new</span> <span class="title class_">TrustManagerDelegate</span>(</span><br><span class="line">                            (X509TrustManager) tm, trustStrategy);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">final</span> TrustManager tm : tms) &#123;</span><br><span class="line">            <span class="built_in">this</span>.trustmanagers.add(tm);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>可见这边是使用实现了 <code>TrustStrategy</code> 接口的 <code>TrustSelfSignedStrategy</code> 对 X509 证书进行管理，所以我们需要自定义一个 <code>TrustStrategy</code> 的实例。</p>
-<p>先查看 <code>TrustStrategy</code> 接口的源代码，发现除了继承了 <code>org.apache.http.ssl.TrustStrategy</code> 之外没有添加任何内容。由于该类在 http-core 包中，直接反编译查看得：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">TrustStrategy</span> &#123;</span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">isTrusted</span><span class="params">(X509Certificate[] var1, String var2)</span> <span class="keyword">throws</span> CertificateException;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>所以这里需要重写 <code>isTrusted</code> 方法，不进行验证，直接返回 <code>true</code>。由于不需要导入 Keystore，所以直接给空值，代码如下。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">SSLContext</span> <span class="variable">sslcontext</span> <span class="operator">=</span> SSLContexts.custom()</span><br><span class="line">	    .loadTrustMaterial(<span class="literal">null</span>, <span class="keyword">new</span> <span class="title class_">TrustStrategy</span>() &#123;</span><br><span class="line">	        <span class="meta">@Override</span></span><br><span class="line">	        <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isTrusted</span><span class="params">(X509Certificate[] x509Certificates, String s)</span> <span class="keyword">throws</span> CertificateException &#123;</span><br><span class="line">	            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	        &#125;</span><br><span class="line">	    &#125;)</span><br><span class="line">	    .build();</span><br></pre></td></tr></table></figure>
-<h3 id="测试"><a class="markdownIt-Anchor" href="#测试"></a> 测试</h3>
-<p>修改后的完整代码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.http.HttpEntity;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.CloseableHttpResponse;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.client.methods.HttpGet;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.conn.ssl.SSLConnectionSocketFactory;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.conn.ssl.TrustStrategy;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.client.CloseableHttpClient;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.impl.client.HttpClients;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.ssl.SSLContexts;</span><br><span class="line"><span class="keyword">import</span> org.apache.http.util.EntityUtils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.net.ssl.SSLContext;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.security.KeyManagementException;</span><br><span class="line"><span class="keyword">import</span> java.security.KeyStoreException;</span><br><span class="line"><span class="keyword">import</span> java.security.NoSuchAlgorithmException;</span><br><span class="line"><span class="keyword">import</span> java.security.cert.CertificateException;</span><br><span class="line"><span class="keyword">import</span> java.security.cert.X509Certificate;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by timer on 2017/4/23.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestClientCustomSSL</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 自定义 SSLContext 使信任所有证书。</span></span><br><span class="line">        <span class="type">SSLContext</span> <span class="variable">sslcontext</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            sslcontext = SSLContexts.custom()</span><br><span class="line">	                .loadTrustMaterial(<span class="literal">null</span>, <span class="keyword">new</span> <span class="title class_">TrustStrategy</span>() &#123;</span><br><span class="line">	                    <span class="meta">@Override</span></span><br><span class="line">	                    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isTrusted</span><span class="params">(X509Certificate[] x509Certificates, String s)</span> <span class="keyword">throws</span> CertificateException &#123;</span><br><span class="line">	                        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	                    &#125;</span><br><span class="line">	                &#125;)</span><br><span class="line">	                .build();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (KeyManagementException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (KeyStoreException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 仅允许 TLSv1 协议</span></span><br><span class="line">        <span class="type">SSLConnectionSocketFactory</span> <span class="variable">sslsf</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SSLConnectionSocketFactory</span>(</span><br><span class="line">                sslcontext,</span><br><span class="line">                <span class="keyword">new</span> <span class="title class_">String</span>[] &#123; <span class="string">&quot;TLSv1&quot;</span> &#125;,</span><br><span class="line">                <span class="literal">null</span>,</span><br><span class="line">                SSLConnectionSocketFactory.getDefaultHostnameVerifier());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span>(<span class="type">CloseableHttpClient</span> <span class="variable">httpclient</span> <span class="operator">=</span> HttpClients.custom().setSSLSocketFactory(sslsf).build()) &#123;</span><br><span class="line"></span><br><span class="line">            <span class="type">HttpGet</span> <span class="variable">httpget</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HttpGet</span>(<span class="string">&quot;https://httpbin.org/get&quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">try</span>(<span class="type">CloseableHttpResponse</span> <span class="variable">response</span> <span class="operator">=</span> httpclient.execute(httpget)) &#123;</span><br><span class="line">                <span class="type">HttpEntity</span> <span class="variable">entity</span> <span class="operator">=</span> response.getEntity();</span><br><span class="line">                System.out.println(EntityUtils.toString(entity));</span><br><span class="line">                EntityUtils.consume(entity);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>成功访问，输出如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;args&quot;: &#123;&#125;, </span><br><span class="line">  &quot;headers&quot;: &#123;</span><br><span class="line">    &quot;Accept-Encoding&quot;: &quot;gzip,deflate&quot;, </span><br><span class="line">    &quot;Connection&quot;: &quot;close&quot;, </span><br><span class="line">    &quot;Host&quot;: &quot;httpbin.org&quot;, </span><br><span class="line">    &quot;User-Agent&quot;: &quot;Apache-HttpClient/4.5.3 (Java/1.8.0_121)&quot;</span><br><span class="line">  &#125;, </span><br><span class="line">  &quot;origin&quot;: &quot;60.219.211.8&quot;, </span><br><span class="line">  &quot;url&quot;: &quot;https://httpbin.org/get&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>注：这里访问的并不是一个不受信任的站点，但是实际测试不受信任的站点也可以正常访问。</strong></p>
-]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>HttpClient</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Docker 学习之旅（零）：出师不利</title>
-    <url>/2017/03/02/docker-learning-trip-0/</url>
-    <content><![CDATA[<p>Docker——这是一个自出现以来就发展迅猛并获得成功的引擎。自从选择这个方向学习以来，一直在各个地方看到这个名词，但也只是大概了解到这是一个一般企业才会采用的东西。</p>
-<p>寒假放假前的课程设计，邀请了企业的人拿来了企业的真实项目来让我们学习，有幸在课余时间与主管技术的老师咨询讨论了一下。其中有一个话题就说到了 Docker，也是符合之前自己所想，老师也是说，像我们平时自己用，拿自己电脑跑或者租个 vps 什么的也就够了，也是用不上这种东西，不过从交谈中也大概了解到了应用 Docker 的优势，比如统一测试环境，比如秒级启动随时恢复等等等等。</p>
-<p>秉承着热爱计算机相关的一切的原则，还是决定先大概看一下这个东西，虽然可能实用性真的接近于零，不过就像自己选择这个专业一样，不是出于为了找工作或者怎样怎样的功利的心态，而是所谓的，真的是“热爱学习”。</p>
-<p>所以作为一只准程序猿，那么要做的第一件事便是打开官网寻找官方文档（所谓程序员必会通用技能），然后就是阅读英文文档（另一项必会技能）。</p>
-<span id="more"></span>
-<h3 id="安装"><a class="markdownIt-Anchor" href="#安装"></a> 安装</h3>
-<p>使用的环境是 Ubuntu 的 16.10，默认的源里有 Docker，只需按照官网手册就可轻松安装。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo apt-get install \</span><br><span class="line">    apt-transport-https \</span><br><span class="line">    ca-certificates \</span><br><span class="line">    curl \</span><br><span class="line">    software-properties-common</span><br><span class="line">$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</span><br><span class="line">$ sudo apt-key fingerprint 0EBFCD88</span><br><span class="line">$ sudo add-apt-repository \</span><br><span class="line">   <span class="string">&quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu \</span></span><br><span class="line"><span class="string">   <span class="subst">$(lsb_release -cs)</span> \</span></span><br><span class="line"><span class="string">   stable&quot;</span></span><br></pre></td></tr></table></figure>
-<p>等等，怎么有些不对，记得以前看到的源的指纹长度比这还要长…</p>
-<p>还以为是找错了文档，结果打开历史记录一看原来真的是文档改变了，最显而易见的就是网站的 favicon 颜色变深了，也确定了文档就是在今天中午或下午更新了（明明早上起来还看过的，摔！）。</p>
-<p>所以看来是写不成第一篇了，之前被称作 docker 和 docker-engine 的东西已经成为了旧版，现在出现的是 Docker CE 和 Docker EE，文档的开始已经让卸载旧版了。不过可能是因为刚刚更新，Docker CE 和 Docker EE 所指向的链接还不能打开，看来真正的旅程应该是等着文档补全然后再开始了（虽然知道“学习之旅”的翻译是中式英语但是真的找不到合适的翻译了）。</p>
-]]></content>
-      <categories>
-        <category>Docker</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
       </tags>
   </entry>
   <entry>
@@ -207,6 +185,28 @@
       </categories>
       <tags>
         <tag>Design Pattern</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Docker 学习之旅（零）：出师不利</title>
+    <url>/2017/03/02/docker-learning-trip-0/</url>
+    <content><![CDATA[<p>Docker——这是一个自出现以来就发展迅猛并获得成功的引擎。自从选择这个方向学习以来，一直在各个地方看到这个名词，但也只是大概了解到这是一个一般企业才会采用的东西。</p>
+<p>寒假放假前的课程设计，邀请了企业的人拿来了企业的真实项目来让我们学习，有幸在课余时间与主管技术的老师咨询讨论了一下。其中有一个话题就说到了 Docker，也是符合之前自己所想，老师也是说，像我们平时自己用，拿自己电脑跑或者租个 vps 什么的也就够了，也是用不上这种东西，不过从交谈中也大概了解到了应用 Docker 的优势，比如统一测试环境，比如秒级启动随时恢复等等等等。</p>
+<p>秉承着热爱计算机相关的一切的原则，还是决定先大概看一下这个东西，虽然可能实用性真的接近于零，不过就像自己选择这个专业一样，不是出于为了找工作或者怎样怎样的功利的心态，而是所谓的，真的是“热爱学习”。</p>
+<p>所以作为一只准程序猿，那么要做的第一件事便是打开官网寻找官方文档（所谓程序员必会通用技能），然后就是阅读英文文档（另一项必会技能）。</p>
+<span id="more"></span>
+<h3 id="安装"><a class="markdownIt-Anchor" href="#安装"></a> 安装</h3>
+<p>使用的环境是 Ubuntu 的 16.10，默认的源里有 Docker，只需按照官网手册就可轻松安装。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo apt-get install \</span><br><span class="line">    apt-transport-https \</span><br><span class="line">    ca-certificates \</span><br><span class="line">    curl \</span><br><span class="line">    software-properties-common</span><br><span class="line">$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</span><br><span class="line">$ sudo apt-key fingerprint 0EBFCD88</span><br><span class="line">$ sudo add-apt-repository \</span><br><span class="line">   <span class="string">&quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu \</span></span><br><span class="line"><span class="string">   <span class="subst">$(lsb_release -cs)</span> \</span></span><br><span class="line"><span class="string">   stable&quot;</span></span><br></pre></td></tr></table></figure>
+<p>等等，怎么有些不对，记得以前看到的源的指纹长度比这还要长…</p>
+<p>还以为是找错了文档，结果打开历史记录一看原来真的是文档改变了，最显而易见的就是网站的 favicon 颜色变深了，也确定了文档就是在今天中午或下午更新了（明明早上起来还看过的，摔！）。</p>
+<p>所以看来是写不成第一篇了，之前被称作 docker 和 docker-engine 的东西已经成为了旧版，现在出现的是 Docker CE 和 Docker EE，文档的开始已经让卸载旧版了。不过可能是因为刚刚更新，Docker CE 和 Docker EE 所指向的链接还不能打开，看来真正的旅程应该是等着文档补全然后再开始了（虽然知道“学习之旅”的翻译是中式英语但是真的找不到合适的翻译了）。</p>
+]]></content>
+      <categories>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
       </tags>
   </entry>
   <entry>
@@ -538,65 +538,6 @@ ENTRYPOINT command param1 param2（shell 形式）
       </tags>
   </entry>
   <entry>
-    <title>sigaction 自定义信号处理函数的“修复”</title>
-    <url>/2017/04/24/fix-sigaction/</url>
-    <content><![CDATA[<p>在对嵌入式 Linux 系统程序开发中的进程间通信进行学习时，涉及到了信号集函数组，书中给出的示例如下：</p>
-<blockquote>
-<p>该实例首先把 SIGQUIT、SIGINT 两个信号加入信号集，然后将该信号集设为阻塞状态，<br />
-并在该状态下使程序暂停 5 秒。接下来再将信号集设置为非阻塞状态，再对这两个信号分别<br />
-操作，其中 SIGQUIT 执行默认操作，而 SIGINT 执行用户自定义函数的操作。源代码如下<br />
-所示：</p>
-</blockquote>
-<span id="more"></span>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;signal.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">my_func</span><span class="params">(<span class="type">int</span> signum)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;If you want to quit,please try SIGQUIT\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">sigset_t</span> <span class="built_in">set</span>,pendset;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">sigaction</span> <span class="title">action1</span>,<span class="title">action2</span>;</span></span><br><span class="line">	<span class="keyword">if</span>(sigemptyset(&amp;<span class="built_in">set</span>)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigemptyset&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span>(sigaddset(&amp;<span class="built_in">set</span>,SIGQUIT)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigaddset&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span>(sigaddset(&amp;<span class="built_in">set</span>,SIGINT)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigaddset&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span>(sigprocmask(SIG_BLOCK,&amp;<span class="built_in">set</span>,<span class="literal">NULL</span>)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigprocmask&quot;</span>);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;blocked\n&quot;</span>);</span><br><span class="line">		sleep(<span class="number">5</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(sigprocmask(SIG_UNBLOCK,&amp;<span class="built_in">set</span>,<span class="literal">NULL</span>)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigprocmask&quot;</span>);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;unblock\n&quot;</span>);</span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">if</span>(sigismember(&amp;<span class="built_in">set</span>,SIGINT))&#123;</span><br><span class="line">			sigemptyset(&amp;action1.sa_mask);</span><br><span class="line">			action1.sa_handler=my_func;</span><br><span class="line">			sigaction(SIGINT,&amp;action1,<span class="literal">NULL</span>);</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(sigismember(&amp;<span class="built_in">set</span>,SIGQUIT))&#123;</span><br><span class="line">			sigemptyset(&amp;action2.sa_mask);</span><br><span class="line">			action2.sa_handler = SIG_DFL;</span><br><span class="line">			sigaction(SIGTERM,&amp;action2,<span class="literal">NULL</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>理论上，按说明所述及代码的编写，使用 <code>Ctrl-C</code> 传递 <code>SIGINT</code> 信号后，会转到自定义处理函数 <code>my_func</code>，但在实际操作中，在进入自定义处理函数后，程序直接退出。<strong>猜测</strong>是由于在进行自定义处理函数后，系统仍然对信号做了默认的处理。</p>
-<p>在请教老师后，给出了一种解决方案，对 <code>sigaction</code> 结构体中的 <code>sa_flags</code> 进行赋值，这里先贴出该结构体。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sigaction</span> &#123;</span></span><br><span class="line">	<span class="type">void</span> (*sa_handler)(<span class="type">int</span> signo);</span><br><span class="line">	<span class="type">sigset_t</span> sa_mask;</span><br><span class="line">	<span class="type">int</span> sa_flags;</span><br><span class="line">	<span class="type">void</span> (*sa_restore)(<span class="type">void</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>sa_handler</code> 是一个函数指针，指定信号关联函数，这里除可以是用户自定义的处理函数<br />
-外，还可以为 <code>SIG_DFL</code>（采用缺省的处理方式）或 <code>SIG_IGN</code>（忽略信号）。它的处理函数只<br />
-有一个参数，即信号值。<br />
-<code>sa_mask</code> 是一个信号集，它可以指定在信号处理程序执行过程中哪些信号应当被阻塞，<br />
-在调用信号捕获函数之前，该信号集要加入到信号的信号屏蔽字中。<br />
-<code>sa_flags</code> 中包含了许多标志位，是对信号进行处理的各个选择项。它的常见可选值如下：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">选项</th>
-<th style="text-align:left">含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">SA_NODEFER/SA_NOMASK</td>
-<td style="text-align:left">当捕捉到此信号时，在执行其信号捕捉函数时，系统不会自动阻塞此信号</td>
-</tr>
-<tr>
-<td style="text-align:left">SA_NOCLDSTOP</td>
-<td style="text-align:left">进程忽略子进程产生的任何 SIGSTOP、SIGTSTP、SIGTTIN 和 SIGTTOU 信号</td>
-</tr>
-<tr>
-<td style="text-align:left">SA_RESTART</td>
-<td style="text-align:left">可让重启的系统调用重新起作用</td>
-</tr>
-<tr>
-<td style="text-align:left">SA_ONESHOT/SA_RESETHAND</td>
-<td style="text-align:left">自定义信号只执行一次，在执行完毕后恢复信号的系统默认动作</td>
-</tr>
-</tbody>
-</table>
-<p>将 <code>sigaction</code> 结构体中的 <code>sa_flags</code> 成员赋值为 0，修改后的部分代码如下。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">	<span class="keyword">if</span>(sigismember(&amp;<span class="built_in">set</span>,SIGINT))&#123;</span><br><span class="line">		sigemptyset(&amp;action1.sa_mask);</span><br><span class="line">		action1.sa_handler=my_func;</span><br><span class="line">		action1.sa_flags=<span class="number">0</span>; <span class="comment">//添加此行</span></span><br><span class="line">		sigaction(SIGINT,&amp;action1,<span class="literal">NULL</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span>(sigismember(&amp;<span class="built_in">set</span>,SIGQUIT))&#123;</span><br><span class="line">		sigemptyset(&amp;action2.sa_mask);</span><br><span class="line">		action2.sa_handler = SIG_DFL;</span><br><span class="line">		sigaction(SIGTERM,&amp;action2,<span class="literal">NULL</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这样修改后，程序确实正常运行了。但是根据该书所述和在网上查询，始终未能理解为何这样操作，而且之后尝试赋其他值，依然正常运行。网上国内的氛围就是博客间互相复制互相抄袭，找不到多少主观的分析，所以一直未能解决，仅在此做下记录。</p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>C</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>设计模式之工厂模式的 Java 实现</title>
     <url>/2017/04/29/factory-patterns-with-java/</url>
     <content><![CDATA[<p><strong>工厂模式</strong> 属于设计模式中创建型数据模式的一种，同时是软件设计模式中最常使用的模式。广义的工厂模式只是一个统称，其还可以继续分为 <strong>简单工厂模式</strong>、<strong>工厂模式</strong> 和 <strong>抽象工厂模式</strong>。这里对这些工厂模式进行说明并使用 Java 代码进行实现。</p>
@@ -715,6 +656,65 @@ SummerTextField
         <tag>Java</tag>
         <tag>Design Pattern</tag>
         <tag>Factory Patterns</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>sigaction 自定义信号处理函数的“修复”</title>
+    <url>/2017/04/24/fix-sigaction/</url>
+    <content><![CDATA[<p>在对嵌入式 Linux 系统程序开发中的进程间通信进行学习时，涉及到了信号集函数组，书中给出的示例如下：</p>
+<blockquote>
+<p>该实例首先把 SIGQUIT、SIGINT 两个信号加入信号集，然后将该信号集设为阻塞状态，<br />
+并在该状态下使程序暂停 5 秒。接下来再将信号集设置为非阻塞状态，再对这两个信号分别<br />
+操作，其中 SIGQUIT 执行默认操作，而 SIGINT 执行用户自定义函数的操作。源代码如下<br />
+所示：</p>
+</blockquote>
+<span id="more"></span>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;signal.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">my_func</span><span class="params">(<span class="type">int</span> signum)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;If you want to quit,please try SIGQUIT\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">sigset_t</span> <span class="built_in">set</span>,pendset;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">sigaction</span> <span class="title">action1</span>,<span class="title">action2</span>;</span></span><br><span class="line">	<span class="keyword">if</span>(sigemptyset(&amp;<span class="built_in">set</span>)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigemptyset&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span>(sigaddset(&amp;<span class="built_in">set</span>,SIGQUIT)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigaddset&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span>(sigaddset(&amp;<span class="built_in">set</span>,SIGINT)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigaddset&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span>(sigprocmask(SIG_BLOCK,&amp;<span class="built_in">set</span>,<span class="literal">NULL</span>)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigprocmask&quot;</span>);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;blocked\n&quot;</span>);</span><br><span class="line">		sleep(<span class="number">5</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(sigprocmask(SIG_UNBLOCK,&amp;<span class="built_in">set</span>,<span class="literal">NULL</span>)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigprocmask&quot;</span>);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;unblock\n&quot;</span>);</span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">if</span>(sigismember(&amp;<span class="built_in">set</span>,SIGINT))&#123;</span><br><span class="line">			sigemptyset(&amp;action1.sa_mask);</span><br><span class="line">			action1.sa_handler=my_func;</span><br><span class="line">			sigaction(SIGINT,&amp;action1,<span class="literal">NULL</span>);</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(sigismember(&amp;<span class="built_in">set</span>,SIGQUIT))&#123;</span><br><span class="line">			sigemptyset(&amp;action2.sa_mask);</span><br><span class="line">			action2.sa_handler = SIG_DFL;</span><br><span class="line">			sigaction(SIGTERM,&amp;action2,<span class="literal">NULL</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>理论上，按说明所述及代码的编写，使用 <code>Ctrl-C</code> 传递 <code>SIGINT</code> 信号后，会转到自定义处理函数 <code>my_func</code>，但在实际操作中，在进入自定义处理函数后，程序直接退出。<strong>猜测</strong>是由于在进行自定义处理函数后，系统仍然对信号做了默认的处理。</p>
+<p>在请教老师后，给出了一种解决方案，对 <code>sigaction</code> 结构体中的 <code>sa_flags</code> 进行赋值，这里先贴出该结构体。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sigaction</span> &#123;</span></span><br><span class="line">	<span class="type">void</span> (*sa_handler)(<span class="type">int</span> signo);</span><br><span class="line">	<span class="type">sigset_t</span> sa_mask;</span><br><span class="line">	<span class="type">int</span> sa_flags;</span><br><span class="line">	<span class="type">void</span> (*sa_restore)(<span class="type">void</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>sa_handler</code> 是一个函数指针，指定信号关联函数，这里除可以是用户自定义的处理函数<br />
+外，还可以为 <code>SIG_DFL</code>（采用缺省的处理方式）或 <code>SIG_IGN</code>（忽略信号）。它的处理函数只<br />
+有一个参数，即信号值。<br />
+<code>sa_mask</code> 是一个信号集，它可以指定在信号处理程序执行过程中哪些信号应当被阻塞，<br />
+在调用信号捕获函数之前，该信号集要加入到信号的信号屏蔽字中。<br />
+<code>sa_flags</code> 中包含了许多标志位，是对信号进行处理的各个选择项。它的常见可选值如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">选项</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">SA_NODEFER/SA_NOMASK</td>
+<td style="text-align:left">当捕捉到此信号时，在执行其信号捕捉函数时，系统不会自动阻塞此信号</td>
+</tr>
+<tr>
+<td style="text-align:left">SA_NOCLDSTOP</td>
+<td style="text-align:left">进程忽略子进程产生的任何 SIGSTOP、SIGTSTP、SIGTTIN 和 SIGTTOU 信号</td>
+</tr>
+<tr>
+<td style="text-align:left">SA_RESTART</td>
+<td style="text-align:left">可让重启的系统调用重新起作用</td>
+</tr>
+<tr>
+<td style="text-align:left">SA_ONESHOT/SA_RESETHAND</td>
+<td style="text-align:left">自定义信号只执行一次，在执行完毕后恢复信号的系统默认动作</td>
+</tr>
+</tbody>
+</table>
+<p>将 <code>sigaction</code> 结构体中的 <code>sa_flags</code> 成员赋值为 0，修改后的部分代码如下。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">	<span class="keyword">if</span>(sigismember(&amp;<span class="built_in">set</span>,SIGINT))&#123;</span><br><span class="line">		sigemptyset(&amp;action1.sa_mask);</span><br><span class="line">		action1.sa_handler=my_func;</span><br><span class="line">		action1.sa_flags=<span class="number">0</span>; <span class="comment">//添加此行</span></span><br><span class="line">		sigaction(SIGINT,&amp;action1,<span class="literal">NULL</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span>(sigismember(&amp;<span class="built_in">set</span>,SIGQUIT))&#123;</span><br><span class="line">		sigemptyset(&amp;action2.sa_mask);</span><br><span class="line">		action2.sa_handler = SIG_DFL;</span><br><span class="line">		sigaction(SIGTERM,&amp;action2,<span class="literal">NULL</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样修改后，程序确实正常运行了。但是根据该书所述和在网上查询，始终未能理解为何这样操作，而且之后尝试赋其他值，依然正常运行。网上国内的氛围就是博客间互相复制互相抄袭，找不到多少主观的分析，所以一直未能解决，仅在此做下记录。</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>C</tag>
       </tags>
   </entry>
   <entry>
@@ -1238,42 +1238,6 @@ Checking connectivity... done.
 ]]></content>
   </entry>
   <entry>
-    <title>wget 使用代理</title>
-    <url>/2017/03/06/proxy-with-wget/</url>
-    <content><![CDATA[<p><code>wget</code> 是 Linux 下常用的一个命令行下载工具。由于此次需要下载的文件在国外，所以速度缓慢，然后就想到使用代理进行下载。使用 <code>--help</code> 查询了一番，发现并没有可以设置代理的地方，倒是有不走代理的选项，汗。</p>
-<p>因为是在终端使用，所以并不想使用全局代理，上网搜寻了一下关于 <code>wget</code> 使用代理的使用方法。</p>
-<ol>
-<li>
-<p>修改 .wgetrc 文件</p>
-<p>.wgetrc 文件位于 $HOME 目录下，修改添加代理设置。</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ vi .wgetrc</span><br><span class="line">use_proxy=on</span><br><span class="line">http_proxy=http://ip:port</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<span id="more"></span>
-<ol start="2">
-<li>
-<p>设置环境变量</p>
-<p>通过环境变量使终端使用代理。</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ export http_proxy=&quot;ip:port&quot;</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>使用 <code>wget</code> 的 <code>-e</code> 选项</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ wget --help</span><br><span class="line">GNU Wget 1.15, a non-interactive network retriever.</span><br><span class="line">Usage: wget [OPTION]... [URL]...</span><br><span class="line"></span><br><span class="line">Mandatory arguments to long options are mandatory for short options too.</span><br><span class="line"></span><br><span class="line">Startup:</span><br><span class="line">  -V,  --version           display the version of Wget and exit.</span><br><span class="line">  -h,  --help              print this help.</span><br><span class="line">  -b,  --background        go to background after startup.</span><br><span class="line">  -e,  --execute=COMMAND   execute a `.wgetrc&#x27;-style command.</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
-<p>由此可见 <code>wget</code> 的 <code>-e</code> 选项同方法二使用了 http_proxy。</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ wget -e &quot;http_proxy=http://ip:port&quot;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>由于想使用非全局代理，所以方法三适用。</p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>wget</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>MySQL FEDERATED 存储引擎介绍及使用</title>
     <url>/2022/02/28/mysql-federated-storage-engine-tutorials/</url>
     <content><![CDATA[<p>项目上遇到了一个需求，需要在 MySQL（不同实例）进行跨库 join 操作。我们都知道如果是同一实例，那么 MySQL 跨库查询肯定是没有问题的，但是不同实例的跨库查询之前一直没有做过。不过以前还在用 Oracle 的时候，Oracle 有个功能叫做 DATABASE LINK（参见 <a href="https://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_5005.htm">CREATE DATABASE LINK</a>），是将远程数据库映射到本地，这样就可以在一个实例中访问其他数据库了。在谷歌搜索 MySQL 跨库查询的时候，发现 MySQL 也有类似的东西，叫做 FEDERATED 存储引擎。所以我们就可以使用 FEDERATED 将需要 join 的远端表映射到本地数据库，这样在做查询的时候使用上就跟本地表一样了。</p>
@@ -1317,6 +1281,42 @@ FEDERATED 表支持 DML 语句，DDL 语句只支持 <code>DROP TABLE</code>，�
       <tags>
         <tag>MySQL</tag>
         <tag>Tutorial</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>wget 使用代理</title>
+    <url>/2017/03/06/proxy-with-wget/</url>
+    <content><![CDATA[<p><code>wget</code> 是 Linux 下常用的一个命令行下载工具。由于此次需要下载的文件在国外，所以速度缓慢，然后就想到使用代理进行下载。使用 <code>--help</code> 查询了一番，发现并没有可以设置代理的地方，倒是有不走代理的选项，汗。</p>
+<p>因为是在终端使用，所以并不想使用全局代理，上网搜寻了一下关于 <code>wget</code> 使用代理的使用方法。</p>
+<ol>
+<li>
+<p>修改 .wgetrc 文件</p>
+<p>.wgetrc 文件位于 $HOME 目录下，修改添加代理设置。</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ vi .wgetrc</span><br><span class="line">use_proxy=on</span><br><span class="line">http_proxy=http://ip:port</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<span id="more"></span>
+<ol start="2">
+<li>
+<p>设置环境变量</p>
+<p>通过环境变量使终端使用代理。</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ export http_proxy=&quot;ip:port&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>使用 <code>wget</code> 的 <code>-e</code> 选项</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ wget --help</span><br><span class="line">GNU Wget 1.15, a non-interactive network retriever.</span><br><span class="line">Usage: wget [OPTION]... [URL]...</span><br><span class="line"></span><br><span class="line">Mandatory arguments to long options are mandatory for short options too.</span><br><span class="line"></span><br><span class="line">Startup:</span><br><span class="line">  -V,  --version           display the version of Wget and exit.</span><br><span class="line">  -h,  --help              print this help.</span><br><span class="line">  -b,  --background        go to background after startup.</span><br><span class="line">  -e,  --execute=COMMAND   execute a `.wgetrc&#x27;-style command.</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+<p>由此可见 <code>wget</code> 的 <code>-e</code> 选项同方法二使用了 http_proxy。</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ wget -e &quot;http_proxy=http://ip:port&quot;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>由于想使用非全局代理，所以方法三适用。</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>wget</tag>
       </tags>
   </entry>
   <entry>
@@ -1646,67 +1646,6 @@ B中第一个字符，另一条从|字符指向右括号。这使NFA能够进行
       </tags>
   </entry>
   <entry>
-    <title>对 “pthread_create” 未定义的引用</title>
-    <url>/2017/04/26/undefined-reference-to-pthread_create/</url>
-    <content><![CDATA[<p>今天在对 Linux 多线程编程进行学习时，在编译代码时出现了问题。</p>
-<p>由于使用了 <code>pthread_create</code>, <code>pthread_join</code> 等函数，在使用 <code>gcc</code> 编译时，出现了 <strong>对 ‘pthread_create’ 未定义的引用</strong> 的错误，在上网查询后，得知 pthread 库不是 Linux 系统默认的库，所以在编译时需要添加 <code>-lpthread</code> 参数来使用 libpthread.a 库进行编译。</p>
-<pre><code># gcc -o pthread -lpthread pthread.c
-</code></pre>
-<p>结果还是失败。再次上网查阅，得知 <code>-lpthread</code> 应该放到最后面，修改后编译通过。</p>
-<pre><code># gcc thread.c -o thread.c -lpthread
-</code></pre>
-<p><strong>参考链接：<a href="http://blog.csdn.net/besfanfei/article/details/7542396">http://blog.csdn.net/besfanfei/article/details/7542396</a></strong></p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>C</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>记录未使用的 Jekyll 环境搭建</title>
-    <url>/2017/01/26/unused-jekyll-on-ubuntu/</url>
-    <content><![CDATA[<p>自从win10出现了 Bash on Ubuntu，自己便喜欢上了它，<s>甚至抛弃了虚拟机</s>（双系统还是存在的）。正好最近厌烦了 wp，毕竟太臃肿了，对于我这种没事闲的只会随便写写的没太大用处。</p>
-<p>然后就想起了自己沉睡已久的 github，不是因为 github 的免费且无限流量，主要是喜欢 github 上静态页面的简约，百度了下现在的方式，大多是 Jelly 来搭建的，不喜欢在 windows 上装各种软件的我就这么选择了 Bash on Ubuntu，这也是本文的来源。</p>
-<h3 id="前期准备"><a class="markdownIt-Anchor" href="#前期准备"></a> 前期准备</h3>
-<ul>
-<li><a href="http://jekyll.com.cn/">Jekyll 中文官网</a></li>
-<li><a href="http://www.ruby-lang.org/">Ruby官网</a></li>
-</ul>
-<span id="more"></span>
-<h3 id="环境搭建"><a class="markdownIt-Anchor" href="#环境搭建"></a> 环境搭建</h3>
-<p>由于 Ubuntu 的仓库里各软件还是很多的，所以首先选择了 apt 方式安装。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo apt-get install ruby</span><br><span class="line">$ gem install jekyll</span><br></pre></td></tr></table></figure>
-<p>结果出错，ruby 版本太低，输入 ruby -v 查询后是1.95的版本，需求是2点多版本。</p>
-<h3 id="换用源码编译安装"><a class="markdownIt-Anchor" href="#换用源码编译安装"></a> 换用源码编译安装</h3>
-<p>Linux 下安装软件，至少是我自己的通常思维是先用自带的包管理器安装，如果没有对应的软件包或者版本太低或有缺陷，通常会到官网选择编译安装。</p>
-<ul>
-<li>首先安装编译环境</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo apt-get install build-essential cmake</span><br></pre></td></tr></table></figure>
-<ul>
-<li>然后下载源码编译安装</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ wget https://cache.ruby-lang.org/pub/ruby/2.4/ruby-2.4.0.tar.gz</span><br><span class="line">$ tar -zxvf ruby-2.4.0.tar.gz</span><br><span class="line">$ <span class="built_in">cd</span> ruby-2.4.0</span><br><span class="line">$ ./configure</span><br><span class="line">$ make</span><br><span class="line">$ sudo make install</span><br></pre></td></tr></table></figure>
-<p>在修改 gem 源时出现错误，使用的是国内的 https 源，提示 openssl 有问题。然而系统是安有 openssl 的，而且编译的时候并没有看到有关 openssl 的配置（也有可能是我没有仔细看）。提示可以使用 http 的方式添加源，不过略微强迫症，于是宣告源码编译安装失败。</p>
-<h3 id="rvm-方式安装"><a class="markdownIt-Anchor" href="#rvm-方式安装"></a> rvm 方式安装</h3>
-<p>这也是在网上查到的第三种也是常见的最后一种安装方式，首先安装 rvm 然后用 rvm 安装 ruby。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ curl -L https://get.rvm.io | bash -s stable</span><br><span class="line">$ <span class="built_in">source</span> ~/.rvm/scripts/rvm</span><br><span class="line">$ rvm requirements</span><br><span class="line">$ rvm install ruby</span><br><span class="line">$ gem install jekyll</span><br></pre></td></tr></table></figure>
-<p>成功安装，安装的 ruby 版本为2.3.3。</p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>Ubuntu</tag>
-        <tag>Ruby</tag>
-        <tag>Jekyll</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Trino 介绍及部署使用</title>
     <url>/2022/03/15/trino-deploy-tutorials/</url>
     <content><![CDATA[<p>之前我们提到项目上有一个跨库进行 MySQL join 操作的需求，当时选择使用了 MySQL 的 FEDERATED 存储引擎来解决这个问题，具体可以看 <a href="/2022/02/28/mysql-federated-storage-engine-tutorials/">MySQL FEDERATED 存储引擎介绍及使用</a>。但是 FEDERATED 本身只支持 MySQL 数据库，如果我们需要对多个不同种类的数据库进行关联操作，那么还是要依赖第三方组件来进行，比如这次要介绍的 Trino。</p>
@@ -1814,6 +1753,67 @@ B中第一个字符，另一条从|字符指向右括号。这使NFA能够进行
       <tags>
         <tag>MySQL</tag>
         <tag>Tutorial</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>对 “pthread_create” 未定义的引用</title>
+    <url>/2017/04/26/undefined-reference-to-pthread_create/</url>
+    <content><![CDATA[<p>今天在对 Linux 多线程编程进行学习时，在编译代码时出现了问题。</p>
+<p>由于使用了 <code>pthread_create</code>, <code>pthread_join</code> 等函数，在使用 <code>gcc</code> 编译时，出现了 <strong>对 ‘pthread_create’ 未定义的引用</strong> 的错误，在上网查询后，得知 pthread 库不是 Linux 系统默认的库，所以在编译时需要添加 <code>-lpthread</code> 参数来使用 libpthread.a 库进行编译。</p>
+<pre><code># gcc -o pthread -lpthread pthread.c
+</code></pre>
+<p>结果还是失败。再次上网查阅，得知 <code>-lpthread</code> 应该放到最后面，修改后编译通过。</p>
+<pre><code># gcc thread.c -o thread.c -lpthread
+</code></pre>
+<p><strong>参考链接：<a href="http://blog.csdn.net/besfanfei/article/details/7542396">http://blog.csdn.net/besfanfei/article/details/7542396</a></strong></p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>C</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>记录未使用的 Jekyll 环境搭建</title>
+    <url>/2017/01/26/unused-jekyll-on-ubuntu/</url>
+    <content><![CDATA[<p>自从win10出现了 Bash on Ubuntu，自己便喜欢上了它，<s>甚至抛弃了虚拟机</s>（双系统还是存在的）。正好最近厌烦了 wp，毕竟太臃肿了，对于我这种没事闲的只会随便写写的没太大用处。</p>
+<p>然后就想起了自己沉睡已久的 github，不是因为 github 的免费且无限流量，主要是喜欢 github 上静态页面的简约，百度了下现在的方式，大多是 Jelly 来搭建的，不喜欢在 windows 上装各种软件的我就这么选择了 Bash on Ubuntu，这也是本文的来源。</p>
+<h3 id="前期准备"><a class="markdownIt-Anchor" href="#前期准备"></a> 前期准备</h3>
+<ul>
+<li><a href="http://jekyll.com.cn/">Jekyll 中文官网</a></li>
+<li><a href="http://www.ruby-lang.org/">Ruby官网</a></li>
+</ul>
+<span id="more"></span>
+<h3 id="环境搭建"><a class="markdownIt-Anchor" href="#环境搭建"></a> 环境搭建</h3>
+<p>由于 Ubuntu 的仓库里各软件还是很多的，所以首先选择了 apt 方式安装。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo apt-get install ruby</span><br><span class="line">$ gem install jekyll</span><br></pre></td></tr></table></figure>
+<p>结果出错，ruby 版本太低，输入 ruby -v 查询后是1.95的版本，需求是2点多版本。</p>
+<h3 id="换用源码编译安装"><a class="markdownIt-Anchor" href="#换用源码编译安装"></a> 换用源码编译安装</h3>
+<p>Linux 下安装软件，至少是我自己的通常思维是先用自带的包管理器安装，如果没有对应的软件包或者版本太低或有缺陷，通常会到官网选择编译安装。</p>
+<ul>
+<li>首先安装编译环境</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo apt-get install build-essential cmake</span><br></pre></td></tr></table></figure>
+<ul>
+<li>然后下载源码编译安装</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ wget https://cache.ruby-lang.org/pub/ruby/2.4/ruby-2.4.0.tar.gz</span><br><span class="line">$ tar -zxvf ruby-2.4.0.tar.gz</span><br><span class="line">$ <span class="built_in">cd</span> ruby-2.4.0</span><br><span class="line">$ ./configure</span><br><span class="line">$ make</span><br><span class="line">$ sudo make install</span><br></pre></td></tr></table></figure>
+<p>在修改 gem 源时出现错误，使用的是国内的 https 源，提示 openssl 有问题。然而系统是安有 openssl 的，而且编译的时候并没有看到有关 openssl 的配置（也有可能是我没有仔细看）。提示可以使用 http 的方式添加源，不过略微强迫症，于是宣告源码编译安装失败。</p>
+<h3 id="rvm-方式安装"><a class="markdownIt-Anchor" href="#rvm-方式安装"></a> rvm 方式安装</h3>
+<p>这也是在网上查到的第三种也是常见的最后一种安装方式，首先安装 rvm 然后用 rvm 安装 ruby。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ curl -L https://get.rvm.io | bash -s stable</span><br><span class="line">$ <span class="built_in">source</span> ~/.rvm/scripts/rvm</span><br><span class="line">$ rvm requirements</span><br><span class="line">$ rvm install ruby</span><br><span class="line">$ gem install jekyll</span><br></pre></td></tr></table></figure>
+<p>成功安装，安装的 ruby 版本为2.3.3。</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Ubuntu</tag>
+        <tag>Ruby</tag>
+        <tag>Jekyll</tag>
       </tags>
   </entry>
   <entry>
