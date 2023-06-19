@@ -153,7 +153,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -164,7 +164,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-count">47</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -204,6 +204,128 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://sslover.me/2017/04/09/regular-expression/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/12376409?v=4">
+      <meta itemprop="name" content="timerever">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A Blog">
+      <meta itemprop="description" content="Just another blog.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | A Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2017/04/09/regular-expression/" class="post-title-link" itemprop="url">正则表达式原理探究</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-04-09 16:52:41" itemprop="dateCreated datePublished" datetime="2017-04-09T16:52:41+08:00">2017-04-09</time>
+    </span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Regular-Expression/" itemprop="url" rel="index"><span itemprop="name">Regular Expression</span></a>
+        </span>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-tags"></i>
+      </span>
+      <span class="post-meta-item-text">标签：</span>
+      <span class="post-tags">
+        <a href="/tags/Regular-Expression/" rel="tag"> Regular Expression</a>
+      </span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<p>正则表达式是被广为使用的工具，功能非常强大，但语法很复杂，想要完全记忆非常麻烦。<br />
+偶然间在《算法：第四版》上看到了有关于正则表达式原理的叙述，受益匪浅，在此做下笔记。</p>
+</blockquote>
+<h1 id="正则表达式的定义"><a class="markdownIt-Anchor" href="#正则表达式的定义"></a> 正则表达式的定义</h1>
+<p>**什么是正则表达式？**一个正则表达式对应着一堆字符串，这些字符串构成一个集合，它们的共同特点就是匹配于这个正则表达式。例如：a(a|b) * b 就对应着第一个字符为a，最后一个字符为b，由a和b构成的字符串。</p>
+<p>正则表达式有三种核心的基本结构：</p>
+<ol>
+<li><em>连接</em>：如 abc，由 a, b, c连接而成。</li>
+<li><em>或</em>：如 a|b|c，表示是 a 或 b 或 c。<br />
+ab|bcd表示ab或bcd。</li>
+<li><em>闭包</em>：如a*b，表示0或若干个a和一个b连接而成的字符串。</li>
+</ol>
+<p>以上就是最最最基本的结构，是构成正则表达式的基础。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/04/09/regular-expression/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1229,118 +1351,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2017/03/03/docker-learning-trip-1/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://sslover.me/2017/03/02/docker-learning-trip-0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/12376409?v=4">
-      <meta itemprop="name" content="timerever">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="A Blog">
-      <meta itemprop="description" content="Just another blog.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | A Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2017/03/02/docker-learning-trip-0/" class="post-title-link" itemprop="url">Docker 学习之旅（零）：出师不利</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2017-03-02 21:51:49" itemprop="dateCreated datePublished" datetime="2017-03-02T21:51:49+08:00">2017-03-02</time>
-    </span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>691</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a>
-        </span>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-tags"></i>
-      </span>
-      <span class="post-meta-item-text">标签：</span>
-      <span class="post-tags">
-        <a href="/tags/Docker/" rel="tag"> Docker</a>
-      </span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Docker——这是一个自出现以来就发展迅猛并获得成功的引擎。自从选择这个方向学习以来，一直在各个地方看到这个名词，但也只是大概了解到这是一个一般企业才会采用的东西。</p>
-<p>寒假放假前的课程设计，邀请了企业的人拿来了企业的真实项目来让我们学习，有幸在课余时间与主管技术的老师咨询讨论了一下。其中有一个话题就说到了 Docker，也是符合之前自己所想，老师也是说，像我们平时自己用，拿自己电脑跑或者租个 vps 什么的也就够了，也是用不上这种东西，不过从交谈中也大概了解到了应用 Docker 的优势，比如统一测试环境，比如秒级启动随时恢复等等等等。</p>
-<p>秉承着热爱计算机相关的一切的原则，还是决定先大概看一下这个东西，虽然可能实用性真的接近于零，不过就像自己选择这个专业一样，不是出于为了找工作或者怎样怎样的功利的心态，而是所谓的，真的是“热爱学习”。</p>
-<p>所以作为一只准程序猿，那么要做的第一件事便是打开官网寻找官方文档（所谓程序员必会通用技能），然后就是阅读英文文档（另一项必会技能）。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/03/02/docker-learning-trip-0/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>

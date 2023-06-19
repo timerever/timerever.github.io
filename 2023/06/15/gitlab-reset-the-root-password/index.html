@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sslover.me","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="手里有一个旧版本的私有化部署的 GitLab 数据，临时要启动一下看一下之前的代码。由于之前就是 Docker 部署的，所以在数据文件里查了下之前部署的版本号，直接就用 Docker 启动了。启动都很顺利，但是问题出在已经没人记得之前的管理员密码了，所以需要重置管理员密码。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="重置 GitLab 管理员密码">
+<meta property="og:url" content="https://sslover.me/2023/06/15/gitlab-reset-the-root-password/index.html">
+<meta property="og:site_name" content="A Blog">
+<meta property="og:description" content="手里有一个旧版本的私有化部署的 GitLab 数据，临时要启动一下看一下之前的代码。由于之前就是 Docker 部署的，所以在数据文件里查了下之前部署的版本号，直接就用 Docker 启动了。启动都很顺利，但是问题出在已经没人记得之前的管理员密码了，所以需要重置管理员密码。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sslover.me/2023/06/15/gitlab-reset-the-root-password/gitlab-reset-the-root-password-0.png">
+<meta property="og:image" content="https://sslover.me/2023/06/15/gitlab-reset-the-root-password/gitlab-reset-the-root-password-1.png">
+<meta property="article:published_time" content="2023-06-15T11:33:12.000Z">
+<meta property="article:modified_time" content="2023-06-19T15:50:52.530Z">
+<meta property="article:author" content="timerever">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="GitLab">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sslover.me/2023/06/15/gitlab-reset-the-root-password/gitlab-reset-the-root-password-0.png">
+
+
+<link rel="canonical" href="https://sslover.me/2023/06/15/gitlab-reset-the-root-password/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://sslover.me/2023/06/15/gitlab-reset-the-root-password/","path":"2023/06/15/gitlab-reset-the-root-password/","title":"重置 GitLab 管理员密码"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>重置 GitLab 管理员密码 | A Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90849359-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-90849359-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">A Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="timerever"
+      src="https://avatars.githubusercontent.com/u/12376409?v=4">
+  <p class="site-author-name" itemprop="name">timerever</p>
+  <div class="site-description" itemprop="description">Just another blog.</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">47</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/timerever" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;timerever" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://blog.swordandfire.online/" title="https:&#x2F;&#x2F;blog.swordandfire.online" rel="noopener" target="_blank">Swordandfire</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://www.yxai123.cn/" title="https:&#x2F;&#x2F;www.yxai123.cn" rel="noopener" target="_blank">Yxai123</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://sslover.me/2023/06/15/gitlab-reset-the-root-password/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://avatars.githubusercontent.com/u/12376409?v=4">
+      <meta itemprop="name" content="timerever">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A Blog">
+      <meta itemprop="description" content="Just another blog.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="重置 GitLab 管理员密码 | A Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          重置 GitLab 管理员密码
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-06-15 19:33:12" itemprop="dateCreated datePublished" datetime="2023-06-15T19:33:12+08:00">2023-06-15</time>
+    </span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>478</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-tags"></i>
+      </span>
+      <span class="post-meta-item-text">标签：</span>
+      <span class="post-tags">
+        <a href="/tags/Docker/" rel="tag"> Docker</a>
+        <a href="/tags/Linux/" rel="tag"> Linux</a>
+        <a href="/tags/GitLab/" rel="tag"> GitLab</a>
+      </span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>手里有一个旧版本的私有化部署的 GitLab 数据，临时要启动一下看一下之前的代码。由于之前就是 Docker 部署的，所以在数据文件里查了下之前部署的版本号，直接就用 Docker 启动了。启动都很顺利，但是问题出在已经没人记得之前的管理员密码了，所以需要重置管理员密码。</p>
+<span id="more"></span>
+<p>重置 GitLab 管理员密码的方法也很简单，GitLab 官方提供了不使用 UI 就可以重置任意用户密码的方法。虽然该方法不局限于管理员账户，但是正常情况下普通账户使用管理员账户重置即可。 对于 GitLab 13.9 的版本，可以使用 Rake 任务的方式直接重置，不过手里的版本没这么新，所以还是采用传统的 Rails 控制台进行操作。</p>
+<p>首先进入 Rails 控制台，对于非源码安装的 GitLab，都可以直接使用 <code>gitlab-rails console</code> 命令进入，通过 Docker 启动的需要先进入 Docker 容器再执行命令，如图：</p>
+<img src="/2023/06/15/gitlab-reset-the-root-password/gitlab-reset-the-root-password-0.png" class="" title="进入 Rails 控制台">
+<p>然后在 Rails 控制台中按顺序执行：</p>
+<ol>
+<li>
+<p>通过用户名或 ID 查询用户<br />
+对于管理员账户，默认用户名为 root，如果修改过，可以使用 ID：1 进行查询</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">通过用户名查询</span></span><br><span class="line">user = User.find_by_username &#x27;exampleuser&#x27;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">通过 ID 查询</span></span><br><span class="line">user = User.find(123)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">通过用户邮箱查询</span></span><br><span class="line">user = User.find_by(email: &#x27;user@example.com&#x27;)</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>查询到用户后，就可以直接修改用户的密码了：</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">new_password = &#x27;abcd1234!&#x27;</span><br><span class="line">user.password = new_password</span><br><span class="line">user.password_confirmation = new_password</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>然后保存，退出</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">user.save!</span><br><span class="line"></span><br><span class="line">exit</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>全部流程如下：</p>
+<img src="/2023/06/15/gitlab-reset-the-root-password/gitlab-reset-the-root-password-1.png" class="" title="重置用户密码">
+<p>此时，管理员用户的密码就已经重置完成，可以正常进行登录了。</p>
+<p><strong>参考文档</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/security/reset_user_password.html">Reset a user’s password</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/administration/operations/rails_console.html">Rails console</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>timerever
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://sslover.me/2023/06/15/gitlab-reset-the-root-password/" title="重置 GitLab 管理员密码">https://sslover.me/2023/06/15/gitlab-reset-the-root-password/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+        <br/>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/04/28/vlc-change-language-on-linux/" rel="next" title="Linux 下修改 VLC 界面语言的正确方式">
+                  Linux 下修改 VLC 界面语言的正确方式 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fas fa-coffee"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">timerever</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css" integrity="sha256-hLTCMFlKxdNgPXyWlSSxYN0ykJmxxq9Yt3MNfdRGWeA=" crossorigin="anonymous">
+
+
+
+</body>
+</html>
