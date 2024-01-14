@@ -538,92 +538,6 @@ ENTRYPOINT command param1 param2（shell 形式）
       </tags>
   </entry>
   <entry>
-    <title>sigaction 自定义信号处理函数的“修复”</title>
-    <url>/2017/04/24/fix-sigaction/</url>
-    <content><![CDATA[<p>在对嵌入式 Linux 系统程序开发中的进程间通信进行学习时，涉及到了信号集函数组，书中给出的示例如下：</p>
-<blockquote>
-<p>该实例首先把 SIGQUIT、SIGINT 两个信号加入信号集，然后将该信号集设为阻塞状态，<br />
-并在该状态下使程序暂停 5 秒。接下来再将信号集设置为非阻塞状态，再对这两个信号分别<br />
-操作，其中 SIGQUIT 执行默认操作，而 SIGINT 执行用户自定义函数的操作。源代码如下<br />
-所示：</p>
-</blockquote>
-<span id="more"></span>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;signal.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">my_func</span><span class="params">(<span class="type">int</span> signum)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;If you want to quit,please try SIGQUIT\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">sigset_t</span> <span class="built_in">set</span>,pendset;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">sigaction</span> <span class="title">action1</span>,<span class="title">action2</span>;</span></span><br><span class="line">	<span class="keyword">if</span>(sigemptyset(&amp;<span class="built_in">set</span>)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigemptyset&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span>(sigaddset(&amp;<span class="built_in">set</span>,SIGQUIT)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigaddset&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span>(sigaddset(&amp;<span class="built_in">set</span>,SIGINT)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigaddset&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span>(sigprocmask(SIG_BLOCK,&amp;<span class="built_in">set</span>,<span class="literal">NULL</span>)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigprocmask&quot;</span>);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;blocked\n&quot;</span>);</span><br><span class="line">		sleep(<span class="number">5</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(sigprocmask(SIG_UNBLOCK,&amp;<span class="built_in">set</span>,<span class="literal">NULL</span>)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigprocmask&quot;</span>);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;unblock\n&quot;</span>);</span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">if</span>(sigismember(&amp;<span class="built_in">set</span>,SIGINT))&#123;</span><br><span class="line">			sigemptyset(&amp;action1.sa_mask);</span><br><span class="line">			action1.sa_handler=my_func;</span><br><span class="line">			sigaction(SIGINT,&amp;action1,<span class="literal">NULL</span>);</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(sigismember(&amp;<span class="built_in">set</span>,SIGQUIT))&#123;</span><br><span class="line">			sigemptyset(&amp;action2.sa_mask);</span><br><span class="line">			action2.sa_handler = SIG_DFL;</span><br><span class="line">			sigaction(SIGTERM,&amp;action2,<span class="literal">NULL</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>理论上，按说明所述及代码的编写，使用 <code>Ctrl-C</code> 传递 <code>SIGINT</code> 信号后，会转到自定义处理函数 <code>my_func</code>，但在实际操作中，在进入自定义处理函数后，程序直接退出。<strong>猜测</strong>是由于在进行自定义处理函数后，系统仍然对信号做了默认的处理。</p>
-<p>在请教老师后，给出了一种解决方案，对 <code>sigaction</code> 结构体中的 <code>sa_flags</code> 进行赋值，这里先贴出该结构体。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sigaction</span> &#123;</span></span><br><span class="line">	<span class="type">void</span> (*sa_handler)(<span class="type">int</span> signo);</span><br><span class="line">	<span class="type">sigset_t</span> sa_mask;</span><br><span class="line">	<span class="type">int</span> sa_flags;</span><br><span class="line">	<span class="type">void</span> (*sa_restore)(<span class="type">void</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>sa_handler</code> 是一个函数指针，指定信号关联函数，这里除可以是用户自定义的处理函数<br />
-外，还可以为 <code>SIG_DFL</code>（采用缺省的处理方式）或 <code>SIG_IGN</code>（忽略信号）。它的处理函数只<br />
-有一个参数，即信号值。<br />
-<code>sa_mask</code> 是一个信号集，它可以指定在信号处理程序执行过程中哪些信号应当被阻塞，<br />
-在调用信号捕获函数之前，该信号集要加入到信号的信号屏蔽字中。<br />
-<code>sa_flags</code> 中包含了许多标志位，是对信号进行处理的各个选择项。它的常见可选值如下：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">选项</th>
-<th style="text-align:left">含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">SA_NODEFER/SA_NOMASK</td>
-<td style="text-align:left">当捕捉到此信号时，在执行其信号捕捉函数时，系统不会自动阻塞此信号</td>
-</tr>
-<tr>
-<td style="text-align:left">SA_NOCLDSTOP</td>
-<td style="text-align:left">进程忽略子进程产生的任何 SIGSTOP、SIGTSTP、SIGTTIN 和 SIGTTOU 信号</td>
-</tr>
-<tr>
-<td style="text-align:left">SA_RESTART</td>
-<td style="text-align:left">可让重启的系统调用重新起作用</td>
-</tr>
-<tr>
-<td style="text-align:left">SA_ONESHOT/SA_RESETHAND</td>
-<td style="text-align:left">自定义信号只执行一次，在执行完毕后恢复信号的系统默认动作</td>
-</tr>
-</tbody>
-</table>
-<p>将 <code>sigaction</code> 结构体中的 <code>sa_flags</code> 成员赋值为 0，修改后的部分代码如下。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">	<span class="keyword">if</span>(sigismember(&amp;<span class="built_in">set</span>,SIGINT))&#123;</span><br><span class="line">		sigemptyset(&amp;action1.sa_mask);</span><br><span class="line">		action1.sa_handler=my_func;</span><br><span class="line">		action1.sa_flags=<span class="number">0</span>; <span class="comment">//添加此行</span></span><br><span class="line">		sigaction(SIGINT,&amp;action1,<span class="literal">NULL</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span>(sigismember(&amp;<span class="built_in">set</span>,SIGQUIT))&#123;</span><br><span class="line">		sigemptyset(&amp;action2.sa_mask);</span><br><span class="line">		action2.sa_handler = SIG_DFL;</span><br><span class="line">		sigaction(SIGTERM,&amp;action2,<span class="literal">NULL</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这样修改后，程序确实正常运行了。但是根据该书所述和在网上查询，始终未能理解为何这样操作，而且之后尝试赋其他值，依然正常运行。网上国内的氛围就是博客间互相复制互相抄袭，找不到多少主观的分析，所以一直未能解决，仅在此做下记录。</p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>C</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>刷 CM 过程中对使用的常用刷机命令的记录</title>
-    <url>/2017/02/27/frequently-used-commands-while-flashing-android/</url>
-    <content><![CDATA[<blockquote>
-<p>终于决定把手里这台荣耀6 刷成 CM，无奈华为只开源 4.4.4 的内核代码，只有 CM 11 的非官方包，哭。</p>
-</blockquote>
-<p>寻着 XDA 上开发者给的步骤给走，给了两个 rec 一个无法挂载内置储存卡然后没外置的选项（不过也是因为这个才有了本文），一个有问题直接手机进了救援模式，也是汗颜，索性自己手里有 rec 成功解决了。</p>
-<p>文中说把刷机包放到外置内存卡目录下，然后进入 rec 傻眼了并没有找到从外置内存卡安装刷机包的选项，于是无奈自己尝试用 adb 传送刷机包。</p>
-<p>至于为什么以前不怎么用 adb，主要是由于华为这机子很难从关机状态进入 fastboot，官方让插着 USB 线关机进入但是成功率不高，所以以前都是用论坛正好给出的脚本从开机状态进入，正好熟悉下 adb 记录于此。</p>
-<span id="more"></span>
-<h3 id="adb-命令"><a class="markdownIt-Anchor" href="#adb-命令"></a> adb 命令</h3>
-<ul>
-<li><a href="https://developer.android.com/studio/command-line/adb.html">官方文档</a></li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb devices <span class="comment"># 查询连接设备</span></span><br><span class="line">$ adb install &lt;apkfile&gt; <span class="comment"># 安装apk文件</span></span><br><span class="line">$ adb uninstall &lt;package&gt; <span class="comment"># 卸载软件</span></span><br><span class="line">$ adb push foo.txt /sdcard/foo.txt <span class="comment">#发送foo.txt文件</span></span><br><span class="line">$ adb pull /sdcard/foo.txt foo.txt <span class="comment">#传送foo.txt文件到本地</span></span><br><span class="line">$ adb reboot <span class="comment"># 重启</span></span><br><span class="line">$ adb reboot recovery <span class="comment"># 重启到recovery</span></span><br><span class="line">$ adb reboot bootloader <span class="comment"># 重启到fastboot</span></span><br></pre></td></tr></table></figure>
-<h3 id="fastboot-命令"><a class="markdownIt-Anchor" href="#fastboot-命令"></a> fastboot 命令</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ fastboot flash boot boot.img <span class="comment"># 刷入boot</span></span><br><span class="line">$ fastboot flash recovery recovery.img <span class="comment"># 同上，刷入recovery</span></span><br><span class="line">......</span><br><span class="line">$ fastboot reboot <span class="comment"># 重启</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
-        <tag>Huawei</tag>
-        <tag>CyanogenMod</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>设计模式之工厂模式的 Java 实现</title>
     <url>/2017/04/29/factory-patterns-with-java/</url>
     <content><![CDATA[<p><strong>工厂模式</strong> 属于设计模式中创建型数据模式的一种，同时是软件设计模式中最常使用的模式。广义的工厂模式只是一个统称，其还可以继续分为 <strong>简单工厂模式</strong>、<strong>工厂模式</strong> 和 <strong>抽象工厂模式</strong>。这里对这些工厂模式进行说明并使用 Java 代码进行实现。</p>
@@ -745,45 +659,89 @@ SummerTextField
       </tags>
   </entry>
   <entry>
-    <title>重置 GitLab 管理员密码</title>
-    <url>/2023/06/15/gitlab-reset-the-root-password/</url>
-    <content><![CDATA[<p>手里有一个旧版本的私有化部署的 GitLab 数据，临时要启动一下看一下之前的代码。由于之前就是 Docker 部署的，所以在数据文件里查了下之前部署的版本号，直接就用 Docker 启动了。启动都很顺利，但是问题出在已经没人记得之前的管理员密码了，所以需要重置管理员密码。</p>
+    <title>sigaction 自定义信号处理函数的“修复”</title>
+    <url>/2017/04/24/fix-sigaction/</url>
+    <content><![CDATA[<p>在对嵌入式 Linux 系统程序开发中的进程间通信进行学习时，涉及到了信号集函数组，书中给出的示例如下：</p>
+<blockquote>
+<p>该实例首先把 SIGQUIT、SIGINT 两个信号加入信号集，然后将该信号集设为阻塞状态，<br />
+并在该状态下使程序暂停 5 秒。接下来再将信号集设置为非阻塞状态，再对这两个信号分别<br />
+操作，其中 SIGQUIT 执行默认操作，而 SIGINT 执行用户自定义函数的操作。源代码如下<br />
+所示：</p>
+</blockquote>
 <span id="more"></span>
-<p>重置 GitLab 管理员密码的方法也很简单，GitLab 官方提供了不使用 UI 就可以重置任意用户密码的方法。虽然该方法不局限于管理员账户，但是正常情况下普通账户使用管理员账户重置即可。 对于 GitLab 13.9 的版本，可以使用 Rake 任务的方式直接重置，不过手里的版本没这么新，所以还是采用传统的 Rails 控制台进行操作。</p>
-<p>首先进入 Rails 控制台，对于非源码安装的 GitLab，都可以直接使用 <code>gitlab-rails console</code> 命令进入，通过 Docker 启动的需要先进入 Docker 容器再执行命令，如图：</p>
-<img src="/2023/06/15/gitlab-reset-the-root-password/gitlab-reset-the-root-password-0.png" class="" title="进入 Rails 控制台">
-<p>然后在 Rails 控制台中按顺序执行：</p>
-<ol>
-<li>
-<p>通过用户名或 ID 查询用户<br />
-对于管理员账户，默认用户名为 root，如果修改过，可以使用 ID：1 进行查询</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">通过用户名查询</span></span><br><span class="line">user = User.find_by_username &#x27;exampleuser&#x27;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">通过 ID 查询</span></span><br><span class="line">user = User.find(123)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">通过用户邮箱查询</span></span><br><span class="line">user = User.find_by(email: &#x27;user@example.com&#x27;)</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>查询到用户后，就可以直接修改用户的密码了：</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">new_password = &#x27;abcd1234!&#x27;</span><br><span class="line">user.password = new_password</span><br><span class="line">user.password_confirmation = new_password</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>然后保存，退出</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">user.save!</span><br><span class="line"></span><br><span class="line">exit</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>全部流程如下：</p>
-<img src="/2023/06/15/gitlab-reset-the-root-password/gitlab-reset-the-root-password-1.png" class="" title="重置用户密码">
-<p>此时，管理员用户的密码就已经重置完成，可以正常进行登录了。</p>
-<p><strong>参考文档</strong></p>
-<ul>
-<li><a href="https://docs.gitlab.com/ee/security/reset_user_password.html">Reset a user’s password</a></li>
-<li><a href="https://docs.gitlab.com/ee/administration/operations/rails_console.html">Rails console</a></li>
-</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;signal.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">my_func</span><span class="params">(<span class="type">int</span> signum)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;If you want to quit,please try SIGQUIT\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">sigset_t</span> <span class="built_in">set</span>,pendset;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">sigaction</span> <span class="title">action1</span>,<span class="title">action2</span>;</span></span><br><span class="line">	<span class="keyword">if</span>(sigemptyset(&amp;<span class="built_in">set</span>)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigemptyset&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span>(sigaddset(&amp;<span class="built_in">set</span>,SIGQUIT)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigaddset&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span>(sigaddset(&amp;<span class="built_in">set</span>,SIGINT)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigaddset&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span>(sigprocmask(SIG_BLOCK,&amp;<span class="built_in">set</span>,<span class="literal">NULL</span>)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigprocmask&quot;</span>);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;blocked\n&quot;</span>);</span><br><span class="line">		sleep(<span class="number">5</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(sigprocmask(SIG_UNBLOCK,&amp;<span class="built_in">set</span>,<span class="literal">NULL</span>)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigprocmask&quot;</span>);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;unblock\n&quot;</span>);</span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">if</span>(sigismember(&amp;<span class="built_in">set</span>,SIGINT))&#123;</span><br><span class="line">			sigemptyset(&amp;action1.sa_mask);</span><br><span class="line">			action1.sa_handler=my_func;</span><br><span class="line">			sigaction(SIGINT,&amp;action1,<span class="literal">NULL</span>);</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(sigismember(&amp;<span class="built_in">set</span>,SIGQUIT))&#123;</span><br><span class="line">			sigemptyset(&amp;action2.sa_mask);</span><br><span class="line">			action2.sa_handler = SIG_DFL;</span><br><span class="line">			sigaction(SIGTERM,&amp;action2,<span class="literal">NULL</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>理论上，按说明所述及代码的编写，使用 <code>Ctrl-C</code> 传递 <code>SIGINT</code> 信号后，会转到自定义处理函数 <code>my_func</code>，但在实际操作中，在进入自定义处理函数后，程序直接退出。<strong>猜测</strong>是由于在进行自定义处理函数后，系统仍然对信号做了默认的处理。</p>
+<p>在请教老师后，给出了一种解决方案，对 <code>sigaction</code> 结构体中的 <code>sa_flags</code> 进行赋值，这里先贴出该结构体。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sigaction</span> &#123;</span></span><br><span class="line">	<span class="type">void</span> (*sa_handler)(<span class="type">int</span> signo);</span><br><span class="line">	<span class="type">sigset_t</span> sa_mask;</span><br><span class="line">	<span class="type">int</span> sa_flags;</span><br><span class="line">	<span class="type">void</span> (*sa_restore)(<span class="type">void</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>sa_handler</code> 是一个函数指针，指定信号关联函数，这里除可以是用户自定义的处理函数<br />
+外，还可以为 <code>SIG_DFL</code>（采用缺省的处理方式）或 <code>SIG_IGN</code>（忽略信号）。它的处理函数只<br />
+有一个参数，即信号值。<br />
+<code>sa_mask</code> 是一个信号集，它可以指定在信号处理程序执行过程中哪些信号应当被阻塞，<br />
+在调用信号捕获函数之前，该信号集要加入到信号的信号屏蔽字中。<br />
+<code>sa_flags</code> 中包含了许多标志位，是对信号进行处理的各个选择项。它的常见可选值如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">选项</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">SA_NODEFER/SA_NOMASK</td>
+<td style="text-align:left">当捕捉到此信号时，在执行其信号捕捉函数时，系统不会自动阻塞此信号</td>
+</tr>
+<tr>
+<td style="text-align:left">SA_NOCLDSTOP</td>
+<td style="text-align:left">进程忽略子进程产生的任何 SIGSTOP、SIGTSTP、SIGTTIN 和 SIGTTOU 信号</td>
+</tr>
+<tr>
+<td style="text-align:left">SA_RESTART</td>
+<td style="text-align:left">可让重启的系统调用重新起作用</td>
+</tr>
+<tr>
+<td style="text-align:left">SA_ONESHOT/SA_RESETHAND</td>
+<td style="text-align:left">自定义信号只执行一次，在执行完毕后恢复信号的系统默认动作</td>
+</tr>
+</tbody>
+</table>
+<p>将 <code>sigaction</code> 结构体中的 <code>sa_flags</code> 成员赋值为 0，修改后的部分代码如下。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">	<span class="keyword">if</span>(sigismember(&amp;<span class="built_in">set</span>,SIGINT))&#123;</span><br><span class="line">		sigemptyset(&amp;action1.sa_mask);</span><br><span class="line">		action1.sa_handler=my_func;</span><br><span class="line">		action1.sa_flags=<span class="number">0</span>; <span class="comment">//添加此行</span></span><br><span class="line">		sigaction(SIGINT,&amp;action1,<span class="literal">NULL</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span>(sigismember(&amp;<span class="built_in">set</span>,SIGQUIT))&#123;</span><br><span class="line">		sigemptyset(&amp;action2.sa_mask);</span><br><span class="line">		action2.sa_handler = SIG_DFL;</span><br><span class="line">		sigaction(SIGTERM,&amp;action2,<span class="literal">NULL</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样修改后，程序确实正常运行了。但是根据该书所述和在网上查询，始终未能理解为何这样操作，而且之后尝试赋其他值，依然正常运行。网上国内的氛围就是博客间互相复制互相抄袭，找不到多少主观的分析，所以一直未能解决，仅在此做下记录。</p>
 ]]></content>
       <categories>
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>Docker</tag>
         <tag>Linux</tag>
-        <tag>GitLab</tag>
+        <tag>C</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>刷 CM 过程中对使用的常用刷机命令的记录</title>
+    <url>/2017/02/27/frequently-used-commands-while-flashing-android/</url>
+    <content><![CDATA[<blockquote>
+<p>终于决定把手里这台荣耀6 刷成 CM，无奈华为只开源 4.4.4 的内核代码，只有 CM 11 的非官方包，哭。</p>
+</blockquote>
+<p>寻着 XDA 上开发者给的步骤给走，给了两个 rec 一个无法挂载内置储存卡然后没外置的选项（不过也是因为这个才有了本文），一个有问题直接手机进了救援模式，也是汗颜，索性自己手里有 rec 成功解决了。</p>
+<p>文中说把刷机包放到外置内存卡目录下，然后进入 rec 傻眼了并没有找到从外置内存卡安装刷机包的选项，于是无奈自己尝试用 adb 传送刷机包。</p>
+<p>至于为什么以前不怎么用 adb，主要是由于华为这机子很难从关机状态进入 fastboot，官方让插着 USB 线关机进入但是成功率不高，所以以前都是用论坛正好给出的脚本从开机状态进入，正好熟悉下 adb 记录于此。</p>
+<span id="more"></span>
+<h3 id="adb-命令"><a class="markdownIt-Anchor" href="#adb-命令"></a> adb 命令</h3>
+<ul>
+<li><a href="https://developer.android.com/studio/command-line/adb.html">官方文档</a></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ adb devices <span class="comment"># 查询连接设备</span></span><br><span class="line">$ adb install &lt;apkfile&gt; <span class="comment"># 安装apk文件</span></span><br><span class="line">$ adb uninstall &lt;package&gt; <span class="comment"># 卸载软件</span></span><br><span class="line">$ adb push foo.txt /sdcard/foo.txt <span class="comment">#发送foo.txt文件</span></span><br><span class="line">$ adb pull /sdcard/foo.txt foo.txt <span class="comment">#传送foo.txt文件到本地</span></span><br><span class="line">$ adb reboot <span class="comment"># 重启</span></span><br><span class="line">$ adb reboot recovery <span class="comment"># 重启到recovery</span></span><br><span class="line">$ adb reboot bootloader <span class="comment"># 重启到fastboot</span></span><br></pre></td></tr></table></figure>
+<h3 id="fastboot-命令"><a class="markdownIt-Anchor" href="#fastboot-命令"></a> fastboot 命令</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ fastboot flash boot boot.img <span class="comment"># 刷入boot</span></span><br><span class="line">$ fastboot flash recovery recovery.img <span class="comment"># 同上，刷入recovery</span></span><br><span class="line">......</span><br><span class="line">$ fastboot reboot <span class="comment"># 重启</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+        <tag>Huawei</tag>
+        <tag>CyanogenMod</tag>
       </tags>
   </entry>
   <entry>
@@ -1028,6 +986,48 @@ Checking connectivity... done.
       </tags>
   </entry>
   <entry>
+    <title>重置 GitLab 管理员密码</title>
+    <url>/2023/06/15/gitlab-reset-the-root-password/</url>
+    <content><![CDATA[<p>手里有一个旧版本的私有化部署的 GitLab 数据，临时要启动一下看一下之前的代码。由于之前就是 Docker 部署的，所以在数据文件里查了下之前部署的版本号，直接就用 Docker 启动了。启动都很顺利，但是问题出在已经没人记得之前的管理员密码了，所以需要重置管理员密码。</p>
+<span id="more"></span>
+<p>重置 GitLab 管理员密码的方法也很简单，GitLab 官方提供了不使用 UI 就可以重置任意用户密码的方法。虽然该方法不局限于管理员账户，但是正常情况下普通账户使用管理员账户重置即可。 对于 GitLab 13.9 的版本，可以使用 Rake 任务的方式直接重置，不过手里的版本没这么新，所以还是采用传统的 Rails 控制台进行操作。</p>
+<p>首先进入 Rails 控制台，对于非源码安装的 GitLab，都可以直接使用 <code>gitlab-rails console</code> 命令进入，通过 Docker 启动的需要先进入 Docker 容器再执行命令，如图：</p>
+<img src="/2023/06/15/gitlab-reset-the-root-password/gitlab-reset-the-root-password-0.png" class="" title="进入 Rails 控制台">
+<p>然后在 Rails 控制台中按顺序执行：</p>
+<ol>
+<li>
+<p>通过用户名或 ID 查询用户<br />
+对于管理员账户，默认用户名为 root，如果修改过，可以使用 ID：1 进行查询</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">通过用户名查询</span></span><br><span class="line">user = User.find_by_username &#x27;exampleuser&#x27;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">通过 ID 查询</span></span><br><span class="line">user = User.find(123)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">通过用户邮箱查询</span></span><br><span class="line">user = User.find_by(email: &#x27;user@example.com&#x27;)</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>查询到用户后，就可以直接修改用户的密码了：</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">new_password = &#x27;abcd1234!&#x27;</span><br><span class="line">user.password = new_password</span><br><span class="line">user.password_confirmation = new_password</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>然后保存，退出</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">user.save!</span><br><span class="line"></span><br><span class="line">exit</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>全部流程如下：</p>
+<img src="/2023/06/15/gitlab-reset-the-root-password/gitlab-reset-the-root-password-1.png" class="" title="重置用户密码">
+<p>此时，管理员用户的密码就已经重置完成，可以正常进行登录了。</p>
+<p><strong>参考文档</strong></p>
+<ul>
+<li><a href="https://docs.gitlab.com/ee/security/reset_user_password.html">Reset a user’s password</a></li>
+<li><a href="https://docs.gitlab.com/ee/administration/operations/rails_console.html">Rails console</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+        <tag>Linux</tag>
+        <tag>GitLab</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hibernate 配置自动清除二级缓存之集合缓存</title>
     <url>/2021/11/26/hibernate-automatic-2nd-collection-cache-eviction/</url>
     <content><![CDATA[<p>之前在项目上使用了 Hibernate，并开启了基于 caffeine 的二级缓存。因为 Hibernate 会自动处理缓存，所以一直没怎么关注。直到最近，发现在一种特定的情况下，Hibernate 不会自动清除二级缓存里面的集合缓存。问题最后解决起来其实很简单，增加一个配置项的事。不过问题寻求解决的过程还是蛮繁琐的，并没有人能够直接告诉这个问题的答案，在此记录一下这个问题的排查过程。</p>
@@ -1170,34 +1170,6 @@ Checking connectivity... done.
       </tags>
   </entry>
   <entry>
-    <title>合并多个 vmdk 文件</title>
-    <url>/2017/03/01/merge-multiple-vmdk&#39;s-into-single-vmdk/</url>
-    <content><![CDATA[<p>这是一个上古时代的虚拟机，自从换电脑以来就一直跟随我。虽然当初磁盘选择了单文件存储，然而由于众多快照的原因，又是好多 vmdk 的虚拟磁盘文件躺在硬盘中。因为好多快照都是之前已经被删除了，索性整理了一下虚拟机，并且将多个虚拟磁盘文件合并。</p>
-<p>上网寻找了一下解决方案，发现在一个大概是和虚拟化相关的、猜测是 wordpress 官方博客（猜测原因是因为该博客用的是 <a href="http://wordpress.com">wordpress.com</a> 的二级域名）的文章中找到了答案。</p>
-<span id="more"></span>
-<blockquote>
-<p><a href="https://vmexpo.wordpress.com/2014/04/15/how-to-merge-multiple-vmdks-into-single-vmdk/comment-page-1/">https://vmexpo.wordpress.com/2014/04/15/how-to-merge-multiple-vmdks-into-single-vmdk/comment-page-1/</a></p>
-</blockquote>
-<p>使用的是一个名为 vmware-vdiskmanager 的命令行工具，这个工具可以在 VMware Fusion 或是 VMware Workstation 中找到，所以如果使用的是 VMware Player，那么可以到 VMware 的网站（KB Article 1023856）下载然后放到 VMware Player 的安装路径下。</p>
-<p>接下来使用下面命令即可完成操作。</p>
-<figure class="highlight dos"><table><tr><td class="code"><pre><span class="line">vmware-vdiskmanager.exe -r &quot;待转换vmdk路径&quot; -t <span class="number">0</span> &quot;新生成的vmdk文件路径&quot;</span><br></pre></td></tr></table></figure>
-<p>记得转换完成后，删除或处理掉原来的文件，将新生成的文件名改为原文件名，亦或可以删除虚拟机配置中的原有硬盘并新添转换后的硬盘。</p>
-<p>命令操作截图如下。</p>
-<img src="/2017/03/01/merge-multiple-vmdk's-into-single-vmdk/conversion-by-cmd.png" class="" title="操作截图">
-<blockquote>
-<p>Virtual disk conversion successful.</p>
-</blockquote>
-<p>操作成功完成。</p>
-]]></content>
-      <categories>
-        <category>VMware</category>
-      </categories>
-      <tags>
-        <tag>VMware</tag>
-        <tag>vmdk</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Keycloak 配置自定义社交帐号登录组件</title>
     <url>/2022/01/05/keycloak-custom-idp/</url>
     <content><![CDATA[<p>由于 Keycloak 由红帽开发维护，所以其自带的 Social Identity Providers 都是国外的平台。现有需求对接公司 SSO，且由于国内 OAuth2 协议实现均不标准（公司的也是），所以无法使用 Keycloak 的 OpenID Connect 自定义接入，需要自己扩展 Identity Provider 实现。和国内的微信、钉钉、飞书等系统接入代码类似，但发现现有的接入组件没有实现 <code>UserAttributeMapper</code>，且版本变动，代码并不兼容，所以参考 Github 的实现进行开发。</p>
@@ -1272,48 +1244,40 @@ Checking connectivity... done.
       </tags>
   </entry>
   <entry>
+    <title>合并多个 vmdk 文件</title>
+    <url>/2017/03/01/merge-multiple-vmdk&#39;s-into-single-vmdk/</url>
+    <content><![CDATA[<p>这是一个上古时代的虚拟机，自从换电脑以来就一直跟随我。虽然当初磁盘选择了单文件存储，然而由于众多快照的原因，又是好多 vmdk 的虚拟磁盘文件躺在硬盘中。因为好多快照都是之前已经被删除了，索性整理了一下虚拟机，并且将多个虚拟磁盘文件合并。</p>
+<p>上网寻找了一下解决方案，发现在一个大概是和虚拟化相关的、猜测是 wordpress 官方博客（猜测原因是因为该博客用的是 <a href="http://wordpress.com">wordpress.com</a> 的二级域名）的文章中找到了答案。</p>
+<span id="more"></span>
+<blockquote>
+<p><a href="https://vmexpo.wordpress.com/2014/04/15/how-to-merge-multiple-vmdks-into-single-vmdk/comment-page-1/">https://vmexpo.wordpress.com/2014/04/15/how-to-merge-multiple-vmdks-into-single-vmdk/comment-page-1/</a></p>
+</blockquote>
+<p>使用的是一个名为 vmware-vdiskmanager 的命令行工具，这个工具可以在 VMware Fusion 或是 VMware Workstation 中找到，所以如果使用的是 VMware Player，那么可以到 VMware 的网站（KB Article 1023856）下载然后放到 VMware Player 的安装路径下。</p>
+<p>接下来使用下面命令即可完成操作。</p>
+<figure class="highlight dos"><table><tr><td class="code"><pre><span class="line">vmware-vdiskmanager.exe -r &quot;待转换vmdk路径&quot; -t <span class="number">0</span> &quot;新生成的vmdk文件路径&quot;</span><br></pre></td></tr></table></figure>
+<p>记得转换完成后，删除或处理掉原来的文件，将新生成的文件名改为原文件名，亦或可以删除虚拟机配置中的原有硬盘并新添转换后的硬盘。</p>
+<p>命令操作截图如下。</p>
+<img src="/2017/03/01/merge-multiple-vmdk's-into-single-vmdk/conversion-by-cmd.png" class="" title="操作截图">
+<blockquote>
+<p>Virtual disk conversion successful.</p>
+</blockquote>
+<p>操作成功完成。</p>
+]]></content>
+      <categories>
+        <category>VMware</category>
+      </categories>
+      <tags>
+        <tag>VMware</tag>
+        <tag>vmdk</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>重新弄好后的第一篇文章</title>
     <url>/2017/01/25/my-first-article/</url>
     <content><![CDATA[<p>经历了一番挫折，最后算是成功地把 blog 重新（也是从新）部署在了 github，对自己而言还算深夜的时候终于写下了这些东西。</p>
 <p>看来我以后要重视下 github 上的项目了，至少不能这么乱糟糟了。</p>
 <p>还有，要学习下makedown语法了。</p>
 ]]></content>
-  </entry>
-  <entry>
-    <title>wget 使用代理</title>
-    <url>/2017/03/06/proxy-with-wget/</url>
-    <content><![CDATA[<p><code>wget</code> 是 Linux 下常用的一个命令行下载工具。由于此次需要下载的文件在国外，所以速度缓慢，然后就想到使用代理进行下载。使用 <code>--help</code> 查询了一番，发现并没有可以设置代理的地方，倒是有不走代理的选项，汗。</p>
-<p>因为是在终端使用，所以并不想使用全局代理，上网搜寻了一下关于 <code>wget</code> 使用代理的使用方法。</p>
-<ol>
-<li>
-<p>修改 .wgetrc 文件</p>
-<p>.wgetrc 文件位于 $HOME 目录下，修改添加代理设置。</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ vi .wgetrc</span><br><span class="line">use_proxy=on</span><br><span class="line">http_proxy=http://ip:port</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<span id="more"></span>
-<ol start="2">
-<li>
-<p>设置环境变量</p>
-<p>通过环境变量使终端使用代理。</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ export http_proxy=&quot;ip:port&quot;</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>使用 <code>wget</code> 的 <code>-e</code> 选项</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ wget --help</span><br><span class="line">GNU Wget 1.15, a non-interactive network retriever.</span><br><span class="line">Usage: wget [OPTION]... [URL]...</span><br><span class="line"></span><br><span class="line">Mandatory arguments to long options are mandatory for short options too.</span><br><span class="line"></span><br><span class="line">Startup:</span><br><span class="line">  -V,  --version           display the version of Wget and exit.</span><br><span class="line">  -h,  --help              print this help.</span><br><span class="line">  -b,  --background        go to background after startup.</span><br><span class="line">  -e,  --execute=COMMAND   execute a `.wgetrc&#x27;-style command.</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
-<p>由此可见 <code>wget</code> 的 <code>-e</code> 选项同方法二使用了 http_proxy。</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ wget -e &quot;http_proxy=http://ip:port&quot;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>由于想使用非全局代理，所以方法三适用。</p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>wget</tag>
-      </tags>
   </entry>
   <entry>
     <title>MySQL FEDERATED 存储引擎介绍及使用</title>
@@ -1359,6 +1323,42 @@ FEDERATED 表支持 DML 语句，DDL 语句只支持 <code>DROP TABLE</code>，�
       <tags>
         <tag>MySQL</tag>
         <tag>Tutorial</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>wget 使用代理</title>
+    <url>/2017/03/06/proxy-with-wget/</url>
+    <content><![CDATA[<p><code>wget</code> 是 Linux 下常用的一个命令行下载工具。由于此次需要下载的文件在国外，所以速度缓慢，然后就想到使用代理进行下载。使用 <code>--help</code> 查询了一番，发现并没有可以设置代理的地方，倒是有不走代理的选项，汗。</p>
+<p>因为是在终端使用，所以并不想使用全局代理，上网搜寻了一下关于 <code>wget</code> 使用代理的使用方法。</p>
+<ol>
+<li>
+<p>修改 .wgetrc 文件</p>
+<p>.wgetrc 文件位于 $HOME 目录下，修改添加代理设置。</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ vi .wgetrc</span><br><span class="line">use_proxy=on</span><br><span class="line">http_proxy=http://ip:port</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<span id="more"></span>
+<ol start="2">
+<li>
+<p>设置环境变量</p>
+<p>通过环境变量使终端使用代理。</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ export http_proxy=&quot;ip:port&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>使用 <code>wget</code> 的 <code>-e</code> 选项</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ wget --help</span><br><span class="line">GNU Wget 1.15, a non-interactive network retriever.</span><br><span class="line">Usage: wget [OPTION]... [URL]...</span><br><span class="line"></span><br><span class="line">Mandatory arguments to long options are mandatory for short options too.</span><br><span class="line"></span><br><span class="line">Startup:</span><br><span class="line">  -V,  --version           display the version of Wget and exit.</span><br><span class="line">  -h,  --help              print this help.</span><br><span class="line">  -b,  --background        go to background after startup.</span><br><span class="line">  -e,  --execute=COMMAND   execute a `.wgetrc&#x27;-style command.</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+<p>由此可见 <code>wget</code> 的 <code>-e</code> 选项同方法二使用了 http_proxy。</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ wget -e &quot;http_proxy=http://ip:port&quot;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>由于想使用非全局代理，所以方法三适用。</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>wget</tag>
       </tags>
   </entry>
   <entry>
