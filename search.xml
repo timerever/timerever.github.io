@@ -72,6 +72,28 @@
       </tags>
   </entry>
   <entry>
+    <title>Docker 学习之旅（零）：出师不利</title>
+    <url>/2017/03/02/docker-learning-trip-0/</url>
+    <content><![CDATA[<p>Docker——这是一个自出现以来就发展迅猛并获得成功的引擎。自从选择这个方向学习以来，一直在各个地方看到这个名词，但也只是大概了解到这是一个一般企业才会采用的东西。</p>
+<p>寒假放假前的课程设计，邀请了企业的人拿来了企业的真实项目来让我们学习，有幸在课余时间与主管技术的老师咨询讨论了一下。其中有一个话题就说到了 Docker，也是符合之前自己所想，老师也是说，像我们平时自己用，拿自己电脑跑或者租个 vps 什么的也就够了，也是用不上这种东西，不过从交谈中也大概了解到了应用 Docker 的优势，比如统一测试环境，比如秒级启动随时恢复等等等等。</p>
+<p>秉承着热爱计算机相关的一切的原则，还是决定先大概看一下这个东西，虽然可能实用性真的接近于零，不过就像自己选择这个专业一样，不是出于为了找工作或者怎样怎样的功利的心态，而是所谓的，真的是“热爱学习”。</p>
+<p>所以作为一只准程序猿，那么要做的第一件事便是打开官网寻找官方文档（所谓程序员必会通用技能），然后就是阅读英文文档（另一项必会技能）。</p>
+<span id="more"></span>
+<h3 id="安装"><a class="markdownIt-Anchor" href="#安装"></a> 安装</h3>
+<p>使用的环境是 Ubuntu 的 16.10，默认的源里有 Docker，只需按照官网手册就可轻松安装。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo apt-get install \</span><br><span class="line">    apt-transport-https \</span><br><span class="line">    ca-certificates \</span><br><span class="line">    curl \</span><br><span class="line">    software-properties-common</span><br><span class="line">$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</span><br><span class="line">$ sudo apt-key fingerprint 0EBFCD88</span><br><span class="line">$ sudo add-apt-repository \</span><br><span class="line">   <span class="string">&quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu \</span></span><br><span class="line"><span class="string">   <span class="subst">$(lsb_release -cs)</span> \</span></span><br><span class="line"><span class="string">   stable&quot;</span></span><br></pre></td></tr></table></figure>
+<p>等等，怎么有些不对，记得以前看到的源的指纹长度比这还要长…</p>
+<p>还以为是找错了文档，结果打开历史记录一看原来真的是文档改变了，最显而易见的就是网站的 favicon 颜色变深了，也确定了文档就是在今天中午或下午更新了（明明早上起来还看过的，摔！）。</p>
+<p>所以看来是写不成第一篇了，之前被称作 docker 和 docker-engine 的东西已经成为了旧版，现在出现的是 Docker CE 和 Docker EE，文档的开始已经让卸载旧版了。不过可能是因为刚刚更新，Docker CE 和 Docker EE 所指向的链接还不能打开，看来真正的旅程应该是等着文档补全然后再开始了（虽然知道“学习之旅”的翻译是中式英语但是真的找不到合适的翻译了）。</p>
+]]></content>
+      <categories>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>软件设计模式</title>
     <url>/2017/04/28/design-patterns/</url>
     <content><![CDATA[<h1 id="模式和软件模式"><a class="markdownIt-Anchor" href="#模式和软件模式"></a> 模式和软件模式</h1>
@@ -185,28 +207,6 @@
       </categories>
       <tags>
         <tag>Design Pattern</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Docker 学习之旅（零）：出师不利</title>
-    <url>/2017/03/02/docker-learning-trip-0/</url>
-    <content><![CDATA[<p>Docker——这是一个自出现以来就发展迅猛并获得成功的引擎。自从选择这个方向学习以来，一直在各个地方看到这个名词，但也只是大概了解到这是一个一般企业才会采用的东西。</p>
-<p>寒假放假前的课程设计，邀请了企业的人拿来了企业的真实项目来让我们学习，有幸在课余时间与主管技术的老师咨询讨论了一下。其中有一个话题就说到了 Docker，也是符合之前自己所想，老师也是说，像我们平时自己用，拿自己电脑跑或者租个 vps 什么的也就够了，也是用不上这种东西，不过从交谈中也大概了解到了应用 Docker 的优势，比如统一测试环境，比如秒级启动随时恢复等等等等。</p>
-<p>秉承着热爱计算机相关的一切的原则，还是决定先大概看一下这个东西，虽然可能实用性真的接近于零，不过就像自己选择这个专业一样，不是出于为了找工作或者怎样怎样的功利的心态，而是所谓的，真的是“热爱学习”。</p>
-<p>所以作为一只准程序猿，那么要做的第一件事便是打开官网寻找官方文档（所谓程序员必会通用技能），然后就是阅读英文文档（另一项必会技能）。</p>
-<span id="more"></span>
-<h3 id="安装"><a class="markdownIt-Anchor" href="#安装"></a> 安装</h3>
-<p>使用的环境是 Ubuntu 的 16.10，默认的源里有 Docker，只需按照官网手册就可轻松安装。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ sudo apt-get install \</span><br><span class="line">    apt-transport-https \</span><br><span class="line">    ca-certificates \</span><br><span class="line">    curl \</span><br><span class="line">    software-properties-common</span><br><span class="line">$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</span><br><span class="line">$ sudo apt-key fingerprint 0EBFCD88</span><br><span class="line">$ sudo add-apt-repository \</span><br><span class="line">   <span class="string">&quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu \</span></span><br><span class="line"><span class="string">   <span class="subst">$(lsb_release -cs)</span> \</span></span><br><span class="line"><span class="string">   stable&quot;</span></span><br></pre></td></tr></table></figure>
-<p>等等，怎么有些不对，记得以前看到的源的指纹长度比这还要长…</p>
-<p>还以为是找错了文档，结果打开历史记录一看原来真的是文档改变了，最显而易见的就是网站的 favicon 颜色变深了，也确定了文档就是在今天中午或下午更新了（明明早上起来还看过的，摔！）。</p>
-<p>所以看来是写不成第一篇了，之前被称作 docker 和 docker-engine 的东西已经成为了旧版，现在出现的是 Docker CE 和 Docker EE，文档的开始已经让卸载旧版了。不过可能是因为刚刚更新，Docker CE 和 Docker EE 所指向的链接还不能打开，看来真正的旅程应该是等着文档补全然后再开始了（虽然知道“学习之旅”的翻译是中式英语但是真的找不到合适的翻译了）。</p>
-]]></content>
-      <categories>
-        <category>Docker</category>
-      </categories>
-      <tags>
-        <tag>Docker</tag>
       </tags>
   </entry>
   <entry>
@@ -538,6 +538,65 @@ ENTRYPOINT command param1 param2（shell 形式）
       </tags>
   </entry>
   <entry>
+    <title>sigaction 自定义信号处理函数的“修复”</title>
+    <url>/2017/04/24/fix-sigaction/</url>
+    <content><![CDATA[<p>在对嵌入式 Linux 系统程序开发中的进程间通信进行学习时，涉及到了信号集函数组，书中给出的示例如下：</p>
+<blockquote>
+<p>该实例首先把 SIGQUIT、SIGINT 两个信号加入信号集，然后将该信号集设为阻塞状态，<br />
+并在该状态下使程序暂停 5 秒。接下来再将信号集设置为非阻塞状态，再对这两个信号分别<br />
+操作，其中 SIGQUIT 执行默认操作，而 SIGINT 执行用户自定义函数的操作。源代码如下<br />
+所示：</p>
+</blockquote>
+<span id="more"></span>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;signal.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">my_func</span><span class="params">(<span class="type">int</span> signum)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;If you want to quit,please try SIGQUIT\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">sigset_t</span> <span class="built_in">set</span>,pendset;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">sigaction</span> <span class="title">action1</span>,<span class="title">action2</span>;</span></span><br><span class="line">	<span class="keyword">if</span>(sigemptyset(&amp;<span class="built_in">set</span>)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigemptyset&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span>(sigaddset(&amp;<span class="built_in">set</span>,SIGQUIT)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigaddset&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span>(sigaddset(&amp;<span class="built_in">set</span>,SIGINT)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigaddset&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span>(sigprocmask(SIG_BLOCK,&amp;<span class="built_in">set</span>,<span class="literal">NULL</span>)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigprocmask&quot;</span>);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;blocked\n&quot;</span>);</span><br><span class="line">		sleep(<span class="number">5</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(sigprocmask(SIG_UNBLOCK,&amp;<span class="built_in">set</span>,<span class="literal">NULL</span>)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigprocmask&quot;</span>);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;unblock\n&quot;</span>);</span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">if</span>(sigismember(&amp;<span class="built_in">set</span>,SIGINT))&#123;</span><br><span class="line">			sigemptyset(&amp;action1.sa_mask);</span><br><span class="line">			action1.sa_handler=my_func;</span><br><span class="line">			sigaction(SIGINT,&amp;action1,<span class="literal">NULL</span>);</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(sigismember(&amp;<span class="built_in">set</span>,SIGQUIT))&#123;</span><br><span class="line">			sigemptyset(&amp;action2.sa_mask);</span><br><span class="line">			action2.sa_handler = SIG_DFL;</span><br><span class="line">			sigaction(SIGTERM,&amp;action2,<span class="literal">NULL</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>理论上，按说明所述及代码的编写，使用 <code>Ctrl-C</code> 传递 <code>SIGINT</code> 信号后，会转到自定义处理函数 <code>my_func</code>，但在实际操作中，在进入自定义处理函数后，程序直接退出。<strong>猜测</strong>是由于在进行自定义处理函数后，系统仍然对信号做了默认的处理。</p>
+<p>在请教老师后，给出了一种解决方案，对 <code>sigaction</code> 结构体中的 <code>sa_flags</code> 进行赋值，这里先贴出该结构体。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sigaction</span> &#123;</span></span><br><span class="line">	<span class="type">void</span> (*sa_handler)(<span class="type">int</span> signo);</span><br><span class="line">	<span class="type">sigset_t</span> sa_mask;</span><br><span class="line">	<span class="type">int</span> sa_flags;</span><br><span class="line">	<span class="type">void</span> (*sa_restore)(<span class="type">void</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>sa_handler</code> 是一个函数指针，指定信号关联函数，这里除可以是用户自定义的处理函数<br />
+外，还可以为 <code>SIG_DFL</code>（采用缺省的处理方式）或 <code>SIG_IGN</code>（忽略信号）。它的处理函数只<br />
+有一个参数，即信号值。<br />
+<code>sa_mask</code> 是一个信号集，它可以指定在信号处理程序执行过程中哪些信号应当被阻塞，<br />
+在调用信号捕获函数之前，该信号集要加入到信号的信号屏蔽字中。<br />
+<code>sa_flags</code> 中包含了许多标志位，是对信号进行处理的各个选择项。它的常见可选值如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">选项</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">SA_NODEFER/SA_NOMASK</td>
+<td style="text-align:left">当捕捉到此信号时，在执行其信号捕捉函数时，系统不会自动阻塞此信号</td>
+</tr>
+<tr>
+<td style="text-align:left">SA_NOCLDSTOP</td>
+<td style="text-align:left">进程忽略子进程产生的任何 SIGSTOP、SIGTSTP、SIGTTIN 和 SIGTTOU 信号</td>
+</tr>
+<tr>
+<td style="text-align:left">SA_RESTART</td>
+<td style="text-align:left">可让重启的系统调用重新起作用</td>
+</tr>
+<tr>
+<td style="text-align:left">SA_ONESHOT/SA_RESETHAND</td>
+<td style="text-align:left">自定义信号只执行一次，在执行完毕后恢复信号的系统默认动作</td>
+</tr>
+</tbody>
+</table>
+<p>将 <code>sigaction</code> 结构体中的 <code>sa_flags</code> 成员赋值为 0，修改后的部分代码如下。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">	<span class="keyword">if</span>(sigismember(&amp;<span class="built_in">set</span>,SIGINT))&#123;</span><br><span class="line">		sigemptyset(&amp;action1.sa_mask);</span><br><span class="line">		action1.sa_handler=my_func;</span><br><span class="line">		action1.sa_flags=<span class="number">0</span>; <span class="comment">//添加此行</span></span><br><span class="line">		sigaction(SIGINT,&amp;action1,<span class="literal">NULL</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span>(sigismember(&amp;<span class="built_in">set</span>,SIGQUIT))&#123;</span><br><span class="line">		sigemptyset(&amp;action2.sa_mask);</span><br><span class="line">		action2.sa_handler = SIG_DFL;</span><br><span class="line">		sigaction(SIGTERM,&amp;action2,<span class="literal">NULL</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样修改后，程序确实正常运行了。但是根据该书所述和在网上查询，始终未能理解为何这样操作，而且之后尝试赋其他值，依然正常运行。网上国内的氛围就是博客间互相复制互相抄袭，找不到多少主观的分析，所以一直未能解决，仅在此做下记录。</p>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>C</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>设计模式之工厂模式的 Java 实现</title>
     <url>/2017/04/29/factory-patterns-with-java/</url>
     <content><![CDATA[<p><strong>工厂模式</strong> 属于设计模式中创建型数据模式的一种，同时是软件设计模式中最常使用的模式。广义的工厂模式只是一个统称，其还可以继续分为 <strong>简单工厂模式</strong>、<strong>工厂模式</strong> 和 <strong>抽象工厂模式</strong>。这里对这些工厂模式进行说明并使用 Java 代码进行实现。</p>
@@ -659,65 +718,6 @@ SummerTextField
       </tags>
   </entry>
   <entry>
-    <title>sigaction 自定义信号处理函数的“修复”</title>
-    <url>/2017/04/24/fix-sigaction/</url>
-    <content><![CDATA[<p>在对嵌入式 Linux 系统程序开发中的进程间通信进行学习时，涉及到了信号集函数组，书中给出的示例如下：</p>
-<blockquote>
-<p>该实例首先把 SIGQUIT、SIGINT 两个信号加入信号集，然后将该信号集设为阻塞状态，<br />
-并在该状态下使程序暂停 5 秒。接下来再将信号集设置为非阻塞状态，再对这两个信号分别<br />
-操作，其中 SIGQUIT 执行默认操作，而 SIGINT 执行用户自定义函数的操作。源代码如下<br />
-所示：</p>
-</blockquote>
-<span id="more"></span>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;signal.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">my_func</span><span class="params">(<span class="type">int</span> signum)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;If you want to quit,please try SIGQUIT\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">sigset_t</span> <span class="built_in">set</span>,pendset;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">sigaction</span> <span class="title">action1</span>,<span class="title">action2</span>;</span></span><br><span class="line">	<span class="keyword">if</span>(sigemptyset(&amp;<span class="built_in">set</span>)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigemptyset&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span>(sigaddset(&amp;<span class="built_in">set</span>,SIGQUIT)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigaddset&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span>(sigaddset(&amp;<span class="built_in">set</span>,SIGINT)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigaddset&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span>(sigprocmask(SIG_BLOCK,&amp;<span class="built_in">set</span>,<span class="literal">NULL</span>)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigprocmask&quot;</span>);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;blocked\n&quot;</span>);</span><br><span class="line">		sleep(<span class="number">5</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(sigprocmask(SIG_UNBLOCK,&amp;<span class="built_in">set</span>,<span class="literal">NULL</span>)&lt;<span class="number">0</span>)</span><br><span class="line">		perror(<span class="string">&quot;sigprocmask&quot;</span>);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;unblock\n&quot;</span>);</span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">if</span>(sigismember(&amp;<span class="built_in">set</span>,SIGINT))&#123;</span><br><span class="line">			sigemptyset(&amp;action1.sa_mask);</span><br><span class="line">			action1.sa_handler=my_func;</span><br><span class="line">			sigaction(SIGINT,&amp;action1,<span class="literal">NULL</span>);</span><br><span class="line">		&#125;<span class="keyword">else</span> <span class="keyword">if</span>(sigismember(&amp;<span class="built_in">set</span>,SIGQUIT))&#123;</span><br><span class="line">			sigemptyset(&amp;action2.sa_mask);</span><br><span class="line">			action2.sa_handler = SIG_DFL;</span><br><span class="line">			sigaction(SIGTERM,&amp;action2,<span class="literal">NULL</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>理论上，按说明所述及代码的编写，使用 <code>Ctrl-C</code> 传递 <code>SIGINT</code> 信号后，会转到自定义处理函数 <code>my_func</code>，但在实际操作中，在进入自定义处理函数后，程序直接退出。<strong>猜测</strong>是由于在进行自定义处理函数后，系统仍然对信号做了默认的处理。</p>
-<p>在请教老师后，给出了一种解决方案，对 <code>sigaction</code> 结构体中的 <code>sa_flags</code> 进行赋值，这里先贴出该结构体。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sigaction</span> &#123;</span></span><br><span class="line">	<span class="type">void</span> (*sa_handler)(<span class="type">int</span> signo);</span><br><span class="line">	<span class="type">sigset_t</span> sa_mask;</span><br><span class="line">	<span class="type">int</span> sa_flags;</span><br><span class="line">	<span class="type">void</span> (*sa_restore)(<span class="type">void</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>sa_handler</code> 是一个函数指针，指定信号关联函数，这里除可以是用户自定义的处理函数<br />
-外，还可以为 <code>SIG_DFL</code>（采用缺省的处理方式）或 <code>SIG_IGN</code>（忽略信号）。它的处理函数只<br />
-有一个参数，即信号值。<br />
-<code>sa_mask</code> 是一个信号集，它可以指定在信号处理程序执行过程中哪些信号应当被阻塞，<br />
-在调用信号捕获函数之前，该信号集要加入到信号的信号屏蔽字中。<br />
-<code>sa_flags</code> 中包含了许多标志位，是对信号进行处理的各个选择项。它的常见可选值如下：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">选项</th>
-<th style="text-align:left">含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">SA_NODEFER/SA_NOMASK</td>
-<td style="text-align:left">当捕捉到此信号时，在执行其信号捕捉函数时，系统不会自动阻塞此信号</td>
-</tr>
-<tr>
-<td style="text-align:left">SA_NOCLDSTOP</td>
-<td style="text-align:left">进程忽略子进程产生的任何 SIGSTOP、SIGTSTP、SIGTTIN 和 SIGTTOU 信号</td>
-</tr>
-<tr>
-<td style="text-align:left">SA_RESTART</td>
-<td style="text-align:left">可让重启的系统调用重新起作用</td>
-</tr>
-<tr>
-<td style="text-align:left">SA_ONESHOT/SA_RESETHAND</td>
-<td style="text-align:left">自定义信号只执行一次，在执行完毕后恢复信号的系统默认动作</td>
-</tr>
-</tbody>
-</table>
-<p>将 <code>sigaction</code> 结构体中的 <code>sa_flags</code> 成员赋值为 0，修改后的部分代码如下。</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">	<span class="keyword">if</span>(sigismember(&amp;<span class="built_in">set</span>,SIGINT))&#123;</span><br><span class="line">		sigemptyset(&amp;action1.sa_mask);</span><br><span class="line">		action1.sa_handler=my_func;</span><br><span class="line">		action1.sa_flags=<span class="number">0</span>; <span class="comment">//添加此行</span></span><br><span class="line">		sigaction(SIGINT,&amp;action1,<span class="literal">NULL</span>);</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span>(sigismember(&amp;<span class="built_in">set</span>,SIGQUIT))&#123;</span><br><span class="line">		sigemptyset(&amp;action2.sa_mask);</span><br><span class="line">		action2.sa_handler = SIG_DFL;</span><br><span class="line">		sigaction(SIGTERM,&amp;action2,<span class="literal">NULL</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这样修改后，程序确实正常运行了。但是根据该书所述和在网上查询，始终未能理解为何这样操作，而且之后尝试赋其他值，依然正常运行。网上国内的氛围就是博客间互相复制互相抄袭，找不到多少主观的分析，所以一直未能解决，仅在此做下记录。</p>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>C</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>刷 CM 过程中对使用的常用刷机命令的记录</title>
     <url>/2017/02/27/frequently-used-commands-while-flashing-android/</url>
     <content><![CDATA[<blockquote>
@@ -742,6 +742,48 @@ SummerTextField
         <tag>Android</tag>
         <tag>Huawei</tag>
         <tag>CyanogenMod</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>重置 GitLab 管理员密码</title>
+    <url>/2023/06/15/gitlab-reset-the-root-password/</url>
+    <content><![CDATA[<p>手里有一个旧版本的私有化部署的 GitLab 数据，临时要启动一下看一下之前的代码。由于之前就是 Docker 部署的，所以在数据文件里查了下之前部署的版本号，直接就用 Docker 启动了。启动都很顺利，但是问题出在已经没人记得之前的管理员密码了，所以需要重置管理员密码。</p>
+<span id="more"></span>
+<p>重置 GitLab 管理员密码的方法也很简单，GitLab 官方提供了不使用 UI 就可以重置任意用户密码的方法。虽然该方法不局限于管理员账户，但是正常情况下普通账户使用管理员账户重置即可。 对于 GitLab 13.9 的版本，可以使用 Rake 任务的方式直接重置，不过手里的版本没这么新，所以还是采用传统的 Rails 控制台进行操作。</p>
+<p>首先进入 Rails 控制台，对于非源码安装的 GitLab，都可以直接使用 <code>gitlab-rails console</code> 命令进入，通过 Docker 启动的需要先进入 Docker 容器再执行命令，如图：</p>
+<img src="/2023/06/15/gitlab-reset-the-root-password/gitlab-reset-the-root-password-0.png" class="" title="进入 Rails 控制台">
+<p>然后在 Rails 控制台中按顺序执行：</p>
+<ol>
+<li>
+<p>通过用户名或 ID 查询用户<br />
+对于管理员账户，默认用户名为 root，如果修改过，可以使用 ID：1 进行查询</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">通过用户名查询</span></span><br><span class="line">user = User.find_by_username &#x27;exampleuser&#x27;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">通过 ID 查询</span></span><br><span class="line">user = User.find(123)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">通过用户邮箱查询</span></span><br><span class="line">user = User.find_by(email: &#x27;user@example.com&#x27;)</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>查询到用户后，就可以直接修改用户的密码了：</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">new_password = &#x27;abcd1234!&#x27;</span><br><span class="line">user.password = new_password</span><br><span class="line">user.password_confirmation = new_password</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>然后保存，退出</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">user.save!</span><br><span class="line"></span><br><span class="line">exit</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>全部流程如下：</p>
+<img src="/2023/06/15/gitlab-reset-the-root-password/gitlab-reset-the-root-password-1.png" class="" title="重置用户密码">
+<p>此时，管理员用户的密码就已经重置完成，可以正常进行登录了。</p>
+<p><strong>参考文档</strong></p>
+<ul>
+<li><a href="https://docs.gitlab.com/ee/security/reset_user_password.html">Reset a user’s password</a></li>
+<li><a href="https://docs.gitlab.com/ee/administration/operations/rails_console.html">Rails console</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+        <tag>Linux</tag>
+        <tag>GitLab</tag>
       </tags>
   </entry>
   <entry>
@@ -986,45 +1028,35 @@ Checking connectivity... done.
       </tags>
   </entry>
   <entry>
-    <title>重置 GitLab 管理员密码</title>
-    <url>/2023/06/15/gitlab-reset-the-root-password/</url>
-    <content><![CDATA[<p>手里有一个旧版本的私有化部署的 GitLab 数据，临时要启动一下看一下之前的代码。由于之前就是 Docker 部署的，所以在数据文件里查了下之前部署的版本号，直接就用 Docker 启动了。启动都很顺利，但是问题出在已经没人记得之前的管理员密码了，所以需要重置管理员密码。</p>
+    <title>Hibernate 解决 Metamodel 属性类型错误问题</title>
+    <url>/2021/12/02/hibernate-incorrect-metamodel-with-no-reationship/</url>
+    <content><![CDATA[<p>因为项目上使用了 Hibernate Metamodel，而且自定义映射了数据库的 JSON 字段类型，导致生成的 Metamodel 属性类型有误。虽然并没有用映射的这些属性做 <code>CriteriaQuery</code>，所以其实在项目的使用上没有影响，但是启动时还是会报一个 ERROR 日志，所以寻找一个能够根治的解决办法。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ERROR org.hibernate.metamodel.internal.MetadataContext [MetadataContext.java:491] - HHH015007: Illegal argument on static metamodel field injection : Foo_#bars; expected type : org.hibernate.metamodel.model.domain.internal.SingularAttributeImpl; encountered type : javax.persistence.metamodel.MapAttribute</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
-<p>重置 GitLab 管理员密码的方法也很简单，GitLab 官方提供了不使用 UI 就可以重置任意用户密码的方法。虽然该方法不局限于管理员账户，但是正常情况下普通账户使用管理员账户重置即可。 对于 GitLab 13.9 的版本，可以使用 Rake 任务的方式直接重置，不过手里的版本没这么新，所以还是采用传统的 Rails 控制台进行操作。</p>
-<p>首先进入 Rails 控制台，对于非源码安装的 GitLab，都可以直接使用 <code>gitlab-rails console</code> 命令进入，通过 Docker 启动的需要先进入 Docker 容器再执行命令，如图：</p>
-<img src="/2023/06/15/gitlab-reset-the-root-password/gitlab-reset-the-root-password-0.png" class="" title="进入 Rails 控制台">
-<p>然后在 Rails 控制台中按顺序执行：</p>
-<ol>
-<li>
-<p>通过用户名或 ID 查询用户<br />
-对于管理员账户，默认用户名为 root，如果修改过，可以使用 ID：1 进行查询</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">通过用户名查询</span></span><br><span class="line">user = User.find_by_username &#x27;exampleuser&#x27;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">通过 ID 查询</span></span><br><span class="line">user = User.find(123)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">通过用户邮箱查询</span></span><br><span class="line">user = User.find_by(email: &#x27;user@example.com&#x27;)</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>查询到用户后，就可以直接修改用户的密码了：</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">new_password = &#x27;abcd1234!&#x27;</span><br><span class="line">user.password = new_password</span><br><span class="line">user.password_confirmation = new_password</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>然后保存，退出</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">user.save!</span><br><span class="line"></span><br><span class="line">exit</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>全部流程如下：</p>
-<img src="/2023/06/15/gitlab-reset-the-root-password/gitlab-reset-the-root-password-1.png" class="" title="重置用户密码">
-<p>此时，管理员用户的密码就已经重置完成，可以正常进行登录了。</p>
-<p><strong>参考文档</strong></p>
-<ul>
-<li><a href="https://docs.gitlab.com/ee/security/reset_user_password.html">Reset a user’s password</a></li>
-<li><a href="https://docs.gitlab.com/ee/administration/operations/rails_console.html">Rails console</a></li>
-</ul>
+<h3 id="一-定位问题"><a class="markdownIt-Anchor" href="#一-定位问题"></a> 一、定位问题</h3>
+<p><strong>首先是背景信息：</strong> 因为前端需要在数据库存储 JSON 字段，而且现在版本的 MySQL 天然支持 JSON ，所以建表时采用了 JSON 作为字段类型。然后在 JPA 实体层面，引入了 <code>hibernate-types</code> 依赖来增加 Hibernate 对 JSON 的支持，字段属性增加了 <code>@Type(type = &quot;json&quot;)</code> 注解，本身定义为了 <code>Map</code> 类型。</p>
+<p>其实在 Hibernate 对 JSON 处理这件事情上，传统方案是通过自定义 <code>Convert</code> 来实现。或者可能不是 JSON Object 而是 JSON Array，但无论是哪种情况，均会遇到同样的问题。</p>
+<p>通过报错信息，对代码进行 DEBUG 后得知，Hibernate 在启动时，会根据实体属性是否存在与其他实体的关系，生成不同的 <code>Attribute</code>。比如 OneToMany 一对多关系就会生成 <code>ListAttribute</code> 或 <code>SetAttribute</code>，没有关系的属性都是 <code>SingularAttribute</code>。而启动时通过反射，会 set Metamodel 的对应属性，我们可以在 target 下面看见，Metamodel 的类型为 <code>MapAttribute</code>，所以我们可以确定，问题就出在了生成 Metamodel 的时候。具体是不是直接拿实体定义的数据类型来生成的我没有去看源码，不过可以肯定的是它在判断类型的时候缺少额外的判断。</p>
+<h3 id="二-解决问题"><a class="markdownIt-Anchor" href="#二-解决问题"></a> 二、解决问题</h3>
+<p>同样作为一个共性问题，在 Goolge 进行搜索后，定位到了一条仍然是 Hibernate 官方 Bug 追踪的链接 <a href="https://hibernate.atlassian.net/browse/HHH-12338">Incorrect metamodel for basic collections</a>。简单的来说，就是当前已经在 5.5.0.Alpha1 的版本中得到了解决，不过如果你认真看了下面整个的 Activity 记录，就会发现仍然是存在一个小插曲。</p>
+<h3 id="三-插曲"><a class="markdownIt-Anchor" href="#三-插曲"></a> 三、插曲</h3>
+<p>这个问题是在 2018 年的 3 月份被提出来的，而 5.5.0.Alpha1 已经是 2021 年 8 月份的事情了，照理说这么一个小问题不会需要三年多的时间来处理，而这个疑问的答案就在下面的讨论之中。</p>
+<p>简单来说，这个问题在当月就被解决掉了，伴随着 5.2.17 的版本发布，这个问题理论上来说就不应该再存在了。然而事与愿违，在 5.2.17 版本发布之后，很快就有人提出了新的问题。在下面的 Comment 中有记录，同时这个人也单独提了一个 issue <a href="https://hibernate.atlassian.net/browse/HHH-12581">NPE for Criteria query containing fetch join as a regression of HHH-12338</a>，即这次的改动造成了 NPE。然后可以看到在另一个维护者与之前 Vlad Mihalcea 的一番讨论之后，他们决定恢复这次的改动。</p>
+<img src="/2021/12/02/hibernate-incorrect-metamodel-with-no-reationship/hibernate-incorrect-metamodel-with-no-reationship-1.png" class="" title="revert commit">
+<p>但是回退了就意味着问题又回来了，上面提到的 Vlad Mihalcea 从红帽离职，不再维护 Hibernate 还弄了一个新的项目就是上面提到的 <code>hibernate-types</code>。所以其他人在遇到相同的问题时，有部分和我们一样是采用的 <code>hibernate-types</code> 方案，自然而然有人把问题又丢给了 Vlad Mihalcea，不过是在 <code>hibernate-types</code> 项目。</p>
+<p>于是 Vlad Mihalcea 在 Github 提了新的 PR，见 <a href="https://github.com/hibernate/hibernate-orm/pull/3254">HHH-12338 - Incorrect metamodel for basic collections</a>。不过很不幸的是，并没有后续。</p>
+<p>直到今年的 7 月，又一位开发者忍无可忍决定解决这个问题，提了新的 PR 出来，见 <a href="https://github.com/hibernate/hibernate-orm/pull/4096">HHH-14724 Test-case for metamodel compile error with converters and validation</a>。这次终于引起了重视，并在一番努力之后，终于得到了合并，问题就此解决。</p>
+<p>题外话，这件事情，是不是跟前阵子遇到的 <a href="/2021/11/26/hibernate-automatic-2nd-collection-cache-eviction/">Hibernate 配置自动清除二级缓存之集合缓存</a> 里面的插曲有点像？笑。</p>
+<h3 id="四-亲力亲为"><a class="markdownIt-Anchor" href="#四-亲力亲为"></a> 四、亲力亲为</h3>
+<p>虽说这件事情现在看来终于告一段落了，不过由于时今年 9 月份才最终解决，虽然代码已经被合并到了各个版本的分支中，但 5.4 已经半年没有发过新的版本了。虽说 5.5 和 5.6 的版本已经没问题了，但由于项目框架的问题，并不能直接升级 Hibernate 的版本，而且本来 5.5 的版本就存在很大改动，现有架构并不能保证完全兼容（比如还是上面提到的 <code>hibernate-types</code> 就需要引入另外一个包），所以最后没有办法，只能决定采用重打包的方式自己对源码进行更新。</p>
+<p>剩下的事情就不再赘述了，大概流程就是下载 Hibernate 源码，找到 5.4.32.Final 的 tag，在此基础上手动把修复代码的变更拷贝过来，然后改个版本号，发布到私仓，再更改当前项目依赖的版本号，最后成功解决。</p>
 ]]></content>
       <categories>
-        <category>Linux</category>
+        <category>Java</category>
       </categories>
       <tags>
-        <tag>Docker</tag>
-        <tag>Linux</tag>
-        <tag>GitLab</tag>
+        <tag>Java</tag>
+        <tag>Hibernate</tag>
       </tags>
   </entry>
   <entry>
@@ -1050,38 +1082,6 @@ Checking connectivity... done.
 <h3 id="三-插曲"><a class="markdownIt-Anchor" href="#三-插曲"></a> 三、插曲</h3>
 <p>由于项目使用了 <code>spring-boot-starter-data-jpa</code> 依赖，所以这个配置项的设置并不是上面 Hibernate 的改动所提及的，于是继续在 Google 用 <code>auto_evict_collection_cache</code> 作为关键字进行搜索，寻找在 Spring Boot 中的配置方式。最终是得到了答案，Spring Boot 中的配置项为 <code>spring.jpa.properties.auto_evict_collection_cache</code>，不过在此之外还发现了一个小插曲。</p>
 <p><a href="https://hibernate.atlassian.net/browse/HHH-10614">Auto evict collection cache throws exception with null values</a> 中描述了一个人开启了这个特性，然后在一个特定的情况下 Hibernate 会抛出异常。虽然这个问题很快就被解决了，不过现在回来想想，维护者在维护这种已经已经很庞大的项目时，对所有的改动都抱有谨慎的态度还是很有必要的。做成了配置项，虽然一方面会让很多不知道的人继续遇到这个问题，但同时也让很多无关的人避免了可能带来的新问题。所以这两种方案孰优孰劣，可能就见仁见智了吧。</p>
-]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>Hibernate</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hibernate 解决 Metamodel 属性类型错误问题</title>
-    <url>/2021/12/02/hibernate-incorrect-metamodel-with-no-reationship/</url>
-    <content><![CDATA[<p>因为项目上使用了 Hibernate Metamodel，而且自定义映射了数据库的 JSON 字段类型，导致生成的 Metamodel 属性类型有误。虽然并没有用映射的这些属性做 <code>CriteriaQuery</code>，所以其实在项目的使用上没有影响，但是启动时还是会报一个 ERROR 日志，所以寻找一个能够根治的解决办法。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ERROR org.hibernate.metamodel.internal.MetadataContext [MetadataContext.java:491] - HHH015007: Illegal argument on static metamodel field injection : Foo_#bars; expected type : org.hibernate.metamodel.model.domain.internal.SingularAttributeImpl; encountered type : javax.persistence.metamodel.MapAttribute</span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-<h3 id="一-定位问题"><a class="markdownIt-Anchor" href="#一-定位问题"></a> 一、定位问题</h3>
-<p><strong>首先是背景信息：</strong> 因为前端需要在数据库存储 JSON 字段，而且现在版本的 MySQL 天然支持 JSON ，所以建表时采用了 JSON 作为字段类型。然后在 JPA 实体层面，引入了 <code>hibernate-types</code> 依赖来增加 Hibernate 对 JSON 的支持，字段属性增加了 <code>@Type(type = &quot;json&quot;)</code> 注解，本身定义为了 <code>Map</code> 类型。</p>
-<p>其实在 Hibernate 对 JSON 处理这件事情上，传统方案是通过自定义 <code>Convert</code> 来实现。或者可能不是 JSON Object 而是 JSON Array，但无论是哪种情况，均会遇到同样的问题。</p>
-<p>通过报错信息，对代码进行 DEBUG 后得知，Hibernate 在启动时，会根据实体属性是否存在与其他实体的关系，生成不同的 <code>Attribute</code>。比如 OneToMany 一对多关系就会生成 <code>ListAttribute</code> 或 <code>SetAttribute</code>，没有关系的属性都是 <code>SingularAttribute</code>。而启动时通过反射，会 set Metamodel 的对应属性，我们可以在 target 下面看见，Metamodel 的类型为 <code>MapAttribute</code>，所以我们可以确定，问题就出在了生成 Metamodel 的时候。具体是不是直接拿实体定义的数据类型来生成的我没有去看源码，不过可以肯定的是它在判断类型的时候缺少额外的判断。</p>
-<h3 id="二-解决问题"><a class="markdownIt-Anchor" href="#二-解决问题"></a> 二、解决问题</h3>
-<p>同样作为一个共性问题，在 Goolge 进行搜索后，定位到了一条仍然是 Hibernate 官方 Bug 追踪的链接 <a href="https://hibernate.atlassian.net/browse/HHH-12338">Incorrect metamodel for basic collections</a>。简单的来说，就是当前已经在 5.5.0.Alpha1 的版本中得到了解决，不过如果你认真看了下面整个的 Activity 记录，就会发现仍然是存在一个小插曲。</p>
-<h3 id="三-插曲"><a class="markdownIt-Anchor" href="#三-插曲"></a> 三、插曲</h3>
-<p>这个问题是在 2018 年的 3 月份被提出来的，而 5.5.0.Alpha1 已经是 2021 年 8 月份的事情了，照理说这么一个小问题不会需要三年多的时间来处理，而这个疑问的答案就在下面的讨论之中。</p>
-<p>简单来说，这个问题在当月就被解决掉了，伴随着 5.2.17 的版本发布，这个问题理论上来说就不应该再存在了。然而事与愿违，在 5.2.17 版本发布之后，很快就有人提出了新的问题。在下面的 Comment 中有记录，同时这个人也单独提了一个 issue <a href="https://hibernate.atlassian.net/browse/HHH-12581">NPE for Criteria query containing fetch join as a regression of HHH-12338</a>，即这次的改动造成了 NPE。然后可以看到在另一个维护者与之前 Vlad Mihalcea 的一番讨论之后，他们决定恢复这次的改动。</p>
-<img src="/2021/12/02/hibernate-incorrect-metamodel-with-no-reationship/hibernate-incorrect-metamodel-with-no-reationship-1.png" class="" title="revert commit">
-<p>但是回退了就意味着问题又回来了，上面提到的 Vlad Mihalcea 从红帽离职，不再维护 Hibernate 还弄了一个新的项目就是上面提到的 <code>hibernate-types</code>。所以其他人在遇到相同的问题时，有部分和我们一样是采用的 <code>hibernate-types</code> 方案，自然而然有人把问题又丢给了 Vlad Mihalcea，不过是在 <code>hibernate-types</code> 项目。</p>
-<p>于是 Vlad Mihalcea 在 Github 提了新的 PR，见 <a href="https://github.com/hibernate/hibernate-orm/pull/3254">HHH-12338 - Incorrect metamodel for basic collections</a>。不过很不幸的是，并没有后续。</p>
-<p>直到今年的 7 月，又一位开发者忍无可忍决定解决这个问题，提了新的 PR 出来，见 <a href="https://github.com/hibernate/hibernate-orm/pull/4096">HHH-14724 Test-case for metamodel compile error with converters and validation</a>。这次终于引起了重视，并在一番努力之后，终于得到了合并，问题就此解决。</p>
-<p>题外话，这件事情，是不是跟前阵子遇到的 <a href="/2021/11/26/hibernate-automatic-2nd-collection-cache-eviction/">Hibernate 配置自动清除二级缓存之集合缓存</a> 里面的插曲有点像？笑。</p>
-<h3 id="四-亲力亲为"><a class="markdownIt-Anchor" href="#四-亲力亲为"></a> 四、亲力亲为</h3>
-<p>虽说这件事情现在看来终于告一段落了，不过由于时今年 9 月份才最终解决，虽然代码已经被合并到了各个版本的分支中，但 5.4 已经半年没有发过新的版本了。虽说 5.5 和 5.6 的版本已经没问题了，但由于项目框架的问题，并不能直接升级 Hibernate 的版本，而且本来 5.5 的版本就存在很大改动，现有架构并不能保证完全兼容（比如还是上面提到的 <code>hibernate-types</code> 就需要引入另外一个包），所以最后没有办法，只能决定采用重打包的方式自己对源码进行更新。</p>
-<p>剩下的事情就不再赘述了，大概流程就是下载 Hibernate 源码，找到 5.4.32.Final 的 tag，在此基础上手动把修复代码的变更拷贝过来，然后改个版本号，发布到私仓，再更改当前项目依赖的版本号，最后成功解决。</p>
 ]]></content>
       <categories>
         <category>Java</category>
@@ -1170,6 +1170,42 @@ Checking connectivity... done.
       </tags>
   </entry>
   <entry>
+    <title>合并多个 vmdk 文件</title>
+    <url>/2017/03/01/merge-multiple-vmdk&#39;s-into-single-vmdk/</url>
+    <content><![CDATA[<p>这是一个上古时代的虚拟机，自从换电脑以来就一直跟随我。虽然当初磁盘选择了单文件存储，然而由于众多快照的原因，又是好多 vmdk 的虚拟磁盘文件躺在硬盘中。因为好多快照都是之前已经被删除了，索性整理了一下虚拟机，并且将多个虚拟磁盘文件合并。</p>
+<p>上网寻找了一下解决方案，发现在一个大概是和虚拟化相关的、猜测是 wordpress 官方博客（猜测原因是因为该博客用的是 <a href="http://wordpress.com">wordpress.com</a> 的二级域名）的文章中找到了答案。</p>
+<span id="more"></span>
+<blockquote>
+<p><a href="https://vmexpo.wordpress.com/2014/04/15/how-to-merge-multiple-vmdks-into-single-vmdk/comment-page-1/">https://vmexpo.wordpress.com/2014/04/15/how-to-merge-multiple-vmdks-into-single-vmdk/comment-page-1/</a></p>
+</blockquote>
+<p>使用的是一个名为 vmware-vdiskmanager 的命令行工具，这个工具可以在 VMware Fusion 或是 VMware Workstation 中找到，所以如果使用的是 VMware Player，那么可以到 VMware 的网站（KB Article 1023856）下载然后放到 VMware Player 的安装路径下。</p>
+<p>接下来使用下面命令即可完成操作。</p>
+<figure class="highlight dos"><table><tr><td class="code"><pre><span class="line">vmware-vdiskmanager.exe -r &quot;待转换vmdk路径&quot; -t <span class="number">0</span> &quot;新生成的vmdk文件路径&quot;</span><br></pre></td></tr></table></figure>
+<p>记得转换完成后，删除或处理掉原来的文件，将新生成的文件名改为原文件名，亦或可以删除虚拟机配置中的原有硬盘并新添转换后的硬盘。</p>
+<p>命令操作截图如下。</p>
+<img src="/2017/03/01/merge-multiple-vmdk's-into-single-vmdk/conversion-by-cmd.png" class="" title="操作截图">
+<blockquote>
+<p>Virtual disk conversion successful.</p>
+</blockquote>
+<p>操作成功完成。</p>
+]]></content>
+      <categories>
+        <category>VMware</category>
+      </categories>
+      <tags>
+        <tag>VMware</tag>
+        <tag>vmdk</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>重新弄好后的第一篇文章</title>
+    <url>/2017/01/25/my-first-article/</url>
+    <content><![CDATA[<p>经历了一番挫折，最后算是成功地把 blog 重新（也是从新）部署在了 github，对自己而言还算深夜的时候终于写下了这些东西。</p>
+<p>看来我以后要重视下 github 上的项目了，至少不能这么乱糟糟了。</p>
+<p>还有，要学习下makedown语法了。</p>
+]]></content>
+  </entry>
+  <entry>
     <title>Keycloak 配置自定义社交帐号登录组件</title>
     <url>/2022/01/05/keycloak-custom-idp/</url>
     <content><![CDATA[<p>由于 Keycloak 由红帽开发维护，所以其自带的 Social Identity Providers 都是国外的平台。现有需求对接公司 SSO，且由于国内 OAuth2 协议实现均不标准（公司的也是），所以无法使用 Keycloak 的 OpenID Connect 自定义接入，需要自己扩展 Identity Provider 实现。和国内的微信、钉钉、飞书等系统接入代码类似，但发现现有的接入组件没有实现 <code>UserAttributeMapper</code>，且版本变动，代码并不兼容，所以参考 Github 的实现进行开发。</p>
@@ -1242,42 +1278,6 @@ Checking connectivity... done.
         <tag>OAuth2</tag>
         <tag>SSO</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>合并多个 vmdk 文件</title>
-    <url>/2017/03/01/merge-multiple-vmdk&#39;s-into-single-vmdk/</url>
-    <content><![CDATA[<p>这是一个上古时代的虚拟机，自从换电脑以来就一直跟随我。虽然当初磁盘选择了单文件存储，然而由于众多快照的原因，又是好多 vmdk 的虚拟磁盘文件躺在硬盘中。因为好多快照都是之前已经被删除了，索性整理了一下虚拟机，并且将多个虚拟磁盘文件合并。</p>
-<p>上网寻找了一下解决方案，发现在一个大概是和虚拟化相关的、猜测是 wordpress 官方博客（猜测原因是因为该博客用的是 <a href="http://wordpress.com">wordpress.com</a> 的二级域名）的文章中找到了答案。</p>
-<span id="more"></span>
-<blockquote>
-<p><a href="https://vmexpo.wordpress.com/2014/04/15/how-to-merge-multiple-vmdks-into-single-vmdk/comment-page-1/">https://vmexpo.wordpress.com/2014/04/15/how-to-merge-multiple-vmdks-into-single-vmdk/comment-page-1/</a></p>
-</blockquote>
-<p>使用的是一个名为 vmware-vdiskmanager 的命令行工具，这个工具可以在 VMware Fusion 或是 VMware Workstation 中找到，所以如果使用的是 VMware Player，那么可以到 VMware 的网站（KB Article 1023856）下载然后放到 VMware Player 的安装路径下。</p>
-<p>接下来使用下面命令即可完成操作。</p>
-<figure class="highlight dos"><table><tr><td class="code"><pre><span class="line">vmware-vdiskmanager.exe -r &quot;待转换vmdk路径&quot; -t <span class="number">0</span> &quot;新生成的vmdk文件路径&quot;</span><br></pre></td></tr></table></figure>
-<p>记得转换完成后，删除或处理掉原来的文件，将新生成的文件名改为原文件名，亦或可以删除虚拟机配置中的原有硬盘并新添转换后的硬盘。</p>
-<p>命令操作截图如下。</p>
-<img src="/2017/03/01/merge-multiple-vmdk's-into-single-vmdk/conversion-by-cmd.png" class="" title="操作截图">
-<blockquote>
-<p>Virtual disk conversion successful.</p>
-</blockquote>
-<p>操作成功完成。</p>
-]]></content>
-      <categories>
-        <category>VMware</category>
-      </categories>
-      <tags>
-        <tag>VMware</tag>
-        <tag>vmdk</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>重新弄好后的第一篇文章</title>
-    <url>/2017/01/25/my-first-article/</url>
-    <content><![CDATA[<p>经历了一番挫折，最后算是成功地把 blog 重新（也是从新）部署在了 github，对自己而言还算深夜的时候终于写下了这些东西。</p>
-<p>看来我以后要重视下 github 上的项目了，至少不能这么乱糟糟了。</p>
-<p>还有，要学习下makedown语法了。</p>
-]]></content>
   </entry>
   <entry>
     <title>MySQL FEDERATED 存储引擎介绍及使用</title>
@@ -1584,71 +1584,6 @@ B中第一个字符，另一条从|字符指向右括号。这使NFA能够进行
       </tags>
   </entry>
   <entry>
-    <title>【翻译】Hibernate 软删除：你可能忽略掉的一些东西</title>
-    <url>/2022/01/07/soft-deletion-in-hibernate-things-you-may-miss/</url>
-    <content><![CDATA[<img src="/2022/01/07/soft-deletion-in-hibernate-things-you-may-miss/soft-deletion-in-hibernate-things-you-may-miss-1.png" class="">
-<p>我们在设计生产系统的时候，无论是为了方便恢复、便于查找问题还是审计等，总是绕不开软删除这个话题。国内互联网公司大部分均使用 MyBatis 作为 ORM 框架，所以大部分的资料也都是 MyBatis 的各种软删除实现，用起来也都没什么问题。但是手里项目使用的是 Hibernate，虽然 Hibernate 也可以找到很多软删除的方案，当初最开始参考的也是原文列出的第一个 Baeldung 网站的方案，但是由于 Hibernate 大部分时候都是直接对实体进行操作，所以软删除用起来会遇到很多的问题。比如自己就遇到了软删除 + 二级缓存冲突的问题，先抛开这个不谈，毕竟在权衡之下直接关闭二级缓存就解决了问题，在基本使用时软删除也不可避免地会遇到各种问题。正好偶然看到了 JPA Buddy 上一篇文章在说这个问题，索性简单翻译下，希望大家在设计软删除方案的时候能够进行充分的考虑。</p>
-<p>原文：<a href="https://www.jpa-buddy.com/blog/soft-deletion-in-hibernate-things-you-may-miss/">Soft Deletion in Hibernate: Things You May Miss</a></p>
-<span id="more"></span>
-<hr />
-<p>软删除是一种广泛使用的模式，简单来说就是：你仅仅将实体标记为删除状态并通过在 SELECT 查询中过滤他们而不是物理删除这些实体。使用软删除有很多常见的原因：审计、可恢复性、或者可以很方便地在将数据伪造成删除状态的同时保持着对这些“已删除”记录的引用。</p>
-<p>在这篇文章中我们将关注一些大部分讲述软删除方案的文章所未提到的细节。</p>
-<h4 id="sqldelete-where"><a class="markdownIt-Anchor" href="#sqldelete-where"></a> @SQLDelete + @Where</h4>
-<p>如果你以“soft deletion hibernate”为关键词在谷歌上进行搜索的话，你很可能找到 <a href="https://www.baeldung.com/spring-jpa-soft-delete">Eugen Paraschiv</a>、<a href="https://vladmihalcea.com/the-best-way-to-soft-delete-with-hibernate/">Vlad Mihalcea</a> 或是 <a href="https://thorben-janssen.com/implement-soft-delete-hibernate/">Thorben Janssen</a> 写的教程。他们都建议使用 Hibernate 的 <code>@SQLDelete</code> 和 <code>@Where</code> 注解来让程序自动设置删除标识并可以在查询时自动过滤这些数据：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table(name = &quot;article&quot;)</span></span><br><span class="line"><span class="meta">@SQLDelete(sql = &quot;update article set deleted=true where id=?&quot;)</span></span><br><span class="line"><span class="meta">@Where(clause = &quot;deleted = false&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Article</span> &#123;</span><br><span class="line">   <span class="meta">@Id</span></span><br><span class="line">   <span class="meta">@GeneratedValue(strategy = GenerationType.SEQUENCE)</span></span><br><span class="line">   <span class="meta">@Column(name = &quot;id&quot;, nullable = false)</span></span><br><span class="line">   <span class="keyword">private</span> Long id;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Column(name = &quot;deleted&quot;, nullable = false)</span></span><br><span class="line">   <span class="keyword">private</span> <span class="type">Boolean</span> <span class="variable">deleted</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// other properties, getters and setters omitted</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>@SQLDelete</code> 注解会在 Hibernate 管理的对象被删除时执行我们设定好的原生 SQL 语句。<code>@Where</code> 注解通过将自身的查询条件自动追加到 SELECT 查询语句中来帮你自动过滤掉这些被标记为删除的数据。</p>
-<p>这个方法看上去是一剂良药，但是里面有坑。普通查询肯定可以正常工作，但是如果是关联查询呢？</p>
-<h4 id="关联查询所遇到的问题"><a class="markdownIt-Anchor" href="#关联查询所遇到的问题"></a> 关联查询所遇到的问题</h4>
-<p>让我们仔细思考一下，假设你拥有一个实体，里面可能关联了另一个实体的集合，或者仅仅是另一个实体对象，但相同的是他们均被软删除。当你获取到这个实体对象时，你期望发生什么？实际上，这里没有几个选项可供选择：被删除的记录呈现或者不呈现在查询结果中，而不同的选择取决于不同的场景用例。比如，我们在商城购物车中有很多的商品，当一件商品被删除时我们期望其从购物车中消失对吧？但是被删除的商品仍应该出现在历史账单中，这难道不矛盾嘛？</p>
-<p>让我们来看一下 <code>@SQLDelete</code> 和 <code>@Where</code> 注解在不同类型的关联关系、FetchType 和不同的查询 API 中是怎样工作的。下面是我们将要在后续实验中使用的 ER 图：</p>
-<img src="/2022/01/07/soft-deletion-in-hibernate-things-you-may-miss/soft-deletion-in-hibernate-things-you-may-miss-2.png" class="" title="ER 图">
-<p>Article 和 Author 拥有多对多关系，和 Comment 有着一对多关系，以及和 ArticleDetails 有着一对一的关系。那么问题来了，他们中的某一个在被其他实体引用时被软删除会发生什么？</p>
-<h4 id="onetomany-manytomany"><a class="markdownIt-Anchor" href="#onetomany-manytomany"></a> OneToMany &amp; ManyToMany</h4>
-<p>Hibernate 会自动在所有对多关系中过滤掉被删除的实体。如果你在删除一个 Author 之前和之后分别运行下面的代码，打印出的 Author 的名字数量会发生变化：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Optional&lt;Article&gt; articleOptional = articleRepository.findById(<span class="number">4L</span>);</span><br><span class="line">articleOptional.ifPresent(article -&gt; &#123;</span><br><span class="line">   article.getAuthors()</span><br><span class="line">           .forEach(author -&gt; logger.info(author.getName()));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>好消息是，无论 FetchType 的值是什么或者用哪种查询方式（比如 entityManager、Criteria API、Spring Data JPA 等），上述结果都成立。</p>
-<h4 id="懒加载下的-manytoone-onetoone"><a class="markdownIt-Anchor" href="#懒加载下的-manytoone-onetoone"></a> 懒加载下的 ManyToOne &amp; OneToOne</h4>
-<p>让我们试着想象一下我们软删除了一篇文章，但我们不希望删除这篇文章下面的评论，因为这样在恢复文章时评论也会自动恢复。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table(name = &quot;comment&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Comment</span> &#123;</span><br><span class="line">   ...</span><br><span class="line">   <span class="meta">@ManyToOne(fetch = FetchType.LAZY)</span></span><br><span class="line">   <span class="meta">@JoinColumn(name = &quot;article_id&quot;)</span></span><br><span class="line">   <span class="keyword">private</span> Article article;</span><br><span class="line">   ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>现在，让我们尝试获取一条对应文章被删除的评论：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Optional&lt;Comment&gt; comment = commentRepository.findById(id);</span><br><span class="line">comment.ifPresent(com -&gt; logger.info(com.getArticle().getText()));</span><br></pre></td></tr></table></figure>
-<p>如果你在第一行打一个断点，你可以看到 article 属性的值是 Hibernate Proxy 对象。</p>
-<img src="/2022/01/07/soft-deletion-in-hibernate-things-you-may-miss/soft-deletion-in-hibernate-things-you-may-miss-3.png" class="" title="debug">
-<p>这很容易理解，因为 Hibernate 并不能提前知道这个实体是否已经被删除。但是当我们执行 <code>com.getArticle().getText()</code> 方法时，却抛出了 EntityNotFoundException 异常，这是你所期望的吗？</p>
-<h4 id="提前加载下的-manytoone-onetoone"><a class="markdownIt-Anchor" href="#提前加载下的-manytoone-onetoone"></a> 提前加载下的 ManyToOne &amp; OneToOne</h4>
-<p>让我们将 FetchType 的值改为 EAGER 后再次重复相同的实验。现在我们在程序不使用代理的情况下获取到了关联的 article 对象，虽然 Hibernate 知道 article 已经被删除了。让我们进行同样的测试：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Optional&lt;Comment&gt; comment = commentRepository.findById(id);</span><br><span class="line">comment.ifPresent(com -&gt; logger.info(com.getArticle().getText()));</span><br></pre></td></tr></table></figure>
-<p>被关联查询且被软删除的 article 对象在没有报任何异常的情况下被加载了，其软删除标志为也依然为 <code>true</code>：</p>
-<img src="/2022/01/07/soft-deletion-in-hibernate-things-you-may-miss/soft-deletion-in-hibernate-things-you-may-miss-4.png" class="" title="debug">
-<p>这种不一致的行为很容易被解释，提前加载让 Hibernate 查询时 join 了 <code>article</code> 表。Hibernate 面临着立即抛出 EntityNotFoundException 异常还是正常加载的抉择，但因为 article 已经被加载了，<code>@Where</code> 注解失去了它的作用，所以 Hibernate 只是简单地为对象赋了值。</p>
-<p>现在让我们批量查询 comments：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Iterable&lt;Comment&gt; comments = commentRepository.findAll();</span><br></pre></td></tr></table></figure>
-<p>现在我们又遇到了 EntityNotFoundException 异常！出现异常是因为 <code>findAll</code> 方法分离查询被关联的 Article 对象，详情可以参考 <a href="https://stackoverflow.com/questions/49192255/spring-data-findall-does-not-fetch-eagerly/49193254">Spring data findAll() does not fetch eagerly</a>。</p>
-<p>任何时候被软删除的对象在被使用分离查询时都会导致上面的异常，因为 Hibernate 在生成分离查询时应用了 <code>@Where</code> 所定义的条件，所以很显然 Hibernate 并不能查询到被软删除的实体。所以很显然，这种查询并不能查到 Hibernate 所期望的结果，所以在这种情况下导致了 EntityNotFoundException 异常。</p>
-<p>所以更有趣的是你需要进行很多实验来认识到 Hibernate 在使用不同的 API 时是怎样获取数据的。首先，无论是对多还是对一的实体，在使用 DSL 查询时你均会遇到同样的异常。与此同时，criteria API 会在提前加载的一对一关系下返回被删除的实体，但会在提前加载的多对一关系中抛出 EntityNotFoundException 异常。这难道不令人困惑吗？</p>
-<h4 id="避免-entitynotfoundexception-异常的解决方式"><a class="markdownIt-Anchor" href="#避免-entitynotfoundexception-异常的解决方式"></a> 避免 EntityNotFoundException 异常的解决方式</h4>
-<p>这里有一个可以避免 EntityNotFoundException 异常的解决方法。Hibernate <a href="https://docs.jboss.org/hibernate/orm/5.2/userguide/html_single/Hibernate_User_Guide.html#associations-not-found">介绍</a>了 <code>@NotFound</code> 注解，它能够让程序不再抛出异常，而是直接将关联对象的值设置为 <code>null</code>。</p>
-<p>这个解决办法看起来是一个灵丹妙药，但它同时带来了额外的缺点：无论 FetchType 设置为什么，所有的对一关系均会提前加载。</p>
-<img src="/2022/01/07/soft-deletion-in-hibernate-things-you-may-miss/soft-deletion-in-hibernate-things-you-may-miss-5.png" class="" title="官网介绍">
-<h4 id="约束和索引带来的问题"><a class="markdownIt-Anchor" href="#约束和索引带来的问题"></a> 约束和索引带来的问题</h4>
-<p>我们知道被软删除的实体和正常的实体均会被唯一约束和索引所限制，因此，常规的索引在这种情况下不再适用。假设一个 Author 实体的 login 字段有唯一约束，在软删除表中已有的记录后，记录仍然存在，所以正常状态的 Author 实体的同样的字段也不能再被设置为被软删除的相同的值。</p>
-<p>如果你正在使用 PostgreSQL，那么你很幸运，因为你可以使用部分索引：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">CREATE UNIQUE INDEX author_login_idx ON <span class="title function_">author</span> <span class="params">(login)</span> <span class="type">WHERE</span> <span class="variable">deleted</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br></pre></td></tr></table></figure>
-<p>但如果你使用的是 MySQL，那么很不幸，这个问题无解。</p>
-<h4 id="结论"><a class="markdownIt-Anchor" href="#结论"></a> 结论</h4>
-<p>所以你可以看到，软删除是一个很容易被理解但不容易去实现的模式。看上去现在还没有一个完美的解决方案，至少 Hibernate 现阶段还没有提供。</p>
-<p>在一些简单的场景，你确实可以直接采用使用 <code>@SQLDelete</code> + <code>@Where</code> 注解的方式，但在软删除实体出现在一对一或者多对一关联关系的时候，你并不能期望他们行为一致。只是简单地改变 FetchType 的值，或是使用 <code>@EntityGraph</code>，或者将你的查询从 Criteria API 迁移到 DSL 查询，或是其他任何改变都很可能影响查询结果：从被意外抛出异常到意外地成功加载了被删除的实体，或是直接获得了意料之外的 <code>null</code> 值。</p>
-]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>Hibernate</tag>
-        <tag>Translate</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>波浪排序</title>
     <url>/2022/03/03/sort-an-array-in-a-waveform/</url>
     <content><![CDATA[<p>偶然间看到了一道算法题，第一眼看起来还挺简单，但是想了想发现不止这么简单，应该会有更优解。拿“波浪排序”作为关键字在百度上进行搜索，发现并没有相关题目。又以“sort wave”为关键字在谷歌上进行搜索，终于发现了相关解析，这里用自己的方式记录一下解题思路。</p>
@@ -1725,115 +1660,68 @@ B中第一个字符，另一条从|字符指向右括号。这使NFA能够进行
       </tags>
   </entry>
   <entry>
-    <title>Trino 介绍及部署使用</title>
-    <url>/2022/03/15/trino-deploy-tutorials/</url>
-    <content><![CDATA[<p>之前我们提到项目上有一个跨库进行 MySQL join 操作的需求，当时选择使用了 MySQL 的 FEDERATED 存储引擎来解决这个问题，具体可以看 <a href="/2022/02/28/mysql-federated-storage-engine-tutorials/">MySQL FEDERATED 存储引擎介绍及使用</a>。但是 FEDERATED 本身只支持 MySQL 数据库，如果我们需要对多个不同种类的数据库进行关联操作，那么还是要依赖第三方组件来进行，比如这次要介绍的 Trino。</p>
-<p>Trino 是基于 Java 开发的高性能的、分布式的大数据 SQL 查询引擎，支持基本上所有的常见数据源以及你所想象不到的中间件存储比如 Kafka，同时也支持在单个查询中使用多个数据源来进行关联查询。</p>
-<p>官网：<a href="https://trino.io/">Trino</a></p>
+    <title>【翻译】Hibernate 软删除：你可能忽略掉的一些东西</title>
+    <url>/2022/01/07/soft-deletion-in-hibernate-things-you-may-miss/</url>
+    <content><![CDATA[<img src="/2022/01/07/soft-deletion-in-hibernate-things-you-may-miss/soft-deletion-in-hibernate-things-you-may-miss-1.png" class="">
+<p>我们在设计生产系统的时候，无论是为了方便恢复、便于查找问题还是审计等，总是绕不开软删除这个话题。国内互联网公司大部分均使用 MyBatis 作为 ORM 框架，所以大部分的资料也都是 MyBatis 的各种软删除实现，用起来也都没什么问题。但是手里项目使用的是 Hibernate，虽然 Hibernate 也可以找到很多软删除的方案，当初最开始参考的也是原文列出的第一个 Baeldung 网站的方案，但是由于 Hibernate 大部分时候都是直接对实体进行操作，所以软删除用起来会遇到很多的问题。比如自己就遇到了软删除 + 二级缓存冲突的问题，先抛开这个不谈，毕竟在权衡之下直接关闭二级缓存就解决了问题，在基本使用时软删除也不可避免地会遇到各种问题。正好偶然看到了 JPA Buddy 上一篇文章在说这个问题，索性简单翻译下，希望大家在设计软删除方案的时候能够进行充分的考虑。</p>
+<p>原文：<a href="https://www.jpa-buddy.com/blog/soft-deletion-in-hibernate-things-you-may-miss/">Soft Deletion in Hibernate: Things You May Miss</a></p>
 <span id="more"></span>
-<h3 id="前世今生"><a class="markdownIt-Anchor" href="#前世今生"></a> 前世今生</h3>
-<p>Trino 的前身是 Facebook 的 Presto。2012 年， Martin Traverso、Dain Sundstrom 和 David Phillips 入职了 Facebook 的大数据基建部门，并和 Eric Hwang 一同开发了 Presto 来解决 Facebook 的海量 Hadoop 数据仓库的低延迟交互分析的问题，随后在 2013 年 11 月将 Presto 开源。但好景不长，在 2018 年 Facebook 的管理层想要对 Presto 项目及其未来拥有更多的控制，并让毫无 Presto 经验的开发者可以直接提交代码，而且这个决定是在没有 Presto 社区参与的情况下做出的。创始人们觉得这和拥有一个健康开放的社区相矛盾，所以为了使 Presto 的成长更加健康，他们决定离开了 Facebook。</p>
-<p>2019 年 1 月，Presto 软件基金会成立了，创始人们决定在未来的 10 个月中不再受雇于任何企业来专门与全球的用户和开发者们接触以及和贡献者合作来扩大和加强社区。随着参与的人员越来越多，Presto 项目也比以前更拥有活力，这个分支叫做 PrestoSQL。</p>
-<img src="/2022/03/15/trino-deploy-tutorials/trino-deploy-tutorials-0.png" class="" title="commit 比较">
-<p>在 PrestoSQL 稳固几个月之后，Facebook 决定通过 Linux 基金会来创建一个具有竞争关系的社区，第一部就是为 Presto 申请了商标。2019 年 9 月，Facebook 在 Linux 基金会成立了 Presto 基金会，这边的分支叫做 PrestoDB。所以 PrestoSQL 不得不改名，最后将名称改为了 Trino。</p>
-<p>最后引用官宣改名文章的最后一句话：<strong>If you love this project, you already love Trino.</strong> ❤️</p>
-<h3 id="server-节点安装"><a class="markdownIt-Anchor" href="#server-节点安装"></a> server 节点安装</h3>
-<p>因为现阶段只是简单地进行试用，所以我们只安装 server 节点，而且 server 节点同时也可以作为 worker 节点使用。</p>
-<h4 id="java-环境"><a class="markdownIt-Anchor" href="#java-环境"></a> Java 环境</h4>
-<p>为什么要单独强调 Java 环境，是因为 Trino 对 Java 环境很挑剔，官网文档要求 64 位的 Java 11 运行环境，且最低版本号为 11.0.11。如果是 Java 12 或者 13、17 等后续版本，官方说可能正常工作，并没有做过测试。同时推荐 <a href="https://www.azul.com/downloads/?package=jdk#download-openjdk">Azul Zulu</a> 的 JDK，官方说只针对 Azul Zulu 的发行版做了测试，可以说是很娇贵了。</p>
-<p>所以为了避免因为 JDK 的问题使程序出现问题，我们还是老老实实按照要求使用 Azul Zulu 的 Open JDK，具体安装过程不再赘述，是用的版本为当前 Java 11 的最新版 11.0.14.1+1。</p>
-<img src="/2022/03/15/trino-deploy-tutorials/trino-deploy-tutorials-1.png" class="" title="JDK 版本">
-<h4 id="python-环境"><a class="markdownIt-Anchor" href="#python-环境"></a> Python 环境</h4>
-<p>Python 环境的要求相对来说就很宽泛了，官方说 2.6.x、2.7.x、或者 3.x 的版本均可，因为 Python 环境只是给启动脚本使用的，并不会影响程序的正常运行。都 2022 年了，所以我们这里使用 Python 3 的最新版即可。</p>
-<img src="/2022/03/15/trino-deploy-tutorials/trino-deploy-tutorials-2.png" class="" title="Python 版本">
-<h4 id="安装-trino"><a class="markdownIt-Anchor" href="#安装-trino"></a> 安装 Trino</h4>
-<p>从官网下载 server 节点压缩包并解压即可。Trino 需要一个目录来存储日志等数据，官方建议放在 Trino 安装目录外，因为这样可以很方便地在后续升级 Trino 版本，具体配置放下面再说。</p>
-<h3 id="trino-配置"><a class="markdownIt-Anchor" href="#trino-配置"></a> Trino 配置</h3>
-<p>安装完 Trino 之后还需要对 Trino 进行一连串的配置才可以运行。首先在安装目录创建 <code>etc</code> 文件夹，用来放置配置信息，然后通过创建对应文件的方式对 Trino 进行配置。</p>
-<h4 id="node-节点配置文件"><a class="markdownIt-Anchor" href="#node-节点配置文件"></a> Node 节点配置文件</h4>
-<p>创建 <code>node.properties</code> 文件配置节点信息：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 集群的环境名称，同一集群下的节点必须具有相同的环境名</span><br><span class="line">node.environment=test</span><br><span class="line"># 节点的唯一 ID，集群内不能重复</span><br><span class="line">node.id=b0e4c61a-a304-47d3-bfc7-88be4c6a22c1</span><br><span class="line"># 数据存储路径</span><br><span class="line">node.data-dir=/opt/trino-server-374/data</span><br></pre></td></tr></table></figure>
-<h4 id="jvm-配置"><a class="markdownIt-Anchor" href="#jvm-配置"></a> JVM 配置</h4>
-<p>创建 <code>jvm.config</code> 文件存储 JVM 启动参数，在官方样例中删掉了 OOM 相关的参数并调整了下内存需求：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-server</span><br><span class="line">-Xmx4G</span><br><span class="line">-XX:-UseBiasedLocking</span><br><span class="line">-XX:+UseG1GC</span><br><span class="line">-XX:G1HeapRegionSize=32M</span><br><span class="line">-XX:+ExplicitGCInvokesConcurrent</span><br><span class="line">-XX:-OmitStackTraceInFastThrow</span><br><span class="line">-XX:ReservedCodeCacheSize=512M</span><br><span class="line">-XX:PerMethodRecompilationCutoff=10000</span><br><span class="line">-XX:PerBytecodeRecompilationCutoff=10000</span><br><span class="line">-Djdk.attach.allowAttachSelf=true</span><br><span class="line">-Djdk.nio.maxCachedBufferSize=2000000</span><br></pre></td></tr></table></figure>
-<h4 id="config-配置文件"><a class="markdownIt-Anchor" href="#config-配置文件"></a> Config 配置文件</h4>
-<p>创建 <code>config.properties</code> 文件，储存的是一些杂七杂八的配置。因为我们只有一个节点做测试，即当 server 又当 worker，所以使用下列配置，端口按需调整：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 标识为协调员，可以接受客户端请求并管理查询</span><br><span class="line">coordinator=true</span><br><span class="line"># 作为协调员的同时可作为 worker 节点使用</span><br><span class="line">node-scheduler.include-coordinator=true</span><br><span class="line">http-server.http.port=8080</span><br><span class="line">query.max-memory=2GB</span><br><span class="line">query.max-memory-per-node=2GB</span><br><span class="line"># 协调员的地址，注册发现使用</span><br><span class="line">discovery.uri=http://127.0.0.1:8080</span><br></pre></td></tr></table></figure>
-<h4 id="日志等级"><a class="markdownIt-Anchor" href="#日志等级"></a> 日志等级</h4>
-<p>创建 <code>log.properties</code> 文件调整日志等级，可选，默认为 <code>INFO</code>。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">io.trino=INFO</span><br></pre></td></tr></table></figure>
-<h4 id="数据源配置"><a class="markdownIt-Anchor" href="#数据源配置"></a> 数据源配置</h4>
-<p>Trino 支持的数据源非常的多，具体可以看官方文档 <a href="https://trino.io/docs/current/connector.html">Connectors</a>，这里我们只配置一个 MySQL 和一个 PostgreSQL 作为测试。</p>
-<p>首先创建 <code>catalog</code> 文件夹，然后创建 <code>mysql.properties</code> 文件，文件名的 <code>mysql</code> 前缀为 catalog 名称，可以自由指定。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 指定为 MySQL</span><br><span class="line">connector.name=mysql</span><br><span class="line"># JDBC 连接地址，注意，MySQL 作为数据源时不能指定具体 database</span><br><span class="line">connection-url=jdbc:mysql://192.168.1.202:3306?useSSL=false</span><br><span class="line">connection-user=root</span><br><span class="line">connection-password=root</span><br></pre></td></tr></table></figure>
-<p>然后再创建 <code>postgresql.properties</code> 文件：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">connector.name=postgresql</span><br><span class="line">connection-url=jdbc:postgresql://192.168.1.202:5432/test</span><br><span class="line">connection-user=postgres</span><br><span class="line">connection-password=postgres</span><br></pre></td></tr></table></figure>
-<h4 id="启动-trino"><a class="markdownIt-Anchor" href="#启动-trino"></a> 启动 Trino</h4>
-<p>可以通过运行 <code>bin</code> 目录下的 <code>launcher</code> 文件启动：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">后台运行</span></span><br><span class="line">ubuntu@CRUCIAL:/opt/trino-server-374/bin$ ./launcher start</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">前台运行</span></span><br><span class="line">ubuntu@CRUCIAL:/opt/trino-server-374/bin$ ./launcher run</span><br></pre></td></tr></table></figure>
-<p>看到显示 <code>SERVER STARTED</code> 后就说明 Trino 正常启动了，可以通过浏览器直接访问 HTTP 端口来查看集群状态，用户名随意输入：</p>
-<img src="/2022/03/15/trino-deploy-tutorials/trino-deploy-tutorials-3.png" class="" title="web ui">
-<h3 id="trino-使用"><a class="markdownIt-Anchor" href="#trino-使用"></a> Trino 使用</h3>
-<p>我们可以通过两种方式来使用 Trino，使用官方的 CLI 命令工具，或者通过 JDBC 驱动在 Java 程序中使用。</p>
-<h4 id="cli-工具"><a class="markdownIt-Anchor" href="#cli-工具"></a> CLI 工具</h4>
-<p>CLI 工具需要 Java 8 或更高版本作为运行环境，我们只需要下载官方提供的 jar 包即可直接使用。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ubuntu@CRUCIAL:/opt/trino-server-374$ wget https://repo1.maven.org/maven2/io/trino/trino-cli/374/trino-cli-374-executable.jar</span><br><span class="line">ubuntu@CRUCIAL:/opt/trino-server-374$ chmod +x trino-cli-374-executable.jar</span><br><span class="line">ubuntu@CRUCIAL:/opt/trino-server-374$ ./trino-cli-374-executable.jar --server localhost:8080 --execute &#x27;SHOW TABLES FROM mysql.test&#x27;</span><br><span class="line">ubuntu@CRUCIAL:/opt/trino-server-374$ ./trino-cli-374-executable.jar --server localhost:8080 --execute &#x27;SELECT * FROM mysql.test.user&#x27;</span><br></pre></td></tr></table></figure>
-<p>其中，<code>mysql</code> 指的是我们在 catlog 文件夹创建的文件名，<code>test</code> 为我们 MySQL 的数据库名称，<code>user</code> 为表名。</p>
-<h4 id="jdbc-驱动"><a class="markdownIt-Anchor" href="#jdbc-驱动"></a> JDBC 驱动</h4>
-<p>CLI 工具的泛用性不强，真要产品化使用还是得采用 JDBC 方式。首先按照官方，添加 JDBC 驱动：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.trino<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>trino-jdbc<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>374<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>然后配置 JDBC 连接地址。这里可以有多种方案来配置，其中 <code>catalog</code> 为文件名，<code>schema</code> 相当于 MySQL 的 database：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">jdbc:trino://host:port</span><br><span class="line">jdbc:trino://host:port/catalog</span><br><span class="line">jdbc:trino://host:port/catalog/schema</span><br></pre></td></tr></table></figure>
-<p>用户名可以任意输入，然后就可以正常使用了。</p>
-<h3 id="高级配置"><a class="markdownIt-Anchor" href="#高级配置"></a> 高级配置</h3>
-<p>上面的流程是可以正常使用的，但是细节上处理的都不到位，比如默认是匿名访问的，用户名可以任意输入；默认没有权限控制，可以访问所有的 catalog 等等，所以我们需要进行一下高级配置。</p>
-<h4 id="配置认证方式"><a class="markdownIt-Anchor" href="#配置认证方式"></a> 配置认证方式</h4>
-<p>Trino 支持很多种的认证方式，基本上常见的都支持。为了减少应用配置复杂度，我们仍然选择通用的用户名/密码方式进行认证。</p>
-<p>首先打开我们的 <code>config.properties</code> 文件，添加认证配置：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http-server.authentication.type=PASSWORD</span><br></pre></td></tr></table></figure>
-<p>然后仍然是在 <code>etc</code> 目录下创建 <code>password-authenticator.properties</code> 文件，指定密码来源：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 采用文件的方式</span><br><span class="line">password-authenticator.name=file</span><br><span class="line">指定密码文件位置</span><br><span class="line">file.password-file=/opt/trino-server-374/etc/password.db</span><br></pre></td></tr></table></figure>
-<p>然后创建密码文件，我们可以使用 <a href="https://httpd.apache.org/">Apache HTTP Server</a> 的 <a href="https://httpd.apache.org/docs/current/programs/htpasswd.html">htpasswd</a> 工具来生成密码文件：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">touch password.db</span><br><span class="line">htpasswd -B -C 10 password.db user</span><br></pre></td></tr></table></figure>
-<p><code>user</code> 为我们想要创建的用户名，然后输入密码即可。</p>
-<h4 id="开启-tls-支持"><a class="markdownIt-Anchor" href="#开启-tls-支持"></a> 开启 TLS 支持</h4>
-<p>当采用用户名/密码的方式进行认证时，Trino 强制要求我们使用 TLS，所以我们需要对其进行配置。</p>
-<p>首先我们需要创建 HTTPS 证书，由于是本地测试，所以我们直接自己签发一个。Trino 支持 PEM 文件和 JKS 文件，我们使用标准的 PEM 文件进行配置。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">生成私钥</span></span><br><span class="line">ubuntu@CRUCIAL:/opt/trino-server-374/etc/ssl$ openssl genrsa -out server.key 2048</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">生成 CSR</span> </span><br><span class="line">ubuntu@CRUCIAL:/opt/trino-server-374/etc/ssl$ openssl req -new -key server.key -out server.csr</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">自己派发证书</span></span><br><span class="line">ubuntu@CRUCIAL:/opt/trino-server-374/etc/ssl$ openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">生成 PEM 格式文件</span></span><br><span class="line">ubuntu@CRUCIAL:/opt/trino-server-374/etc/ssl$ cat server.key server.crt &gt; server.pem</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">校验 PEM 文件</span></span><br><span class="line">ubuntu@CRUCIAL:/opt/trino-server-374/etc/ssl$ openssl rsa -in server.pem -check -noout</span><br><span class="line">ubuntu@CRUCIAL:/opt/trino-server-374/etc/ssl$ openssl x509 -in server.pem -text -noout</span><br></pre></td></tr></table></figure>
-<p>生成完证书后，在 <code>config.properties</code> 文件中添加如下配置即可开启 TLS 支持：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 开启 https</span><br><span class="line">http-server.https.enabled=true</span><br><span class="line"># 指定 https 端口</span><br><span class="line">http-server.https.port=8443</span><br><span class="line"># 指定证书文件</span><br><span class="line">http-server.https.keystore.path=/opt/trino-server-374/etc/ssl/server.pem</span><br></pre></td></tr></table></figure>
-<p>最后修改 JDBC 连接地址，由于是自签证书，所以我们需要关闭证书校验：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">jdbc:trino://127.0.0.1:8443?SSL=true&amp;SSLVerification=NONE</span><br></pre></td></tr></table></figure>
-<p>同理，CLI 命令修改为：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./trino-cli-374-executable.jar --server https://localhost:8443 --user user --password --execute &#x27;SELECT * FROM mysql.test.user&#x27; --insecure</span><br></pre></td></tr></table></figure>
-<h4 id="权限控制"><a class="markdownIt-Anchor" href="#权限控制"></a> 权限控制</h4>
-<p>默认在不开启权限控制的情况下，用户都拥有最大权限，这显示是很不安全的，所以需要配置权限控制。</p>
-<p>创建 <code>access-control.properties</code> 文件，指定权限控制文件：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">access-control.name=file</span><br><span class="line"># 指定控制文件位置</span><br><span class="line">security.config-file=/opt/trino-server-374/etc/rules.json</span><br><span class="line"># 自动刷新间隔，不再需要重启 Trino 即可自动生效</span><br><span class="line">security.refresh-period=1s</span><br></pre></td></tr></table></figure>
-<p>创建 <code>group-provider.properties</code> 文件，指定群组配置文件：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">group-provider.name=file</span><br><span class="line">file.group-file=/opt/trino-server-374/etc/group.txt</span><br></pre></td></tr></table></figure>
-<p>然后编辑群组映射关系 <code>group.txt</code>：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">admin:admin-user</span><br></pre></td></tr></table></figure>
-<p>然后创建 <code>rules.json</code> 文件编写规则，具体的权限控制比较复杂，可以参考 <a href="https://trino.io/docs/current/security/file-system-access-control.html">File-based access control</a>，这里我们只写一个基础的权限控制规则，实现 <code>admin</code> 组的用户可以进行所有操作，任意用户可以访问 <code>mysql</code>，user 可以读取 <code>postgresql</code> 的数据，<code>system</code> 没有用户可以访问。权限匹配是从上到下的，如果没有匹配到，则默认拒绝权限。具体配置如下：</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;catalogs&quot;</span><span class="punctuation">:</span><span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;group&quot;</span><span class="punctuation">:</span><span class="string">&quot;admin&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;allow&quot;</span><span class="punctuation">:</span><span class="string">&quot;all&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;catalog&quot;</span><span class="punctuation">:</span><span class="string">&quot;mysql&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;allow&quot;</span><span class="punctuation">:</span><span class="string">&quot;all&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;user&quot;</span><span class="punctuation">:</span><span class="string">&quot;user&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;catalog&quot;</span><span class="punctuation">:</span><span class="string">&quot;postgresql&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;allow&quot;</span><span class="punctuation">:</span><span class="string">&quot;read-only&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;catalog&quot;</span><span class="punctuation">:</span><span class="string">&quot;system&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;allow&quot;</span><span class="punctuation">:</span><span class="string">&quot;none&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-<p>再创建用户 user2 及 admin-user，来测试一下效果：</p>
-<p><strong>这是开启权限控制之前 user 可以看到的</strong></p>
-<img src="/2022/03/15/trino-deploy-tutorials/trino-deploy-tutorials-4.png" class="" title="开启权限控制之前 user 可见范围">
-<p><strong>这是开启权限控制之后 user 可以看到的</strong></p>
-<img src="/2022/03/15/trino-deploy-tutorials/trino-deploy-tutorials-5.png" class="" title="开启权限控制之后 user 可见范围">
-<p><strong>这是 user2 可以看到的</strong></p>
-<img src="/2022/03/15/trino-deploy-tutorials/trino-deploy-tutorials-6.png" class="" title="user2 可见范围">
-<p><strong>最后这是 admin-user 可以看到的</strong></p>
-<img src="/2022/03/15/trino-deploy-tutorials/trino-deploy-tutorials-7.png" class="" title="admin-user 可见范围">
+<hr />
+<p>软删除是一种广泛使用的模式，简单来说就是：你仅仅将实体标记为删除状态并通过在 SELECT 查询中过滤他们而不是物理删除这些实体。使用软删除有很多常见的原因：审计、可恢复性、或者可以很方便地在将数据伪造成删除状态的同时保持着对这些“已删除”记录的引用。</p>
+<p>在这篇文章中我们将关注一些大部分讲述软删除方案的文章所未提到的细节。</p>
+<h4 id="sqldelete-where"><a class="markdownIt-Anchor" href="#sqldelete-where"></a> @SQLDelete + @Where</h4>
+<p>如果你以“soft deletion hibernate”为关键词在谷歌上进行搜索的话，你很可能找到 <a href="https://www.baeldung.com/spring-jpa-soft-delete">Eugen Paraschiv</a>、<a href="https://vladmihalcea.com/the-best-way-to-soft-delete-with-hibernate/">Vlad Mihalcea</a> 或是 <a href="https://thorben-janssen.com/implement-soft-delete-hibernate/">Thorben Janssen</a> 写的教程。他们都建议使用 Hibernate 的 <code>@SQLDelete</code> 和 <code>@Where</code> 注解来让程序自动设置删除标识并可以在查询时自动过滤这些数据：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table(name = &quot;article&quot;)</span></span><br><span class="line"><span class="meta">@SQLDelete(sql = &quot;update article set deleted=true where id=?&quot;)</span></span><br><span class="line"><span class="meta">@Where(clause = &quot;deleted = false&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Article</span> &#123;</span><br><span class="line">   <span class="meta">@Id</span></span><br><span class="line">   <span class="meta">@GeneratedValue(strategy = GenerationType.SEQUENCE)</span></span><br><span class="line">   <span class="meta">@Column(name = &quot;id&quot;, nullable = false)</span></span><br><span class="line">   <span class="keyword">private</span> Long id;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Column(name = &quot;deleted&quot;, nullable = false)</span></span><br><span class="line">   <span class="keyword">private</span> <span class="type">Boolean</span> <span class="variable">deleted</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// other properties, getters and setters omitted</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>@SQLDelete</code> 注解会在 Hibernate 管理的对象被删除时执行我们设定好的原生 SQL 语句。<code>@Where</code> 注解通过将自身的查询条件自动追加到 SELECT 查询语句中来帮你自动过滤掉这些被标记为删除的数据。</p>
+<p>这个方法看上去是一剂良药，但是里面有坑。普通查询肯定可以正常工作，但是如果是关联查询呢？</p>
+<h4 id="关联查询所遇到的问题"><a class="markdownIt-Anchor" href="#关联查询所遇到的问题"></a> 关联查询所遇到的问题</h4>
+<p>让我们仔细思考一下，假设你拥有一个实体，里面可能关联了另一个实体的集合，或者仅仅是另一个实体对象，但相同的是他们均被软删除。当你获取到这个实体对象时，你期望发生什么？实际上，这里没有几个选项可供选择：被删除的记录呈现或者不呈现在查询结果中，而不同的选择取决于不同的场景用例。比如，我们在商城购物车中有很多的商品，当一件商品被删除时我们期望其从购物车中消失对吧？但是被删除的商品仍应该出现在历史账单中，这难道不矛盾嘛？</p>
+<p>让我们来看一下 <code>@SQLDelete</code> 和 <code>@Where</code> 注解在不同类型的关联关系、FetchType 和不同的查询 API 中是怎样工作的。下面是我们将要在后续实验中使用的 ER 图：</p>
+<img src="/2022/01/07/soft-deletion-in-hibernate-things-you-may-miss/soft-deletion-in-hibernate-things-you-may-miss-2.png" class="" title="ER 图">
+<p>Article 和 Author 拥有多对多关系，和 Comment 有着一对多关系，以及和 ArticleDetails 有着一对一的关系。那么问题来了，他们中的某一个在被其他实体引用时被软删除会发生什么？</p>
+<h4 id="onetomany-manytomany"><a class="markdownIt-Anchor" href="#onetomany-manytomany"></a> OneToMany &amp; ManyToMany</h4>
+<p>Hibernate 会自动在所有对多关系中过滤掉被删除的实体。如果你在删除一个 Author 之前和之后分别运行下面的代码，打印出的 Author 的名字数量会发生变化：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Optional&lt;Article&gt; articleOptional = articleRepository.findById(<span class="number">4L</span>);</span><br><span class="line">articleOptional.ifPresent(article -&gt; &#123;</span><br><span class="line">   article.getAuthors()</span><br><span class="line">           .forEach(author -&gt; logger.info(author.getName()));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>好消息是，无论 FetchType 的值是什么或者用哪种查询方式（比如 entityManager、Criteria API、Spring Data JPA 等），上述结果都成立。</p>
+<h4 id="懒加载下的-manytoone-onetoone"><a class="markdownIt-Anchor" href="#懒加载下的-manytoone-onetoone"></a> 懒加载下的 ManyToOne &amp; OneToOne</h4>
+<p>让我们试着想象一下我们软删除了一篇文章，但我们不希望删除这篇文章下面的评论，因为这样在恢复文章时评论也会自动恢复。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table(name = &quot;comment&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Comment</span> &#123;</span><br><span class="line">   ...</span><br><span class="line">   <span class="meta">@ManyToOne(fetch = FetchType.LAZY)</span></span><br><span class="line">   <span class="meta">@JoinColumn(name = &quot;article_id&quot;)</span></span><br><span class="line">   <span class="keyword">private</span> Article article;</span><br><span class="line">   ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在，让我们尝试获取一条对应文章被删除的评论：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Optional&lt;Comment&gt; comment = commentRepository.findById(id);</span><br><span class="line">comment.ifPresent(com -&gt; logger.info(com.getArticle().getText()));</span><br></pre></td></tr></table></figure>
+<p>如果你在第一行打一个断点，你可以看到 article 属性的值是 Hibernate Proxy 对象。</p>
+<img src="/2022/01/07/soft-deletion-in-hibernate-things-you-may-miss/soft-deletion-in-hibernate-things-you-may-miss-3.png" class="" title="debug">
+<p>这很容易理解，因为 Hibernate 并不能提前知道这个实体是否已经被删除。但是当我们执行 <code>com.getArticle().getText()</code> 方法时，却抛出了 EntityNotFoundException 异常，这是你所期望的吗？</p>
+<h4 id="提前加载下的-manytoone-onetoone"><a class="markdownIt-Anchor" href="#提前加载下的-manytoone-onetoone"></a> 提前加载下的 ManyToOne &amp; OneToOne</h4>
+<p>让我们将 FetchType 的值改为 EAGER 后再次重复相同的实验。现在我们在程序不使用代理的情况下获取到了关联的 article 对象，虽然 Hibernate 知道 article 已经被删除了。让我们进行同样的测试：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Optional&lt;Comment&gt; comment = commentRepository.findById(id);</span><br><span class="line">comment.ifPresent(com -&gt; logger.info(com.getArticle().getText()));</span><br></pre></td></tr></table></figure>
+<p>被关联查询且被软删除的 article 对象在没有报任何异常的情况下被加载了，其软删除标志为也依然为 <code>true</code>：</p>
+<img src="/2022/01/07/soft-deletion-in-hibernate-things-you-may-miss/soft-deletion-in-hibernate-things-you-may-miss-4.png" class="" title="debug">
+<p>这种不一致的行为很容易被解释，提前加载让 Hibernate 查询时 join 了 <code>article</code> 表。Hibernate 面临着立即抛出 EntityNotFoundException 异常还是正常加载的抉择，但因为 article 已经被加载了，<code>@Where</code> 注解失去了它的作用，所以 Hibernate 只是简单地为对象赋了值。</p>
+<p>现在让我们批量查询 comments：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Iterable&lt;Comment&gt; comments = commentRepository.findAll();</span><br></pre></td></tr></table></figure>
+<p>现在我们又遇到了 EntityNotFoundException 异常！出现异常是因为 <code>findAll</code> 方法分离查询被关联的 Article 对象，详情可以参考 <a href="https://stackoverflow.com/questions/49192255/spring-data-findall-does-not-fetch-eagerly/49193254">Spring data findAll() does not fetch eagerly</a>。</p>
+<p>任何时候被软删除的对象在被使用分离查询时都会导致上面的异常，因为 Hibernate 在生成分离查询时应用了 <code>@Where</code> 所定义的条件，所以很显然 Hibernate 并不能查询到被软删除的实体。所以很显然，这种查询并不能查到 Hibernate 所期望的结果，所以在这种情况下导致了 EntityNotFoundException 异常。</p>
+<p>所以更有趣的是你需要进行很多实验来认识到 Hibernate 在使用不同的 API 时是怎样获取数据的。首先，无论是对多还是对一的实体，在使用 DSL 查询时你均会遇到同样的异常。与此同时，criteria API 会在提前加载的一对一关系下返回被删除的实体，但会在提前加载的多对一关系中抛出 EntityNotFoundException 异常。这难道不令人困惑吗？</p>
+<h4 id="避免-entitynotfoundexception-异常的解决方式"><a class="markdownIt-Anchor" href="#避免-entitynotfoundexception-异常的解决方式"></a> 避免 EntityNotFoundException 异常的解决方式</h4>
+<p>这里有一个可以避免 EntityNotFoundException 异常的解决方法。Hibernate <a href="https://docs.jboss.org/hibernate/orm/5.2/userguide/html_single/Hibernate_User_Guide.html#associations-not-found">介绍</a>了 <code>@NotFound</code> 注解，它能够让程序不再抛出异常，而是直接将关联对象的值设置为 <code>null</code>。</p>
+<p>这个解决办法看起来是一个灵丹妙药，但它同时带来了额外的缺点：无论 FetchType 设置为什么，所有的对一关系均会提前加载。</p>
+<img src="/2022/01/07/soft-deletion-in-hibernate-things-you-may-miss/soft-deletion-in-hibernate-things-you-may-miss-5.png" class="" title="官网介绍">
+<h4 id="约束和索引带来的问题"><a class="markdownIt-Anchor" href="#约束和索引带来的问题"></a> 约束和索引带来的问题</h4>
+<p>我们知道被软删除的实体和正常的实体均会被唯一约束和索引所限制，因此，常规的索引在这种情况下不再适用。假设一个 Author 实体的 login 字段有唯一约束，在软删除表中已有的记录后，记录仍然存在，所以正常状态的 Author 实体的同样的字段也不能再被设置为被软删除的相同的值。</p>
+<p>如果你正在使用 PostgreSQL，那么你很幸运，因为你可以使用部分索引：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">CREATE UNIQUE INDEX author_login_idx ON <span class="title function_">author</span> <span class="params">(login)</span> <span class="type">WHERE</span> <span class="variable">deleted</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br></pre></td></tr></table></figure>
+<p>但如果你使用的是 MySQL，那么很不幸，这个问题无解。</p>
+<h4 id="结论"><a class="markdownIt-Anchor" href="#结论"></a> 结论</h4>
+<p>所以你可以看到，软删除是一个很容易被理解但不容易去实现的模式。看上去现在还没有一个完美的解决方案，至少 Hibernate 现阶段还没有提供。</p>
+<p>在一些简单的场景，你确实可以直接采用使用 <code>@SQLDelete</code> + <code>@Where</code> 注解的方式，但在软删除实体出现在一对一或者多对一关联关系的时候，你并不能期望他们行为一致。只是简单地改变 FetchType 的值，或是使用 <code>@EntityGraph</code>，或者将你的查询从 Criteria API 迁移到 DSL 查询，或是其他任何改变都很可能影响查询结果：从被意外抛出异常到意外地成功加载了被删除的实体，或是直接获得了意料之外的 <code>null</code> 值。</p>
 ]]></content>
       <categories>
-        <category>Trino</category>
+        <category>Java</category>
       </categories>
       <tags>
-        <tag>MySQL</tag>
-        <tag>Tutorial</tag>
-        <tag>Trino</tag>
-        <tag>Presto</tag>
+        <tag>Java</tag>
+        <tag>Hibernate</tag>
+        <tag>Translate</tag>
       </tags>
   </entry>
   <entry>
@@ -1946,6 +1834,118 @@ B中第一个字符，另一条从|字符指向右括号。这使NFA能够进行
         <tag>Chromebook</tag>
         <tag>Chrome OS</tag>
         <tag>Crostini</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Trino 介绍及部署使用</title>
+    <url>/2022/03/15/trino-deploy-tutorials/</url>
+    <content><![CDATA[<p>之前我们提到项目上有一个跨库进行 MySQL join 操作的需求，当时选择使用了 MySQL 的 FEDERATED 存储引擎来解决这个问题，具体可以看 <a href="/2022/02/28/mysql-federated-storage-engine-tutorials/">MySQL FEDERATED 存储引擎介绍及使用</a>。但是 FEDERATED 本身只支持 MySQL 数据库，如果我们需要对多个不同种类的数据库进行关联操作，那么还是要依赖第三方组件来进行，比如这次要介绍的 Trino。</p>
+<p>Trino 是基于 Java 开发的高性能的、分布式的大数据 SQL 查询引擎，支持基本上所有的常见数据源以及你所想象不到的中间件存储比如 Kafka，同时也支持在单个查询中使用多个数据源来进行关联查询。</p>
+<p>官网：<a href="https://trino.io/">Trino</a></p>
+<span id="more"></span>
+<h3 id="前世今生"><a class="markdownIt-Anchor" href="#前世今生"></a> 前世今生</h3>
+<p>Trino 的前身是 Facebook 的 Presto。2012 年， Martin Traverso、Dain Sundstrom 和 David Phillips 入职了 Facebook 的大数据基建部门，并和 Eric Hwang 一同开发了 Presto 来解决 Facebook 的海量 Hadoop 数据仓库的低延迟交互分析的问题，随后在 2013 年 11 月将 Presto 开源。但好景不长，在 2018 年 Facebook 的管理层想要对 Presto 项目及其未来拥有更多的控制，并让毫无 Presto 经验的开发者可以直接提交代码，而且这个决定是在没有 Presto 社区参与的情况下做出的。创始人们觉得这和拥有一个健康开放的社区相矛盾，所以为了使 Presto 的成长更加健康，他们决定离开了 Facebook。</p>
+<p>2019 年 1 月，Presto 软件基金会成立了，创始人们决定在未来的 10 个月中不再受雇于任何企业来专门与全球的用户和开发者们接触以及和贡献者合作来扩大和加强社区。随着参与的人员越来越多，Presto 项目也比以前更拥有活力，这个分支叫做 PrestoSQL。</p>
+<img src="/2022/03/15/trino-deploy-tutorials/trino-deploy-tutorials-0.png" class="" title="commit 比较">
+<p>在 PrestoSQL 稳固几个月之后，Facebook 决定通过 Linux 基金会来创建一个具有竞争关系的社区，第一部就是为 Presto 申请了商标。2019 年 9 月，Facebook 在 Linux 基金会成立了 Presto 基金会，这边的分支叫做 PrestoDB。所以 PrestoSQL 不得不改名，最后将名称改为了 Trino。</p>
+<p>最后引用官宣改名文章的最后一句话：<strong>If you love this project, you already love Trino.</strong> ❤️</p>
+<h3 id="server-节点安装"><a class="markdownIt-Anchor" href="#server-节点安装"></a> server 节点安装</h3>
+<p>因为现阶段只是简单地进行试用，所以我们只安装 server 节点，而且 server 节点同时也可以作为 worker 节点使用。</p>
+<h4 id="java-环境"><a class="markdownIt-Anchor" href="#java-环境"></a> Java 环境</h4>
+<p>为什么要单独强调 Java 环境，是因为 Trino 对 Java 环境很挑剔，官网文档要求 64 位的 Java 11 运行环境，且最低版本号为 11.0.11。如果是 Java 12 或者 13、17 等后续版本，官方说可能正常工作，并没有做过测试。同时推荐 <a href="https://www.azul.com/downloads/?package=jdk#download-openjdk">Azul Zulu</a> 的 JDK，官方说只针对 Azul Zulu 的发行版做了测试，可以说是很娇贵了。</p>
+<p>所以为了避免因为 JDK 的问题使程序出现问题，我们还是老老实实按照要求使用 Azul Zulu 的 Open JDK，具体安装过程不再赘述，是用的版本为当前 Java 11 的最新版 11.0.14.1+1。</p>
+<img src="/2022/03/15/trino-deploy-tutorials/trino-deploy-tutorials-1.png" class="" title="JDK 版本">
+<h4 id="python-环境"><a class="markdownIt-Anchor" href="#python-环境"></a> Python 环境</h4>
+<p>Python 环境的要求相对来说就很宽泛了，官方说 2.6.x、2.7.x、或者 3.x 的版本均可，因为 Python 环境只是给启动脚本使用的，并不会影响程序的正常运行。都 2022 年了，所以我们这里使用 Python 3 的最新版即可。</p>
+<img src="/2022/03/15/trino-deploy-tutorials/trino-deploy-tutorials-2.png" class="" title="Python 版本">
+<h4 id="安装-trino"><a class="markdownIt-Anchor" href="#安装-trino"></a> 安装 Trino</h4>
+<p>从官网下载 server 节点压缩包并解压即可。Trino 需要一个目录来存储日志等数据，官方建议放在 Trino 安装目录外，因为这样可以很方便地在后续升级 Trino 版本，具体配置放下面再说。</p>
+<h3 id="trino-配置"><a class="markdownIt-Anchor" href="#trino-配置"></a> Trino 配置</h3>
+<p>安装完 Trino 之后还需要对 Trino 进行一连串的配置才可以运行。首先在安装目录创建 <code>etc</code> 文件夹，用来放置配置信息，然后通过创建对应文件的方式对 Trino 进行配置。</p>
+<h4 id="node-节点配置文件"><a class="markdownIt-Anchor" href="#node-节点配置文件"></a> Node 节点配置文件</h4>
+<p>创建 <code>node.properties</code> 文件配置节点信息：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 集群的环境名称，同一集群下的节点必须具有相同的环境名</span><br><span class="line">node.environment=test</span><br><span class="line"># 节点的唯一 ID，集群内不能重复</span><br><span class="line">node.id=b0e4c61a-a304-47d3-bfc7-88be4c6a22c1</span><br><span class="line"># 数据存储路径</span><br><span class="line">node.data-dir=/opt/trino-server-374/data</span><br></pre></td></tr></table></figure>
+<h4 id="jvm-配置"><a class="markdownIt-Anchor" href="#jvm-配置"></a> JVM 配置</h4>
+<p>创建 <code>jvm.config</code> 文件存储 JVM 启动参数，在官方样例中删掉了 OOM 相关的参数并调整了下内存需求：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-server</span><br><span class="line">-Xmx4G</span><br><span class="line">-XX:-UseBiasedLocking</span><br><span class="line">-XX:+UseG1GC</span><br><span class="line">-XX:G1HeapRegionSize=32M</span><br><span class="line">-XX:+ExplicitGCInvokesConcurrent</span><br><span class="line">-XX:-OmitStackTraceInFastThrow</span><br><span class="line">-XX:ReservedCodeCacheSize=512M</span><br><span class="line">-XX:PerMethodRecompilationCutoff=10000</span><br><span class="line">-XX:PerBytecodeRecompilationCutoff=10000</span><br><span class="line">-Djdk.attach.allowAttachSelf=true</span><br><span class="line">-Djdk.nio.maxCachedBufferSize=2000000</span><br></pre></td></tr></table></figure>
+<h4 id="config-配置文件"><a class="markdownIt-Anchor" href="#config-配置文件"></a> Config 配置文件</h4>
+<p>创建 <code>config.properties</code> 文件，储存的是一些杂七杂八的配置。因为我们只有一个节点做测试，即当 server 又当 worker，所以使用下列配置，端口按需调整：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 标识为协调员，可以接受客户端请求并管理查询</span><br><span class="line">coordinator=true</span><br><span class="line"># 作为协调员的同时可作为 worker 节点使用</span><br><span class="line">node-scheduler.include-coordinator=true</span><br><span class="line">http-server.http.port=8080</span><br><span class="line">query.max-memory=2GB</span><br><span class="line">query.max-memory-per-node=2GB</span><br><span class="line"># 协调员的地址，注册发现使用</span><br><span class="line">discovery.uri=http://127.0.0.1:8080</span><br></pre></td></tr></table></figure>
+<h4 id="日志等级"><a class="markdownIt-Anchor" href="#日志等级"></a> 日志等级</h4>
+<p>创建 <code>log.properties</code> 文件调整日志等级，可选，默认为 <code>INFO</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">io.trino=INFO</span><br></pre></td></tr></table></figure>
+<h4 id="数据源配置"><a class="markdownIt-Anchor" href="#数据源配置"></a> 数据源配置</h4>
+<p>Trino 支持的数据源非常的多，具体可以看官方文档 <a href="https://trino.io/docs/current/connector.html">Connectors</a>，这里我们只配置一个 MySQL 和一个 PostgreSQL 作为测试。</p>
+<p>首先创建 <code>catalog</code> 文件夹，然后创建 <code>mysql.properties</code> 文件，文件名的 <code>mysql</code> 前缀为 catalog 名称，可以自由指定。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 指定为 MySQL</span><br><span class="line">connector.name=mysql</span><br><span class="line"># JDBC 连接地址，注意，MySQL 作为数据源时不能指定具体 database</span><br><span class="line">connection-url=jdbc:mysql://192.168.1.202:3306?useSSL=false</span><br><span class="line">connection-user=root</span><br><span class="line">connection-password=root</span><br></pre></td></tr></table></figure>
+<p>然后再创建 <code>postgresql.properties</code> 文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">connector.name=postgresql</span><br><span class="line">connection-url=jdbc:postgresql://192.168.1.202:5432/test</span><br><span class="line">connection-user=postgres</span><br><span class="line">connection-password=postgres</span><br></pre></td></tr></table></figure>
+<h4 id="启动-trino"><a class="markdownIt-Anchor" href="#启动-trino"></a> 启动 Trino</h4>
+<p>可以通过运行 <code>bin</code> 目录下的 <code>launcher</code> 文件启动：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">后台运行</span></span><br><span class="line">ubuntu@CRUCIAL:/opt/trino-server-374/bin$ ./launcher start</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">前台运行</span></span><br><span class="line">ubuntu@CRUCIAL:/opt/trino-server-374/bin$ ./launcher run</span><br></pre></td></tr></table></figure>
+<p>看到显示 <code>SERVER STARTED</code> 后就说明 Trino 正常启动了，可以通过浏览器直接访问 HTTP 端口来查看集群状态，用户名随意输入：</p>
+<img src="/2022/03/15/trino-deploy-tutorials/trino-deploy-tutorials-3.png" class="" title="web ui">
+<h3 id="trino-使用"><a class="markdownIt-Anchor" href="#trino-使用"></a> Trino 使用</h3>
+<p>我们可以通过两种方式来使用 Trino，使用官方的 CLI 命令工具，或者通过 JDBC 驱动在 Java 程序中使用。</p>
+<h4 id="cli-工具"><a class="markdownIt-Anchor" href="#cli-工具"></a> CLI 工具</h4>
+<p>CLI 工具需要 Java 8 或更高版本作为运行环境，我们只需要下载官方提供的 jar 包即可直接使用。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ubuntu@CRUCIAL:/opt/trino-server-374$ wget https://repo1.maven.org/maven2/io/trino/trino-cli/374/trino-cli-374-executable.jar</span><br><span class="line">ubuntu@CRUCIAL:/opt/trino-server-374$ chmod +x trino-cli-374-executable.jar</span><br><span class="line">ubuntu@CRUCIAL:/opt/trino-server-374$ ./trino-cli-374-executable.jar --server localhost:8080 --execute &#x27;SHOW TABLES FROM mysql.test&#x27;</span><br><span class="line">ubuntu@CRUCIAL:/opt/trino-server-374$ ./trino-cli-374-executable.jar --server localhost:8080 --execute &#x27;SELECT * FROM mysql.test.user&#x27;</span><br></pre></td></tr></table></figure>
+<p>其中，<code>mysql</code> 指的是我们在 catlog 文件夹创建的文件名，<code>test</code> 为我们 MySQL 的数据库名称，<code>user</code> 为表名。</p>
+<h4 id="jdbc-驱动"><a class="markdownIt-Anchor" href="#jdbc-驱动"></a> JDBC 驱动</h4>
+<p>CLI 工具的泛用性不强，真要产品化使用还是得采用 JDBC 方式。首先按照官方，添加 JDBC 驱动：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.trino<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>trino-jdbc<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>374<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>然后配置 JDBC 连接地址。这里可以有多种方案来配置，其中 <code>catalog</code> 为文件名，<code>schema</code> 相当于 MySQL 的 database：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">jdbc:trino://host:port</span><br><span class="line">jdbc:trino://host:port/catalog</span><br><span class="line">jdbc:trino://host:port/catalog/schema</span><br></pre></td></tr></table></figure>
+<p>用户名可以任意输入，然后就可以正常使用了。</p>
+<h3 id="高级配置"><a class="markdownIt-Anchor" href="#高级配置"></a> 高级配置</h3>
+<p>上面的流程是可以正常使用的，但是细节上处理的都不到位，比如默认是匿名访问的，用户名可以任意输入；默认没有权限控制，可以访问所有的 catalog 等等，所以我们需要进行一下高级配置。</p>
+<h4 id="配置认证方式"><a class="markdownIt-Anchor" href="#配置认证方式"></a> 配置认证方式</h4>
+<p>Trino 支持很多种的认证方式，基本上常见的都支持。为了减少应用配置复杂度，我们仍然选择通用的用户名/密码方式进行认证。</p>
+<p>首先打开我们的 <code>config.properties</code> 文件，添加认证配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http-server.authentication.type=PASSWORD</span><br></pre></td></tr></table></figure>
+<p>然后仍然是在 <code>etc</code> 目录下创建 <code>password-authenticator.properties</code> 文件，指定密码来源：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 采用文件的方式</span><br><span class="line">password-authenticator.name=file</span><br><span class="line">指定密码文件位置</span><br><span class="line">file.password-file=/opt/trino-server-374/etc/password.db</span><br></pre></td></tr></table></figure>
+<p>然后创建密码文件，我们可以使用 <a href="https://httpd.apache.org/">Apache HTTP Server</a> 的 <a href="https://httpd.apache.org/docs/current/programs/htpasswd.html">htpasswd</a> 工具来生成密码文件：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">touch password.db</span><br><span class="line">htpasswd -B -C 10 password.db user</span><br></pre></td></tr></table></figure>
+<p><code>user</code> 为我们想要创建的用户名，然后输入密码即可。</p>
+<h4 id="开启-tls-支持"><a class="markdownIt-Anchor" href="#开启-tls-支持"></a> 开启 TLS 支持</h4>
+<p>当采用用户名/密码的方式进行认证时，Trino 强制要求我们使用 TLS，所以我们需要对其进行配置。</p>
+<p>首先我们需要创建 HTTPS 证书，由于是本地测试，所以我们直接自己签发一个。Trino 支持 PEM 文件和 JKS 文件，我们使用标准的 PEM 文件进行配置。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">生成私钥</span></span><br><span class="line">ubuntu@CRUCIAL:/opt/trino-server-374/etc/ssl$ openssl genrsa -out server.key 2048</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">生成 CSR</span> </span><br><span class="line">ubuntu@CRUCIAL:/opt/trino-server-374/etc/ssl$ openssl req -new -key server.key -out server.csr</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">自己派发证书</span></span><br><span class="line">ubuntu@CRUCIAL:/opt/trino-server-374/etc/ssl$ openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">生成 PEM 格式文件</span></span><br><span class="line">ubuntu@CRUCIAL:/opt/trino-server-374/etc/ssl$ cat server.key server.crt &gt; server.pem</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">校验 PEM 文件</span></span><br><span class="line">ubuntu@CRUCIAL:/opt/trino-server-374/etc/ssl$ openssl rsa -in server.pem -check -noout</span><br><span class="line">ubuntu@CRUCIAL:/opt/trino-server-374/etc/ssl$ openssl x509 -in server.pem -text -noout</span><br></pre></td></tr></table></figure>
+<p>生成完证书后，在 <code>config.properties</code> 文件中添加如下配置即可开启 TLS 支持：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 开启 https</span><br><span class="line">http-server.https.enabled=true</span><br><span class="line"># 指定 https 端口</span><br><span class="line">http-server.https.port=8443</span><br><span class="line"># 指定证书文件</span><br><span class="line">http-server.https.keystore.path=/opt/trino-server-374/etc/ssl/server.pem</span><br></pre></td></tr></table></figure>
+<p>最后修改 JDBC 连接地址，由于是自签证书，所以我们需要关闭证书校验：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">jdbc:trino://127.0.0.1:8443?SSL=true&amp;SSLVerification=NONE</span><br></pre></td></tr></table></figure>
+<p>同理，CLI 命令修改为：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./trino-cli-374-executable.jar --server https://localhost:8443 --user user --password --execute &#x27;SELECT * FROM mysql.test.user&#x27; --insecure</span><br></pre></td></tr></table></figure>
+<h4 id="权限控制"><a class="markdownIt-Anchor" href="#权限控制"></a> 权限控制</h4>
+<p>默认在不开启权限控制的情况下，用户都拥有最大权限，这显示是很不安全的，所以需要配置权限控制。</p>
+<p>创建 <code>access-control.properties</code> 文件，指定权限控制文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">access-control.name=file</span><br><span class="line"># 指定控制文件位置</span><br><span class="line">security.config-file=/opt/trino-server-374/etc/rules.json</span><br><span class="line"># 自动刷新间隔，不再需要重启 Trino 即可自动生效</span><br><span class="line">security.refresh-period=1s</span><br></pre></td></tr></table></figure>
+<p>创建 <code>group-provider.properties</code> 文件，指定群组配置文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">group-provider.name=file</span><br><span class="line">file.group-file=/opt/trino-server-374/etc/group.txt</span><br></pre></td></tr></table></figure>
+<p>然后编辑群组映射关系 <code>group.txt</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">admin:admin-user</span><br></pre></td></tr></table></figure>
+<p>然后创建 <code>rules.json</code> 文件编写规则，具体的权限控制比较复杂，可以参考 <a href="https://trino.io/docs/current/security/file-system-access-control.html">File-based access control</a>，这里我们只写一个基础的权限控制规则，实现 <code>admin</code> 组的用户可以进行所有操作，任意用户可以访问 <code>mysql</code>，user 可以读取 <code>postgresql</code> 的数据，<code>system</code> 没有用户可以访问。权限匹配是从上到下的，如果没有匹配到，则默认拒绝权限。具体配置如下：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;catalogs&quot;</span><span class="punctuation">:</span><span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;group&quot;</span><span class="punctuation">:</span><span class="string">&quot;admin&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;allow&quot;</span><span class="punctuation">:</span><span class="string">&quot;all&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;catalog&quot;</span><span class="punctuation">:</span><span class="string">&quot;mysql&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;allow&quot;</span><span class="punctuation">:</span><span class="string">&quot;all&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;user&quot;</span><span class="punctuation">:</span><span class="string">&quot;user&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;catalog&quot;</span><span class="punctuation">:</span><span class="string">&quot;postgresql&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;allow&quot;</span><span class="punctuation">:</span><span class="string">&quot;read-only&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;catalog&quot;</span><span class="punctuation">:</span><span class="string">&quot;system&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;allow&quot;</span><span class="punctuation">:</span><span class="string">&quot;none&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>再创建用户 user2 及 admin-user，来测试一下效果：</p>
+<p><strong>这是开启权限控制之前 user 可以看到的</strong></p>
+<img src="/2022/03/15/trino-deploy-tutorials/trino-deploy-tutorials-4.png" class="" title="开启权限控制之前 user 可见范围">
+<p><strong>这是开启权限控制之后 user 可以看到的</strong></p>
+<img src="/2022/03/15/trino-deploy-tutorials/trino-deploy-tutorials-5.png" class="" title="开启权限控制之后 user 可见范围">
+<p><strong>这是 user2 可以看到的</strong></p>
+<img src="/2022/03/15/trino-deploy-tutorials/trino-deploy-tutorials-6.png" class="" title="user2 可见范围">
+<p><strong>最后这是 admin-user 可以看到的</strong></p>
+<img src="/2022/03/15/trino-deploy-tutorials/trino-deploy-tutorials-7.png" class="" title="admin-user 可见范围">
+]]></content>
+      <categories>
+        <category>Trino</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+        <tag>Tutorial</tag>
+        <tag>Trino</tag>
+        <tag>Presto</tag>
       </tags>
   </entry>
   <entry>
